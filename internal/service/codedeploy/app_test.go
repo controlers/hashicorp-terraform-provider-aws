@@ -72,7 +72,7 @@ func testSweepCodeDeployApps(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSCodeDeployApp_basic(t *testing.T) {
+func TestAccCodeDeployApp_basic(t *testing.T) {
 	var application1 codedeploy.ApplicationInfo
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codedeploy_app.test"
@@ -81,12 +81,12 @@ func TestAccAWSCodeDeployApp_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codedeploy.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeDeployAppDestroy,
+		CheckDestroy: testAccCheckAppDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeDeployAppConfigName(rName),
+				Config: testAccAppNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application1),
+					testAccCheckAppExists(resourceName, &application1),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "codedeploy", fmt.Sprintf(`application:%s`, rName)),
 					resource.TestCheckResourceAttr(resourceName, "compute_platform", "Server"),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
@@ -112,7 +112,7 @@ func TestAccAWSCodeDeployApp_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeDeployApp_computePlatform(t *testing.T) {
+func TestAccCodeDeployApp_computePlatform(t *testing.T) {
 	var application1, application2 codedeploy.ApplicationInfo
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codedeploy_app.test"
@@ -121,20 +121,20 @@ func TestAccAWSCodeDeployApp_computePlatform(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codedeploy.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeDeployAppDestroy,
+		CheckDestroy: testAccCheckAppDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeDeployAppConfigComputePlatform(rName, "Lambda"),
+				Config: testAccAppComputePlatformConfig(rName, "Lambda"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application1),
+					testAccCheckAppExists(resourceName, &application1),
 					resource.TestCheckResourceAttr(resourceName, "compute_platform", "Lambda"),
 				),
 			},
 			{
-				Config: testAccAWSCodeDeployAppConfigComputePlatform(rName, "Server"),
+				Config: testAccAppComputePlatformConfig(rName, "Server"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application2),
-					testAccCheckAWSCodeDeployAppRecreated(&application1, &application2),
+					testAccCheckAppExists(resourceName, &application2),
+					testAccCheckAppRecreated(&application1, &application2),
 					resource.TestCheckResourceAttr(resourceName, "compute_platform", "Server"),
 				),
 			},
@@ -142,7 +142,7 @@ func TestAccAWSCodeDeployApp_computePlatform(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeDeployApp_computePlatform_ECS(t *testing.T) {
+func TestAccCodeDeployApp_ComputePlatform_ecs(t *testing.T) {
 	var application1 codedeploy.ApplicationInfo
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codedeploy_app.test"
@@ -151,12 +151,12 @@ func TestAccAWSCodeDeployApp_computePlatform_ECS(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codedeploy.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeDeployAppDestroy,
+		CheckDestroy: testAccCheckAppDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeDeployAppConfigComputePlatform(rName, "ECS"),
+				Config: testAccAppComputePlatformConfig(rName, "ECS"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application1),
+					testAccCheckAppExists(resourceName, &application1),
 					resource.TestCheckResourceAttr(resourceName, "compute_platform", "ECS"),
 				),
 			},
@@ -169,7 +169,7 @@ func TestAccAWSCodeDeployApp_computePlatform_ECS(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeDeployApp_computePlatform_Lambda(t *testing.T) {
+func TestAccCodeDeployApp_ComputePlatform_lambda(t *testing.T) {
 	var application1 codedeploy.ApplicationInfo
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codedeploy_app.test"
@@ -178,12 +178,12 @@ func TestAccAWSCodeDeployApp_computePlatform_Lambda(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codedeploy.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeDeployAppDestroy,
+		CheckDestroy: testAccCheckAppDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeDeployAppConfigComputePlatform(rName, "Lambda"),
+				Config: testAccAppComputePlatformConfig(rName, "Lambda"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application1),
+					testAccCheckAppExists(resourceName, &application1),
 					resource.TestCheckResourceAttr(resourceName, "compute_platform", "Lambda"),
 				),
 			},
@@ -196,7 +196,7 @@ func TestAccAWSCodeDeployApp_computePlatform_Lambda(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeDeployApp_name(t *testing.T) {
+func TestAccCodeDeployApp_name(t *testing.T) {
 	var application1, application2 codedeploy.ApplicationInfo
 	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -206,19 +206,19 @@ func TestAccAWSCodeDeployApp_name(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codedeploy.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeDeployAppDestroy,
+		CheckDestroy: testAccCheckAppDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeDeployAppConfigName(rName1),
+				Config: testAccAppNameConfig(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application1),
+					testAccCheckAppExists(resourceName, &application1),
 					resource.TestCheckResourceAttr(resourceName, "name", rName1),
 				),
 			},
 			{
-				Config: testAccAWSCodeDeployAppConfigName(rName2),
+				Config: testAccAppNameConfig(rName2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application2),
+					testAccCheckAppExists(resourceName, &application2),
 					resource.TestCheckResourceAttr(resourceName, "name", rName2),
 				),
 			},
@@ -231,7 +231,7 @@ func TestAccAWSCodeDeployApp_name(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeDeployApp_tags(t *testing.T) {
+func TestAccCodeDeployApp_tags(t *testing.T) {
 	var application codedeploy.ApplicationInfo
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codedeploy_app.test"
@@ -240,12 +240,12 @@ func TestAccAWSCodeDeployApp_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codedeploy.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeDeployAppDestroy,
+		CheckDestroy: testAccCheckAppDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeDeployAppConfigTags1(rName, "key1", "value1"),
+				Config: testAccAppTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application),
+					testAccCheckAppExists(resourceName, &application),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -256,18 +256,18 @@ func TestAccAWSCodeDeployApp_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCodeDeployAppConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccAppTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application),
+					testAccCheckAppExists(resourceName, &application),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSCodeDeployAppConfigTags1(rName, "key2", "value2"),
+				Config: testAccAppTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application),
+					testAccCheckAppExists(resourceName, &application),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -276,7 +276,7 @@ func TestAccAWSCodeDeployApp_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeDeployApp_disappears(t *testing.T) {
+func TestAccCodeDeployApp_disappears(t *testing.T) {
 	var application1 codedeploy.ApplicationInfo
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codedeploy_app.test"
@@ -285,12 +285,12 @@ func TestAccAWSCodeDeployApp_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codedeploy.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeDeployAppDestroy,
+		CheckDestroy: testAccCheckAppDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeDeployAppConfigName(rName),
+				Config: testAccAppNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeDeployAppExists(resourceName, &application1),
+					testAccCheckAppExists(resourceName, &application1),
 					acctest.CheckResourceDisappears(acctest.Provider, tfcodedeploy.ResourceApp(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -299,7 +299,7 @@ func TestAccAWSCodeDeployApp_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSCodeDeployAppDestroy(s *terraform.State) error {
+func testAccCheckAppDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).CodeDeployConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -325,7 +325,7 @@ func testAccCheckAWSCodeDeployAppDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSCodeDeployAppExists(name string, application *codedeploy.ApplicationInfo) resource.TestCheckFunc {
+func testAccCheckAppExists(name string, application *codedeploy.ApplicationInfo) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -354,7 +354,7 @@ func testAccCheckAWSCodeDeployAppExists(name string, application *codedeploy.App
 	}
 }
 
-func testAccCheckAWSCodeDeployAppRecreated(i, j *codedeploy.ApplicationInfo) resource.TestCheckFunc {
+func testAccCheckAppRecreated(i, j *codedeploy.ApplicationInfo) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.TimeValue(i.CreateTime).Equal(aws.TimeValue(j.CreateTime)) {
 			return errors.New("CodeDeploy Application was not recreated")
@@ -364,7 +364,7 @@ func testAccCheckAWSCodeDeployAppRecreated(i, j *codedeploy.ApplicationInfo) res
 	}
 }
 
-func testAccAWSCodeDeployAppConfigComputePlatform(rName string, computePlatform string) string {
+func testAccAppComputePlatformConfig(rName string, computePlatform string) string {
 	return fmt.Sprintf(`
 resource "aws_codedeploy_app" "test" {
   compute_platform = %q
@@ -373,7 +373,7 @@ resource "aws_codedeploy_app" "test" {
 `, computePlatform, rName)
 }
 
-func testAccAWSCodeDeployAppConfigName(rName string) string {
+func testAccAppNameConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_codedeploy_app" "test" {
   name = %q
@@ -381,7 +381,7 @@ resource "aws_codedeploy_app" "test" {
 `, rName)
 }
 
-func testAccAWSCodeDeployAppConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccAppTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_codedeploy_app" "test" {
   name = %[1]q
@@ -393,7 +393,7 @@ resource "aws_codedeploy_app" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSCodeDeployAppConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccAppTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_codedeploy_app" "test" {
   name = %[1]q
