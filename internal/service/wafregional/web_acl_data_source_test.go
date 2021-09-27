@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsWafRegionalWebAcl_basic(t *testing.T) {
+func TestAccWAFRegionalWebACLDataSource_basic(t *testing.T) {
 	name := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_wafregional_web_acl.web_acl"
 	datasourceName := "data.aws_wafregional_web_acl.web_acl"
@@ -22,11 +22,11 @@ func TestAccDataSourceAwsWafRegionalWebAcl_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccDataSourceAwsWafRegionalWebAclConfig_NonExistent,
+				Config:      testAccWebACLDataSourceConfig_NonExistent,
 				ExpectError: regexp.MustCompile(`web ACLs not found`),
 			},
 			{
-				Config: testAccDataSourceAwsWafRegionalWebAclConfig_Name(name),
+				Config: testAccWebACLDataSourceConfig_Name(name),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(datasourceName, "id", resourceName, "id"),
 					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
@@ -36,7 +36,7 @@ func TestAccDataSourceAwsWafRegionalWebAcl_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsWafRegionalWebAclConfig_Name(name string) string {
+func testAccWebACLDataSourceConfig_Name(name string) string {
 	return fmt.Sprintf(`
 resource "aws_wafregional_web_acl" "web_acl" {
   name        = %[1]q
@@ -53,7 +53,7 @@ data "aws_wafregional_web_acl" "web_acl" {
 `, name)
 }
 
-const testAccDataSourceAwsWafRegionalWebAclConfig_NonExistent = `
+const testAccWebACLDataSourceConfig_NonExistent = `
 data "aws_wafregional_web_acl" "web_acl" {
   name = "tf-acc-test-does-not-exist"
 }
