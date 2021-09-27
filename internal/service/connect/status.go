@@ -7,7 +7,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/connect"
 	"github.com/hashicorp/aws-sdk-go-base/tfawserr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	tfconnect "github.com/hashicorp/terraform-provider-aws/aws/internal/service/connect"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
@@ -19,8 +18,8 @@ func statusInstance(ctx context.Context, conn *connect.Connect, instanceId strin
 
 		output, err := conn.DescribeInstanceWithContext(ctx, input)
 
-		if tfawserr.ErrCodeEquals(err, tfconnect.InstanceStatusStatusNotFound) {
-			return output, tfconnect.InstanceStatusStatusNotFound, nil
+		if tfawserr.ErrCodeEquals(err, InstanceStatusStatusNotFound) {
+			return output, InstanceStatusStatusNotFound, nil
 		}
 
 		if err != nil {
