@@ -126,7 +126,7 @@ func testSweepAppConfigHostedConfigurationVersions(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSAppConfigHostedConfigurationVersion_basic(t *testing.T) {
+func TestAccAppConfigHostedConfigurationVersion_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_appconfig_hosted_configuration_version.test"
 
@@ -137,9 +137,9 @@ func TestAccAWSAppConfigHostedConfigurationVersion_basic(t *testing.T) {
 		CheckDestroy: testAccCheckAppConfigHostedConfigurationVersionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAppConfigHostedConfigurationVersion(rName),
+				Config: testAccHostedConfigurationVersion(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAppConfigHostedConfigurationVersionExists(resourceName),
+					testAccCheckHostedConfigurationVersionExists(resourceName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "appconfig", regexp.MustCompile(`application/[a-z0-9]{4,7}/configurationprofile/[a-z0-9]{4,7}/hostedconfigurationversion/[0-9]+`)),
 					resource.TestCheckResourceAttrPair(resourceName, "application_id", "aws_appconfig_application.test", "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "configuration_profile_id", "aws_appconfig_configuration_profile.test", "configuration_profile_id"),
@@ -158,7 +158,7 @@ func TestAccAWSAppConfigHostedConfigurationVersion_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSAppConfigHostedConfigurationVersion_disappears(t *testing.T) {
+func TestAccAppConfigHostedConfigurationVersion_disappears(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_appconfig_hosted_configuration_version.test"
 
@@ -169,9 +169,9 @@ func TestAccAWSAppConfigHostedConfigurationVersion_disappears(t *testing.T) {
 		CheckDestroy: testAccCheckAppConfigHostedConfigurationVersionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAppConfigHostedConfigurationVersion(rName),
+				Config: testAccHostedConfigurationVersion(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAppConfigHostedConfigurationVersionExists(resourceName),
+					testAccCheckHostedConfigurationVersionExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfappconfig.ResourceHostedConfigurationVersion(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -218,7 +218,7 @@ func testAccCheckAppConfigHostedConfigurationVersionDestroy(s *terraform.State) 
 	return nil
 }
 
-func testAccCheckAWSAppConfigHostedConfigurationVersionExists(resourceName string) resource.TestCheckFunc {
+func testAccCheckHostedConfigurationVersionExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -255,9 +255,9 @@ func testAccCheckAWSAppConfigHostedConfigurationVersionExists(resourceName strin
 	}
 }
 
-func testAccAWSAppConfigHostedConfigurationVersion(rName string) string {
+func testAccHostedConfigurationVersion(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSAppConfigConfigurationProfileConfigName(rName),
+		testAccConfigurationProfileNameConfig(rName),
 		fmt.Sprintf(`
 resource "aws_appconfig_hosted_configuration_version" "test" {
   application_id           = aws_appconfig_application.test.id
