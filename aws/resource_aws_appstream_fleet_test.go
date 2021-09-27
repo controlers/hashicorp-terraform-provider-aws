@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
+	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
 func init() {
@@ -253,7 +254,7 @@ func testAccCheckAwsAppStreamFleetExists(resourceName string, appStreamFleet *ap
 			return fmt.Errorf("not found: %s", resourceName)
 		}
 
-		conn := acctest.Provider.Meta().(*AWSClient).appstreamconn
+		conn := acctest.Provider.Meta().(*conns.AWSClient).AppStreamConn
 		resp, err := conn.DescribeFleets(&appstream.DescribeFleetsInput{Names: []*string{aws.String(rs.Primary.ID)}})
 
 		if err != nil {
@@ -271,7 +272,7 @@ func testAccCheckAwsAppStreamFleetExists(resourceName string, appStreamFleet *ap
 }
 
 func testAccCheckAwsAppStreamFleetDestroy(s *terraform.State) error {
-	conn := acctest.Provider.Meta().(*AWSClient).appstreamconn
+	conn := acctest.Provider.Meta().(*conns.AWSClient).AppStreamConn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_appstream_fleet" {
