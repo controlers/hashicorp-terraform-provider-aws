@@ -80,7 +80,7 @@ func testSweepRoute53ResolverRuleAssociations(region string) error {
 	return errors
 }
 
-func TestAccAWSRoute53ResolverRuleAssociation_basic(t *testing.T) {
+func TestAccRoute53ResolverRuleAssociation_basic(t *testing.T) {
 	var assn route53resolver.ResolverRuleAssociation
 	resourceNameVpc := "aws_vpc.example"
 	resourceNameRule := "aws_route53_resolver_rule.example"
@@ -88,7 +88,7 @@ func TestAccAWSRoute53ResolverRuleAssociation_basic(t *testing.T) {
 	name := fmt.Sprintf("terraform-testacc-r53-resolver-%d", sdkacctest.RandInt())
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverRuleAssociationDestroy,

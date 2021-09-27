@@ -68,13 +68,13 @@ func testSweepRoute53ResolverFirewallRules(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSRoute53ResolverFirewallRule_basic(t *testing.T) {
+func TestAccRoute53ResolverFirewallRule_basic(t *testing.T) {
 	var v route53resolver.FirewallRule
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleDestroy,
@@ -99,13 +99,13 @@ func TestAccAWSRoute53ResolverFirewallRule_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverFirewallRule_block(t *testing.T) {
+func TestAccRoute53ResolverFirewallRule_block(t *testing.T) {
 	var v route53resolver.FirewallRule
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleDestroy,
@@ -128,13 +128,13 @@ func TestAccAWSRoute53ResolverFirewallRule_block(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverFirewallRule_blockOverride(t *testing.T) {
+func TestAccRoute53ResolverFirewallRule_blockOverride(t *testing.T) {
 	var v route53resolver.FirewallRule
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleDestroy,
@@ -160,13 +160,13 @@ func TestAccAWSRoute53ResolverFirewallRule_blockOverride(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverFirewallRule_disappears(t *testing.T) {
+func TestAccRoute53ResolverFirewallRule_disappears(t *testing.T) {
 	var v route53resolver.FirewallRule
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleDestroy,

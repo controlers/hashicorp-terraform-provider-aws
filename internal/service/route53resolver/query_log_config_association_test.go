@@ -66,7 +66,7 @@ func testSweepRoute53ResolverQueryLogConfigAssociations(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSRoute53ResolverQueryLogConfigAssociation_basic(t *testing.T) {
+func TestAccRoute53ResolverQueryLogConfigAssociation_basic(t *testing.T) {
 	var v route53resolver.ResolverQueryLogConfigAssociation
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_query_log_config_association.test"
@@ -74,7 +74,7 @@ func TestAccAWSRoute53ResolverQueryLogConfigAssociation_basic(t *testing.T) {
 	vpcResourceName := "aws_vpc.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverQueryLogConfigAssociationDestroy,
@@ -96,13 +96,13 @@ func TestAccAWSRoute53ResolverQueryLogConfigAssociation_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverQueryLogConfigAssociation_disappears(t *testing.T) {
+func TestAccRoute53ResolverQueryLogConfigAssociation_disappears(t *testing.T) {
 	var v route53resolver.ResolverQueryLogConfigAssociation
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_query_log_config_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverQueryLogConfigAssociationDestroy,

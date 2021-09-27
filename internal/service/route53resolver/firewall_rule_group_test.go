@@ -70,13 +70,13 @@ func testSweepRoute53ResolverFirewallRuleGroups(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSRoute53ResolverFirewallRuleGroup_basic(t *testing.T) {
+func TestAccRoute53ResolverFirewallRuleGroup_basic(t *testing.T) {
 	var v route53resolver.FirewallRuleGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupDestroy,
@@ -100,13 +100,13 @@ func TestAccAWSRoute53ResolverFirewallRuleGroup_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverFirewallRuleGroup_disappears(t *testing.T) {
+func TestAccRoute53ResolverFirewallRuleGroup_disappears(t *testing.T) {
 	var v route53resolver.FirewallRuleGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupDestroy,
@@ -123,13 +123,13 @@ func TestAccAWSRoute53ResolverFirewallRuleGroup_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverFirewallRuleGroup_tags(t *testing.T) {
+func TestAccRoute53ResolverFirewallRuleGroup_tags(t *testing.T) {
 	var v route53resolver.FirewallRuleGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupDestroy,

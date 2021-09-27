@@ -69,13 +69,13 @@ func testSweepRoute53ResolverFirewallDomainLists(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSRoute53ResolverFirewallDomainList_basic(t *testing.T) {
+func TestAccRoute53ResolverFirewallDomainList_basic(t *testing.T) {
 	var v route53resolver.FirewallDomainList
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_domain_list.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallDomainListDestroy,
@@ -97,7 +97,7 @@ func TestAccAWSRoute53ResolverFirewallDomainList_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverFirewallDomainList_domains(t *testing.T) {
+func TestAccRoute53ResolverFirewallDomainList_domains(t *testing.T) {
 	var v route53resolver.FirewallDomainList
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_domain_list.test"
@@ -106,7 +106,7 @@ func TestAccAWSRoute53ResolverFirewallDomainList_domains(t *testing.T) {
 	domainName2 := acctest.RandomFQDomainName()
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallDomainListDestroy,
@@ -146,13 +146,13 @@ func TestAccAWSRoute53ResolverFirewallDomainList_domains(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverFirewallDomainList_disappears(t *testing.T) {
+func TestAccRoute53ResolverFirewallDomainList_disappears(t *testing.T) {
 	var v route53resolver.FirewallDomainList
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_domain_list.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallDomainListDestroy,
@@ -169,13 +169,13 @@ func TestAccAWSRoute53ResolverFirewallDomainList_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSRoute53ResolverFirewallDomainList_tags(t *testing.T) {
+func TestAccRoute53ResolverFirewallDomainList_tags(t *testing.T) {
 	var v route53resolver.FirewallDomainList
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_route53_resolver_firewall_domain_list.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallDomainListDestroy,
