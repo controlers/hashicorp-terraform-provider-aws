@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAwsImageBuilderInfrastructureConfigurationDataSource_Arn(t *testing.T) {
+func TestAccImageBuilderInfrastructureConfigurationDataSource_arn(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_imagebuilder_infrastructure_configuration.test"
 	resourceName := "aws_imagebuilder_infrastructure_configuration.test"
@@ -19,10 +19,10 @@ func TestAccAwsImageBuilderInfrastructureConfigurationDataSource_Arn(t *testing.
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderInfrastructureConfigurationDestroy,
+		CheckDestroy:      testAccCheckInfrastructureConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderInfrastructureConfigurationDataSourceConfigArn(rName),
+				Config: testAccInfrastructureConfigurationARNDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "date_created", resourceName, "date_created"),
@@ -45,7 +45,7 @@ func TestAccAwsImageBuilderInfrastructureConfigurationDataSource_Arn(t *testing.
 	})
 }
 
-func testAccAwsImageBuilderInfrastructureConfigurationDataSourceConfigArn(rName string) string {
+func testAccInfrastructureConfigurationARNDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 

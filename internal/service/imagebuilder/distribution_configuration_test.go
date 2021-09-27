@@ -76,7 +76,7 @@ func testSweepImageBuilderDistributionConfigurations(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_basic(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -84,12 +84,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_basic(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigName(rName),
+				Config: testAccDistributionConfigurationNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "imagebuilder", fmt.Sprintf("distribution-configuration/%s", rName)),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_created"),
 					resource.TestCheckResourceAttr(resourceName, "date_updated", ""),
@@ -107,7 +107,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_disappears(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_disappears(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -115,12 +115,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_disappears(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigName(rName),
+				Config: testAccDistributionConfigurationNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfimagebuilder.ResourceDistributionConfiguration(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -129,7 +129,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Description(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_description(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -137,12 +137,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Description(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDescription(rName, "description1"),
+				Config: testAccDistributionConfigurationDescriptionConfig(rName, "description1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "description", "description1"),
 				),
 			},
@@ -152,9 +152,9 @@ func TestAccAwsImageBuilderDistributionConfiguration_Description(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDescription(rName, "description2"),
+				Config: testAccDistributionConfigurationDescriptionConfig(rName, "description2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_updated"),
 					resource.TestCheckResourceAttr(resourceName, "description", "description2"),
 				),
@@ -163,7 +163,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Description(t *testing.T) {
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_distribution(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -174,12 +174,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution(t *testing.T) 
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.FactoriesMultipleRegion(nil, 2),
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistribution2(rName),
+				Config: testAccDistributionConfigurationDistribution2Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "2"),
 				),
 			},
@@ -192,7 +192,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution(t *testing.T) 
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_AmiTags(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_amiTags(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -200,12 +200,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationAmiTags(rName, "key1", "value1"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationAmiTagsConfig(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "distribution.*", map[string]string{
 						"ami_distribution_configuration.#":               "1",
@@ -220,9 +220,9 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationAmiTags(rName, "key2", "value2"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationAmiTagsConfig(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_updated"),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "distribution.*", map[string]string{
@@ -236,7 +236,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_Description(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_description(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -244,12 +244,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationDescription(rName, "description1"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationDescriptionConfig(rName, "description1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "distribution.*", map[string]string{
 						"ami_distribution_configuration.#":             "1",
@@ -263,9 +263,9 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationDescription(rName, "description2"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationDescriptionConfig(rName, "description2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_updated"),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "distribution.*", map[string]string{
@@ -278,7 +278,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_KmsKeyId(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_kmsKeyID(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	kmsKeyResourceName := "aws_kms_key.test"
 	kmsKeyResourceName2 := "aws_kms_key.test2"
@@ -288,12 +288,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationKmsKeyId1(rName),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationKMSKeyId1Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttrPair(resourceName, "distribution.*.ami_distribution_configuration.0.kms_key_id", kmsKeyResourceName, "arn"),
 				),
@@ -304,9 +304,9 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationKmsKeyId2(rName),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationKMSKeyId2Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_updated"),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttrPair(resourceName, "distribution.*.ami_distribution_configuration.0.kms_key_id", kmsKeyResourceName2, "arn"),
@@ -316,7 +316,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission_UserGroups(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistributionLaunchPermission_userGroups(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -324,12 +324,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationLaunchPermissionUserGroups(rName, "all"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationLaunchPermissionUserGroupsConfig(rName, "all"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "distribution.*.ami_distribution_configuration.0.launch_permission.0.user_groups.*", "all"),
 				),
@@ -343,7 +343,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission_UserIds(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistributionLaunchPermission_userIDs(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -351,12 +351,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationLaunchPermissionUserIds(rName, "111111111111"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationLaunchPermissionUserIDsConfig(rName, "111111111111"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "distribution.*.ami_distribution_configuration.0.launch_permission.0.user_ids.*", "111111111111"),
 				),
@@ -367,9 +367,9 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationLaunchPermissionUserIds(rName, "222222222222"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationLaunchPermissionUserIDsConfig(rName, "222222222222"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_updated"),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "distribution.*.ami_distribution_configuration.0.launch_permission.0.user_ids.*", "222222222222"),
@@ -379,7 +379,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_Name(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_name(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -387,12 +387,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationName(rName, "name1-{{ imagebuilder:buildDate }}"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationNameConfig(rName, "name1-{{ imagebuilder:buildDate }}"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "distribution.*", map[string]string{
 						"ami_distribution_configuration.#":      "1",
@@ -406,9 +406,9 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationName(rName, "name2-{{ imagebuilder:buildDate }}"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationNameConfig(rName, "name2-{{ imagebuilder:buildDate }}"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_updated"),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "distribution.*", map[string]string{
@@ -421,7 +421,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_TargetAccountIds(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_targetAccountIDs(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -429,12 +429,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationTargetAccountIds(rName, "111111111111"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationTargetAccountIDsConfig(rName, "111111111111"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "distribution.*.ami_distribution_configuration.0.target_account_ids.*", "111111111111"),
 				),
@@ -445,9 +445,9 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationTargetAccountIds(rName, "222222222222"),
+				Config: testAccDistributionConfigurationDistributionAMIDistributionConfigurationTargetAccountIDsConfig(rName, "222222222222"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_updated"),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "distribution.*.ami_distribution_configuration.0.target_account_ids.*", "222222222222"),
@@ -457,7 +457,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_AmiDistributio
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Distribution_LicenseConfigurationArns(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_Distribution_licenseARNs(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	licenseConfigurationResourceName := "aws_licensemanager_license_configuration.test"
 	licenseConfigurationResourceName2 := "aws_licensemanager_license_configuration.test2"
@@ -467,12 +467,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_LicenseConfigu
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionLicenseConfigurationArns1(rName),
+				Config: testAccDistributionConfigurationDistributionLicenseConfigurationARNs1Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttrPair(resourceName, "distribution.*.license_configuration_arns.*", licenseConfigurationResourceName, "id"),
 				),
@@ -483,9 +483,9 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_LicenseConfigu
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigDistributionLicenseConfigurationArns2(rName),
+				Config: testAccDistributionConfigurationDistributionLicenseConfigurationARNs2Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "date_updated"),
 					resource.TestCheckResourceAttr(resourceName, "distribution.#", "1"),
 					resource.TestCheckTypeSetElemAttrPair(resourceName, "distribution.*.license_configuration_arns.*", licenseConfigurationResourceName2, "id"),
@@ -495,7 +495,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Distribution_LicenseConfigu
 	})
 }
 
-func TestAccAwsImageBuilderDistributionConfiguration_Tags(t *testing.T) {
+func TestAccImageBuilderDistributionConfiguration_tags(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
@@ -503,12 +503,12 @@ func TestAccAwsImageBuilderDistributionConfiguration_Tags(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, imagebuilder.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsImageBuilderDistributionConfigurationDestroy,
+		CheckDestroy:      testAccCheckDistributionConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigTags1(rName, "key1", "value1"),
+				Config: testAccDistributionConfigurationTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -519,18 +519,18 @@ func TestAccAwsImageBuilderDistributionConfiguration_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccDistributionConfigurationTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAwsImageBuilderDistributionConfigurationConfigTags1(rName, "key2", "value2"),
+				Config: testAccDistributionConfigurationTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName),
+					testAccCheckDistributionConfigurationExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -539,7 +539,7 @@ func TestAccAwsImageBuilderDistributionConfiguration_Tags(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsImageBuilderDistributionConfigurationDestroy(s *terraform.State) error {
+func testAccCheckDistributionConfigurationDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ImageBuilderConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -569,7 +569,7 @@ func testAccCheckAwsImageBuilderDistributionConfigurationDestroy(s *terraform.St
 	return nil
 }
 
-func testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName string) resource.TestCheckFunc {
+func testAccCheckDistributionConfigurationExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -592,7 +592,7 @@ func testAccCheckAwsImageBuilderDistributionConfigurationExists(resourceName str
 	}
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDescription(rName string, description string) string {
+func testAccDistributionConfigurationDescriptionConfig(rName string, description string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -611,7 +611,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, description)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistribution2(rName string) string {
+func testAccDistributionConfigurationDistribution2Config(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigMultipleRegionProvider(2),
 		fmt.Sprintf(`
@@ -643,7 +643,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName))
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationAmiTags(rName string, amiTagKey string, amiTagValue string) string {
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationAmiTagsConfig(rName string, amiTagKey string, amiTagValue string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -663,7 +663,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, amiTagKey, amiTagValue)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationDescription(rName string, description string) string {
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationDescriptionConfig(rName string, description string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -681,7 +681,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, description)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationKmsKeyId1(rName string) string {
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationKMSKeyId1Config(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   deletion_window_in_days = 7
@@ -703,7 +703,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationKmsKeyId2(rName string) string {
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationKMSKeyId2Config(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test2" {
   deletion_window_in_days = 7
@@ -725,7 +725,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationLaunchPermissionUserGroups(rName string, userGroup string) string {
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationLaunchPermissionUserGroupsConfig(rName string, userGroup string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -745,7 +745,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, userGroup)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationLaunchPermissionUserIds(rName string, userId string) string {
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationLaunchPermissionUserIDsConfig(rName string, userId string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -765,7 +765,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, userId)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationName(rName string, name string) string {
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationNameConfig(rName string, name string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -783,7 +783,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, name)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionAmiDistributionConfigurationTargetAccountIds(rName string, targetAccountId string) string {
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationTargetAccountIDsConfig(rName string, targetAccountId string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -801,7 +801,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, targetAccountId)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionLicenseConfigurationArns1(rName string) string {
+func testAccDistributionConfigurationDistributionLicenseConfigurationARNs1Config(rName string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -821,7 +821,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigDistributionLicenseConfigurationArns2(rName string) string {
+func testAccDistributionConfigurationDistributionLicenseConfigurationARNs2Config(rName string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -841,7 +841,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigName(rName string) string {
+func testAccDistributionConfigurationNameConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -859,7 +859,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigTags1(rName string, tagKey1 string, tagValue1 string) string {
+func testAccDistributionConfigurationTags1Config(rName string, tagKey1 string, tagValue1 string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -881,7 +881,7 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAwsImageBuilderDistributionConfigurationConfigTags2(rName string, tagKey1 string, tagValue1 string, tagKey2 string, tagValue2 string) string {
+func testAccDistributionConfigurationTags2Config(rName string, tagKey1 string, tagValue1 string, tagKey2 string, tagValue2 string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}
 
