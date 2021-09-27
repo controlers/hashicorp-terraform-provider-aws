@@ -105,7 +105,7 @@ func resourceSchemaCreate(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	if v, ok := d.GetOk("registry_arn"); ok {
-		input.RegistryId = createAwsRegistryID(v.(string))
+		input.RegistryId = createRegistryID(v.(string))
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -195,7 +195,7 @@ func resourceSchemaUpdate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).GlueConn
 
 	input := &glue.UpdateSchemaInput{
-		SchemaId: createAwsSchemaID(d.Id()),
+		SchemaId: createSchemaID(d.Id()),
 		SchemaVersionNumber: &glue.SchemaVersionNumber{
 			LatestVersion: aws.Bool(true),
 		},
@@ -234,7 +234,7 @@ func resourceSchemaUpdate(d *schema.ResourceData, meta interface{}) error {
 
 	if d.HasChange("schema_definition") {
 		defInput := &glue.RegisterSchemaVersionInput{
-			SchemaId:         createAwsSchemaID(d.Id()),
+			SchemaId:         createSchemaID(d.Id()),
 			SchemaDefinition: aws.String(d.Get("schema_definition").(string)),
 		}
 
@@ -257,7 +257,7 @@ func resourceSchemaDelete(d *schema.ResourceData, meta interface{}) error {
 
 	log.Printf("[DEBUG] Deleting Glue Schema: %s", d.Id())
 	input := &glue.DeleteSchemaInput{
-		SchemaId: createAwsSchemaID(d.Id()),
+		SchemaId: createSchemaID(d.Id()),
 	}
 
 	_, err := conn.DeleteSchema(input)

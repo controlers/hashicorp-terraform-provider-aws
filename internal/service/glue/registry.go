@@ -127,7 +127,7 @@ func resourceRegistryUpdate(d *schema.ResourceData, meta interface{}) error {
 
 	if d.HasChanges("description") {
 		input := &glue.UpdateRegistryInput{
-			RegistryId: createAwsRegistryID(d.Id()),
+			RegistryId: createRegistryID(d.Id()),
 		}
 
 		if v, ok := d.GetOk("description"); ok {
@@ -156,7 +156,7 @@ func resourceRegistryDelete(d *schema.ResourceData, meta interface{}) error {
 
 	log.Printf("[DEBUG] Deleting Glue Registry: %s", d.Id())
 	input := &glue.DeleteRegistryInput{
-		RegistryId: createAwsRegistryID(d.Id()),
+		RegistryId: createRegistryID(d.Id()),
 	}
 
 	_, err := conn.DeleteRegistry(input)

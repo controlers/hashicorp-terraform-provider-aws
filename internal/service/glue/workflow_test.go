@@ -48,22 +48,22 @@ func testSweepGlueWorkflow(region string) error {
 	return nil
 }
 
-func TestAccAWSGlueWorkflow_basic(t *testing.T) {
+func TestAccGlueWorkflow_basic(t *testing.T) {
 	var workflow glue.Workflow
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSGlueWorkflow(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWorkflow(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueWorkflowDestroy,
+		CheckDestroy: testAccCheckWorkflowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueWorkflowConfig_Required(rName),
+				Config: testAccWorkflowConfig_Required(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "glue", fmt.Sprintf("workflow/%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),
@@ -78,22 +78,22 @@ func TestAccAWSGlueWorkflow_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueWorkflow_maxConcurrentRuns(t *testing.T) {
+func TestAccGlueWorkflow_maxConcurrentRuns(t *testing.T) {
 	var workflow glue.Workflow
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSGlueWorkflow(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWorkflow(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueWorkflowDestroy,
+		CheckDestroy: testAccCheckWorkflowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueWorkflowConfigMaxConcurrentRuns(rName, 1),
+				Config: testAccWorkflowMaxConcurrentRunsConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "max_concurrent_runs", "1"),
 				),
 			},
@@ -103,16 +103,16 @@ func TestAccAWSGlueWorkflow_maxConcurrentRuns(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSGlueWorkflowConfigMaxConcurrentRuns(rName, 2),
+				Config: testAccWorkflowMaxConcurrentRunsConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "max_concurrent_runs", "2"),
 				),
 			},
 			{
-				Config: testAccAWSGlueWorkflowConfigMaxConcurrentRuns(rName, 1),
+				Config: testAccWorkflowMaxConcurrentRunsConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "max_concurrent_runs", "1"),
 				),
 			},
@@ -120,22 +120,22 @@ func TestAccAWSGlueWorkflow_maxConcurrentRuns(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueWorkflow_DefaultRunProperties(t *testing.T) {
+func TestAccGlueWorkflow_defaultRunProperties(t *testing.T) {
 	var workflow glue.Workflow
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSGlueWorkflow(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWorkflow(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueWorkflowDestroy,
+		CheckDestroy: testAccCheckWorkflowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueWorkflowConfig_DefaultRunProperties(rName, "firstPropValue", "secondPropValue"),
+				Config: testAccWorkflowConfig_DefaultRunProperties(rName, "firstPropValue", "secondPropValue"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "default_run_properties.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "default_run_properties.--run-prop1", "firstPropValue"),
 					resource.TestCheckResourceAttr(resourceName, "default_run_properties.--run-prop2", "secondPropValue"),
@@ -150,29 +150,29 @@ func TestAccAWSGlueWorkflow_DefaultRunProperties(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueWorkflow_Description(t *testing.T) {
+func TestAccGlueWorkflow_description(t *testing.T) {
 	var workflow glue.Workflow
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSGlueWorkflow(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWorkflow(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueWorkflowDestroy,
+		CheckDestroy: testAccCheckWorkflowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueWorkflowConfig_Description(rName, "First Description"),
+				Config: testAccWorkflowConfig_Description(rName, "First Description"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "description", "First Description"),
 				),
 			},
 			{
-				Config: testAccAWSGlueWorkflowConfig_Description(rName, "Second Description"),
+				Config: testAccWorkflowConfig_Description(rName, "Second Description"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "description", "Second Description"),
 				),
 			},
@@ -185,21 +185,21 @@ func TestAccAWSGlueWorkflow_Description(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueWorkflow_Tags(t *testing.T) {
+func TestAccGlueWorkflow_tags(t *testing.T) {
 	var workflow glue.Workflow
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSGlueWorkflow(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWorkflow(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueWorkflowDestroy,
+		CheckDestroy: testAccCheckWorkflowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueWorkflowConfigTags1(rName, "key1", "value1"),
+				Config: testAccWorkflowTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -210,18 +210,18 @@ func TestAccAWSGlueWorkflow_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSGlueWorkflowConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccWorkflowTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSGlueWorkflowConfigTags1(rName, "key2", "value2"),
+				Config: testAccWorkflowTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -230,22 +230,22 @@ func TestAccAWSGlueWorkflow_Tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueWorkflow_disappears(t *testing.T) {
+func TestAccGlueWorkflow_disappears(t *testing.T) {
 	var workflow glue.Workflow
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSGlueWorkflow(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWorkflow(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueWorkflowDestroy,
+		CheckDestroy: testAccCheckWorkflowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueWorkflowConfig_Required(rName),
+				Config: testAccWorkflowConfig_Required(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueWorkflowExists(resourceName, &workflow),
+					testAccCheckWorkflowExists(resourceName, &workflow),
 					acctest.CheckResourceDisappears(acctest.Provider, tfglue.ResourceWorkflow(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -254,7 +254,7 @@ func TestAccAWSGlueWorkflow_disappears(t *testing.T) {
 	})
 }
 
-func testAccPreCheckAWSGlueWorkflow(t *testing.T) {
+func testAccPreCheckWorkflow(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).GlueConn
 
 	_, err := conn.ListWorkflows(&glue.ListWorkflowsInput{})
@@ -269,7 +269,7 @@ func testAccPreCheckAWSGlueWorkflow(t *testing.T) {
 	}
 }
 
-func testAccCheckAWSGlueWorkflowExists(resourceName string, workflow *glue.Workflow) resource.TestCheckFunc {
+func testAccCheckWorkflowExists(resourceName string, workflow *glue.Workflow) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -302,7 +302,7 @@ func testAccCheckAWSGlueWorkflowExists(resourceName string, workflow *glue.Workf
 	}
 }
 
-func testAccCheckAWSGlueWorkflowDestroy(s *terraform.State) error {
+func testAccCheckWorkflowDestroy(s *terraform.State) error {
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_glue_workflow" {
 			continue
@@ -332,7 +332,7 @@ func testAccCheckAWSGlueWorkflowDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSGlueWorkflowConfig_DefaultRunProperties(rName, firstPropValue, secondPropValue string) string {
+func testAccWorkflowConfig_DefaultRunProperties(rName, firstPropValue, secondPropValue string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_workflow" "test" {
   name = "%s"
@@ -345,7 +345,7 @@ resource "aws_glue_workflow" "test" {
 `, rName, firstPropValue, secondPropValue)
 }
 
-func testAccAWSGlueWorkflowConfig_Description(rName, description string) string {
+func testAccWorkflowConfig_Description(rName, description string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_workflow" "test" {
   description = "%s"
@@ -354,7 +354,7 @@ resource "aws_glue_workflow" "test" {
 `, description, rName)
 }
 
-func testAccAWSGlueWorkflowConfig_Required(rName string) string {
+func testAccWorkflowConfig_Required(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_workflow" "test" {
   name = "%s"
@@ -362,7 +362,7 @@ resource "aws_glue_workflow" "test" {
 `, rName)
 }
 
-func testAccAWSGlueWorkflowConfigMaxConcurrentRuns(rName string, runs int) string {
+func testAccWorkflowMaxConcurrentRunsConfig(rName string, runs int) string {
 	return fmt.Sprintf(`
 resource "aws_glue_workflow" "test" {
   name                = %[1]q
@@ -371,7 +371,7 @@ resource "aws_glue_workflow" "test" {
 `, rName, runs)
 }
 
-func testAccAWSGlueWorkflowConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccWorkflowTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_workflow" "test" {
   name = %[1]q
@@ -383,7 +383,7 @@ resource "aws_glue_workflow" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSGlueWorkflowConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccWorkflowTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_workflow" "test" {
   name = %[1]q

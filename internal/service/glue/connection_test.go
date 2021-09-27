@@ -61,7 +61,7 @@ func testSweepGlueConnections(region string) error {
 	return nil
 }
 
-func TestAccAWSGlueConnection_basic(t *testing.T) {
+func TestAccGlueConnection_basic(t *testing.T) {
 	var connection glue.Connection
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -73,12 +73,12 @@ func TestAccAWSGlueConnection_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueConnectionConfig_Required(rName, jdbcConnectionUrl),
+				Config: testAccConnectionConfig_Required(rName, jdbcConnectionUrl),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "glue", fmt.Sprintf("connection/%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.%", "3"),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.JDBC_CONNECTION_URL", jdbcConnectionUrl),
@@ -97,7 +97,7 @@ func TestAccAWSGlueConnection_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueConnection_MongoDB(t *testing.T) {
+func TestAccGlueConnection_mongoDB(t *testing.T) {
 	var connection glue.Connection
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -109,12 +109,12 @@ func TestAccAWSGlueConnection_MongoDB(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueConnectionConfig_MongoDB(rName, connectionUrl),
+				Config: testAccConnectionConfig_MongoDB(rName, connectionUrl),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.%", "3"),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.CONNECTION_URL", connectionUrl),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.USERNAME", "testusername"),
@@ -133,7 +133,7 @@ func TestAccAWSGlueConnection_MongoDB(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueConnection_Kafka(t *testing.T) {
+func TestAccGlueConnection_kafka(t *testing.T) {
 	var connection glue.Connection
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -145,12 +145,12 @@ func TestAccAWSGlueConnection_Kafka(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueConnectionConfig_Kafka(rName, bootstrapServers),
+				Config: testAccConnectionConfig_Kafka(rName, bootstrapServers),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.KAFKA_BOOTSTRAP_SERVERS", bootstrapServers),
 					resource.TestCheckResourceAttr(resourceName, "connection_type", "KAFKA"),
@@ -167,7 +167,7 @@ func TestAccAWSGlueConnection_Kafka(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueConnection_Network(t *testing.T) {
+func TestAccGlueConnection_network(t *testing.T) {
 	var connection glue.Connection
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -177,12 +177,12 @@ func TestAccAWSGlueConnection_Network(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueConnectionConfig_Network(rName),
+				Config: testAccConnectionConfig_Network(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.%", "0"),
 					resource.TestCheckResourceAttr(resourceName, "connection_type", "NETWORK"),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.#", "0"),
@@ -201,7 +201,7 @@ func TestAccAWSGlueConnection_Network(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueConnection_Description(t *testing.T) {
+func TestAccGlueConnection_description(t *testing.T) {
 	var connection glue.Connection
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -213,19 +213,19 @@ func TestAccAWSGlueConnection_Description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueConnectionConfig_Description(rName, jdbcConnectionUrl, "First Description"),
+				Config: testAccConnectionConfig_Description(rName, jdbcConnectionUrl, "First Description"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "description", "First Description"),
 				),
 			},
 			{
-				Config: testAccAWSGlueConnectionConfig_Description(rName, jdbcConnectionUrl, "Second Description"),
+				Config: testAccConnectionConfig_Description(rName, jdbcConnectionUrl, "Second Description"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "description", "Second Description"),
 				),
 			},
@@ -238,7 +238,7 @@ func TestAccAWSGlueConnection_Description(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueConnection_MatchCriteria(t *testing.T) {
+func TestAccGlueConnection_matchCriteria(t *testing.T) {
 	var connection glue.Connection
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -250,12 +250,12 @@ func TestAccAWSGlueConnection_MatchCriteria(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueConnectionConfig_MatchCriteria_First(rName, jdbcConnectionUrl),
+				Config: testAccConnectionConfig_MatchCriteria_First(rName, jdbcConnectionUrl),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.#", "4"),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.0", "criteria1"),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.1", "criteria2"),
@@ -264,17 +264,17 @@ func TestAccAWSGlueConnection_MatchCriteria(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSGlueConnectionConfig_MatchCriteria_Second(rName, jdbcConnectionUrl),
+				Config: testAccConnectionConfig_MatchCriteria_Second(rName, jdbcConnectionUrl),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.0", "criteria1"),
 				),
 			},
 			{
-				Config: testAccAWSGlueConnectionConfig_MatchCriteria_Third(rName, jdbcConnectionUrl),
+				Config: testAccConnectionConfig_MatchCriteria_Third(rName, jdbcConnectionUrl),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.#", "3"),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.0", "criteria2"),
 					resource.TestCheckResourceAttr(resourceName, "match_criteria.1", "criteria3"),
@@ -290,7 +290,7 @@ func TestAccAWSGlueConnection_MatchCriteria(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueConnection_PhysicalConnectionRequirements(t *testing.T) {
+func TestAccGlueConnection_physicalConnectionRequirements(t *testing.T) {
 	var connection glue.Connection
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -300,12 +300,12 @@ func TestAccAWSGlueConnection_PhysicalConnectionRequirements(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueConnectionConfig_PhysicalConnectionRequirements(rName),
+				Config: testAccConnectionConfig_PhysicalConnectionRequirements(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "connection_properties.%", "3"),
 					resource.TestCheckResourceAttrSet(resourceName, "connection_properties.JDBC_CONNECTION_URL"),
 					resource.TestCheckResourceAttrSet(resourceName, "connection_properties.PASSWORD"),
@@ -327,7 +327,7 @@ func TestAccAWSGlueConnection_PhysicalConnectionRequirements(t *testing.T) {
 	})
 }
 
-func TestAccAWSGlueConnection_disappears(t *testing.T) {
+func TestAccGlueConnection_disappears(t *testing.T) {
 	var connection glue.Connection
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -339,12 +339,12 @@ func TestAccAWSGlueConnection_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, glue.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGlueConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlueConnectionConfig_Required(rName, jdbcConnectionUrl),
+				Config: testAccConnectionConfig_Required(rName, jdbcConnectionUrl),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGlueConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					acctest.CheckResourceDisappears(acctest.Provider, tfglue.ResourceConnection(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -353,7 +353,7 @@ func TestAccAWSGlueConnection_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSGlueConnectionExists(resourceName string, connection *glue.Connection) resource.TestCheckFunc {
+func testAccCheckConnectionExists(resourceName string, connection *glue.Connection) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -391,7 +391,7 @@ func testAccCheckAWSGlueConnectionExists(resourceName string, connection *glue.C
 	}
 }
 
-func testAccCheckAWSGlueConnectionDestroy(s *terraform.State) error {
+func testAccCheckConnectionDestroy(s *terraform.State) error {
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_glue_connection" {
 			continue
@@ -426,7 +426,7 @@ func testAccCheckAWSGlueConnectionDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSGlueConnectionConfig_Description(rName, jdbcConnectionUrl, description string) string {
+func testAccConnectionConfig_Description(rName, jdbcConnectionUrl, description string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_connection" "test" {
   name        = %[1]q
@@ -442,7 +442,7 @@ resource "aws_glue_connection" "test" {
 `, rName, description, jdbcConnectionUrl)
 }
 
-func testAccAWSGlueConnectionConfig_MatchCriteria_First(rName, jdbcConnectionUrl string) string {
+func testAccConnectionConfig_MatchCriteria_First(rName, jdbcConnectionUrl string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_connection" "test" {
   name = %[1]q
@@ -458,7 +458,7 @@ resource "aws_glue_connection" "test" {
 `, rName, jdbcConnectionUrl)
 }
 
-func testAccAWSGlueConnectionConfig_MatchCriteria_Second(rName, jdbcConnectionUrl string) string {
+func testAccConnectionConfig_MatchCriteria_Second(rName, jdbcConnectionUrl string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_connection" "test" {
   name = %[1]q
@@ -474,7 +474,7 @@ resource "aws_glue_connection" "test" {
 `, rName, jdbcConnectionUrl)
 }
 
-func testAccAWSGlueConnectionConfig_MatchCriteria_Third(rName, jdbcConnectionUrl string) string {
+func testAccConnectionConfig_MatchCriteria_Third(rName, jdbcConnectionUrl string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_connection" "test" {
   name = "%s"
@@ -490,7 +490,7 @@ resource "aws_glue_connection" "test" {
 `, rName, jdbcConnectionUrl)
 }
 
-func testAccAWSGlueConnectionConfig_PhysicalConnectionRequirements(rName string) string {
+func testAccConnectionConfig_PhysicalConnectionRequirements(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -575,7 +575,7 @@ resource "aws_glue_connection" "test" {
 `, rName)
 }
 
-func testAccAWSGlueConnectionConfig_Required(rName, jdbcConnectionUrl string) string {
+func testAccConnectionConfig_Required(rName, jdbcConnectionUrl string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_connection" "test" {
   name = %[1]q
@@ -589,7 +589,7 @@ resource "aws_glue_connection" "test" {
 `, rName, jdbcConnectionUrl)
 }
 
-func testAccAWSGlueConnectionConfig_MongoDB(rName, connectionUrl string) string {
+func testAccConnectionConfig_MongoDB(rName, connectionUrl string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_connection" "test" {
   name = %[1]q
@@ -604,7 +604,7 @@ resource "aws_glue_connection" "test" {
 `, rName, connectionUrl)
 }
 
-func testAccAWSGlueConnectionConfig_Kafka(rName, bootstrapServers string) string {
+func testAccConnectionConfig_Kafka(rName, bootstrapServers string) string {
 	return fmt.Sprintf(`
 resource "aws_glue_connection" "test" {
   name = %[1]q
@@ -617,7 +617,7 @@ resource "aws_glue_connection" "test" {
 `, rName, bootstrapServers)
 }
 
-func testAccAWSGlueConnectionConfig_Network(rName string) string {
+func testAccConnectionConfig_Network(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"

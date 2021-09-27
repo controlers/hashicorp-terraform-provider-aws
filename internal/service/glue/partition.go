@@ -200,7 +200,7 @@ func ResourcePartition() *schema.Resource {
 
 func resourcePartitionCreate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).GlueConn
-	catalogID := createAwsGlueCatalogID(d, meta.(*conns.AWSClient).AccountID)
+	catalogID := createCatalogID(d, meta.(*conns.AWSClient).AccountID)
 	dbName := d.Get("database_name").(string)
 	tableName := d.Get("table_name").(string)
 	values := d.Get("partition_values").([]interface{})
@@ -218,7 +218,7 @@ func resourcePartitionCreate(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error creating Glue Partition: %w", err)
 	}
 
-	d.SetId(createAwsPartitionID(catalogID, dbName, tableName, values))
+	d.SetId(createPartitionID(catalogID, dbName, tableName, values))
 
 	return resourcePartitionRead(d, meta)
 }
@@ -268,7 +268,7 @@ func resourcePartitionRead(d *schema.ResourceData, meta interface{}) error {
 func resourcePartitionUpdate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).GlueConn
 
-	catalogID, dbName, tableName, values, err := readAwsPartitionID(d.Id())
+	catalogID, dbName, tableName, values, err := readPartitionID(d.Id())
 	if err != nil {
 		return err
 	}
@@ -292,7 +292,7 @@ func resourcePartitionUpdate(d *schema.ResourceData, meta interface{}) error {
 func resourcePartitionDelete(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).GlueConn
 
-	catalogID, dbName, tableName, values, tableErr := readAwsPartitionID(d.Id())
+	catalogID, dbName, tableName, values, tableErr := readPartitionID(d.Id())
 	if tableErr != nil {
 		return tableErr
 	}
