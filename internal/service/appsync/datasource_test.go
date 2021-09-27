@@ -16,7 +16,7 @@ import (
 	tfappsync "github.com/hashicorp/terraform-provider-aws/internal/service/appsync"
 )
 
-func TestAccAwsAppsyncDatasource_basic(t *testing.T) {
+func TestAccAppSyncDataSource_basic(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -24,12 +24,12 @@ func TestAccAwsAppsyncDatasource_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_None(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "appsync", regexp.MustCompile(fmt.Sprintf("apis/.+/datasources/%s", rName))),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.#", "0"),
@@ -49,7 +49,7 @@ func TestAccAwsAppsyncDatasource_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_Description(t *testing.T) {
+func TestAccAppSyncDataSource_description(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -57,19 +57,19 @@ func TestAccAwsAppsyncDatasource_Description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_Description(rName, "description1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "description", "description1"),
 				),
 			},
 			{
 				Config: testAccAppsyncDatasourceConfig_Description(rName, "description2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "description", "description2"),
 				),
 			},
@@ -82,7 +82,7 @@ func TestAccAwsAppsyncDatasource_Description(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_DynamoDBConfig_Region(t *testing.T) {
+func TestAccAppSyncDataSource_DynamoDB_region(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -90,12 +90,12 @@ func TestAccAwsAppsyncDatasource_DynamoDBConfig_Region(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_DynamoDBConfig_Region(rName, acctest.Region()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.0.Region", acctest.Region()),
 				),
@@ -103,7 +103,7 @@ func TestAccAwsAppsyncDatasource_DynamoDBConfig_Region(t *testing.T) {
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_DynamoDB(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.0.Region", acctest.Region()),
 				),
@@ -117,7 +117,7 @@ func TestAccAwsAppsyncDatasource_DynamoDBConfig_Region(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_DynamoDBConfig_UseCallerCredentials(t *testing.T) {
+func TestAccAppSyncDataSource_DynamoDB_useCallerCredentials(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -125,12 +125,12 @@ func TestAccAwsAppsyncDatasource_DynamoDBConfig_UseCallerCredentials(t *testing.
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_DynamoDBConfig_UseCallerCredentials(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.0.use_caller_credentials", "true"),
 				),
@@ -138,7 +138,7 @@ func TestAccAwsAppsyncDatasource_DynamoDBConfig_UseCallerCredentials(t *testing.
 			{
 				Config: testAccAppsyncDatasourceConfig_DynamoDBConfig_UseCallerCredentials(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.0.use_caller_credentials", "false"),
 				),
@@ -152,7 +152,7 @@ func TestAccAwsAppsyncDatasource_DynamoDBConfig_UseCallerCredentials(t *testing.
 	})
 }
 
-func TestAccAwsAppsyncDatasource_ElasticsearchConfig_Region(t *testing.T) {
+func TestAccAppSyncDataSource_ElasticSearch_region(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -160,12 +160,12 @@ func TestAccAwsAppsyncDatasource_ElasticsearchConfig_Region(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_ElasticsearchConfig_Region(rName, acctest.Region()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "elasticsearch_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "elasticsearch_config.0.Region", acctest.Region()),
 				),
@@ -173,7 +173,7 @@ func TestAccAwsAppsyncDatasource_ElasticsearchConfig_Region(t *testing.T) {
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_Elasticsearch(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "elasticsearch_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "elasticsearch_config.0.Region", acctest.Region()),
 				),
@@ -187,7 +187,7 @@ func TestAccAwsAppsyncDatasource_ElasticsearchConfig_Region(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_HTTPConfig_Endpoint(t *testing.T) {
+func TestAccAppSyncDataSource_HTTP_endpoint(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -195,12 +195,12 @@ func TestAccAwsAppsyncDatasource_HTTPConfig_Endpoint(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_HTTPConfig_Endpoint(rName, "http://example.com"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "http_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "http_config.0.endpoint", "http://example.com"),
 					resource.TestCheckResourceAttr(resourceName, "type", "HTTP"),
@@ -209,7 +209,7 @@ func TestAccAwsAppsyncDatasource_HTTPConfig_Endpoint(t *testing.T) {
 			{
 				Config: testAccAppsyncDatasourceConfig_HTTPConfig_Endpoint(rName, "http://example.org"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "http_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "http_config.0.endpoint", "http://example.org"),
 					resource.TestCheckResourceAttr(resourceName, "type", "HTTP"),
@@ -224,7 +224,7 @@ func TestAccAwsAppsyncDatasource_HTTPConfig_Endpoint(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_Type(t *testing.T) {
+func TestAccAppSyncDataSource_type(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -232,19 +232,19 @@ func TestAccAwsAppsyncDatasource_Type(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_None(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "type", "NONE"),
 				),
 			},
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_HTTP(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "type", "HTTP"),
 				),
 			},
@@ -252,7 +252,7 @@ func TestAccAwsAppsyncDatasource_Type(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_Type_DynamoDB(t *testing.T) {
+func TestAccAppSyncDataSource_Type_dynamoDB(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	dynamodbTableResourceName := "aws_dynamodb_table.test"
 	iamRoleResourceName := "aws_iam_role.test"
@@ -262,12 +262,12 @@ func TestAccAwsAppsyncDatasource_Type_DynamoDB(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_DynamoDB(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.#", "1"),
 					resource.TestCheckResourceAttrPair(resourceName, "dynamodb_config.0.table_name", dynamodbTableResourceName, "name"),
 					resource.TestCheckResourceAttr(resourceName, "dynamodb_config.0.Region", acctest.Region()),
@@ -284,7 +284,7 @@ func TestAccAwsAppsyncDatasource_Type_DynamoDB(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_Type_Elasticsearch(t *testing.T) {
+func TestAccAppSyncDataSource_Type_elasticSearch(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_appsync_datasource.test"
@@ -293,12 +293,12 @@ func TestAccAwsAppsyncDatasource_Type_Elasticsearch(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_Elasticsearch(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "elasticsearch_config.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "elasticsearch_config.0.endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "elasticsearch_config.0.Region", acctest.Region()),
@@ -315,7 +315,7 @@ func TestAccAwsAppsyncDatasource_Type_Elasticsearch(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_Type_HTTP(t *testing.T) {
+func TestAccAppSyncDataSource_Type_http(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -323,12 +323,12 @@ func TestAccAwsAppsyncDatasource_Type_HTTP(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_HTTP(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "http_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "http_config.0.endpoint", "http://example.com"),
 					resource.TestCheckResourceAttr(resourceName, "type", "HTTP"),
@@ -343,7 +343,7 @@ func TestAccAwsAppsyncDatasource_Type_HTTP(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_Type_Lambda(t *testing.T) {
+func TestAccAppSyncDataSource_Type_lambda(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	iamRoleResourceName := "aws_iam_role.test"
 	lambdaFunctionResourceName := "aws_lambda_function.test"
@@ -353,12 +353,12 @@ func TestAccAwsAppsyncDatasource_Type_Lambda(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_Lambda(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.#", "1"),
 					resource.TestCheckResourceAttrPair(resourceName, "lambda_config.0.function_arn", lambdaFunctionResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "service_role_arn", iamRoleResourceName, "arn"),
@@ -374,7 +374,7 @@ func TestAccAwsAppsyncDatasource_Type_Lambda(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppsyncDatasource_Type_None(t *testing.T) {
+func TestAccAppSyncDataSource_Type_none(t *testing.T) {
 	rName := fmt.Sprintf("tfacctest%d", sdkacctest.RandInt())
 	resourceName := "aws_appsync_datasource.test"
 
@@ -382,12 +382,12 @@ func TestAccAwsAppsyncDatasource_Type_None(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appsync.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appsync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppsyncDatasourceDestroy,
+		CheckDestroy: testAccCheckDestroyDataSource,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppsyncDatasourceConfig_Type_None(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsAppsyncDatasourceExists(resourceName),
+					testAccCheckExistsDataSource(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "type", "NONE"),
 				),
 			},
@@ -400,7 +400,7 @@ func TestAccAwsAppsyncDatasource_Type_None(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsAppsyncDatasourceDestroy(s *terraform.State) error {
+func testAccCheckDestroyDataSource(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).AppSyncConn
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_appsync_datasource" {
@@ -429,7 +429,7 @@ func testAccCheckAwsAppsyncDatasourceDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsAppsyncDatasourceExists(name string) resource.TestCheckFunc {
+func testAccCheckExistsDataSource(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
