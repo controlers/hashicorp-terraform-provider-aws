@@ -11,16 +11,16 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSElasticBeanstalkSolutionStackDataSource_basic(t *testing.T) {
+func TestAccElasticBeanstalkSolutionStackDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, elasticbeanstalk.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsElasticBeanstalkSolutionStackDataSourceConfig,
+				Config: testAccCheckAWSElasticBeanstalkSolutionStackDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsElasticBeanstalkSolutionStackDataSourceID("data.aws_elastic_beanstalk_solution_stack.multi_docker"),
+					testAccCheckSolutionStackIDDataSource("data.aws_elastic_beanstalk_solution_stack.multi_docker"),
 					resource.TestMatchResourceAttr("data.aws_elastic_beanstalk_solution_stack.multi_docker", "name", regexp.MustCompile("^64bit Amazon Linux (.*) Multi-container Docker (.*)$")),
 				),
 			},
@@ -28,7 +28,7 @@ func TestAccAWSElasticBeanstalkSolutionStackDataSource_basic(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsElasticBeanstalkSolutionStackDataSourceID(n string) resource.TestCheckFunc {
+func testAccCheckSolutionStackIDDataSource(n string) resource.TestCheckFunc {
 	// Wait for solution stacks
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
@@ -43,7 +43,7 @@ func testAccCheckAwsElasticBeanstalkSolutionStackDataSourceID(n string) resource
 	}
 }
 
-const testAccCheckAwsElasticBeanstalkSolutionStackDataSourceConfig = `
+const testAccCheckAWSElasticBeanstalkSolutionStackDataSourceConfig = `
 data "aws_elastic_beanstalk_solution_stack" "multi_docker" {
   most_recent = true
   name_regex  = "^64bit Amazon Linux (.*) Multi-container Docker (.*)$"
