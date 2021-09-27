@@ -6,14 +6,13 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/appstream"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/appstream/finder"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
 //statusStackState fetches the fleet and its state
 func statusStackState(ctx context.Context, conn *appstream.AppStream, name string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		stack, err := finder.findStackByName(ctx, conn, name)
+		stack, err := findStackByName(ctx, conn, name)
 		if err != nil {
 			return nil, "Unknown", err
 		}
@@ -29,7 +28,7 @@ func statusStackState(ctx context.Context, conn *appstream.AppStream, name strin
 //statusFleetState fetches the fleet and its state
 func statusFleetState(ctx context.Context, conn *appstream.AppStream, name string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		fleet, err := finder.findFleetByName(ctx, conn, name)
+		fleet, err := findFleetByName(ctx, conn, name)
 
 		if err != nil {
 			return nil, "Unknown", err
