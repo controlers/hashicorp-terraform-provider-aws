@@ -67,21 +67,21 @@ func testSweepBackupVaultPolicies(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAwsBackupVaultPolicy_basic(t *testing.T) {
+func TestAccBackupVaultPolicy_basic(t *testing.T) {
 	var vault backup.GetBackupVaultAccessPolicyOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_backup_vault_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSBackup(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, backup.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsBackupVaultPolicyDestroy,
+		CheckDestroy: testAccCheckVaultPolicyDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccBackupVaultPolicyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsBackupVaultPolicyExists(resourceName, &vault),
+					testAccCheckVaultPolicyExists(resourceName, &vault),
 					resource.TestMatchResourceAttr(resourceName, "policy", regexp.MustCompile("^{\"Version\":\"2012-10-17\".+"))),
 			},
 			{
@@ -92,7 +92,7 @@ func TestAccAwsBackupVaultPolicy_basic(t *testing.T) {
 			{
 				Config: testAccBackupVaultPolicyConfigUpdated(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsBackupVaultPolicyExists(resourceName, &vault),
+					testAccCheckVaultPolicyExists(resourceName, &vault),
 					resource.TestMatchResourceAttr(resourceName, "policy", regexp.MustCompile("^{\"Version\":\"2012-10-17\".+")),
 					resource.TestMatchResourceAttr(resourceName, "policy", regexp.MustCompile("backup:ListRecoveryPointsByBackupVault")),
 				),
@@ -101,21 +101,21 @@ func TestAccAwsBackupVaultPolicy_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsBackupVaultPolicy_disappears(t *testing.T) {
+func TestAccBackupVaultPolicy_disappears(t *testing.T) {
 	var vault backup.GetBackupVaultAccessPolicyOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_backup_vault_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSBackup(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, backup.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsBackupVaultPolicyDestroy,
+		CheckDestroy: testAccCheckVaultPolicyDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccBackupVaultPolicyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsBackupVaultPolicyExists(resourceName, &vault),
+					testAccCheckVaultPolicyExists(resourceName, &vault),
 					acctest.CheckResourceDisappears(acctest.Provider, tfbackup.ResourceVaultPolicy(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -124,22 +124,22 @@ func TestAccAwsBackupVaultPolicy_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAwsBackupVaultPolicy_disappears_vault(t *testing.T) {
+func TestAccBackupVaultPolicy_Disappears_vault(t *testing.T) {
 	var vault backup.GetBackupVaultAccessPolicyOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_backup_vault_policy.test"
 	vaultResourceName := "aws_backup_vault.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSBackup(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, backup.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsBackupVaultPolicyDestroy,
+		CheckDestroy: testAccCheckVaultPolicyDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccBackupVaultPolicyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsBackupVaultPolicyExists(resourceName, &vault),
+					testAccCheckVaultPolicyExists(resourceName, &vault),
 					acctest.CheckResourceDisappears(acctest.Provider, tfbackup.ResourceVault(), vaultResourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -148,7 +148,7 @@ func TestAccAwsBackupVaultPolicy_disappears_vault(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsBackupVaultPolicyDestroy(s *terraform.State) error {
+func testAccCheckVaultPolicyDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).BackupConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -172,7 +172,7 @@ func testAccCheckAwsBackupVaultPolicyDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsBackupVaultPolicyExists(name string, vault *backup.GetBackupVaultAccessPolicyOutput) resource.TestCheckFunc {
+func testAccCheckVaultPolicyExists(name string, vault *backup.GetBackupVaultAccessPolicyOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
