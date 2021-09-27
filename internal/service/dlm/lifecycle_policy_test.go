@@ -15,12 +15,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSDlmLifecyclePolicy_basic(t *testing.T) {
+func TestAccDLMLifecyclePolicy_basic(t *testing.T) {
 	resourceName := "aws_dlm_lifecycle_policy.basic"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDlm(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, dlm.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: dlmLifecyclePolicyDestroy,
@@ -52,12 +52,12 @@ func TestAccAWSDlmLifecyclePolicy_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDlmLifecyclePolicy_Full(t *testing.T) {
+func TestAccDLMLifecyclePolicy_full(t *testing.T) {
 	resourceName := "aws_dlm_lifecycle_policy.full"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDlm(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, dlm.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: dlmLifecyclePolicyDestroy,
@@ -102,12 +102,12 @@ func TestAccAWSDlmLifecyclePolicy_Full(t *testing.T) {
 	})
 }
 
-func TestAccAWSDlmLifecyclePolicy_Tags(t *testing.T) {
+func TestAccDLMLifecyclePolicy_tags(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_dlm_lifecycle_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDlm(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, dlm.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: dlmLifecyclePolicyDestroy,
@@ -199,7 +199,7 @@ func checkDlmLifecyclePolicyExists(name string) resource.TestCheckFunc {
 	}
 }
 
-func testAccPreCheckAWSDlm(t *testing.T) {
+func testAccPreCheck(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DLMConn
 
 	input := &dlm.GetLifecyclePoliciesInput{}
