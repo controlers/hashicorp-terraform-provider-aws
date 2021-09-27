@@ -79,8 +79,8 @@ Comprehensive code examples and information about resource import support can be
 
 In addition to the below checklist and the items noted in the Extending Terraform documentation, please see the [Common Review Items](pullrequest-submission-and-lifecycle.md#common-review-items) sections for more specific coding and testing guidelines.
 
-- [ ] _Resource Code Implementation_: In the resource code (e.g. `aws/resource_aws_service_thing.go`), implementation of `Importer` `State` function
-- [ ] _Resource Acceptance Testing Implementation_: In the resource acceptance testing (e.g. `aws/resource_aws_service_thing_test.go`), implementation of `TestStep`s with `ImportState: true`
+- [ ] _Resource Code Implementation_: In the resource code (e.g. `internal/service/{service}/{thing}.go`), implementation of `Importer` `State` function
+- [ ] _Resource Acceptance Testing Implementation_: In the resource acceptance testing (e.g. `internal/service/{service}/{thing}_test.go`), implementation of `TestStep`s with `ImportState: true`
 - [ ] _Resource Documentation Implementation_: In the resource documentation (e.g. `website/docs/r/service_thing.html.markdown`), addition of `Import` documentation section at the bottom of the page
 
 ## Adding Resource Name Generation Support
@@ -89,13 +89,13 @@ Terraform AWS Provider resources can use shared logic to support and test name g
 
 Implementing name generation support for Terraform AWS Provider resources requires the following, each with its own section below:
 
-- [ ] _Resource Name Generation Code Implementation_: In the resource code (e.g. `aws/resource_aws_service_thing.go`), implementation of `name_prefix` attribute, along with handling in `Create` function.
-- [ ] _Resource Name Generation Testing Implementation_: In the resource acceptance testing (e.g. `aws/resource_aws_service_thing_test.go`), implementation of new acceptance test functions and configurations to exercise new naming logic.
+- [ ] _Resource Name Generation Code Implementation_: In the resource code (e.g. `internal/service/{service}/{thing}.go`), implementation of `name_prefix` attribute, along with handling in `Create` function.
+- [ ] _Resource Name Generation Testing Implementation_: In the resource acceptance testing (e.g. `internal/service/{service}/{thing}_test.go`), implementation of new acceptance test functions and configurations to exercise new naming logic.
 - [ ] _Resource Name Generation Documentation Implementation_: In the resource documentation (e.g. `website/docs/r/service_thing.html.markdown`), addition of `name_prefix` argument and update of `name` argument description.
 
 ### Resource Name Generation Code Implementation
 
-- In the resource Go file (e.g. `aws/resource_aws_service_thing.go`), add the following Go import: `"github.com/hashicorp/terraform-provider-aws/aws/internal/naming"`
+- In the resource Go file (e.g. `internal/service/{service}/{thing}.go`), add the following Go import: `"github.com/hashicorp/terraform-provider-aws/internal/create"`
 - In the resource schema, add the new `name_prefix` attribute and adjust the `name` attribute to be `Optional`, `Computed`, and `ConflictsWith` the `name_prefix` attribute. Ensure to keep any existing schema fields on `name` such as `ValidateFunc`. e.g.
 
 ```go
@@ -115,10 +115,10 @@ Implementing name generation support for Terraform AWS Provider resources requir
 },
 ```
 
-- In the resource `Create` function, switch any calls from `d.Get("name").(string)` to instead use the `naming.Generate()` function, e.g.
+- In the resource `Create` function, switch any calls from `d.Get("name").(string)` to instead use the `create.Name()` function, e.g.
 
 ```go
-name := naming.Generate(d.Get("name").(string), d.Get("name_prefix").(string))
+name := create.Name(d.Get("name").(string), d.Get("name_prefix").(string))
 
 // ... in AWS Go SDK Input types, etc. use aws.String(name)
 ```
@@ -127,30 +127,30 @@ name := naming.Generate(d.Get("name").(string), d.Get("name_prefix").(string))
 
 ```go
 d.Set("name", resp.Name)
-d.Set("name_prefix", naming.NamePrefixFromName(aws.StringValue(resp.Name)))
+d.Set("name_prefix", create.NamePrefixFromName(aws.StringValue(resp.Name)))
 ```
 
 ### Resource Name Generation Testing Implementation
 
-- In the resource testing (e.g. `aws/resource_aws_service_thing_test.go`), add the following Go import: `"github.com/hashicorp/terraform-provider-aws/aws/internal/naming"`
+- In the resource testing (e.g. `internal/service/{service}/{thing}_test.go`), add the following Go import: `"github.com/hashicorp/terraform-provider-aws/internal/create"`
 - In the resource testing, implement two new tests named `_Name_Generated` and `_NamePrefix` with associated configurations, that verifies creating the resource without `name` and `name_prefix` arguments (for the former) and with only the `name_prefix` argument (for the latter). e.g.
 
 ```go
-func TestAccAWSServiceThing_Name_Generated(t *testing.T) {
+func TestAccServiceThing_nameGenerated(t *testing.T) {
   var thing service.ServiceThing
   resourceName := "aws_service_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),
-    Providers:    testAccProviders,
-    CheckDestroy: testAccCheckAWSServiceThingDestroy,
+    PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),
+    Providers:    acctest.Providers,
+    CheckDestroy: testAccCheckThingDestroy,
     Steps: []resource.TestStep{
       {
-        Config: testAccAWSServiceThingConfigNameGenerated(),
+        Config: testAccThingNameGeneratedConfig(),
         Check: resource.ComposeTestCheckFunc(
-          testAccCheckAWSServiceThingExists(resourceName, &thing),
-          naming.TestCheckResourceAttrNameGenerated(resourceName, "name"),
+          testAccCheckThingExists(resourceName, &thing),
+          create.TestCheckResourceAttrNameGenerated(resourceName, "name"),
           resource.TestCheckResourceAttr(resourceName, "name_prefix", "terraform-"),
         ),
       },
@@ -164,21 +164,21 @@ func TestAccAWSServiceThing_Name_Generated(t *testing.T) {
   })
 }
 
-func TestAccAWSServiceThing_NamePrefix(t *testing.T) {
+func TestAccServiceThing_namePrefix(t *testing.T) {
   var thing service.ServiceThing
   resourceName := "aws_service_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),
-    Providers:    testAccProviders,
-    CheckDestroy: testAccCheckAWSServiceThingDestroy,
+    PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),
+    Providers:    acctest.Providers,
+    CheckDestroy: testAccCheckThingDestroy,
     Steps: []resource.TestStep{
       {
-        Config: testAccAWSServiceThingConfigNamePrefix("tf-acc-test-prefix-"),
+        Config: testAccThingNamePrefixConfig("tf-acc-test-prefix-"),
         Check: resource.ComposeTestCheckFunc(
-          testAccCheckAWSServiceThingExists(resourceName, &thing),
-          naming.TestCheckResourceAttrNameFromPrefix(resourceName, "name", "tf-acc-test-prefix-"),
+          testAccCheckThingExists(resourceName, &thing),
+          create.TestCheckResourceAttrNameFromPrefix(resourceName, "name", "tf-acc-test-prefix-"),
           resource.TestCheckResourceAttr(resourceName, "name_prefix", "tf-acc-test-prefix-"),
         ),
       },
@@ -192,7 +192,7 @@ func TestAccAWSServiceThing_NamePrefix(t *testing.T) {
   })
 }
 
-func testAccAWSServiceThingConfigNameGenerated() string {
+func testAccThingNameGeneratedConfig() string {
   return fmt.Sprintf(`
 resource "aws_service_thing" "test" {
   # ... other configuration ...
@@ -200,7 +200,7 @@ resource "aws_service_thing" "test" {
 `)
 }
 
-func testAccAWSServiceThingConfigNamePrefix(namePrefix string) string {
+func testAccThingNamePrefixConfig(namePrefix string) string {
   return fmt.Sprintf(`
 resource "aws_service_thing" "test" {
   # ... other configuration ...
@@ -228,20 +228,20 @@ resource "aws_service_thing" "test" {
 ### Resource Name Generation With Suffix
 
 Some generated resource names require a fixed suffix (for example Amazon SNS FIFO topic names must end in `.fifo`).
-In these cases use `naming.GenerateWithSuffix()` in the resource `Create` function and `naming.NamePrefixFromNameWithSuffix()` in the resource `Read` function, e.g.
+In these cases use `create.NameWithSuffix()` in the resource `Create` function and `create.NamePrefixFromNameWithSuffix()` in the resource `Read` function, e.g.
 
 ```go
-name := naming.GenerateWithSuffix(d.Get("name").(string), d.Get("name_prefix").(string), ".fifo")
+name := create.NameWithSuffix(d.Get("name").(string), d.Get("name_prefix").(string), ".fifo")
 ```
 
 and
 
 ```go
 d.Set("name", resp.Name)
-d.Set("name_prefix", naming.NamePrefixFromNameWithSuffix(aws.StringValue(resp.Name), ".fifo"))
+d.Set("name_prefix", create.NamePrefixFromNameWithSuffix(aws.StringValue(resp.Name), ".fifo"))
 ```
 
-There are also functions `naming.TestCheckResourceAttrNameWithSuffixGenerated` and `naming.TestCheckResourceAttrNameWithSuffixFromPrefix` for use in tests.
+There are also functions `create.TestCheckResourceAttrNameWithSuffixGenerated` and `create.TestCheckResourceAttrNameWithSuffixFromPrefix` for use in tests.
 
 ## Adding Resource Policy Support
 
@@ -255,9 +255,9 @@ As of version 3.38.0 of the Terraform AWS Provider, resources that previously im
 
 Thus, for in-flight and future contributions, implementing tagging support for Terraform AWS Provider resources requires the following, each with its own section below:
 
-- [ ] _Generated Service Tagging Code_: In the internal code generators (e.g. `aws/internal/keyvaluetags`), implementation and customization of how a service handles tagging, which is standardized for the resources.
-- [ ] _Resource Tagging Code Implementation_: In the resource code (e.g. `aws/resource_aws_service_thing.go`), implementation of `tags` and `tags_all` schema attributes, along with implementation of `CustomizeDiff` in the resource definition and handling in `Create`, `Read`, and `Update` functions.
-- [ ] _Resource Tagging Acceptance Testing Implementation_: In the resource acceptance testing (e.g. `aws/resource_aws_service_thing_test.go`), implementation of new acceptance test function and configurations to exercise new tagging logic.
+- [ ] _Generated Service Tagging Code_: In the internal code generators (e.g. `internal/generate/tags`), implementation and customization of how a service handles tagging, which is standardized for the resources.
+- [ ] _Resource Tagging Code Implementation_: In the resource code (e.g. `internal/service/{service}/{thing}.go`), implementation of `tags` and `tags_all` schema attributes, along with implementation of `CustomizeDiff` in the resource definition and handling in `Create`, `Read`, and `Update` functions.
+- [ ] _Resource Tagging Acceptance Testing Implementation_: In the resource acceptance testing (e.g. `internal/service/{service}/{thing}_test.go`), implementation of new acceptance test function and configurations to exercise new tagging logic.
 - [ ] _Resource Tagging Documentation Implementation_: In the resource documentation (e.g. `website/docs/r/service_thing.html.markdown`), addition of `tags` argument and `tags_all` attribute.
 
 See also a [full example pull request for implementing resource tags with default tags support](https://github.com/hashicorp/terraform-provider-aws/pull/18861).
@@ -266,13 +266,15 @@ See also a [full example pull request for implementing resource tags with defaul
 
 This step is only necessary for the first implementation and may have been previously completed. If so, move on to the next section.
 
-More details about this code generation, including fixes for potential error messages in this process, can be found in the [keyvaluetags documentation](../../aws/internal/keyvaluetags/README.md).
+More details about this code generation, including fixes for potential error messages in this process, can be found in the [generate documentation](../../internal/generate/README.md).
 
 - Open the AWS Go SDK documentation for the service, e.g. for [`service/eks`](https://docs.aws.amazon.com/sdk-for-go/api/service/eks/). Note: there can be a delay between the AWS announcement and the updated AWS Go SDK documentation.
 - Determine the "type" of tagging implementation. Some services will use a simple map style (`map[string]*string` in Go) while others will have a separate structure shape (`[]service.Tag` struct with `Key` and `Value` fields).
 
-    - If the type is a map, add the AWS Go SDK service name (e.g. `eks`) to `mapServiceNames` in `aws/internal/keyvaluetags/generators/servicetags/main.go`
-    - Otherwise, if the type is a struct, add the AWS Go SDK service name (e.g. `eks`) to `sliceServiceNames` in `aws/internal/keyvaluetags/generators/servicetags/main.go`. If the struct name is not exactly `Tag`, it can be customized via the `ServiceTagType` function. If the struct key field is not exactly `Key`, it can be customized via the `ServiceTagTypeKeyField` function. If the struct value field is not exactly `Value`, it can be customized via the `ServiceTagTypeValueField` function.
+    - Check to see if the service already has a `generate.go` file (e.g., `internal/service/eks/generate.go`). If none exists, follow the example of other `generate.go` files in many other services. This is a very simple file, perhaps 3-5 lines long, and must _only_ contain generate directives at the very top of the file and a package declaration (e.g. `package eks`) -- nothing else.
+    - If a `generate.go` file exists, check to see if there is already a `generate/tags/main.go` directive. If there is and the type is a map, add a new flag to the existing declaration: `-ServiceTagsMap=yes`. If there is and the type is `struct`, add a new flag to the existing declaration: `-ServiceTagsSlice=yes`. 
+    - If the `generate.go` does not have a `generate/tags/main.go` directive, or you are creating a new file, add a new generate directive: `//go:generate go run -tags generate ../../generate/tags/main.go`. If the type is map, add this flag to the line `-ServiceTagsMap=yes`. Otherwise, if the type is `struct`, add the `-ServiceTagsSlice=yes` flag.
+    - When using the `-ServiceTagsSlice=yes` flag, if the `struct` name is not exactly `Tag`, you must include the `-TagType` flag with the name of the `struct` (e.g. `-TagType=S3Tag`). If the key and value elements of the `struct` are not exactly `Key` and `Value` respectively, you must include the `-TagTypeKeyElem` and/or `-TagTypeValElem` flags with the correct names.
 
 - Determine if the service API includes functionality for listing tags (usually a `ListTags` or `ListTagsForResource` API call) or updating tags (usually `TagResource` and `UntagResource` API calls). If so, add the AWS Go SDK service client information to `ServiceClientType` (along with the new required import) in `aws/internal/keyvaluetags/service_generation_customizations.go`, e.g. for EKS:
 
@@ -288,7 +290,7 @@ More details about this code generation, including fixes for potential error mes
 
 ### Resource Tagging Code Implementation
 
-- In the resource Go file (e.g. `aws/resource_aws_eks_cluster.go`), add the following Go import: `"github.com/hashicorp/terraform-provider-aws/aws/internal/keyvaluetags"`
+- In the resource Go file (e.g. `internal/service/eks/cluster.go`), add the following Go import: `"github.com/hashicorp/terraform-provider-aws/aws/internal/keyvaluetags"`
 - In the resource schema, add `"tags": tagsSchema(),` and `"tags_all": tagsSchemaComputed(),`
 - In the `schema.Resource` struct definition, add the `CustomizeDiff: SetTagsDiff` handling essential to resource support for default tags:
 
@@ -447,19 +449,19 @@ More details about this code generation, including fixes for potential error mes
 
 ### Resource Tagging Acceptance Testing Implementation
 
-- In the resource testing (e.g. `aws/resource_aws_eks_cluster_test.go`), verify that existing resources without tagging are unaffected and do not have tags saved into their Terraform state. This should be done in the `_basic` acceptance test by adding one line similar to `resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),` and one similar to `resource.TestCheckResourceAttr(resourceName, "tags_all.%", "0"),`
+- In the resource testing (e.g. `internal/service/eks/cluster_test.go`), verify that existing resources without tagging are unaffected and do not have tags saved into their Terraform state. This should be done in the `_basic` acceptance test by adding one line similar to `resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),` and one similar to `resource.TestCheckResourceAttr(resourceName, "tags_all.%", "0"),`
 - In the resource testing, implement a new test named `_Tags` with associated configurations, that verifies creating the resource with tags and updating tags. e.g. EKS Clusters:
 
   ```go
-  func TestAccAWSEksCluster_Tags(t *testing.T) {
+  func TestAccEksCluster_Tags(t *testing.T) {
     var cluster1, cluster2, cluster3 eks.Cluster
     rName := acctest.RandomWithPrefix("tf-acc-test")
     resourceName := "aws_eks_cluster.test"
 
     resource.ParallelTest(t, resource.TestCase{
-      PreCheck:     func() { testAccPreCheck(t); testAccPreCheckAWSEks(t) },
-      ErrorCheck:   testAccErrorCheck(t, eks.EndpointsID),
-      Providers:    testAccProviders,
+      PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t) },
+      ErrorCheck:   acctest.ErrorCheck(t, eks.EndpointsID),
+      Providers:    acctest.Providers,
       CheckDestroy: testAccCheckAWSEksClusterDestroy,
       Steps: []resource.TestStep{
         {
@@ -536,7 +538,7 @@ More details about this code generation, including fixes for potential error mes
   }
   ```
 
-- Verify all acceptance testing passes for the resource (e.g. `make testacc TESTARGS='-run=TestAccAWSEksCluster_'`)
+- Verify all acceptance testing passes for the resource (e.g. `make testacc TESTARGS='-run=TestAccEksCluster_'`)
 
 ### Resource Tagging Documentation Implementation
 
@@ -612,7 +614,7 @@ More complex filters can be expressed using one or more `filter` sub-blocks, whi
 
 ## New Resource
 
-_Before submitting this type of contribution, it is highly recommended to read and understand the other pages of the [Contributing Guide](../CONTRIBUTING.md)._
+_Before submitting this type of contribution, it is highly recommended to read and understand the other pages of the [Contributing Guide](contributing.md)._
 
 Implementing a new resource is a good way to learn more about how Terraform
 interacts with upstream APIs. There are plenty of examples to draw from in the
@@ -665,7 +667,7 @@ Adding a tag resource, similar to the `aws_ecs_tag` resource, has its own implem
 - In `aws/tag_resources.go`: Add the new `//go:generate` call with the correct service name. Run `make gen` after any modifications.
 - In `aws/provider.go`: Add the new resource.
 - Run `make test` and ensure there are no failures.
-- Create `aws/resource_aws_{service}_tag_test.go` with initial acceptance testing similar to the following (where the parent resource is simple to provision):
+- Create `internal/service/{service}/tag_gen_test.go` with initial acceptance testing similar to the following (where the parent resource is simple to provision):
 
 ```go
 
@@ -678,14 +680,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-func TestAccAWS{Service}Tag_basic(t *testing.T) {
+func TestAcc{Service}Tag_basic(t *testing.T) {
 	rName := acctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_{service}_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, {Service}.EndpointsID),
-		Providers:    testAccProviders,
+		PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, {Service}.EndpointsID),
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheck{Service}TagDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -705,21 +707,21 @@ func TestAccAWS{Service}Tag_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWS{Service}Tag_disappears(t *testing.T) {
+func TestAcc{Service}Tag_disappears(t *testing.T) {
 	rName := acctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_{service}_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, {Service}.EndpointsID),
-		Providers:    testAccProviders,
+		PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, {Service}.EndpointsID),
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheck{Service}TagDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAcc{Service}TagConfig(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheck{Service}TagExists(resourceName),
-					testAccCheckResourceDisappears(testAccProvider, resourceAws{Service}Tag(), resourceName),
+					acctest.CheckResourceDisappears(testAccProvider, resourceAws{Service}Tag(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -727,14 +729,14 @@ func TestAccAWS{Service}Tag_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWS{Service}Tag_Value(t *testing.T) {
+func TestAcc{Service}Tag_Value(t *testing.T) {
 	rName := acctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_{service}_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, {Service}.EndpointsID),
-		Providers:    testAccProviders,
+		PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, {Service}.EndpointsID),
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheck{Service}TagDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -781,7 +783,7 @@ resource "aws_{service}_tag" "test" {
 }
 ```
 
-- Run `make testacc TEST=./aws TESTARGS='-run=TestAccAWS{Service}Tags_'` and ensure there are no failures.
+- Run `make testacc TEST=./aws TESTARGS='-run=TestAcc{Service}Tags_'` and ensure there are no failures.
 - Create `website/docs/r/{service}_tag.html.markdown` with initial documentation similar to the following:
 
 ``````markdown

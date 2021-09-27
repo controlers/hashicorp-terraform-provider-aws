@@ -86,7 +86,7 @@ Ensure that the following steps are tracked within the issue and completed withi
 - Verify `make test lint` works as expected
 - Verify `goreleaser build --snapshot` succeeds for all currently supported architectures
 - Verify `goenv` support for the new version
-- Update `docs/DEVELOPMENT.md`
+- Update `development-environment.md`
 - Update `.go-version`
 - Update `CHANGELOG.md` detailing the update and mention any notes practitioners need to be aware of.
 
@@ -104,7 +104,7 @@ Additionally, if a `CHANGELOG` addition seemed appropriate, this dependency and 
 
 CloudFront changes:
 
-CloudFront service client updates have previously caused an issue when a new field introduced in the SDK was not included with Terraform and caused all requests to error (https://github.com/hashicorp/terraform-provider-aws/issues/4091). As a precaution, if you see CloudFront updates, run all the CloudFront resource acceptance testing before merging (`TestAccAWSCloudFront`).
+CloudFront service client updates have previously caused an issue when a new field introduced in the SDK was not included with Terraform and caused all requests to error (https://github.com/hashicorp/terraform-provider-aws/issues/4091). As a precaution, if you see CloudFront updates, run all the CloudFront resource acceptance testing before merging (`TestAccCloudFront`).
 
 New Regions:
 
@@ -296,7 +296,7 @@ Merge if CI passes.
 
 ##### yaml.v2 Updates
 
-Run the acceptance testing pattern, `TestAccAWSCloudFormationStack(_dataSource)?_yaml`, and merge if passing.
+Run the acceptance testing pattern, `TestAccCloudFormationStack(_dataSource)?_yaml`, and merge if passing.
 
 ### Pull Request Merge Process
 

@@ -31,7 +31,7 @@ const (
 
 // Custom environment variables used in the Terraform AWS Provider testing.
 // Additions should also be documented in the Environment Variable Dictionary
-// of the Maintainers Guide: docs/MAINTAINING.md
+// of the Maintainers Guide: docs/contributing/maintaining.md
 const (
 	// For tests using an alternate AWS account, the equivalent of AWS_ACCESS_KEY_ID for that account
 	EnvVarAlternateAccessKeyId = "AWS_ALTERNATE_ACCESS_KEY_ID"

@@ -122,7 +122,7 @@ const (
 ```
 
 ```go
-// aws/resource_example_thing.go
+// internal/service/{service}/{thing}.go
 
 import (
 	// ... other imports ...
@@ -178,7 +178,7 @@ The last operation can receive varied API errors ranging from:
 Each AWS service API (and sometimes even operations within the same API) varies in the implementation of these errors. To handle them, it is recommended to use the [Operation Specific Error Retries](#operation-specific-error-retries) pattern. The Terraform AWS Provider implements a standard timeout constant of two minutes in the `aws/internal/service/iam/waiter` package which should be used for all retry timeouts associated with IAM errors. This timeout was derived from years of Terraform operational experience with all AWS APIs.
 
 ```go
-// aws/resource_example_thing.go
+// internal/service/{service}/{thing}.go
 
 import (
 	// ... other imports ...
@@ -219,7 +219,7 @@ Some remote system operations run asynchronously as detailed in the [Asynchronou
 The below code example highlights this situation for a resource creation that also exhibited IAM eventual consistency.
 
 ```go
-// aws/resource_example_thing.go
+// internal/service/{service}/{thing}.go
 
 import (
 	// ... other imports ...
@@ -297,7 +297,7 @@ const (
 ```
 
 ```go
-// aws/resource_example_thing.go
+// internal/service/{service}/{thing}.go
 
 function ExampleThingCreate(d *schema.ResourceData, meta interface{}) error {
 	// ...
@@ -415,7 +415,7 @@ func ThingAttributeUpdated(conn *example.Example, id string, expectedValue strin
 ```
 
 ```go
-// aws/resource_example_thing.go
+// internal/service/{service}/{thing}.go
 
 function ExampleThingUpdate(d *schema.ResourceData, meta interface{}) error {
 	// ...
@@ -525,7 +525,7 @@ func ThingDeleted(conn *example.Example, id string) (*example.Thing, error) {
 ```
 
 ```go
-// aws/resource_example_thing.go
+// internal/service/{service}/{thing}.go
 
 function ExampleThingCreate(d *schema.ResourceData, meta interface{}) error {
 	// ... AWS Go SDK logic to create resource ...

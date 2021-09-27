@@ -93,11 +93,11 @@ export AWS_DEFAULT_REGION=us-gov-west-1
 Tests can then be run by specifying a regular expression defining the tests to run:
 
 ```sh
-$ make testacc TESTARGS='-run=TestAccAWSCloudWatchDashboard_update'
+$ make testacc TESTARGS='-run=TestAccCloudWatchDashboard_update'
 ==> Checking that code complies with gofmt requirements...
-TF_ACC=1 go test ./aws -v -run=TestAccAWSCloudWatchDashboard_update -timeout 120m
-=== RUN   TestAccAWSCloudWatchDashboard_update
---- PASS: TestAccAWSCloudWatchDashboard_update (26.56s)
+TF_ACC=1 go test ./aws -v -run=TestAccCloudWatchDashboard_update -timeout 120m
+=== RUN   TestAccCloudWatchDashboard_update
+--- PASS: TestAccCloudWatchDashboard_update (26.56s)
 PASS
 ok  	github.com/hashicorp/terraform-provider-aws/aws	26.607s
 ```
@@ -108,15 +108,15 @@ write the regular expression. For example, to run all tests of the
 testing like this:
 
 ```sh
-$ make testacc TESTARGS='-run=TestAccAWSCloudWatchDashboard'
+$ make testacc TESTARGS='-run=TestAccCloudWatchDashboard'
 ==> Checking that code complies with gofmt requirements...
-TF_ACC=1 go test ./aws -v -run=TestAccAWSCloudWatchDashboard -timeout 120m
-=== RUN   TestAccAWSCloudWatchDashboard_importBasic
---- PASS: TestAccAWSCloudWatchDashboard_importBasic (15.06s)
-=== RUN   TestAccAWSCloudWatchDashboard_basic
---- PASS: TestAccAWSCloudWatchDashboard_basic (12.70s)
-=== RUN   TestAccAWSCloudWatchDashboard_update
---- PASS: TestAccAWSCloudWatchDashboard_update (27.81s)
+TF_ACC=1 go test ./aws -v -run=TestAccCloudWatchDashboard -timeout 120m
+=== RUN   TestAccCloudWatchDashboard_importBasic
+--- PASS: TestAccCloudWatchDashboard_importBasic (15.06s)
+=== RUN   TestAccCloudWatchDashboard_basic
+--- PASS: TestAccCloudWatchDashboard_basic (12.70s)
+=== RUN   TestAccCloudWatchDashboard_update
+--- PASS: TestAccCloudWatchDashboard_update (27.81s)
 PASS
 ok  	github.com/hashicorp/terraform-provider-aws/aws	55.619s
 ```
@@ -132,12 +132,12 @@ Please Note: On macOS 10.14 and later (and some Linux distributions), the defaul
 Certain testing requires multiple AWS accounts. This additional setup is not typically required and the testing will return an error (shown below) if your current setup does not have the secondary AWS configuration:
 
 ```console
-$ make testacc TEST=./aws TESTARGS='-run=TestAccAWSDBInstance_DbSubnetGroupName_RamShared'
-=== RUN   TestAccAWSDBInstance_DbSubnetGroupName_RamShared
-=== PAUSE TestAccAWSDBInstance_DbSubnetGroupName_RamShared
-=== CONT  TestAccAWSDBInstance_DbSubnetGroupName_RamShared
-    TestAccAWSDBInstance_DbSubnetGroupName_RamShared: provider_test.go:386: AWS_ALTERNATE_ACCESS_KEY_ID or AWS_ALTERNATE_PROFILE must be set for acceptance tests
---- FAIL: TestAccAWSDBInstance_DbSubnetGroupName_RamShared (2.22s)
+$ make testacc TEST=./aws TESTARGS='-run=TestAccDBInstance_DbSubnetGroupName_RamShared'
+=== RUN   TestAccDBInstance_DbSubnetGroupName_RamShared
+=== PAUSE TestAccDBInstance_DbSubnetGroupName_RamShared
+=== CONT  TestAccDBInstance_DbSubnetGroupName_RamShared
+    TestAccDBInstance_DbSubnetGroupName_RamShared: provider_test.go:386: AWS_ALTERNATE_ACCESS_KEY_ID or AWS_ALTERNATE_PROFILE must be set for acceptance tests
+--- FAIL: TestAccDBInstance_DbSubnetGroupName_RamShared (2.22s)
 FAIL
 FAIL	github.com/hashicorp/terraform-provider-aws/aws	4.305s
 FAIL
@@ -193,13 +193,13 @@ readable, and allows reuse of assertion functions across different tests of the
 same type of resource. The definition of a complete test looks like this:
 
 ```go
-func TestAccAWSCloudWatchDashboard_basic(t *testing.T) {
+func TestAccCloudWatchDashboard_basic(t *testing.T) {
 	var dashboard cloudwatch.GetDashboardOutput
 	rInt := acctest.RandInt()
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { testAccPreCheck(t) },
-		ErrorCheck:   testAccErrorCheck(t, cloudwatch.EndpointsID),
-		Providers:    testAccProviders,
+		PreCheck:     func() { acctest.PreCheck(t) },
+		ErrorCheck:   acctest.ErrorCheck(t, cloudwatch.EndpointsID),
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchDashboardDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -494,9 +494,9 @@ func TestAccAwsExampleThing_basic(t *testing.T) {
   resourceName := "aws_example_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),
-    Providers:    testAccProviders,
+    PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),
+    Providers:    acctest.Providers,
     CheckDestroy: testAccCheckAwsExampleThingDestroy,
     Steps: []resource.TestStep{
       {
@@ -540,7 +540,7 @@ func TestAccAwsExampleThing_basic(t *testing.T) {
   resourceName := "aws_example_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t) },
+    PreCheck:     func() { acctest.PreCheck(t) },
     // ... additional checks follow ...
   })
 }
@@ -567,7 +567,7 @@ func TestAccAwsExampleThing_basic(t *testing.T) {
   resourceName := "aws_example_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t); testAccPartitionHasServicePreCheck(waf.EndpointsID, t) },
+    PreCheck:     func() { acctest.PreCheck(t); testAccPartitionHasServicePreCheck(waf.EndpointsID, t) },
     // ... additional checks follow ...
   })
 }
@@ -585,7 +585,7 @@ func TestAccAwsExampleThing_basic(t *testing.T) {
   resourceName := "aws_example_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t), testAccPreCheckAwsExample(t) },
+    PreCheck:     func() { acctest.PreCheck(t), testAccPreCheckAwsExample(t) },
     // ... additional checks follow ...
   })
 }
@@ -620,7 +620,7 @@ func TestAccAwsExampleThing_basic(t *testing.T) {
 
   resource.ParallelTest(t, resource.TestCase{
     // PreCheck
-    ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),
+    ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),
     // ... additional checks follow ...
   })
 }
@@ -670,16 +670,16 @@ func TestAccAwsExampleThing_disappears(t *testing.T) {
   resourceName := "aws_example_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),
-    Providers:    testAccProviders,
+    PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),
+    Providers:    acctest.Providers,
     CheckDestroy: testAccCheckAwsExampleThingDestroy,
     Steps: []resource.TestStep{
       {
         Config: testAccAwsExampleThingConfigName(rName),
         Check: resource.ComposeTestCheckFunc(
           testAccCheckAwsExampleThingExists(resourceName, &job),
-          testAccCheckResourceDisappears(testAccProvider, resourceAwsExampleThing(), resourceName),
+          acctest.CheckResourceDisappears(testAccProvider, resourceAwsExampleThing(), resourceName),
         ),
         ExpectNonEmptyPlan: true,
       },
@@ -713,16 +713,16 @@ func TestAccAwsExampleChildThing_disappears_ParentThing(t *testing.T) {
   resourceName := "aws_example_child_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),
-    Providers:    testAccProviders,
+    PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),
+    Providers:    acctest.Providers,
     CheckDestroy: testAccCheckAwsExampleChildThingDestroy,
     Steps: []resource.TestStep{
       {
         Config: testAccAwsExampleThingConfigName(rName),
         Check: resource.ComposeTestCheckFunc(
           testAccCheckAwsExampleThingExists(resourceName),
-          testAccCheckResourceDisappears(testAccProvider, resourceAwsExampleParentThing(), parentResourceName),
+          acctest.CheckResourceDisappears(testAccProvider, resourceAwsExampleParentThing(), parentResourceName),
         ),
         ExpectNonEmptyPlan: true,
       },
@@ -743,9 +743,9 @@ func TestAccAwsExampleThing_Description(t *testing.T) {
   resourceName := "aws_example_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),
-    Providers:    testAccProviders,
+    PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),
+    Providers:    acctest.Providers,
     CheckDestroy: testAccCheckAwsExampleThingDestroy,
     Steps: []resource.TestStep{
       {
@@ -789,7 +789,7 @@ When testing requires AWS infrastructure in a second AWS account, the below chan
 
 - In the `PreCheck` function, include `testAccAlternateAccountPreCheck(t)` to ensure a standardized set of information is required for cross-account testing credentials
 - Declare a `providers` variable at the top of the test function: `var providers []*schema.Provider`
-- Switch usage of `Providers: testAccProviders` to `ProviderFactories: testAccProviderFactoriesAlternate(&providers)`
+- Switch usage of `Providers: acctest.Providers` to `ProviderFactories: testAccProviderFactoriesAlternate(&providers)`
 - Add `testAccAlternateAccountProviderConfig()` to the test configuration and use `provider = awsalternate` for cross-account resources. The resource that is the focus of the acceptance test should _not_ use the alternate provider identification to simplify the testing setup.
 - For any `TestStep` that includes `ImportState: true`, add the `Config` that matches the previous `TestStep` `Config`
 
@@ -802,10 +802,10 @@ func TestAccAwsExample_basic(t *testing.T) {
 
   resource.ParallelTest(t, resource.TestCase{
     PreCheck: func() {
-      testAccPreCheck(t)
+      acctest.PreCheck(t)
       testAccAlternateAccountPreCheck(t)
     },
-    ErrorCheck:        testAccErrorCheck(t, service.EndpointsID),
+    ErrorCheck:        acctest.ErrorCheck(t, service.EndpointsID),
     ProviderFactories: testAccProviderFactoriesAlternate(&providers),
     CheckDestroy:      testAccCheckAwsExampleDestroy,
     Steps: []resource.TestStep{
@@ -853,7 +853,7 @@ When testing requires AWS infrastructure in a second or third AWS region, the be
 
 - In the `PreCheck` function, include `testAccMultipleRegionPreCheck(t, ###)` to ensure a standardized set of information is required for cross-region testing configuration. If the infrastructure in the second AWS region is also in a second AWS account also include `testAccAlternateAccountPreCheck(t)`
 - Declare a `providers` variable at the top of the test function: `var providers []*schema.Provider`
-- Switch usage of `Providers: testAccProviders` to `ProviderFactories: testAccProviderFactoriesMultipleRegion(&providers, 2)` (where the last parameter is number of regions)
+- Switch usage of `Providers: acctest.Providers` to `ProviderFactories: testAccProviderFactoriesMultipleRegion(&providers, 2)` (where the last parameter is number of regions)
 - Add `testAccMultipleRegionProviderConfig(###)` to the test configuration and use `provider = awsalternate` (and potentially `provider = awsthird`) for cross-region resources. The resource that is the focus of the acceptance test should _not_ use the alternative providers to simplify the testing setup. If the infrastructure in the second AWS region is also in a second AWS account use `testAccAlternateAccountAlternateRegionProviderConfig()` instead
 - For any `TestStep` that includes `ImportState: true`, add the `Config` that matches the previous `TestStep` `Config`
 
@@ -866,10 +866,10 @@ func TestAccAwsExample_basic(t *testing.T) {
 
   resource.ParallelTest(t, resource.TestCase{
     PreCheck: func() {
-      testAccPreCheck(t)
+      acctest.PreCheck(t)
       testAccMultipleRegionPreCheck(t, 2)
     },
-    ErrorCheck:        testAccErrorCheck(t, service.EndpointsID),
+    ErrorCheck:        acctest.ErrorCheck(t, service.EndpointsID),
     ProviderFactories: testAccProviderFactoriesMultipleRegion(&providers, 2),
     CheckDestroy:      testAccCheckAwsExampleDestroy,
     Steps: []resource.TestStep{
@@ -1003,8 +1003,8 @@ func testAccGetPricingRegion() string {
 
 For the resource or data source acceptance tests, the key items to adjust are:
 
-* Ensure `TestCase` uses `ProviderFactories: testAccProviderFactories` instead of `Providers: testAccProviders`
-* Add the call for the new `PreCheck` function (keeping `testAccPreCheck(t)`), e.g. `PreCheck: func() { testAccPreCheck(t); testAccPreCheckPricing(t) },`
+* Ensure `TestCase` uses `ProviderFactories: testAccProviderFactories` instead of `Providers: acctest.Providers`
+* Add the call for the new `PreCheck` function (keeping `acctest.PreCheck(t)`), e.g. `PreCheck: func() { acctest.PreCheck(t); testAccPreCheckPricing(t) },`
 * If the testing is for a managed resource with a `CheckDestroy` function, ensure it uses the new provider instance, e.g. `testAccProviderPricing`, instead of `testAccProvider`.
 * If the testing is for a managed resource with a `Check...Exists` function, ensure it uses the new provider instance, e.g. `testAccProviderPricing`, instead of `testAccProvider`.
 * In each `TestStep` configuration, ensure the new provider configuration function is called, e.g.
@@ -1083,9 +1083,9 @@ func TestAccAwsExampleThingDataSource_Name(t *testing.T) {
   resourceName := "aws_example_thing.test"
 
   resource.ParallelTest(t, resource.TestCase{
-    PreCheck:     func() { testAccPreCheck(t) },
-    ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),
-    Providers:    testAccProviders,
+    PreCheck:     func() { acctest.PreCheck(t) },
+    ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),
+    Providers:    acctest.Providers,
     CheckDestroy: testAccCheckAwsExampleThingDestroy,
     Steps: []resource.TestStep{
       {
@@ -1309,7 +1309,7 @@ The below are required items that will be noted during submission review and pre
 - [ ] __Implements Exists Check Function__: Resource testing should include a `TestCheckFunc` function (typically named `testAccCheckAws{SERVICE}{RESOURCE}Exists`) that calls the API to verify that the Terraform resource has been created or associated as appropriate. Preferably, this function will also accept a pointer to an API object representing the Terraform resource from the API response that can be set for potential usage in later `TestCheckFunc`. More information about these functions can be found in the [Extending Terraform Custom Check Functions documentation](https://www.terraform.io/docs/extend/testing/acceptance-tests/testcase.html#checkdestroy).
 - [ ] __Excludes Provider Declarations__: Test configurations should not include `provider "aws" {...}` declarations. If necessary, only the provider declarations in `provider_test.go` should be used for multiple account/region or otherwise specialized testing.
 - [ ] __Passes in us-west-2 Region__: Tests default to running in `us-west-2` and at a minimum should pass in that region or include necessary `PreCheck` functions to skip the test when ran outside an expected environment.
-- [ ] __Includes ErrorCheck__: All acceptance tests should include a call to the common ErrorCheck (`ErrorCheck:   testAccErrorCheck(t, service.EndpointsID),`).
+- [ ] __Includes ErrorCheck__: All acceptance tests should include a call to the common ErrorCheck (`ErrorCheck:   acctest.ErrorCheck(t, service.EndpointsID),`).
 - [ ] __Uses resource.ParallelTest__: Tests should utilize [`resource.ParallelTest()`](https://godoc.org/github.com/hashicorp/terraform/helper/resource#ParallelTest) instead of [`resource.Test()`](https://godoc.org/github.com/hashicorp/terraform/helper/resource#Test) except where serialized testing is absolutely required.
 - [ ] __Uses fmt.Sprintf()__: Test configurations preferably should to be separated into their own functions (typically named `testAccAws{SERVICE}{RESOURCE}Config{PURPOSE}`) that call [`fmt.Sprintf()`](https://golang.org/pkg/fmt/#Sprintf) for variable injection or a string `const` for completely static configurations. Test configurations should avoid `var` or other variable injection functionality such as [`text/template`](https://golang.org/pkg/text/template/).
 - [ ] __Uses Randomized Infrastructure Naming__: Test configurations that utilize resources where a unique name is required should generate a random name. Typically this is created via `rName := acctest.RandomWithPrefix("tf-acc-test")` in the acceptance test function before generating the configuration.
@@ -1578,7 +1578,7 @@ resource "aws_spot_fleet_request" "test" {
 Here's an example using `aws_key_pair`
 
 ```go
-func TestAccAWSKeyPair_basic(t *testing.T) {
+func TestAccKeyPair_basic(t *testing.T) {
   ...
 
 	rName := acctest.RandomWithPrefix("tf-acc-test")
@@ -1617,7 +1617,7 @@ Using `testAccDefaultEmailAddress` is preferred when using a single email addres
 Here's an example using `testAccDefaultEmailAddress`
 
 ```go
-func TestAccAWSSNSTopicSubscription_email(t *testing.T) {
+func TestAccSNSTopicSubscription_email(t *testing.T) {
 	...
 
 	rName := acctest.RandomWithPrefix("tf-acc-test")
@@ -1640,7 +1640,7 @@ func TestAccAWSSNSTopicSubscription_email(t *testing.T) {
 Here's an example using `testAccRandomEmailAddress()`
 
 ```go
-func TestAccAWSPinpointEmailChannel_basic(t *testing.T) {
+func TestAccPinpointEmailChannel_basic(t *testing.T) {
 	...
 
 	domain := testAccRandomDomainName()
