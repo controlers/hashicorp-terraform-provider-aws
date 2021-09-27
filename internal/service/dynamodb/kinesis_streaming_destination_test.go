@@ -16,7 +16,7 @@ import (
 	tfdynamodb "github.com/hashicorp/terraform-provider-aws/internal/service/dynamodb"
 )
 
-func TestAccAwsDynamoDbKinesisStreamingDestination_basic(t *testing.T) {
+func TestAccDynamoDBKinesisStreamingDestination_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_dynamodb_kinesis_streaming_destination.test"
 
@@ -24,10 +24,10 @@ func TestAccAwsDynamoDbKinesisStreamingDestination_basic(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, dynamodb.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSDynamoDbKinesisStreamingDestinationDestroy,
+		CheckDestroy:      testAccCheckKinesisStreamingDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDynamodbKinesisStreamingDestinationConfigBasic(rName),
+				Config: testAccKinesisStreamingDestinationBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDynamoDbKinesisStreamingDestinationExists(resourceName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "stream_arn", "kinesis", regexp.MustCompile(fmt.Sprintf("stream/%s", rName))),
@@ -43,7 +43,7 @@ func TestAccAwsDynamoDbKinesisStreamingDestination_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsDynamoDbKinesisStreamingDestination_disappears(t *testing.T) {
+func TestAccDynamoDBKinesisStreamingDestination_disappears(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_dynamodb_kinesis_streaming_destination.test"
 
@@ -51,10 +51,10 @@ func TestAccAwsDynamoDbKinesisStreamingDestination_disappears(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, dynamodb.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSDynamoDbKinesisStreamingDestinationDestroy,
+		CheckDestroy:      testAccCheckKinesisStreamingDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDynamodbKinesisStreamingDestinationConfigBasic(rName),
+				Config: testAccKinesisStreamingDestinationBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDynamoDbKinesisStreamingDestinationExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfdynamodb.ResourceKinesisStreamingDestination(), resourceName),
@@ -65,7 +65,7 @@ func TestAccAwsDynamoDbKinesisStreamingDestination_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAwsDynamoDbKinesisStreamingDestination_disappears_DynamoDbTable(t *testing.T) {
+func TestAccDynamoDBKinesisStreamingDestination_Disappears_dynamoDBTable(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resourceName := "aws_dynamodb_kinesis_streaming_destination.test"
@@ -75,10 +75,10 @@ func TestAccAwsDynamoDbKinesisStreamingDestination_disappears_DynamoDbTable(t *t
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, dynamodb.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSDynamoDbKinesisStreamingDestinationDestroy,
+		CheckDestroy:      testAccCheckKinesisStreamingDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDynamodbKinesisStreamingDestinationConfigBasic(rName),
+				Config: testAccKinesisStreamingDestinationBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDynamoDbKinesisStreamingDestinationExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfdynamodb.ResourceTable(), tableResourceName),
@@ -89,7 +89,7 @@ func TestAccAwsDynamoDbKinesisStreamingDestination_disappears_DynamoDbTable(t *t
 	})
 }
 
-func testAccAwsDynamodbKinesisStreamingDestinationConfigBasic(rName string) string {
+func testAccKinesisStreamingDestinationBasicConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_dynamodb_table" "test" {
   name           = %[1]q
@@ -148,7 +148,7 @@ func testAccCheckDynamoDbKinesisStreamingDestinationExists(resourceName string) 
 	}
 }
 
-func testAccCheckAWSDynamoDbKinesisStreamingDestinationDestroy(s *terraform.State) error {
+func testAccCheckKinesisStreamingDestinationDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DynamoDBConn
 
 	for _, rs := range s.RootModule().Resources {

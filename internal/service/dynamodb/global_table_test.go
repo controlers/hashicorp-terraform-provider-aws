@@ -18,19 +18,19 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSDynamoDbGlobalTable_basic(t *testing.T) {
+func TestAccDynamoDBGlobalTable_basic(t *testing.T) {
 	resourceName := "aws_dynamodb_global_table.test"
 	tableName := fmt.Sprintf("tf-acc-test-%s", sdkacctest.RandString(5))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			testAccPreCheckAWSDynamodbGlobalTable(t)
+			testAccPreCheckGlobalTable(t)
 			testAccDynamoDBGlobalTablePreCheck(t)
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, dynamodb.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAwsDynamoDbGlobalTableDestroy,
+		CheckDestroy:      testAccCheckGlobalTableDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config:      testAccDynamoDbGlobalTableConfig_invalidName(sdkacctest.RandString(2)),
@@ -47,7 +47,7 @@ func TestAccAWSDynamoDbGlobalTable_basic(t *testing.T) {
 			{
 				Config: testAccDynamoDbGlobalTableConfig_basic(tableName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDynamoDbGlobalTableExists(resourceName),
+					testAccCheckGlobalTableExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "name", tableName),
 					resource.TestCheckResourceAttr(resourceName, "replica.#", "1"),
 					acctest.MatchResourceAttrGlobalARN(resourceName, "arn", "dynamodb", regexp.MustCompile("global-table/[a-z0-9-]+$")),
@@ -62,7 +62,7 @@ func TestAccAWSDynamoDbGlobalTable_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDynamoDbGlobalTable_multipleRegions(t *testing.T) {
+func TestAccDynamoDBGlobalTable_multipleRegions(t *testing.T) {
 	var providers []*schema.Provider
 	resourceName := "aws_dynamodb_global_table.test"
 	tableName := fmt.Sprintf("tf-acc-test-%s", sdkacctest.RandString(5))
@@ -70,18 +70,18 @@ func TestAccAWSDynamoDbGlobalTable_multipleRegions(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			testAccPreCheckAWSDynamodbGlobalTable(t)
+			testAccPreCheckGlobalTable(t)
 			acctest.PreCheckMultipleRegion(t, 2)
 			testAccDynamoDBGlobalTablePreCheck(t)
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, dynamodb.EndpointsID),
 		ProviderFactories: acctest.FactoriesAlternate(&providers),
-		CheckDestroy:      testAccCheckAwsDynamoDbGlobalTableDestroy,
+		CheckDestroy:      testAccCheckGlobalTableDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDynamoDbGlobalTableConfig_multipleRegions1(tableName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDynamoDbGlobalTableExists(resourceName),
+					testAccCheckGlobalTableExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "name", tableName),
 					resource.TestCheckResourceAttr(resourceName, "replica.#", "1"),
 					acctest.MatchResourceAttrGlobalARN(resourceName, "arn", "dynamodb", regexp.MustCompile("global-table/[a-z0-9-]+$")),
@@ -96,14 +96,14 @@ func TestAccAWSDynamoDbGlobalTable_multipleRegions(t *testing.T) {
 			{
 				Config: testAccDynamoDbGlobalTableConfig_multipleRegions2(tableName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDynamoDbGlobalTableExists(resourceName),
+					testAccCheckGlobalTableExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "replica.#", "2"),
 				),
 			},
 			{
 				Config: testAccDynamoDbGlobalTableConfig_multipleRegions1(tableName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDynamoDbGlobalTableExists(resourceName),
+					testAccCheckGlobalTableExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "replica.#", "1"),
 				),
 			},
@@ -111,7 +111,7 @@ func TestAccAWSDynamoDbGlobalTable_multipleRegions(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsDynamoDbGlobalTableDestroy(s *terraform.State) error {
+func testAccCheckGlobalTableDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DynamoDBConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -137,7 +137,7 @@ func testAccCheckAwsDynamoDbGlobalTableDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsDynamoDbGlobalTableExists(name string) resource.TestCheckFunc {
+func testAccCheckGlobalTableExists(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		_, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -148,7 +148,7 @@ func testAccCheckAwsDynamoDbGlobalTableExists(name string) resource.TestCheckFun
 	}
 }
 
-func testAccPreCheckAWSDynamodbGlobalTable(t *testing.T) {
+func testAccPreCheckGlobalTable(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DynamoDBConn
 
 	input := &dynamodb.ListGlobalTablesInput{}
