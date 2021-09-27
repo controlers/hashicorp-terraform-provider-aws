@@ -80,7 +80,7 @@ func testSweepDataSyncTasks(region string) error {
 	return nil
 }
 
-func TestAccAWSDataSyncTask_basic(t *testing.T) {
+func TestAccDataSyncTask_basic(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSyncDestinationLocationResourceName := "aws_datasync_location_s3.destination"
@@ -88,15 +88,15 @@ func TestAccAWSDataSyncTask_basic(t *testing.T) {
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfig(rName),
+				Config: testAccTaskConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "datasync", regexp.MustCompile(`task/task-.+`)),
 					resource.TestCheckResourceAttr(resourceName, "cloudwatch_log_group_arn", ""),
 					resource.TestCheckResourceAttrPair(resourceName, "destination_location_arn", dataSyncDestinationLocationResourceName, "arn"),
@@ -130,21 +130,21 @@ func TestAccAWSDataSyncTask_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_disappears(t *testing.T) {
+func TestAccDataSyncTask_disappears(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfig(rName),
+				Config: testAccTaskConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					acctest.CheckResourceDisappears(acctest.Provider, tfdatasync.ResourceTask(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -153,21 +153,21 @@ func TestAccAWSDataSyncTask_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_schedule(t *testing.T) {
+func TestAccDataSyncTask_schedule(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskScheduleConfig(rName, "cron(0 12 ? * SUN,WED *)"),
+				Config: testAccTaskScheduleConfig(rName, "cron(0 12 ? * SUN,WED *)"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "schedule.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "schedule.0.schedule_expression", "cron(0 12 ? * SUN,WED *)"),
 				),
@@ -178,9 +178,9 @@ func TestAccAWSDataSyncTask_schedule(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskScheduleConfig(rName, "cron(0 12 ? * SUN,MON *)"),
+				Config: testAccTaskScheduleConfig(rName, "cron(0 12 ? * SUN,MON *)"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "schedule.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "schedule.0.schedule_expression", "cron(0 12 ? * SUN,MON *)"),
 				),
@@ -189,21 +189,21 @@ func TestAccAWSDataSyncTask_schedule(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_CloudWatchLogGroupARN(t *testing.T) {
+func TestAccDataSyncTask_cloudWatchLogGroupARN(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigCloudWatchLogGroupArn(rName),
+				Config: testAccTaskCloudWatchLogGroupARNConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttrPair(resourceName, "cloudwatch_log_group_arn", "aws_cloudwatch_log_group.test1", "arn"),
 				),
 			},
@@ -213,30 +213,30 @@ func TestAccAWSDataSyncTask_CloudWatchLogGroupARN(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigCloudWatchLogGroupArn2(rName),
+				Config: testAccTaskCloudWatchLogGroupARN2Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttrPair(resourceName, "cloudwatch_log_group_arn", "aws_cloudwatch_log_group.test2", "arn")),
 			},
 		},
 	})
 }
 
-func TestAccAWSDataSyncTask_Excludes(t *testing.T) {
+func TestAccDataSyncTask_excludes(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskExcludesConfig(rName, "/folder1|/folder2"),
+				Config: testAccTaskExcludesConfig(rName, "/folder1|/folder2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "excludes.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "excludes.0.filter_type", "SIMPLE_PATTERN"),
 					resource.TestCheckResourceAttr(resourceName, "excludes.0.value", "/folder1|/folder2"),
@@ -248,9 +248,9 @@ func TestAccAWSDataSyncTask_Excludes(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskExcludesConfig(rName, "/test"),
+				Config: testAccTaskExcludesConfig(rName, "/test"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "excludes.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "excludes.0.filter_type", "SIMPLE_PATTERN"),
 					resource.TestCheckResourceAttr(resourceName, "excludes.0.value", "/test"),
@@ -260,21 +260,21 @@ func TestAccAWSDataSyncTask_Excludes(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_AtimeMtime(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_atimeMtime(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsAtimeMtime(rName, "NONE", "NONE"),
+				Config: testAccTaskDefaultSyncOptionsAtimeMtimeConfig(rName, "NONE", "NONE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.atime", "NONE"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.mtime", "NONE"),
@@ -286,10 +286,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_AtimeMtime(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsAtimeMtime(rName, "BEST_EFFORT", "PRESERVE"),
+				Config: testAccTaskDefaultSyncOptionsAtimeMtimeConfig(rName, "BEST_EFFORT", "PRESERVE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.atime", "BEST_EFFORT"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.mtime", "PRESERVE"),
@@ -299,21 +299,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_AtimeMtime(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_BytesPerSecond(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_bytesPerSecond(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsBytesPerSecond(rName, 1),
+				Config: testAccTaskDefaultSyncOptionsBytesPerSecondConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.bytes_per_second", "1"),
 				),
@@ -324,10 +324,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_BytesPerSecond(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsBytesPerSecond(rName, 2),
+				Config: testAccTaskDefaultSyncOptionsBytesPerSecondConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.bytes_per_second", "2"),
 				),
@@ -336,21 +336,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_BytesPerSecond(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_Gid(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_gid(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsGid(rName, "NONE"),
+				Config: testAccTaskDefaultSyncOptionsGidConfig(rName, "NONE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.gid", "NONE"),
 				),
@@ -361,10 +361,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_Gid(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsGid(rName, "INT_VALUE"),
+				Config: testAccTaskDefaultSyncOptionsGidConfig(rName, "INT_VALUE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.gid", "INT_VALUE"),
 				),
@@ -373,21 +373,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_Gid(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_LogLevel(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_logLevel(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsLogLevel(rName, "OFF"),
+				Config: testAccTaskDefaultSyncOptionsLogLevelConfig(rName, "OFF"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.log_level", "OFF"),
 				),
@@ -398,10 +398,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_LogLevel(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsLogLevel(rName, "BASIC"),
+				Config: testAccTaskDefaultSyncOptionsLogLevelConfig(rName, "BASIC"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.log_level", "BASIC"),
 				),
@@ -410,21 +410,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_LogLevel(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_OverwriteMode(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_overwriteMode(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsOverwriteMode(rName, "NEVER"),
+				Config: testAccTaskDefaultSyncOptionsOverwriteModeConfig(rName, "NEVER"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.overwrite_mode", "NEVER"),
 				),
@@ -435,10 +435,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_OverwriteMode(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsOverwriteMode(rName, "ALWAYS"),
+				Config: testAccTaskDefaultSyncOptionsOverwriteModeConfig(rName, "ALWAYS"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.overwrite_mode", "ALWAYS"),
 				),
@@ -447,21 +447,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_OverwriteMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_PosixPermissions(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_posixPermissions(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsPosixPermissions(rName, "NONE"),
+				Config: testAccTaskDefaultSyncOptionsPOSIXPermissionsConfig(rName, "NONE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.posix_permissions", "NONE"),
 				),
@@ -472,10 +472,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_PosixPermissions(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsPosixPermissions(rName, "PRESERVE"),
+				Config: testAccTaskDefaultSyncOptionsPOSIXPermissionsConfig(rName, "PRESERVE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.posix_permissions", "PRESERVE"),
 				),
@@ -484,21 +484,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_PosixPermissions(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_PreserveDeletedFiles(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_preserveDeletedFiles(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsPreserveDeletedFiles(rName, "REMOVE"),
+				Config: testAccTaskDefaultSyncOptionsPreserveDeletedFilesConfig(rName, "REMOVE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.preserve_deleted_files", "REMOVE"),
 				),
@@ -509,10 +509,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_PreserveDeletedFiles(t *testing.T
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsPreserveDeletedFiles(rName, "PRESERVE"),
+				Config: testAccTaskDefaultSyncOptionsPreserveDeletedFilesConfig(rName, "PRESERVE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.preserve_deleted_files", "PRESERVE"),
 				),
@@ -521,21 +521,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_PreserveDeletedFiles(t *testing.T
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_PreserveDevices(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_preserveDevices(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsPreserveDevices(rName, "PRESERVE"),
+				Config: testAccTaskDefaultSyncOptionsPreserveDevicesConfig(rName, "PRESERVE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.preserve_devices", "PRESERVE"),
 				),
@@ -546,10 +546,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_PreserveDevices(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsPreserveDevices(rName, "NONE"),
+				Config: testAccTaskDefaultSyncOptionsPreserveDevicesConfig(rName, "NONE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.preserve_devices", "NONE"),
 				),
@@ -558,21 +558,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_PreserveDevices(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_TaskQueueing(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_taskQueueing(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsTaskQueueing(rName, "ENABLED"),
+				Config: testAccTaskDefaultSyncOptionsTaskQueueingConfig(rName, "ENABLED"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.task_queueing", "ENABLED"),
 				),
@@ -583,10 +583,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_TaskQueueing(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsTaskQueueing(rName, "DISABLED"),
+				Config: testAccTaskDefaultSyncOptionsTaskQueueingConfig(rName, "DISABLED"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.task_queueing", "DISABLED"),
 				),
@@ -595,21 +595,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_TaskQueueing(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_TransferMode(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_transferMode(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsTransferMode(rName, "CHANGED"),
+				Config: testAccTaskDefaultSyncOptionsTransferModeConfig(rName, "CHANGED"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.transfer_mode", "CHANGED"),
 				),
@@ -620,10 +620,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_TransferMode(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsTransferMode(rName, "ALL"),
+				Config: testAccTaskDefaultSyncOptionsTransferModeConfig(rName, "ALL"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.transfer_mode", "ALL"),
 				),
@@ -632,21 +632,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_TransferMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_Uid(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_uid(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsUid(rName, "NONE"),
+				Config: testAccTaskDefaultSyncOptionsUIDConfig(rName, "NONE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.uid", "NONE"),
 				),
@@ -657,10 +657,10 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_Uid(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsUid(rName, "INT_VALUE"),
+				Config: testAccTaskDefaultSyncOptionsUIDConfig(rName, "INT_VALUE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.uid", "INT_VALUE"),
 				),
@@ -669,21 +669,21 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_Uid(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_DefaultSyncOptions_VerifyMode(t *testing.T) {
+func TestAccDataSyncTask_DefaultSyncOptions_verifyMode(t *testing.T) {
 	var task1, task2, task3 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsVerifyMode(rName, "NONE"),
+				Config: testAccTaskDefaultSyncOptionsVerifyModeConfig(rName, "NONE"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.verify_mode", "NONE"),
 				),
@@ -694,19 +694,19 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_VerifyMode(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsVerifyMode(rName, "POINT_IN_TIME_CONSISTENT"),
+				Config: testAccTaskDefaultSyncOptionsVerifyModeConfig(rName, "POINT_IN_TIME_CONSISTENT"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.verify_mode", "POINT_IN_TIME_CONSISTENT"),
 				),
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigDefaultSyncOptionsVerifyMode(rName, "ONLY_FILES_TRANSFERRED"),
+				Config: testAccTaskDefaultSyncOptionsVerifyModeConfig(rName, "ONLY_FILES_TRANSFERRED"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task3),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task2, &task3),
+					testAccCheckTaskExists(resourceName, &task3),
+					testAccCheckTaskNotRecreated(&task2, &task3),
 					resource.TestCheckResourceAttr(resourceName, "options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "options.0.verify_mode", "ONLY_FILES_TRANSFERRED"),
 				),
@@ -715,22 +715,22 @@ func TestAccAWSDataSyncTask_DefaultSyncOptions_VerifyMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSyncTask_Tags(t *testing.T) {
+func TestAccDataSyncTask_tags(t *testing.T) {
 	acctest.Skip(t, "Tagging on creation is inconsistent")
 	var task1, task2, task3 datasync.DescribeTaskOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDataSyncTaskDestroy,
+		CheckDestroy: testAccCheckTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDataSyncTaskConfigTags1(rName, "key1", "value1"),
+				Config: testAccTaskTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task1),
+					testAccCheckTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -741,20 +741,20 @@ func TestAccAWSDataSyncTask_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccTaskTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task2),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task1, &task2),
+					testAccCheckTaskExists(resourceName, &task2),
+					testAccCheckTaskNotRecreated(&task1, &task2),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSDataSyncTaskConfigTags1(rName, "key1", "value1"),
+				Config: testAccTaskTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDataSyncTaskExists(resourceName, &task3),
-					testAccCheckAWSDataSyncTaskNotRecreated(&task2, &task3),
+					testAccCheckTaskExists(resourceName, &task3),
+					testAccCheckTaskNotRecreated(&task2, &task3),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -763,7 +763,7 @@ func TestAccAWSDataSyncTask_Tags(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSDataSyncTaskDestroy(s *terraform.State) error {
+func testAccCheckTaskDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DataSyncConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -787,7 +787,7 @@ func testAccCheckAWSDataSyncTaskDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSDataSyncTaskExists(resourceName string, task *datasync.DescribeTaskOutput) resource.TestCheckFunc {
+func testAccCheckTaskExists(resourceName string, task *datasync.DescribeTaskOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -813,7 +813,7 @@ func testAccCheckAWSDataSyncTaskExists(resourceName string, task *datasync.Descr
 	}
 }
 
-func testAccCheckAWSDataSyncTaskNotRecreated(i, j *datasync.DescribeTaskOutput) resource.TestCheckFunc {
+func testAccCheckTaskNotRecreated(i, j *datasync.DescribeTaskOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(i.TaskArn) != aws.StringValue(j.TaskArn) {
 			return errors.New("DataSync Task was recreated")
@@ -823,7 +823,7 @@ func testAccCheckAWSDataSyncTaskNotRecreated(i, j *datasync.DescribeTaskOutput) 
 	}
 }
 
-func testAccPreCheckAWSDataSync(t *testing.T) {
+func testAccPreCheck(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DataSyncConn
 
 	input := &datasync.ListTasksInput{
@@ -841,7 +841,7 @@ func testAccPreCheckAWSDataSync(t *testing.T) {
 	}
 }
 
-func testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName string) string {
+func testAccTaskDestinationLocationS3BaseConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "destination" {
   name = "%[1]s-destination"
@@ -897,7 +897,7 @@ resource "aws_datasync_location_s3" "destination" {
 `, rName)
 }
 
-func testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName string) string {
+func testAccTaskSourceLocationNFSBaseConfig(rName string) string {
 	return acctest.ConfigCompose(
 		// Reference: https://docs.aws.amazon.com/datasync/latest/userguide/agent-requirements.html
 		acctest.AvailableEC2InstanceTypeForAvailabilityZone("aws_subnet.source.availability_zone", "m5.2xlarge", "m5.4xlarge"),
@@ -1011,10 +1011,10 @@ resource "aws_datasync_location_nfs" "source" {
 `, rName))
 }
 
-func testAccAWSDataSyncTaskConfig(rName string) string {
+func testAccTaskConfig(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1024,10 +1024,10 @@ resource "aws_datasync_task" "test" {
 `, rName))
 }
 
-func testAccAWSDataSyncTaskScheduleConfig(rName, cron string) string {
+func testAccTaskScheduleConfig(rName, cron string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1041,10 +1041,10 @@ resource "aws_datasync_task" "test" {
 `, rName, cron))
 }
 
-func testAccAWSDataSyncTaskConfigCloudWatchLogGroupArn(rName string) string {
+func testAccTaskCloudWatchLogGroupARNConfig(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_cloudwatch_log_group" "test1" {
   name = "%[1]s-1"
@@ -1059,10 +1059,10 @@ resource "aws_datasync_task" "test" {
 `, rName))
 }
 
-func testAccAWSDataSyncTaskConfigCloudWatchLogGroupArn2(rName string) string {
+func testAccTaskCloudWatchLogGroupARN2Config(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_cloudwatch_log_group" "test1" {
   name = "%[1]s-1"
@@ -1081,10 +1081,10 @@ resource "aws_datasync_task" "test" {
 `, rName))
 }
 
-func testAccAWSDataSyncTaskExcludesConfig(rName, value string) string {
+func testAccTaskExcludesConfig(rName, value string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1099,10 +1099,10 @@ resource "aws_datasync_task" "test" {
 `, rName, value))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsAtimeMtime(rName, atime, mtime string) string {
+func testAccTaskDefaultSyncOptionsAtimeMtimeConfig(rName, atime, mtime string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1117,10 +1117,10 @@ resource "aws_datasync_task" "test" {
 `, rName, atime, mtime))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsBytesPerSecond(rName string, bytesPerSecond int) string {
+func testAccTaskDefaultSyncOptionsBytesPerSecondConfig(rName string, bytesPerSecond int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1134,10 +1134,10 @@ resource "aws_datasync_task" "test" {
 `, rName, bytesPerSecond))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsGid(rName, gid string) string {
+func testAccTaskDefaultSyncOptionsGidConfig(rName, gid string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1151,10 +1151,10 @@ resource "aws_datasync_task" "test" {
 `, rName, gid))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsLogLevel(rName, logLevel string) string {
+func testAccTaskDefaultSyncOptionsLogLevelConfig(rName, logLevel string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_cloudwatch_log_group" "test" {
   name = %[1]q
@@ -1173,10 +1173,10 @@ resource "aws_datasync_task" "test" {
 `, rName, logLevel))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsOverwriteMode(rName, overwriteMode string) string {
+func testAccTaskDefaultSyncOptionsOverwriteModeConfig(rName, overwriteMode string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1190,10 +1190,10 @@ resource "aws_datasync_task" "test" {
 `, rName, overwriteMode))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsPosixPermissions(rName, posixPermissions string) string {
+func testAccTaskDefaultSyncOptionsPOSIXPermissionsConfig(rName, posixPermissions string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1207,10 +1207,10 @@ resource "aws_datasync_task" "test" {
 `, rName, posixPermissions))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsPreserveDeletedFiles(rName, preserveDeletedFiles string) string {
+func testAccTaskDefaultSyncOptionsPreserveDeletedFilesConfig(rName, preserveDeletedFiles string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1224,10 +1224,10 @@ resource "aws_datasync_task" "test" {
 `, rName, preserveDeletedFiles))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsPreserveDevices(rName, preserveDevices string) string {
+func testAccTaskDefaultSyncOptionsPreserveDevicesConfig(rName, preserveDevices string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1241,10 +1241,10 @@ resource "aws_datasync_task" "test" {
 `, rName, preserveDevices))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsTaskQueueing(rName, taskQueueing string) string {
+func testAccTaskDefaultSyncOptionsTaskQueueingConfig(rName, taskQueueing string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1258,10 +1258,10 @@ resource "aws_datasync_task" "test" {
 `, rName, taskQueueing))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsTransferMode(rName, transferMode string) string {
+func testAccTaskDefaultSyncOptionsTransferModeConfig(rName, transferMode string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1275,10 +1275,10 @@ resource "aws_datasync_task" "test" {
 `, rName, transferMode))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsUid(rName, uid string) string {
+func testAccTaskDefaultSyncOptionsUIDConfig(rName, uid string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1292,10 +1292,10 @@ resource "aws_datasync_task" "test" {
 `, rName, uid))
 }
 
-func testAccAWSDataSyncTaskConfigDefaultSyncOptionsVerifyMode(rName, verifyMode string) string {
+func testAccTaskDefaultSyncOptionsVerifyModeConfig(rName, verifyMode string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1309,10 +1309,10 @@ resource "aws_datasync_task" "test" {
 `, rName, verifyMode))
 }
 
-func testAccAWSDataSyncTaskConfigTags1(rName, key1, value1 string) string {
+func testAccTaskTags1Config(rName, key1, value1 string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
@@ -1326,10 +1326,10 @@ resource "aws_datasync_task" "test" {
 `, rName, key1, value1))
 }
 
-func testAccAWSDataSyncTaskConfigTags2(rName, key1, value1, key2, value2 string) string {
+func testAccTaskTags2Config(rName, key1, value1, key2, value2 string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDataSyncTaskConfigDestinationLocationS3Base(rName),
-		testAccAWSDataSyncTaskConfigSourceLocationNfsBase(rName),
+		testAccTaskDestinationLocationS3BaseConfig(rName),
+		testAccTaskSourceLocationNFSBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_datasync_task" "test" {
   destination_location_arn = aws_datasync_location_s3.destination.arn
