@@ -17,7 +17,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSS3BucketNotification_LambdaFunction(t *testing.T) {
+func TestAccS3BucketNotification_lambdaFunction(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_bucket_notification.notification"
 
@@ -25,12 +25,12 @@ func TestAccAWSS3BucketNotification_LambdaFunction(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3BucketNotificationDestroy,
+		CheckDestroy: testAccCheckBucketNotificationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3BucketNotificationConfigLambdaFunction(rName),
+				Config: testAccBucketNotificationLambdaFunctionConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3BucketLambdaFunctionConfiguration(
+					testAccCheckBucketLambdaFunctionConfiguration(
 						"aws_s3_bucket.bucket",
 						"notification-lambda",
 						"aws_lambda_function.func",
@@ -59,7 +59,7 @@ func TestAccAWSS3BucketNotification_LambdaFunction(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3BucketNotification_LambdaFunction_LambdaFunctionArn_Alias(t *testing.T) {
+func TestAccS3BucketNotification_LambdaFunctionLambdaFunctionARN_alias(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_bucket_notification.test"
 
@@ -67,12 +67,12 @@ func TestAccAWSS3BucketNotification_LambdaFunction_LambdaFunctionArn_Alias(t *te
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3BucketNotificationDestroy,
+		CheckDestroy: testAccCheckBucketNotificationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3BucketNotificationConfigLambdaFunctionLambdaFunctionArnAlias(rName),
+				Config: testAccBucketNotificationLambdaFunctionLambdaFunctionARNAliasConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3BucketLambdaFunctionConfiguration(
+					testAccCheckBucketLambdaFunctionConfiguration(
 						"aws_s3_bucket.test",
 						"test",
 						"aws_lambda_alias.test",
@@ -90,7 +90,7 @@ func TestAccAWSS3BucketNotification_LambdaFunction_LambdaFunctionArn_Alias(t *te
 	})
 }
 
-func TestAccAWSS3BucketNotification_Queue(t *testing.T) {
+func TestAccS3BucketNotification_queue(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_bucket_notification.notification"
 
@@ -98,12 +98,12 @@ func TestAccAWSS3BucketNotification_Queue(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3BucketNotificationDestroy,
+		CheckDestroy: testAccCheckBucketNotificationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3BucketNotificationConfigQueue(rName),
+				Config: testAccBucketNotificationQueueConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3BucketQueueNotification(
+					testAccCheckBucketQueueNotification(
 						"aws_s3_bucket.bucket",
 						"notification-sqs",
 						"aws_sqs_queue.queue",
@@ -132,7 +132,7 @@ func TestAccAWSS3BucketNotification_Queue(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3BucketNotification_Topic(t *testing.T) {
+func TestAccS3BucketNotification_topic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_bucket_notification.notification"
 
@@ -140,12 +140,12 @@ func TestAccAWSS3BucketNotification_Topic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3BucketNotificationDestroy,
+		CheckDestroy: testAccCheckBucketNotificationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3BucketNotificationConfigTopic(rName),
+				Config: testAccBucketNotificationTopicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3BucketTopicNotification(
+					testAccCheckBucketTopicNotification(
 						"aws_s3_bucket.bucket",
 						"notification-sns1",
 						"aws_sns_topic.topic",
@@ -163,7 +163,7 @@ func TestAccAWSS3BucketNotification_Topic(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3BucketNotification_Topic_Multiple(t *testing.T) {
+func TestAccS3BucketNotification_Topic_multiple(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_bucket_notification.notification"
 
@@ -171,12 +171,12 @@ func TestAccAWSS3BucketNotification_Topic_Multiple(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3BucketNotificationDestroy,
+		CheckDestroy: testAccCheckBucketNotificationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3BucketNotificationConfigTopicMultiple(rName),
+				Config: testAccBucketNotificationTopicMultipleConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3BucketTopicNotification(
+					testAccCheckBucketTopicNotification(
 						"aws_s3_bucket.bucket",
 						"notification-sns1",
 						"aws_sns_topic.topic",
@@ -194,7 +194,7 @@ func TestAccAWSS3BucketNotification_Topic_Multiple(t *testing.T) {
 							},
 						},
 					),
-					testAccCheckAWSS3BucketTopicNotification(
+					testAccCheckBucketTopicNotification(
 						"aws_s3_bucket.bucket",
 						"notification-sns2",
 						"aws_sns_topic.topic",
@@ -219,19 +219,19 @@ func TestAccAWSS3BucketNotification_Topic_Multiple(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3BucketNotification_update(t *testing.T) {
+func TestAccS3BucketNotification_update(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3BucketNotificationDestroy,
+		CheckDestroy: testAccCheckBucketNotificationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3BucketNotificationConfigTopic(rName),
+				Config: testAccBucketNotificationTopicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3BucketTopicNotification(
+					testAccCheckBucketTopicNotification(
 						"aws_s3_bucket.bucket",
 						"notification-sns1",
 						"aws_sns_topic.topic",
@@ -241,9 +241,9 @@ func TestAccAWSS3BucketNotification_update(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSS3BucketNotificationConfigQueue(rName),
+				Config: testAccBucketNotificationQueueConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3BucketQueueNotification(
+					testAccCheckBucketQueueNotification(
 						"aws_s3_bucket.bucket",
 						"notification-sqs",
 						"aws_sqs_queue.queue",
@@ -267,7 +267,7 @@ func TestAccAWSS3BucketNotification_update(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSS3BucketNotificationDestroy(s *terraform.State) error {
+func testAccCheckBucketNotificationDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).S3Conn
 
 	for _, rs := range s.RootModule().Resources {
@@ -304,7 +304,7 @@ func testAccCheckAWSS3BucketNotificationDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSS3BucketTopicNotification(n, i, t string, events []string, filters *s3.KeyFilter) resource.TestCheckFunc {
+func testAccCheckBucketTopicNotification(n, i, t string, events []string, filters *s3.KeyFilter) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs := s.RootModule().Resources[n]
 		topicArn := s.RootModule().Resources[t].Primary.ID
@@ -361,7 +361,7 @@ func testAccCheckAWSS3BucketTopicNotification(n, i, t string, events []string, f
 	}
 }
 
-func testAccCheckAWSS3BucketQueueNotification(n, i, t string, events []string, filters *s3.KeyFilter) resource.TestCheckFunc {
+func testAccCheckBucketQueueNotification(n, i, t string, events []string, filters *s3.KeyFilter) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs := s.RootModule().Resources[n]
 		queueArn := s.RootModule().Resources[t].Primary.Attributes["arn"]
@@ -418,7 +418,7 @@ func testAccCheckAWSS3BucketQueueNotification(n, i, t string, events []string, f
 	}
 }
 
-func testAccCheckAWSS3BucketLambdaFunctionConfiguration(n, i, t string, events []string, filters *s3.KeyFilter) resource.TestCheckFunc {
+func testAccCheckBucketLambdaFunctionConfiguration(n, i, t string, events []string, filters *s3.KeyFilter) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs := s.RootModule().Resources[n]
 		funcArn := s.RootModule().Resources[t].Primary.Attributes["arn"]
@@ -475,7 +475,7 @@ func testAccCheckAWSS3BucketLambdaFunctionConfiguration(n, i, t string, events [
 	}
 }
 
-func testAccAWSS3BucketNotificationConfigTopicMultiple(rName string) string {
+func testAccBucketNotificationTopicMultipleConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -539,7 +539,7 @@ resource "aws_s3_bucket_notification" "notification" {
 `, rName)
 }
 
-func testAccAWSS3BucketNotificationConfigQueue(rName string) string {
+func testAccBucketNotificationQueueConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -590,7 +590,7 @@ resource "aws_s3_bucket_notification" "notification" {
 `, rName)
 }
 
-func testAccAWSS3BucketNotificationConfigLambdaFunction(rName string) string {
+func testAccBucketNotificationLambdaFunctionConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -654,7 +654,7 @@ resource "aws_s3_bucket_notification" "notification" {
 `, rName)
 }
 
-func testAccAWSS3BucketNotificationConfigLambdaFunctionLambdaFunctionArnAlias(rName string) string {
+func testAccBucketNotificationLambdaFunctionLambdaFunctionARNAliasConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -717,7 +717,7 @@ resource "aws_s3_bucket_notification" "test" {
 `, rName)
 }
 
-func testAccAWSS3BucketNotificationConfigTopic(rName string) string {
+func testAccBucketNotificationTopicConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
