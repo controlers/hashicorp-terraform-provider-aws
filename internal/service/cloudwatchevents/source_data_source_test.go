@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsCloudWatchEventSource_basic(t *testing.T) {
+func TestAccCloudWatchEventsSourceDataSource_basic(t *testing.T) {
 	key := "EVENT_BRIDGE_PARTNER_EVENT_SOURCE_NAME"
 	busName := os.Getenv(key)
 	if busName == "" {
@@ -32,7 +32,7 @@ func TestAccDataSourceAwsCloudWatchEventSource_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDataSourcePartnerEventSourceConfig(busName),
+				Config: testAccPartnerEventSourceDataSourceConfig(busName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "name", busName),
 					resource.TestCheckResourceAttr(dataSourceName, "created_by", createdBy),
@@ -43,7 +43,7 @@ func TestAccDataSourceAwsCloudWatchEventSource_basic(t *testing.T) {
 	})
 }
 
-func testAccAwsDataSourcePartnerEventSourceConfig(namePrefix string) string {
+func testAccPartnerEventSourceDataSourceConfig(namePrefix string) string {
 	return fmt.Sprintf(`
 data "aws_cloudwatch_event_source" "test" {
   name_prefix = "%s"

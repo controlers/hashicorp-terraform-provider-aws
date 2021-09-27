@@ -77,7 +77,7 @@ func testSweepCloudWatchEventBuses(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSCloudWatchEventBus_basic(t *testing.T) {
+func TestAccCloudWatchEventsBus_basic(t *testing.T) {
 	var v1, v2, v3 events.DescribeEventBusOutput
 	busName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	busNameModified := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -88,10 +88,10 @@ func TestAccAWSCloudWatchEventBus_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCloudWatchEventBusDestroy,
+		CheckDestroy: testAccCheckBusDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudWatchEventBusConfig(busName),
+				Config: testAccBusConfig(busName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &v1),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "events", fmt.Sprintf("event-bus/%s", busName)),
@@ -106,7 +106,7 @@ func TestAccAWSCloudWatchEventBus_basic(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCloudWatchEventBusConfig(busNameModified),
+				Config: testAccBusConfig(busNameModified),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &v2),
 					testAccCheckCloudWatchEventBusRecreated(&v1, &v2),
@@ -117,7 +117,7 @@ func TestAccAWSCloudWatchEventBus_basic(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCloudWatchEventBusConfig_Tags1(busNameModified, "key", "value"),
+				Config: testAccBusConfig_Tags1(busNameModified, "key", "value"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &v3),
 					testAccCheckCloudWatchEventBusNotRecreated(&v2, &v3),
@@ -129,7 +129,7 @@ func TestAccAWSCloudWatchEventBus_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudWatchEventBus_tags(t *testing.T) {
+func TestAccCloudWatchEventsBus_tags(t *testing.T) {
 	var v1, v2, v3, v4 events.DescribeEventBusOutput
 	busName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -139,10 +139,10 @@ func TestAccAWSCloudWatchEventBus_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCloudWatchEventBusDestroy,
+		CheckDestroy: testAccCheckBusDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudWatchEventBusConfig_Tags1(busName, "key1", "value"),
+				Config: testAccBusConfig_Tags1(busName, "key1", "value"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &v1),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -155,7 +155,7 @@ func TestAccAWSCloudWatchEventBus_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCloudWatchEventBusConfig_Tags2(busName, "key1", "updated", "key2", "added"),
+				Config: testAccBusConfig_Tags2(busName, "key1", "updated", "key2", "added"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &v2),
 					testAccCheckCloudWatchEventBusNotRecreated(&v1, &v2),
@@ -165,7 +165,7 @@ func TestAccAWSCloudWatchEventBus_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCloudWatchEventBusConfig_Tags1(busName, "key2", "added"),
+				Config: testAccBusConfig_Tags1(busName, "key2", "added"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &v3),
 					testAccCheckCloudWatchEventBusNotRecreated(&v2, &v3),
@@ -174,7 +174,7 @@ func TestAccAWSCloudWatchEventBus_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCloudWatchEventBusConfig(busName),
+				Config: testAccBusConfig(busName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &v4),
 					testAccCheckCloudWatchEventBusNotRecreated(&v3, &v4),
@@ -185,22 +185,22 @@ func TestAccAWSCloudWatchEventBus_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudWatchEventBus_default(t *testing.T) {
+func TestAccCloudWatchEventsBus_default(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCloudWatchEventBusDestroy,
+		CheckDestroy: testAccCheckBusDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSCloudWatchEventBusConfig("default"),
+				Config:      testAccBusConfig("default"),
 				ExpectError: regexp.MustCompile(`cannot be 'default'`),
 			},
 		},
 	})
 }
 
-func TestAccAWSCloudWatchEventBus_disappears(t *testing.T) {
+func TestAccCloudWatchEventsBus_disappears(t *testing.T) {
 	var v events.DescribeEventBusOutput
 	busName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -210,10 +210,10 @@ func TestAccAWSCloudWatchEventBus_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCloudWatchEventBusDestroy,
+		CheckDestroy: testAccCheckBusDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudWatchEventBusConfig(busName),
+				Config: testAccBusConfig(busName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &v),
 					acctest.CheckResourceDisappears(acctest.Provider, tfcloudwatchevents.ResourceBus(), resourceName),
@@ -224,7 +224,7 @@ func TestAccAWSCloudWatchEventBus_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudWatchEventBus_PartnerEventSource(t *testing.T) {
+func TestAccCloudWatchEventsBus_partnerEventSource(t *testing.T) {
 	key := "EVENT_BRIDGE_PARTNER_EVENT_SOURCE_NAME"
 	busName := os.Getenv(key)
 	if busName == "" {
@@ -238,10 +238,10 @@ func TestAccAWSCloudWatchEventBus_PartnerEventSource(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCloudWatchEventBusDestroy,
+		CheckDestroy: testAccCheckBusDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudWatchEventBusPartnerEventSourceConfig(busName),
+				Config: testAccBusPartnerEventSourceConfig(busName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventBusExists(resourceName, &busOutput),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "events", fmt.Sprintf("event-bus/%s", busName)),
@@ -254,7 +254,7 @@ func TestAccAWSCloudWatchEventBus_PartnerEventSource(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSCloudWatchEventBusDestroy(s *terraform.State) error {
+func testAccCheckBusDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).CloudWatchEventsConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -319,7 +319,7 @@ func testAccCheckCloudWatchEventBusNotRecreated(i, j *events.DescribeEventBusOut
 	}
 }
 
-func testAccAWSCloudWatchEventBusConfig(name string) string {
+func testAccBusConfig(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_bus" "test" {
   name = %[1]q
@@ -327,7 +327,7 @@ resource "aws_cloudwatch_event_bus" "test" {
 `, name)
 }
 
-func testAccAWSCloudWatchEventBusConfig_Tags1(name, key, value string) string {
+func testAccBusConfig_Tags1(name, key, value string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_bus" "test" {
   name = %[1]q
@@ -339,7 +339,7 @@ resource "aws_cloudwatch_event_bus" "test" {
 `, name, key, value)
 }
 
-func testAccAWSCloudWatchEventBusConfig_Tags2(name, key1, value1, key2, value2 string) string {
+func testAccBusConfig_Tags2(name, key1, value1, key2, value2 string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_bus" "test" {
   name = %[1]q
@@ -352,7 +352,7 @@ resource "aws_cloudwatch_event_bus" "test" {
 `, name, key1, value1, key2, value2)
 }
 
-func testAccAWSCloudWatchEventBusPartnerEventSourceConfig(name string) string {
+func testAccBusPartnerEventSourceConfig(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_bus" "test" {
   name              = %[1]q

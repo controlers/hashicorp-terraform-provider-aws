@@ -70,7 +70,7 @@ func testSweepCloudWatchEventPermissions(region string) error {
 	return nil
 }
 
-func TestAccAWSCloudWatchEventPermission_basic(t *testing.T) {
+func TestAccCloudWatchEventsPermission_basic(t *testing.T) {
 	principal1 := "111111111111"
 	principal2 := "*"
 	statementID := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -83,35 +83,35 @@ func TestAccAWSCloudWatchEventPermission_basic(t *testing.T) {
 		CheckDestroy: testAccCheckCloudWatchEventPermissionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic("", statementID),
+				Config:      testAccCheckPermissionResourceBasicConfig("", statementID),
 				ExpectError: regexp.MustCompile(`must be \* or a 12 digit AWS account ID`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(".", statementID),
+				Config:      testAccCheckPermissionResourceBasicConfig(".", statementID),
 				ExpectError: regexp.MustCompile(`must be \* or a 12 digit AWS account ID`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic("12345678901", statementID),
+				Config:      testAccCheckPermissionResourceBasicConfig("12345678901", statementID),
 				ExpectError: regexp.MustCompile(`must be \* or a 12 digit AWS account ID`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic("abcdefghijkl", statementID),
+				Config:      testAccCheckPermissionResourceBasicConfig("abcdefghijkl", statementID),
 				ExpectError: regexp.MustCompile(`must be \* or a 12 digit AWS account ID`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(principal1, ""),
+				Config:      testAccCheckPermissionResourceBasicConfig(principal1, ""),
 				ExpectError: regexp.MustCompile(`must be between 1 and 64 characters`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(principal1, sdkacctest.RandString(65)),
+				Config:      testAccCheckPermissionResourceBasicConfig(principal1, sdkacctest.RandString(65)),
 				ExpectError: regexp.MustCompile(`must be between 1 and 64 characters`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(principal1, " "),
+				Config:      testAccCheckPermissionResourceBasicConfig(principal1, " "),
 				ExpectError: regexp.MustCompile(`must be one or more alphanumeric, hyphen, or underscore characters`),
 			},
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(principal1, statementID),
+				Config: testAccCheckPermissionResourceBasicConfig(principal1, statementID),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "action", "events:PutEvents"),
@@ -122,7 +122,7 @@ func TestAccAWSCloudWatchEventPermission_basic(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(principal2, statementID),
+				Config: testAccCheckPermissionResourceBasicConfig(principal2, statementID),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "principal", principal2),
@@ -134,14 +134,14 @@ func TestAccAWSCloudWatchEventPermission_basic(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config:   testAccCheckAwsCloudWatchEventPermissionResourceConfigDefaultEventBusName(principal2, statementID),
+				Config:   testAccCheckPermissionResourceDefaultEventBusNameConfig(principal2, statementID),
 				PlanOnly: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSCloudWatchEventPermission_EventBusName(t *testing.T) {
+func TestAccCloudWatchEventsPermission_eventBusName(t *testing.T) {
 	principal1 := "111111111111"
 	statementID := sdkacctest.RandomWithPrefix("tf-acc-test")
 	busName := sdkacctest.RandomWithPrefix("tf-acc-test-bus")
@@ -155,7 +155,7 @@ func TestAccAWSCloudWatchEventPermission_EventBusName(t *testing.T) {
 		CheckDestroy: testAccCheckCloudWatchEventPermissionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigEventBusName(principal1, busName, statementID),
+				Config: testAccCheckPermissionResourceEventBusNameConfig(principal1, busName, statementID),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "action", "events:PutEvents"),
@@ -174,7 +174,7 @@ func TestAccAWSCloudWatchEventPermission_EventBusName(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudWatchEventPermission_Action(t *testing.T) {
+func TestAccCloudWatchEventsPermission_action(t *testing.T) {
 	principal := "111111111111"
 	statementID := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cloudwatch_event_permission.test"
@@ -186,23 +186,23 @@ func TestAccAWSCloudWatchEventPermission_Action(t *testing.T) {
 		CheckDestroy: testAccCheckCloudWatchEventPermissionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigAction("", principal, statementID),
+				Config:      testAccCheckPermissionResourceActionConfig("", principal, statementID),
 				ExpectError: regexp.MustCompile(`must be between 1 and 64 characters`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigAction(sdkacctest.RandString(65), principal, statementID),
+				Config:      testAccCheckPermissionResourceActionConfig(sdkacctest.RandString(65), principal, statementID),
 				ExpectError: regexp.MustCompile(`must be between 1 and 64 characters`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigAction("events:", principal, statementID),
+				Config:      testAccCheckPermissionResourceActionConfig("events:", principal, statementID),
 				ExpectError: regexp.MustCompile(`must be: events: followed by one or more alphabetic characters`),
 			},
 			{
-				Config:      testAccCheckAwsCloudWatchEventPermissionResourceConfigAction("events:1", principal, statementID),
+				Config:      testAccCheckPermissionResourceActionConfig("events:1", principal, statementID),
 				ExpectError: regexp.MustCompile(`must be: events: followed by one or more alphabetic characters`),
 			},
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigAction("events:PutEvents", principal, statementID),
+				Config: testAccCheckPermissionResourceActionConfig("events:PutEvents", principal, statementID),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "action", "events:PutEvents"),
@@ -217,7 +217,7 @@ func TestAccAWSCloudWatchEventPermission_Action(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudWatchEventPermission_Condition(t *testing.T) {
+func TestAccCloudWatchEventsPermission_condition(t *testing.T) {
 	statementID := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cloudwatch_event_permission.test"
 
@@ -228,7 +228,7 @@ func TestAccAWSCloudWatchEventPermission_Condition(t *testing.T) {
 		CheckDestroy: testAccCheckCloudWatchEventPermissionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigConditionOrganization(statementID, "o-1234567890"),
+				Config: testAccCheckPermissionResourceConditionOrganizationConfig(statementID, "o-1234567890"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "condition.#", "1"),
@@ -238,7 +238,7 @@ func TestAccAWSCloudWatchEventPermission_Condition(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigConditionOrganization(statementID, "o-0123456789"),
+				Config: testAccCheckPermissionResourceConditionOrganizationConfig(statementID, "o-0123456789"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "condition.#", "1"),
@@ -256,7 +256,7 @@ func TestAccAWSCloudWatchEventPermission_Condition(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudWatchEventPermission_Multiple(t *testing.T) {
+func TestAccCloudWatchEventsPermission_multiple(t *testing.T) {
 	principal1 := "111111111111"
 	principal2 := "222222222222"
 	statementID1 := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -271,7 +271,7 @@ func TestAccAWSCloudWatchEventPermission_Multiple(t *testing.T) {
 		CheckDestroy: testAccCheckCloudWatchEventPermissionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(principal1, statementID1),
+				Config: testAccCheckPermissionResourceBasicConfig(principal1, statementID1),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName1),
 					resource.TestCheckResourceAttr(resourceName1, "principal", principal1),
@@ -279,7 +279,7 @@ func TestAccAWSCloudWatchEventPermission_Multiple(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigMultiple(principal1, statementID1, principal2, statementID2),
+				Config: testAccCheckPermissionResourceMultipleConfig(principal1, statementID1, principal2, statementID2),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName1),
 					testAccCheckCloudWatchEventPermissionExists(resourceName2),
@@ -293,7 +293,7 @@ func TestAccAWSCloudWatchEventPermission_Multiple(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudWatchEventPermission_Disappears(t *testing.T) {
+func TestAccCloudWatchEventsPermission_disappears(t *testing.T) {
 	resourceName := "aws_cloudwatch_event_permission.test"
 	principal := "111111111111"
 	statementID := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -305,7 +305,7 @@ func TestAccAWSCloudWatchEventPermission_Disappears(t *testing.T) {
 		CheckDestroy: testAccCheckCloudWatchEventPermissionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(principal, statementID),
+				Config: testAccCheckPermissionResourceBasicConfig(principal, statementID),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchEventPermissionExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfcloudwatchevents.ResourcePermission(), resourceName),
@@ -404,7 +404,7 @@ func testAccCheckCloudWatchEventPermissionDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsCloudWatchEventPermissionResourceConfigBasic(principal, statementID string) string {
+func testAccCheckPermissionResourceBasicConfig(principal, statementID string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_permission" "test" {
   principal    = "%[1]s"
@@ -413,7 +413,7 @@ resource "aws_cloudwatch_event_permission" "test" {
 `, principal, statementID)
 }
 
-func testAccCheckAwsCloudWatchEventPermissionResourceConfigDefaultEventBusName(principal, statementID string) string {
+func testAccCheckPermissionResourceDefaultEventBusNameConfig(principal, statementID string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_permission" "test" {
   principal      = %[1]q
@@ -423,7 +423,7 @@ resource "aws_cloudwatch_event_permission" "test" {
 `, principal, statementID)
 }
 
-func testAccCheckAwsCloudWatchEventPermissionResourceConfigEventBusName(principal, busName, statementID string) string {
+func testAccCheckPermissionResourceEventBusNameConfig(principal, busName, statementID string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_permission" "test" {
   principal      = %[1]q
@@ -437,7 +437,7 @@ resource "aws_cloudwatch_event_bus" "test" {
 `, principal, statementID, busName)
 }
 
-func testAccCheckAwsCloudWatchEventPermissionResourceConfigAction(action, principal, statementID string) string {
+func testAccCheckPermissionResourceActionConfig(action, principal, statementID string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_permission" "test" {
   action       = "%[1]s"
@@ -447,7 +447,7 @@ resource "aws_cloudwatch_event_permission" "test" {
 `, action, principal, statementID)
 }
 
-func testAccCheckAwsCloudWatchEventPermissionResourceConfigConditionOrganization(statementID, value string) string {
+func testAccCheckPermissionResourceConditionOrganizationConfig(statementID, value string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_permission" "test" {
   principal    = "*"
@@ -462,7 +462,7 @@ resource "aws_cloudwatch_event_permission" "test" {
 `, statementID, value)
 }
 
-func testAccCheckAwsCloudWatchEventPermissionResourceConfigMultiple(principal1, statementID1, principal2, statementID2 string) string {
+func testAccCheckPermissionResourceMultipleConfig(principal1, statementID1, principal2, statementID2 string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudwatch_event_permission" "test" {
   principal    = "%[1]s"
