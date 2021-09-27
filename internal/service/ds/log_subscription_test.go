@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSDirectoryServiceLogSubscription_basic(t *testing.T) {
+func TestAccDirectoryServiceLogSubscription_basic(t *testing.T) {
 	resourceName := "aws_directory_service_log_subscription.subscription"
 	logGroupName := "ad-service-log-subscription-test"
 
@@ -21,13 +21,13 @@ func TestAccAWSDirectoryServiceLogSubscription_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckDirectoryService(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directoryservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDirectoryServiceLogSubscriptionDestroy,
+		CheckDestroy: testAccCheckLogSubscriptionDestroy,
 		Steps: []resource.TestStep{
 			// test create
 			{
 				Config: testAccDirectoryServiceLogSubscriptionConfig(logGroupName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDirectoryServiceLogSubscriptionExists(
+					testAccCheckLogSubscriptionExists(
 						resourceName,
 						logGroupName,
 					),
@@ -43,7 +43,7 @@ func TestAccAWSDirectoryServiceLogSubscription_basic(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsDirectoryServiceLogSubscriptionDestroy(s *terraform.State) error {
+func testAccCheckLogSubscriptionDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DirectoryServiceConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -71,7 +71,7 @@ func testAccCheckAwsDirectoryServiceLogSubscriptionDestroy(s *terraform.State) e
 	return nil
 }
 
-func testAccCheckAwsDirectoryServiceLogSubscriptionExists(name string, logGroupName string) resource.TestCheckFunc {
+func testAccCheckLogSubscriptionExists(name string, logGroupName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
