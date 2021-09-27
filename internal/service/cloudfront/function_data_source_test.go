@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAWSCloudfrontFunction_basic(t *testing.T) {
+func TestAccCloudFrontFunctionDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_cloudfront_function.test"
 	resourceName := "aws_cloudfront_function.test"
@@ -21,7 +21,7 @@ func TestAccDataSourceAWSCloudfrontFunction_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSCloudfrontFunctionConfigBasic(rName),
+				Config: testAccFunctionBasicDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "code", resourceName, "code"),
@@ -37,7 +37,7 @@ func TestAccDataSourceAWSCloudfrontFunction_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAWSCloudfrontFunctionConfigBasic(rName string) string {
+func testAccFunctionBasicDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_function" "test" {
   name    = %[1]q

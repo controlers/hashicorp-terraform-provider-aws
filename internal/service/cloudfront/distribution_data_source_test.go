@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDataSourceCloudFrontDistribution_basic(t *testing.T) {
+func TestAccCloudFrontDistributionDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_cloudfront_distribution.test"
 	resourceName := "aws_cloudfront_distribution.s3_distribution"
 	rInt := sdkacctest.RandInt()
@@ -20,7 +20,7 @@ func TestAccAWSDataSourceCloudFrontDistribution_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionDataConfig(rInt),
+				Config: testAccDistributionDataConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "domain_name", resourceName, "domain_name"),
@@ -35,9 +35,9 @@ func TestAccAWSDataSourceCloudFrontDistribution_basic(t *testing.T) {
 	})
 }
 
-func testAccAWSCloudFrontDistributionDataConfig(rInt int) string {
+func testAccDistributionDataConfig(rInt int) string {
 	return acctest.ConfigCompose(
-		testAccAWSCloudFrontDistributionS3ConfigWithTags(rInt),
+		testAccDistributionS3WithTagsConfig(rInt),
 		`
 data "aws_cloudfront_distribution" "test" {
   id = aws_cloudfront_distribution.s3_distribution.id

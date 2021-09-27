@@ -14,7 +14,7 @@ import (
 	tfcloudfront "github.com/hashicorp/terraform-provider-aws/internal/service/cloudfront"
 )
 
-func TestAccAWSCloudFrontOriginAccessIdentity_basic(t *testing.T) {
+func TestAccCloudFrontOriginAccessIdentity_basic(t *testing.T) {
 	var origin cloudfront.GetCloudFrontOriginAccessIdentityOutput
 	resourceName := "aws_cloudfront_origin_access_identity.test"
 
@@ -25,7 +25,7 @@ func TestAccAWSCloudFrontOriginAccessIdentity_basic(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontOriginAccessIdentityDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontOriginAccessIdentityConfig,
+				Config: testAccOriginAccessIdentityConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontOriginAccessIdentityExistence(resourceName, &origin),
 					resource.TestCheckResourceAttr(resourceName, "comment", "some comment"),
@@ -45,7 +45,7 @@ func TestAccAWSCloudFrontOriginAccessIdentity_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontOriginAccessIdentity_noComment(t *testing.T) {
+func TestAccCloudFrontOriginAccessIdentity_noComment(t *testing.T) {
 	var origin cloudfront.GetCloudFrontOriginAccessIdentityOutput
 	resourceName := "aws_cloudfront_origin_access_identity.test"
 
@@ -56,7 +56,7 @@ func TestAccAWSCloudFrontOriginAccessIdentity_noComment(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontOriginAccessIdentityDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontOriginAccessIdentityNoCommentConfig,
+				Config: testAccOriginAccessIdentityNoCommentConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontOriginAccessIdentityExistence(resourceName, &origin),
 					resource.TestMatchResourceAttr(resourceName, "caller_reference", regexp.MustCompile(fmt.Sprintf("^%s", resource.UniqueIdPrefix))),
@@ -75,7 +75,7 @@ func TestAccAWSCloudFrontOriginAccessIdentity_noComment(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontOriginAccessIdentity_disappears(t *testing.T) {
+func TestAccCloudFrontOriginAccessIdentity_disappears(t *testing.T) {
 	var origin cloudfront.GetCloudFrontOriginAccessIdentityOutput
 	resourceName := "aws_cloudfront_origin_access_identity.test"
 
@@ -86,7 +86,7 @@ func TestAccAWSCloudFrontOriginAccessIdentity_disappears(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontOriginAccessIdentityDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontOriginAccessIdentityConfig,
+				Config: testAccOriginAccessIdentityConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontOriginAccessIdentityExistence(resourceName, &origin),
 					acctest.CheckResourceDisappears(acctest.Provider, tfcloudfront.ResourceOriginAccessIdentity(), resourceName),
@@ -145,13 +145,13 @@ func testAccCheckCloudFrontOriginAccessIdentityExistence(r string, origin *cloud
 	}
 }
 
-const testAccAWSCloudFrontOriginAccessIdentityConfig = `
+const testAccOriginAccessIdentityConfig = `
 resource "aws_cloudfront_origin_access_identity" "test" {
   comment = "some comment"
 }
 `
 
-const testAccAWSCloudFrontOriginAccessIdentityNoCommentConfig = `
+const testAccOriginAccessIdentityNoCommentConfig = `
 resource "aws_cloudfront_origin_access_identity" "test" {
 }
 `

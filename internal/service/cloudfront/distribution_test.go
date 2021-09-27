@@ -81,7 +81,7 @@ func testSweepCloudFrontDistributions(region string) error {
 	return nil
 }
 
-func TestAccAWSCloudFrontDistribution_disappears(t *testing.T) {
+func TestAccCloudFrontDistribution_disappears(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 
@@ -92,7 +92,7 @@ func TestAccAWSCloudFrontDistribution_disappears(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigEnabled(false, false),
+				Config: testAccDistributionEnabledConfig(false, false),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					testAccCheckCloudFrontDistributionDisappears(&distribution),
@@ -103,15 +103,15 @@ func TestAccAWSCloudFrontDistribution_disappears(t *testing.T) {
 	})
 }
 
-// TestAccAWSCloudFrontDistribution_S3Origin runs an
+// TestAccCloudFrontDistribution_s3Origin runs an
 // aws_cloudfront_distribution acceptance test with a single S3 origin.
 //
 // If you are testing manually and can't wait for deletion, set the
 // TF_TEST_CLOUDFRONT_RETAIN environment variable.
-func TestAccAWSCloudFrontDistribution_S3Origin(t *testing.T) {
+func TestAccCloudFrontDistribution_s3Origin(t *testing.T) {
 	var distribution cloudfront.Distribution
 	ri := sdkacctest.RandInt()
-	testConfig := testAccAWSCloudFrontDistributionS3Config(ri)
+	testConfig := testAccDistributionS3Config(ri)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudfront.EndpointsID),
@@ -142,11 +142,11 @@ func TestAccAWSCloudFrontDistribution_S3Origin(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_S3OriginWithTags(t *testing.T) {
+func TestAccCloudFrontDistribution_s3OriginWithTags(t *testing.T) {
 	var distribution cloudfront.Distribution
 	ri := sdkacctest.RandInt()
-	preConfig := testAccAWSCloudFrontDistributionS3ConfigWithTags(ri)
-	postConfig := testAccAWSCloudFrontDistributionS3ConfigWithTagsUpdated(ri)
+	preConfig := testAccDistributionS3WithTagsConfig(ri)
+	postConfig := testAccDistributionS3WithTagsUpdatedConfig(ri)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -194,7 +194,7 @@ func TestAccAWSCloudFrontDistribution_S3OriginWithTags(t *testing.T) {
 //
 // If you are testing manually and can't wait for deletion, set the
 // TF_TEST_CLOUDFRONT_RETAIN environment variable.
-func TestAccAWSCloudFrontDistribution_customOrigin(t *testing.T) {
+func TestAccCloudFrontDistribution_customOrigin(t *testing.T) {
 	var distribution cloudfront.Distribution
 	rInt := sdkacctest.RandInt()
 
@@ -205,7 +205,7 @@ func TestAccAWSCloudFrontDistribution_customOrigin(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionCustomConfig(rInt),
+				Config: testAccDistributionCustomConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists("aws_cloudfront_distribution.custom_distribution", &distribution),
 				),
@@ -223,7 +223,7 @@ func TestAccAWSCloudFrontDistribution_customOrigin(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_originPolicyDefault(t *testing.T) {
+func TestAccCloudFrontDistribution_originPolicyDefault(t *testing.T) {
 	rInt := sdkacctest.RandInt()
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -233,7 +233,7 @@ func TestAccAWSCloudFrontDistribution_originPolicyDefault(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionOriginRequestPolicyConfigDefault(rInt),
+				Config: testAccDistributionOriginRequestPolicyDefaultConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr("aws_cloudfront_distribution.custom_distribution", "default_cache_behavior.0.origin_request_policy_id", regexp.MustCompile("[A-z0-9]+")),
 				),
@@ -251,7 +251,7 @@ func TestAccAWSCloudFrontDistribution_originPolicyDefault(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_originPolicyOrdered(t *testing.T) {
+func TestAccCloudFrontDistribution_originPolicyOrdered(t *testing.T) {
 	rInt := sdkacctest.RandInt()
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -261,7 +261,7 @@ func TestAccAWSCloudFrontDistribution_originPolicyOrdered(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionOriginRequestPolicyConfigOrdered(rInt),
+				Config: testAccDistributionOriginRequestPolicyOrderedConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr("aws_cloudfront_distribution.custom_distribution", "ordered_cache_behavior.0.origin_request_policy_id", regexp.MustCompile("[A-z0-9]+")),
 				),
@@ -279,12 +279,12 @@ func TestAccAWSCloudFrontDistribution_originPolicyOrdered(t *testing.T) {
 	})
 }
 
-// TestAccAWSCloudFrontDistribution_multiOrigin runs an
+// TestAccCloudFrontDistribution_multiOrigin runs an
 // aws_cloudfront_distribution acceptance test with multiple origins.
 //
 // If you are testing manually and can't wait for deletion, set the
 // TF_TEST_CLOUDFRONT_RETAIN environment variable.
-func TestAccAWSCloudFrontDistribution_multiOrigin(t *testing.T) {
+func TestAccCloudFrontDistribution_multiOrigin(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.multi_origin_distribution"
 	rInt := sdkacctest.RandInt()
@@ -296,7 +296,7 @@ func TestAccAWSCloudFrontDistribution_multiOrigin(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionMultiOriginConfig(rInt),
+				Config: testAccDistributionMultiOriginConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "ordered_cache_behavior.#", "2"),
@@ -318,12 +318,12 @@ func TestAccAWSCloudFrontDistribution_multiOrigin(t *testing.T) {
 }
 
 // https://github.com/hashicorp/terraform-provider-aws/issues/188
-// TestAccAWSCloudFrontDistribution_orderedCacheBehavior runs an
+// TestAccCloudFrontDistribution_orderedCacheBehavior runs an
 // aws_cloudfront_distribution acceptance test with multiple and ordered cache behaviors.
 //
 // If you are testing manually and can't wait for deletion, set the
 // TF_TEST_CLOUDFRONT_RETAIN environment variable.
-func TestAccAWSCloudFrontDistribution_orderedCacheBehavior(t *testing.T) {
+func TestAccCloudFrontDistribution_orderedCacheBehavior(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.main"
 	rInt := sdkacctest.RandInt()
@@ -335,7 +335,7 @@ func TestAccAWSCloudFrontDistribution_orderedCacheBehavior(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionOrderedCacheBehavior(rInt),
+				Config: testAccDistributionOrderedCacheBehavior(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "ordered_cache_behavior.#", "2"),
@@ -358,7 +358,7 @@ func TestAccAWSCloudFrontDistribution_orderedCacheBehavior(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_orderedCacheBehaviorCachePolicy(t *testing.T) {
+func TestAccCloudFrontDistribution_orderedCacheBehaviorCachePolicy(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.main"
 	rInt := sdkacctest.RandInt()
@@ -370,7 +370,7 @@ func TestAccAWSCloudFrontDistribution_orderedCacheBehaviorCachePolicy(t *testing
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionOrderedCacheBehaviorCachePolicy(rInt),
+				Config: testAccDistributionOrderedCacheBehaviorCachePolicy(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "ordered_cache_behavior.0.path_pattern", "images2/*.jpg"),
@@ -390,7 +390,7 @@ func TestAccAWSCloudFrontDistribution_orderedCacheBehaviorCachePolicy(t *testing
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_forwardedValuesToCachePolicy(t *testing.T) {
+func TestAccCloudFrontDistribution_forwardedValuesToCachePolicy(t *testing.T) {
 	var distribution cloudfront.Distribution
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_cloudfront_distribution.main"
@@ -401,13 +401,13 @@ func TestAccAWSCloudFrontDistribution_forwardedValuesToCachePolicy(t *testing.T)
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionOrderedCacheBehavior(rInt),
+				Config: testAccDistributionOrderedCacheBehavior(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 				),
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionOrderedCacheBehaviorCachePolicy(rInt),
+				Config: testAccDistributionOrderedCacheBehaviorCachePolicy(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 				),
@@ -416,7 +416,7 @@ func TestAccAWSCloudFrontDistribution_forwardedValuesToCachePolicy(t *testing.T)
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_Origin_EmptyDomainName(t *testing.T) {
+func TestAccCloudFrontDistribution_Origin_emptyDomainName(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudfront.EndpointsID),
@@ -424,14 +424,14 @@ func TestAccAWSCloudFrontDistribution_Origin_EmptyDomainName(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSCloudFrontDistributionConfig_Origin_EmptyDomainName(),
+				Config:      testAccDistributionConfig_Origin_EmptyDomainName(),
 				ExpectError: regexp.MustCompile(`domain_name must not be empty`),
 			},
 		},
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_Origin_EmptyOriginID(t *testing.T) {
+func TestAccCloudFrontDistribution_Origin_emptyOriginID(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudfront.EndpointsID),
@@ -439,14 +439,14 @@ func TestAccAWSCloudFrontDistribution_Origin_EmptyOriginID(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSCloudFrontDistributionConfig_Origin_EmptyOriginID(),
+				Config:      testAccDistributionConfig_Origin_EmptyOriginID(),
 				ExpectError: regexp.MustCompile(`origin.0.origin_id must not be empty`),
 			},
 		},
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_Origin_ConnectionAttempts(t *testing.T) {
+func TestAccCloudFrontDistribution_Origin_connectionAttempts(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -458,15 +458,15 @@ func TestAccAWSCloudFrontDistribution_Origin_ConnectionAttempts(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, `connection_attempts = 0`),
+				Config:      testAccDistributionOriginItem(rName, rInt, `connection_attempts = 0`),
 				ExpectError: regexp.MustCompile(`expected origin.0.connection_attempts to be in the range`),
 			},
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, `connection_attempts = 4`),
+				Config:      testAccDistributionOriginItem(rName, rInt, `connection_attempts = 4`),
 				ExpectError: regexp.MustCompile(`expected origin.0.connection_attempts to be in the range`),
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionOriginItem(rName, rInt, `connection_attempts = 2`),
+				Config: testAccDistributionOriginItem(rName, rInt, `connection_attempts = 2`),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "origin.#", "1"),
@@ -477,7 +477,7 @@ func TestAccAWSCloudFrontDistribution_Origin_ConnectionAttempts(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_Origin_ConnectionTimeout(t *testing.T) {
+func TestAccCloudFrontDistribution_Origin_connectionTimeout(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -489,15 +489,15 @@ func TestAccAWSCloudFrontDistribution_Origin_ConnectionTimeout(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, `connection_timeout = 0`),
+				Config:      testAccDistributionOriginItem(rName, rInt, `connection_timeout = 0`),
 				ExpectError: regexp.MustCompile(`expected origin.0.connection_timeout to be in the range`),
 			},
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, `connection_timeout = 11`),
+				Config:      testAccDistributionOriginItem(rName, rInt, `connection_timeout = 11`),
 				ExpectError: regexp.MustCompile(`expected origin.0.connection_timeout to be in the range`),
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionOriginItem(rName, rInt, `connection_timeout = 6`),
+				Config: testAccDistributionOriginItem(rName, rInt, `connection_timeout = 6`),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "origin.#", "1"),
@@ -508,7 +508,7 @@ func TestAccAWSCloudFrontDistribution_Origin_ConnectionTimeout(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_Origin_OriginShield(t *testing.T) {
+func TestAccCloudFrontDistribution_Origin_originShield(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -520,27 +520,27 @@ func TestAccAWSCloudFrontDistribution_Origin_OriginShield(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, originShieldItem(`null`, `data.aws_region.current.name`)),
+				Config:      testAccDistributionOriginItem(rName, rInt, originShieldItem(`null`, `data.aws_region.current.name`)),
 				ExpectError: regexp.MustCompile(`Missing required argument`),
 			},
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, originShieldItem(`false`, `null`)),
+				Config:      testAccDistributionOriginItem(rName, rInt, originShieldItem(`false`, `null`)),
 				ExpectError: regexp.MustCompile(`Missing required argument`),
 			},
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, originShieldItem(`true`, `null`)),
+				Config:      testAccDistributionOriginItem(rName, rInt, originShieldItem(`true`, `null`)),
 				ExpectError: regexp.MustCompile(`Missing required argument`),
 			},
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, originShieldItem(`false`, `""`)),
+				Config:      testAccDistributionOriginItem(rName, rInt, originShieldItem(`false`, `""`)),
 				ExpectError: regexp.MustCompile(`.*must be a valid AWS Region Code.*`),
 			},
 			{
-				Config:      testAccAWSCloudFrontDistributionOriginItem(rName, rInt, originShieldItem(`true`, `"US East (Ohio)"`)),
+				Config:      testAccDistributionOriginItem(rName, rInt, originShieldItem(`true`, `"US East (Ohio)"`)),
 				ExpectError: regexp.MustCompile(`.*must be a valid AWS Region Code.*`),
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionOriginItem(rName, rInt, originShieldItem(`true`, `"us-east-1"`)), //lintignore:AWSAT003
+				Config: testAccDistributionOriginItem(rName, rInt, originShieldItem(`true`, `"us-east-1"`)), //lintignore:AWSAT003
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "origin.#", "1"),
@@ -552,12 +552,12 @@ func TestAccAWSCloudFrontDistribution_Origin_OriginShield(t *testing.T) {
 	})
 }
 
-// TestAccAWSCloudFrontDistribution_noOptionalItemsConfig runs an
+// TestAccCloudFrontDistribution_noOptionalItems runs an
 // aws_cloudfront_distribution acceptance test with no optional items set.
 //
 // If you are testing manually and can't wait for deletion, set the
 // TF_TEST_CLOUDFRONT_RETAIN environment variable.
-func TestAccAWSCloudFrontDistribution_noOptionalItemsConfig(t *testing.T) {
+func TestAccCloudFrontDistribution_noOptionalItems(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.no_optional_items"
 	rInt := sdkacctest.RandInt()
@@ -569,7 +569,7 @@ func TestAccAWSCloudFrontDistribution_noOptionalItemsConfig(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionNoOptionalItemsConfig(rInt),
+				Config: testAccDistributionNoOptionalItemsConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "aliases.#", "0"),
@@ -637,13 +637,13 @@ func TestAccAWSCloudFrontDistribution_noOptionalItemsConfig(t *testing.T) {
 	})
 }
 
-// TestAccAWSCloudFrontDistribution_HTTP11Config runs an
+// TestAccCloudFrontDistribution_http11 runs an
 // aws_cloudfront_distribution acceptance test with the HTTP version set to
 // 1.1.
 //
 // If you are testing manually and can't wait for deletion, set the
 // TF_TEST_CLOUDFRONT_RETAIN environment variable.
-func TestAccAWSCloudFrontDistribution_HTTP11Config(t *testing.T) {
+func TestAccCloudFrontDistribution_http11(t *testing.T) {
 	var distribution cloudfront.Distribution
 	rInt := sdkacctest.RandInt()
 
@@ -654,7 +654,7 @@ func TestAccAWSCloudFrontDistribution_HTTP11Config(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionHTTP11Config(rInt),
+				Config: testAccDistributionHTTP11Config(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists("aws_cloudfront_distribution.http_1_1", &distribution),
 				),
@@ -672,7 +672,7 @@ func TestAccAWSCloudFrontDistribution_HTTP11Config(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_IsIPV6EnabledConfig(t *testing.T) {
+func TestAccCloudFrontDistribution_isIPV6Enabled(t *testing.T) {
 	var distribution cloudfront.Distribution
 	rInt := sdkacctest.RandInt()
 
@@ -683,7 +683,7 @@ func TestAccAWSCloudFrontDistribution_IsIPV6EnabledConfig(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionIsIPV6EnabledConfig(rInt),
+				Config: testAccDistributionIsIPV6EnabledConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists("aws_cloudfront_distribution.is_ipv6_enabled", &distribution),
 					resource.TestCheckResourceAttr(
@@ -703,7 +703,7 @@ func TestAccAWSCloudFrontDistribution_IsIPV6EnabledConfig(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_noCustomErrorResponseConfig(t *testing.T) {
+func TestAccCloudFrontDistribution_noCustomErrorResponse(t *testing.T) {
 	var distribution cloudfront.Distribution
 	rInt := sdkacctest.RandInt()
 
@@ -714,7 +714,7 @@ func TestAccAWSCloudFrontDistribution_noCustomErrorResponseConfig(t *testing.T) 
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionNoCustomErroResponseInfo(rInt),
+				Config: testAccDistributionNoCustomErroResponseInfo(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists("aws_cloudfront_distribution.no_custom_error_responses", &distribution),
 				),
@@ -732,10 +732,10 @@ func TestAccAWSCloudFrontDistribution_noCustomErrorResponseConfig(t *testing.T) 
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies_WhitelistedNames(t *testing.T) {
+func TestAccCloudFrontDistribution_DefaultCacheBehaviorForwardedValuesCookies_whitelistedNames(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -744,7 +744,7 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_ForwardedValues_Cooki
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered3(retainOnDelete),
+				Config: testAccDistributionDefaultCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered3Config(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "default_cache_behavior.#", "1"),
@@ -763,7 +763,7 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_ForwardedValues_Cooki
 				},
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered2(retainOnDelete),
+				Config: testAccDistributionDefaultCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered2Config(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "default_cache_behavior.#", "1"),
@@ -776,10 +776,10 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_ForwardedValues_Cooki
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_ForwardedValues_Headers(t *testing.T) {
+func TestAccCloudFrontDistribution_DefaultCacheBehaviorForwardedValues_headers(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -788,7 +788,7 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_ForwardedValues_Heade
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorForwardedValuesHeadersUnordered3(retainOnDelete),
+				Config: testAccDistributionDefaultCacheBehaviorForwardedValuesHeadersUnordered3Config(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "default_cache_behavior.#", "1"),
@@ -806,7 +806,7 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_ForwardedValues_Heade
 				},
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorForwardedValuesHeadersUnordered2(retainOnDelete),
+				Config: testAccDistributionDefaultCacheBehaviorForwardedValuesHeadersUnordered2Config(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "default_cache_behavior.#", "1"),
@@ -818,12 +818,12 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_ForwardedValues_Heade
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_TrustedKeyGroups(t *testing.T) {
+func TestAccCloudFrontDistribution_DefaultCacheBehavior_trustedKeyGroups(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -832,7 +832,7 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_TrustedKeyGroups(t *t
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorTrustedKeyGroups(retainOnDelete, rName),
+				Config: testAccDistributionDefaultCacheBehaviorTrustedKeyGroupsConfig(retainOnDelete, rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "trusted_key_groups.#", "1"),
@@ -857,10 +857,10 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_TrustedKeyGroups(t *t
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_TrustedSigners(t *testing.T) {
+func TestAccCloudFrontDistribution_DefaultCacheBehavior_trustedSigners(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -869,7 +869,7 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_TrustedSigners(t *tes
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorTrustedSignersSelf(retainOnDelete),
+				Config: testAccDistributionDefaultCacheBehaviorTrustedSignersSelfConfig(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "trusted_signers.#", "1"),
@@ -892,12 +892,12 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_TrustedSigners(t *tes
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_RealtimeLogConfigArn(t *testing.T) {
+func TestAccCloudFrontDistribution_DefaultCacheBehavior_realtimeLogARN(t *testing.T) {
 	var distribution cloudfront.Distribution
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cloudfront_distribution.test"
 	realtimeLogConfigResourceName := "aws_cloudfront_realtime_log_config.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -906,7 +906,7 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_RealtimeLogConfigArn(
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorRealtimeLogConfigArn(rName, retainOnDelete),
+				Config: testAccDistributionDefaultCacheBehaviorRealtimeLogARNConfig(rName, retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "default_cache_behavior.#", "1"),
@@ -926,12 +926,12 @@ func TestAccAWSCloudFrontDistribution_DefaultCacheBehavior_RealtimeLogConfigArn(
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_RealtimeLogConfigArn(t *testing.T) {
+func TestAccCloudFrontDistribution_OrderedCacheBehavior_realtimeLogARN(t *testing.T) {
 	var distribution cloudfront.Distribution
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cloudfront_distribution.test"
 	realtimeLogConfigResourceName := "aws_cloudfront_realtime_log_config.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -940,7 +940,7 @@ func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_RealtimeLogConfigArn(
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorRealtimeLogConfigArn(rName, retainOnDelete),
+				Config: testAccDistributionOrderedCacheBehaviorRealtimeLogARNConfig(rName, retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "ordered_cache_behavior.#", "1"),
@@ -960,7 +960,7 @@ func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_RealtimeLogConfigArn(
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_Enabled(t *testing.T) {
+func TestAccCloudFrontDistribution_enabled(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 
@@ -971,7 +971,7 @@ func TestAccAWSCloudFrontDistribution_Enabled(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigEnabled(false, false),
+				Config: testAccDistributionEnabledConfig(false, false),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "false"),
@@ -987,7 +987,7 @@ func TestAccAWSCloudFrontDistribution_Enabled(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionConfigEnabled(true, false),
+				Config: testAccDistributionEnabledConfig(true, false),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "true"),
@@ -997,12 +997,12 @@ func TestAccAWSCloudFrontDistribution_Enabled(t *testing.T) {
 	})
 }
 
-// TestAccAWSCloudFrontDistribution_RetainOnDelete verifies retain_on_delete = true
+// TestAccCloudFrontDistribution_retainOnDelete verifies retain_on_delete = true
 // This acceptance test performs the following steps:
 //  * Trigger a Terraform destroy of the resource, which should only disable the distribution
 //  * Check it still exists and is disabled outside Terraform
 //  * Destroy for real outside Terraform
-func TestAccAWSCloudFrontDistribution_RetainOnDelete(t *testing.T) {
+func TestAccCloudFrontDistribution_retainOnDelete(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 
@@ -1013,13 +1013,13 @@ func TestAccAWSCloudFrontDistribution_RetainOnDelete(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigEnabled(true, true),
+				Config: testAccDistributionEnabledConfig(true, true),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 				),
 			},
 			{
-				Config:  testAccAWSCloudFrontDistributionConfigEnabled(true, true),
+				Config:  testAccDistributionEnabledConfig(true, true),
 				Destroy: true,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExistsAPIOnly(&distribution),
@@ -1032,10 +1032,10 @@ func TestAccAWSCloudFrontDistribution_RetainOnDelete(t *testing.T) {
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_ForwardedValues_Cookies_WhitelistedNames(t *testing.T) {
+func TestAccCloudFrontDistribution_OrderedCacheBehaviorForwardedValuesCookies_whitelistedNames(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -1044,7 +1044,7 @@ func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_ForwardedValues_Cooki
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered3(retainOnDelete),
+				Config: testAccDistributionOrderedCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered3Config(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "ordered_cache_behavior.#", "1"),
@@ -1063,7 +1063,7 @@ func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_ForwardedValues_Cooki
 				},
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered2(retainOnDelete),
+				Config: testAccDistributionOrderedCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered2Config(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "ordered_cache_behavior.#", "1"),
@@ -1076,10 +1076,10 @@ func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_ForwardedValues_Cooki
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_ForwardedValues_Headers(t *testing.T) {
+func TestAccCloudFrontDistribution_OrderedCacheBehaviorForwardedValues_headers(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -1088,7 +1088,7 @@ func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_ForwardedValues_Heade
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorForwardedValuesHeadersUnordered3(retainOnDelete),
+				Config: testAccDistributionOrderedCacheBehaviorForwardedValuesHeadersUnordered3Config(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "ordered_cache_behavior.#", "1"),
@@ -1106,7 +1106,7 @@ func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_ForwardedValues_Heade
 				},
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorForwardedValuesHeadersUnordered2(retainOnDelete),
+				Config: testAccDistributionOrderedCacheBehaviorForwardedValuesHeadersUnordered2Config(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					resource.TestCheckResourceAttr(resourceName, "ordered_cache_behavior.#", "1"),
@@ -1118,10 +1118,10 @@ func TestAccAWSCloudFrontDistribution_OrderedCacheBehavior_ForwardedValues_Heade
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_ViewerCertificate_AcmCertificateArn(t *testing.T) {
+func TestAccCloudFrontDistribution_ViewerCertificate_acmCertificateARN(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -1130,13 +1130,13 @@ func TestAccAWSCloudFrontDistribution_ViewerCertificate_AcmCertificateArn(t *tes
 		CheckDestroy:      testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArn(retainOnDelete),
+				Config: testAccDistributionViewerCertificateACMCertificateARNConfig(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 				),
 			},
 			{
-				Config:            testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArn(retainOnDelete),
+				Config:            testAccDistributionViewerCertificateACMCertificateARNConfig(retainOnDelete),
 				ResourceName:      resourceName,
 				ImportState:       true,
 				ImportStateVerify: true,
@@ -1150,10 +1150,10 @@ func TestAccAWSCloudFrontDistribution_ViewerCertificate_AcmCertificateArn(t *tes
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/7773
-func TestAccAWSCloudFrontDistribution_ViewerCertificate_AcmCertificateArn_ConflictsWithCloudFrontDefaultCertificate(t *testing.T) {
+func TestAccCloudFrontDistribution_ViewerCertificateACMCertificateARN_conflictsWithCloudFrontDefaultCertificate(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	retainOnDelete := testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv()
+	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
@@ -1162,13 +1162,13 @@ func TestAccAWSCloudFrontDistribution_ViewerCertificate_AcmCertificateArn_Confli
 		CheckDestroy:      testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArnConflictsWithCloudFrontDefaultCertificate(retainOnDelete),
+				Config: testAccDistributionViewerCertificateACMCertificateARNConflictsWithCloudFrontDefaultCertificateConfig(retainOnDelete),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 				),
 			},
 			{
-				Config:            testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArnConflictsWithCloudFrontDefaultCertificate(retainOnDelete),
+				Config:            testAccDistributionViewerCertificateACMCertificateARNConflictsWithCloudFrontDefaultCertificateConfig(retainOnDelete),
 				ResourceName:      resourceName,
 				ImportState:       true,
 				ImportStateVerify: true,
@@ -1181,7 +1181,7 @@ func TestAccAWSCloudFrontDistribution_ViewerCertificate_AcmCertificateArn_Confli
 	})
 }
 
-func TestAccAWSCloudFrontDistribution_WaitForDeployment(t *testing.T) {
+func TestAccCloudFrontDistribution_waitForDeployment(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 
@@ -1192,7 +1192,7 @@ func TestAccAWSCloudFrontDistribution_WaitForDeployment(t *testing.T) {
 		CheckDestroy: testAccCheckCloudFrontDistributionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudFrontDistributionConfigWaitForDeployment(false, false),
+				Config: testAccDistributionWaitForDeploymentConfig(false, false),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					testAccCheckCloudFrontDistributionStatusInProgress(&distribution),
@@ -1210,7 +1210,7 @@ func TestAccAWSCloudFrontDistribution_WaitForDeployment(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionConfigWaitForDeployment(true, false),
+				Config: testAccDistributionWaitForDeploymentConfig(true, false),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					testAccCheckCloudFrontDistributionStatusInProgress(&distribution),
@@ -1218,7 +1218,7 @@ func TestAccAWSCloudFrontDistribution_WaitForDeployment(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCloudFrontDistributionConfigWaitForDeployment(false, true),
+				Config: testAccDistributionWaitForDeploymentConfig(false, true),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFrontDistributionExists(resourceName, &distribution),
 					testAccCheckCloudFrontDistributionStatusDeployed(&distribution),
@@ -1251,7 +1251,7 @@ func testAccCheckCloudFrontDistributionDestroy(s *terraform.State) error {
 			return err
 		}
 
-		if !testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv() {
+		if !testAccDistributionRetainOnDeleteFromEnv() {
 			return fmt.Errorf("CloudFront Distribution (%s) still exists", rs.Primary.ID)
 		}
 
@@ -1412,23 +1412,23 @@ func testAccCheckCloudFrontDistributionWaitForDeployment(distribution *cloudfron
 	}
 }
 
-func testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv() bool {
+func testAccDistributionRetainOnDeleteFromEnv() bool {
 	_, ok := os.LookupEnv("TF_TEST_CLOUDFRONT_RETAIN")
 	return ok
 }
 
-func testAccAWSCloudFrontDistributionRetainConfig() string {
-	if testAccAWSCloudFrontDistributionRetainOnDeleteFromEnv() {
+func testAccDistributionRetainConfig() string {
+	if testAccDistributionRetainOnDeleteFromEnv() {
 		return "retain_on_delete = true"
 	}
 	return ""
 }
 
-func TestAccAWSCloudFrontDistribution_OriginGroups(t *testing.T) {
+func TestAccCloudFrontDistribution_originGroups(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.failover_distribution"
 	ri := sdkacctest.RandInt()
-	testConfig := testAccAWSCloudFrontDistributionOriginGroupsConfig(ri)
+	testConfig := testAccDistributionOriginGroupsConfig(ri)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudfront.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudfront.EndpointsID),
@@ -1480,7 +1480,7 @@ resource "aws_s3_bucket" "s3_bucket_logs" {
 }
 `
 
-func testAccAWSCloudFrontDistributionS3Config(rInt int) string {
+func testAccDistributionS3Config(rInt int) string {
 	return acctest.ConfigCompose(
 		originBucket,
 		logBucket,
@@ -1538,10 +1538,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig()))
+`, rInt, testAccDistributionRetainConfig()))
 }
 
-func testAccAWSCloudFrontDistributionS3ConfigWithTags(rInt int) string {
+func testAccDistributionS3WithTagsConfig(rInt int) string {
 	return acctest.ConfigCompose(
 		originBucket,
 		logBucket,
@@ -1598,10 +1598,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig()))
+`, rInt, testAccDistributionRetainConfig()))
 }
 
-func testAccAWSCloudFrontDistributionS3ConfigWithTagsUpdated(rInt int) string {
+func testAccDistributionS3WithTagsUpdatedConfig(rInt int) string {
 	return acctest.ConfigCompose(
 		originBucket,
 		logBucket,
@@ -1657,10 +1657,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig()))
+`, rInt, testAccDistributionRetainConfig()))
 }
 
-func testAccAWSCloudFrontDistributionCustomConfig(rInt int) string {
+func testAccDistributionCustomConfig(rInt int) string {
 	return acctest.ConfigCompose(
 		logBucket,
 		fmt.Sprintf(`
@@ -1728,10 +1728,10 @@ resource "aws_cloudfront_distribution" "custom_distribution" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig()))
+`, rInt, testAccDistributionRetainConfig()))
 }
 
-func testAccAWSCloudFrontDistributionOriginRequestPolicyConfigDefault(rInt int) string {
+func testAccDistributionOriginRequestPolicyDefaultConfig(rInt int) string {
 	return acctest.ConfigCompose(
 		logBucket,
 		fmt.Sprintf(`
@@ -1842,10 +1842,10 @@ resource "aws_cloudfront_distribution" "custom_distribution" {
 
   %[2]s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig()))
+`, rInt, testAccDistributionRetainConfig()))
 }
 
-func testAccAWSCloudFrontDistributionOriginRequestPolicyConfigOrdered(rInt int) string {
+func testAccDistributionOriginRequestPolicyOrderedConfig(rInt int) string {
 	return acctest.ConfigCompose(
 		logBucket,
 		fmt.Sprintf(`
@@ -1969,10 +1969,10 @@ resource "aws_cloudfront_distribution" "custom_distribution" {
 
   %[2]s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig()))
+`, rInt, testAccDistributionRetainConfig()))
 }
 
-func testAccAWSCloudFrontDistributionMultiOriginConfig(rInt int) string {
+func testAccDistributionMultiOriginConfig(rInt int) string {
 	return acctest.ConfigCompose(
 		originBucket,
 		logBucket,
@@ -2091,10 +2091,10 @@ resource "aws_cloudfront_distribution" "multi_origin_distribution" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig()))
+`, rInt, testAccDistributionRetainConfig()))
 }
 
-func testAccAWSCloudFrontDistributionNoCustomErroResponseInfo(rInt int) string {
+func testAccDistributionNoCustomErroResponseInfo(rInt int) string {
 	return fmt.Sprintf(`
 variable rand_id {
   default = %d
@@ -2154,10 +2154,10 @@ resource "aws_cloudfront_distribution" "no_custom_error_responses" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig())
+`, rInt, testAccDistributionRetainConfig())
 }
 
-func testAccAWSCloudFrontDistributionNoOptionalItemsConfig(rInt int) string {
+func testAccDistributionNoOptionalItemsConfig(rInt int) string {
 	return fmt.Sprintf(`
 variable rand_id {
   default = %d
@@ -2208,10 +2208,10 @@ resource "aws_cloudfront_distribution" "no_optional_items" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig())
+`, rInt, testAccDistributionRetainConfig())
 }
 
-func testAccAWSCloudFrontDistributionConfig_Origin_EmptyDomainName() string {
+func testAccDistributionConfig_Origin_EmptyDomainName() string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "Origin_EmptyDomainName" {
   origin {
@@ -2258,10 +2258,10 @@ resource "aws_cloudfront_distribution" "Origin_EmptyDomainName" {
 
   %s
 }
-`, testAccAWSCloudFrontDistributionRetainConfig())
+`, testAccDistributionRetainConfig())
 }
 
-func testAccAWSCloudFrontDistributionConfig_Origin_EmptyOriginID() string {
+func testAccDistributionConfig_Origin_EmptyOriginID() string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "Origin_EmptyOriginID" {
   origin {
@@ -2308,10 +2308,10 @@ resource "aws_cloudfront_distribution" "Origin_EmptyOriginID" {
 
   %s
 }
-`, testAccAWSCloudFrontDistributionRetainConfig())
+`, testAccDistributionRetainConfig())
 }
 
-func testAccAWSCloudFrontDistributionHTTP11Config(rInt int) string {
+func testAccDistributionHTTP11Config(rInt int) string {
 	return fmt.Sprintf(`
 variable rand_id {
   default = %d
@@ -2368,10 +2368,10 @@ resource "aws_cloudfront_distribution" "http_1_1" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig())
+`, rInt, testAccDistributionRetainConfig())
 }
 
-func testAccAWSCloudFrontDistributionIsIPV6EnabledConfig(rInt int) string {
+func testAccDistributionIsIPV6EnabledConfig(rInt int) string {
 	return fmt.Sprintf(`
 variable rand_id {
   default = %d
@@ -2429,10 +2429,10 @@ resource "aws_cloudfront_distribution" "is_ipv6_enabled" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig())
+`, rInt, testAccDistributionRetainConfig())
 }
 
-func testAccAWSCloudFrontDistributionOrderedCacheBehavior(rInt int) string {
+func testAccDistributionOrderedCacheBehavior(rInt int) string {
 	return fmt.Sprintf(`
 variable rand_id {
   default = %d
@@ -2528,10 +2528,10 @@ resource "aws_cloudfront_distribution" "main" {
 
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig())
+`, rInt, testAccDistributionRetainConfig())
 }
 
-func testAccAWSCloudFrontDistributionOrderedCacheBehaviorCachePolicy(rInt int) string {
+func testAccDistributionOrderedCacheBehaviorCachePolicy(rInt int) string {
 	return fmt.Sprintf(`
 variable rand_id {
   default = %d
@@ -2613,10 +2613,10 @@ resource "aws_cloudfront_cache_policy" "cache_policy" {
     }
   }
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig())
+`, rInt, testAccDistributionRetainConfig())
 }
 
-func testAccAWSCloudFrontDistributionOriginGroupsConfig(rInt int) string {
+func testAccDistributionOriginGroupsConfig(rInt int) string {
 	return acctest.ConfigCompose(
 		originBucket,
 		backupBucket,
@@ -2682,10 +2682,10 @@ resource "aws_cloudfront_distribution" "failover_distribution" {
   }
   %s
 }
-`, rInt, testAccAWSCloudFrontDistributionRetainConfig()))
+`, rInt, testAccDistributionRetainConfig()))
 }
 
-func testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered2(retainOnDelete bool) string {
+func testAccDistributionDefaultCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered2Config(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -2734,7 +2734,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered3(retainOnDelete bool) string {
+func testAccDistributionDefaultCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered3Config(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -2783,7 +2783,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorForwardedValuesHeadersUnordered2(retainOnDelete bool) string {
+func testAccDistributionDefaultCacheBehaviorForwardedValuesHeadersUnordered2Config(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -2832,7 +2832,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorForwardedValuesHeadersUnordered3(retainOnDelete bool) string {
+func testAccDistributionDefaultCacheBehaviorForwardedValuesHeadersUnordered3Config(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -2881,7 +2881,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigEnabled(enabled, retainOnDelete bool) string {
+func testAccDistributionEnabledConfig(enabled, retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   enabled          = %[1]t
@@ -2927,7 +2927,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, enabled, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered2(retainOnDelete bool) string {
+func testAccDistributionOrderedCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered2Config(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -2992,7 +2992,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered3(retainOnDelete bool) string {
+func testAccDistributionOrderedCacheBehaviorForwardedValuesCookiesWhitelistedNamesUnordered3Config(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -3057,7 +3057,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorForwardedValuesHeadersUnordered2(retainOnDelete bool) string {
+func testAccDistributionOrderedCacheBehaviorForwardedValuesHeadersUnordered2Config(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -3122,7 +3122,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorForwardedValuesHeadersUnordered3(retainOnDelete bool) string {
+func testAccDistributionOrderedCacheBehaviorForwardedValuesHeadersUnordered3Config(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -3187,7 +3187,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorTrustedKeyGroups(retainOnDelete bool, rName string) string {
+func testAccDistributionDefaultCacheBehaviorTrustedKeyGroupsConfig(retainOnDelete bool, rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -3248,7 +3248,7 @@ resource "aws_cloudfront_key_group" "test" {
 `, retainOnDelete, rName)
 }
 
-func testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorTrustedSignersSelf(retainOnDelete bool) string {
+func testAccDistributionDefaultCacheBehaviorTrustedSignersSelfConfig(retainOnDelete bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -3298,7 +3298,7 @@ resource "aws_cloudfront_distribution" "test" {
 }
 
 // CloudFront Distribution ACM Certificates must be created in us-east-1
-func testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArnBase(commonName string) string {
+func testAccDistributionViewerCertificateACMCertificateARNBaseConfig(commonName string) string {
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, commonName)
 
@@ -3310,8 +3310,8 @@ resource "aws_acm_certificate" "test" {
 `, acctest.TLSPEMEscapeNewlines(certificate), acctest.TLSPEMEscapeNewlines(key))
 }
 
-func testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArn(retainOnDelete bool) string {
-	return testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArnBase("example.com") + fmt.Sprintf(`
+func testAccDistributionViewerCertificateACMCertificateARNConfig(retainOnDelete bool) string {
+	return testAccDistributionViewerCertificateACMCertificateARNBaseConfig("example.com") + fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   enabled          = false
   retain_on_delete = %t
@@ -3357,8 +3357,8 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArnConflictsWithCloudFrontDefaultCertificate(retainOnDelete bool) string {
-	return testAccAWSCloudFrontDistributionConfigViewerCertificateAcmCertificateArnBase("example.com") + fmt.Sprintf(`
+func testAccDistributionViewerCertificateACMCertificateARNConflictsWithCloudFrontDefaultCertificateConfig(retainOnDelete bool) string {
+	return testAccDistributionViewerCertificateACMCertificateARNBaseConfig("example.com") + fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   enabled          = false
   retain_on_delete = %t
@@ -3405,7 +3405,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete)
 }
 
-func testAccAWSCloudFrontDistributionConfigWaitForDeployment(enabled, waitForDeployment bool) string {
+func testAccDistributionWaitForDeploymentConfig(enabled, waitForDeployment bool) string {
 	return fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   enabled             = %[1]t
@@ -3451,7 +3451,7 @@ resource "aws_cloudfront_distribution" "test" {
 `, enabled, waitForDeployment)
 }
 
-func testAccAWSCloudFrontDistributionConfigCacheBehaviorRealtimeLogConfigBase(rName string) string {
+func testAccDistributionCacheBehaviorRealtimeLogBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kinesis_stream" "test" {
   name        = %[1]q
@@ -3515,9 +3515,9 @@ resource "aws_cloudfront_realtime_log_config" "test" {
 `, rName)
 }
 
-func testAccAWSCloudFrontDistributionConfigDefaultCacheBehaviorRealtimeLogConfigArn(rName string, retainOnDelete bool) string {
+func testAccDistributionDefaultCacheBehaviorRealtimeLogARNConfig(rName string, retainOnDelete bool) string {
 	return acctest.ConfigCompose(
-		testAccAWSCloudFrontDistributionConfigCacheBehaviorRealtimeLogConfigBase(rName),
+		testAccDistributionCacheBehaviorRealtimeLogBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -3566,9 +3566,9 @@ resource "aws_cloudfront_distribution" "test" {
 `, retainOnDelete))
 }
 
-func testAccAWSCloudFrontDistributionConfigOrderedCacheBehaviorRealtimeLogConfigArn(rName string, retainOnDelete bool) string {
+func testAccDistributionOrderedCacheBehaviorRealtimeLogARNConfig(rName string, retainOnDelete bool) string {
 	return acctest.ConfigCompose(
-		testAccAWSCloudFrontDistributionConfigCacheBehaviorRealtimeLogConfigBase(rName),
+		testAccDistributionCacheBehaviorRealtimeLogBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_cloudfront_distribution" "test" {
   # Faster acceptance testing
@@ -3642,10 +3642,10 @@ origin_shield {
 `, enabled, region)
 }
 
-func testAccAWSCloudFrontDistributionOriginItem(rName string, rInt int, item string) string {
+func testAccDistributionOriginItem(rName string, rInt int, item string) string {
 	return acctest.ConfigCompose(
 		originBucket,
-		testAccAWSCloudFrontDistributionConfigCacheBehaviorRealtimeLogConfigBase(rName),
+		testAccDistributionCacheBehaviorRealtimeLogBaseConfig(rName),
 		fmt.Sprintf(`
 variable rand_id {
   default = %[1]d
