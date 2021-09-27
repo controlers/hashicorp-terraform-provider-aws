@@ -70,7 +70,7 @@ func TestDecodeStorageGatewayWorkingStorageID(t *testing.T) {
 	}
 }
 
-func TestAccAWSStorageGatewayWorkingStorage_basic(t *testing.T) {
+func TestAccStorageGatewayWorkingStorage_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_storagegateway_working_storage.test"
 	localDiskDataSourceName := "data.aws_storagegateway_local_disk.test"
@@ -82,12 +82,12 @@ func TestAccAWSStorageGatewayWorkingStorage_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		// Storage Gateway API does not support removing working storages,
 		// but we want to ensure other resources are removed.
-		CheckDestroy: testAccCheckAWSStorageGatewayGatewayDestroy,
+		CheckDestroy: testAccCheckGatewayDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSStorageGatewayWorkingStorageConfig_Basic(rName),
+				Config: testAccWorkingStorageConfig_Basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSStorageGatewayWorkingStorageExists(resourceName),
+					testAccCheckWorkingStorageExists(resourceName),
 					resource.TestCheckResourceAttrPair(resourceName, "disk_id", localDiskDataSourceName, "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "gateway_arn", gatewayResourceName, "arn"),
 				),
@@ -101,7 +101,7 @@ func TestAccAWSStorageGatewayWorkingStorage_basic(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSStorageGatewayWorkingStorageExists(resourceName string) resource.TestCheckFunc {
+func testAccCheckWorkingStorageExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -139,8 +139,8 @@ func testAccCheckAWSStorageGatewayWorkingStorageExists(resourceName string) reso
 	}
 }
 
-func testAccAWSStorageGatewayWorkingStorageConfig_Basic(rName string) string {
-	return testAccAWSStorageGatewayGatewayConfig_GatewayType_Stored(rName) + fmt.Sprintf(`
+func testAccWorkingStorageConfig_Basic(rName string) string {
+	return testAccGatewayConfig_GatewayType_Stored(rName) + fmt.Sprintf(`
 resource "aws_ebs_volume" "test" {
   availability_zone = aws_instance.test.availability_zone
   size              = "10"
