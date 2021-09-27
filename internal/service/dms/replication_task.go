@@ -132,7 +132,7 @@ func resourceReplicationTaskCreate(d *schema.ResourceData, meta interface{}) err
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{"creating"},
 		Target:     []string{"ready"},
-		Refresh:    resourceAwsDmsReplicationTaskStateRefreshFunc(d, meta),
+		Refresh:    resourceReplicationTaskStateRefreshFunc(d, meta),
 		Timeout:    d.Timeout(schema.TimeoutCreate),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -169,7 +169,7 @@ func resourceReplicationTaskRead(d *schema.ResourceData, meta interface{}) error
 		return err
 	}
 
-	err = resourceAwsDmsReplicationTaskSetState(d, response.ReplicationTasks[0])
+	err = resourceReplicationTaskSetState(d, response.ReplicationTasks[0])
 	if err != nil {
 		return err
 	}
@@ -246,7 +246,7 @@ func resourceReplicationTaskUpdate(d *schema.ResourceData, meta interface{}) err
 		stateConf := &resource.StateChangeConf{
 			Pending:    []string{"modifying"},
 			Target:     []string{"ready", "stopped", "failed"},
-			Refresh:    resourceAwsDmsReplicationTaskStateRefreshFunc(d, meta),
+			Refresh:    resourceReplicationTaskStateRefreshFunc(d, meta),
 			Timeout:    d.Timeout(schema.TimeoutCreate),
 			MinTimeout: 10 * time.Second,
 			Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -285,7 +285,7 @@ func resourceReplicationTaskDelete(d *schema.ResourceData, meta interface{}) err
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{"deleting"},
 		Target:     []string{},
-		Refresh:    resourceAwsDmsReplicationTaskStateRefreshFunc(d, meta),
+		Refresh:    resourceReplicationTaskStateRefreshFunc(d, meta),
 		Timeout:    d.Timeout(schema.TimeoutCreate),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -297,7 +297,7 @@ func resourceReplicationTaskDelete(d *schema.ResourceData, meta interface{}) err
 	return err
 }
 
-func resourceAwsDmsReplicationTaskSetState(d *schema.ResourceData, task *dms.ReplicationTask) error {
+func resourceReplicationTaskSetState(d *schema.ResourceData, task *dms.ReplicationTask) error {
 	d.SetId(aws.StringValue(task.ReplicationTaskIdentifier))
 
 	d.Set("migration_type", task.MigrationType)
@@ -317,7 +317,7 @@ func resourceAwsDmsReplicationTaskSetState(d *schema.ResourceData, task *dms.Rep
 	return nil
 }
 
-func resourceAwsDmsReplicationTaskStateRefreshFunc(
+func resourceReplicationTaskStateRefreshFunc(
 	d *schema.ResourceData, meta interface{}) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		conn := meta.(*conns.AWSClient).DMSConn
