@@ -3,7 +3,6 @@ package kafka_test
 import (
 	"testing"
 
-	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 	tfkafka "github.com/hashicorp/terraform-provider-aws/internal/service/kafka"
 )
 
