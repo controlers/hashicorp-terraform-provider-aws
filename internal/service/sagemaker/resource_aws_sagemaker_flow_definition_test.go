@@ -1,4 +1,4 @@
-package aws
+package sagemaker_test
 
 import (
 	"fmt"
@@ -11,13 +11,13 @@ import (
 	sdkacctest "github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/sagemaker/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
 )
 
 func init() {
@@ -247,7 +247,7 @@ func testAccCheckAWSSagemakerFlowDefinitionDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FindFlowDefinitionByName(conn, rs.Primary.ID)
+		_, err := tfsagemaker.FindFlowDefinitionByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -276,7 +276,7 @@ func testAccCheckAWSSagemakerFlowDefinitionExists(n string, flowDefinition *sage
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
-		output, err := finder.FindFlowDefinitionByName(conn, rs.Primary.ID)
+		output, err := tfsagemaker.FindFlowDefinitionByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err

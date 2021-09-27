@@ -1,4 +1,4 @@
-package aws
+package sagemaker
 
 import (
 	"fmt"
@@ -12,14 +12,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	tftags "github.com/hashicorp/terraform-provider-aws/aws/internal/tags"
-	iamwaiter "github.com/hashicorp/terraform-provider-aws/aws/internal/service/iam/waiter"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/sagemaker/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/sagemaker/waiter"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfiam "github.com/hashicorp/terraform-provider-aws/internal/service/iam"
 )
 
 func ResourceFlowDefinition() *schema.Resource {
@@ -272,7 +270,7 @@ func resourceFlowDefinitionCreate(d *schema.ResourceData, meta interface{}) erro
 	}
 
 	log.Printf("[DEBUG] Creating SageMaker Flow Definition: %s", input)
-	_, err := tfresource.RetryWhenAwsErrCodeEquals(iamwaiter.PropagationTimeout, func() (interface{}, error) {
+	_, err := tfresource.RetryWhenAwsErrCodeEquals(tfiam.PropagationTimeout, func() (interface{}, error) {
 		return conn.CreateFlowDefinition(input)
 	}, "ValidationException")
 
@@ -282,7 +280,7 @@ func resourceFlowDefinitionCreate(d *schema.ResourceData, meta interface{}) erro
 
 	d.SetId(name)
 
-	if _, err := waiter.WaitFlowDefinitionActive(conn, d.Id()); err != nil {
+	if _, err := WaitFlowDefinitionActive(conn, d.Id()); err != nil {
 		return fmt.Errorf("error waiting for SageMaker Flow Definition (%s) to become active: %w", d.Id(), err)
 	}
 
@@ -294,7 +292,7 @@ func resourceFlowDefinitionRead(d *schema.ResourceData, meta interface{}) error 
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	flowDefinition, err := finder.FindFlowDefinitionByName(conn, d.Id())
+	flowDefinition, err := FindFlowDefinitionByName(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] SageMaker Flow Definition (%s) not found, removing from state", d.Id())
@@ -377,7 +375,7 @@ func resourceFlowDefinitionDelete(d *schema.ResourceData, meta interface{}) erro
 		return fmt.Errorf("error deleting SageMaker Flow Definition (%s): %w", d.Id(), err)
 	}
 
-	if _, err := waiter.WaitFlowDefinitionDeleted(conn, d.Id()); err != nil {
+	if _, err := WaitFlowDefinitionDeleted(conn, d.Id()); err != nil {
 		return fmt.Errorf("error waiting for SageMaker Flow Definition (%s) to delete: %w", d.Id(), err)
 	}
 
