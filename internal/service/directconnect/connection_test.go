@@ -82,7 +82,7 @@ func testSweepDxConnections(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAwsDxConnection_basic(t *testing.T) {
+func TestAccDirectConnectConnection_basic(t *testing.T) {
 	var connection directconnect.Connection
 	resourceName := "aws_dx_connection.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -91,12 +91,12 @@ func TestAccAwsDxConnection_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxConnectionConfigBasic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "directconnect", regexp.MustCompile(`dxcon/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "bandwidth", "1Gbps"),
 					resource.TestCheckResourceAttrSet(resourceName, "location"),
@@ -116,7 +116,7 @@ func TestAccAwsDxConnection_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsDxConnection_disappears(t *testing.T) {
+func TestAccDirectConnectConnection_disappears(t *testing.T) {
 	var connection directconnect.Connection
 	resourceName := "aws_dx_connection.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -125,12 +125,12 @@ func TestAccAwsDxConnection_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxConnectionConfigBasic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					acctest.CheckResourceDisappears(acctest.Provider, tfdirectconnect.ResourceConnection(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -139,7 +139,7 @@ func TestAccAwsDxConnection_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAwsDxConnection_ProviderName(t *testing.T) {
+func TestAccDirectConnectConnection_providerName(t *testing.T) {
 	var connection directconnect.Connection
 	resourceName := "aws_dx_connection.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -148,12 +148,12 @@ func TestAccAwsDxConnection_ProviderName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxConnectionConfigProviderName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "directconnect", regexp.MustCompile(`dxcon/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "bandwidth", "1Gbps"),
 					resource.TestCheckResourceAttrSet(resourceName, "location"),
@@ -173,7 +173,7 @@ func TestAccAwsDxConnection_ProviderName(t *testing.T) {
 	})
 }
 
-func TestAccAwsDxConnection_Tags(t *testing.T) {
+func TestAccDirectConnectConnection_tags(t *testing.T) {
 	var connection directconnect.Connection
 	resourceName := "aws_dx_connection.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -182,12 +182,12 @@ func TestAccAwsDxConnection_Tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxConnectionDestroy,
+		CheckDestroy: testAccCheckConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxConnectionConfigTags1(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
@@ -202,7 +202,7 @@ func TestAccAwsDxConnection_Tags(t *testing.T) {
 			{
 				Config: testAccDxConnectionConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
@@ -212,7 +212,7 @@ func TestAccAwsDxConnection_Tags(t *testing.T) {
 			{
 				Config: testAccDxConnectionConfigTags1(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxConnectionExists(resourceName, &connection),
+					testAccCheckConnectionExists(resourceName, &connection),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
@@ -222,7 +222,7 @@ func TestAccAwsDxConnection_Tags(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsDxConnectionDestroy(s *terraform.State) error {
+func testAccCheckConnectionDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DirectConnectConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -246,7 +246,7 @@ func testAccCheckAwsDxConnectionDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsDxConnectionExists(name string, v *directconnect.Connection) resource.TestCheckFunc {
+func testAccCheckConnectionExists(name string, v *directconnect.Connection) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).DirectConnectConn
 

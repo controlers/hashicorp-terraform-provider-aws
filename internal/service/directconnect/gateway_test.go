@@ -111,7 +111,7 @@ func testSweepDirectConnectGateways(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAwsDxGateway_basic(t *testing.T) {
+func TestAccDirectConnectGateway_basic(t *testing.T) {
 	var v directconnect.Gateway
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
@@ -121,12 +121,12 @@ func TestAccAwsDxGateway_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxGatewayDestroy,
+		CheckDestroy: testAccCheckGatewayDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxGatewayConfig(rName, rBgpAsn),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxGatewayExists(resourceName, &v),
+					testAccCheckGatewayExists(resourceName, &v),
 					acctest.CheckResourceAttrAccountID(resourceName, "owner_account_id"),
 				),
 			},
@@ -139,7 +139,7 @@ func TestAccAwsDxGateway_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsDxGateway_disappears(t *testing.T) {
+func TestAccDirectConnectGateway_disappears(t *testing.T) {
 	var v directconnect.Gateway
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
@@ -149,12 +149,12 @@ func TestAccAwsDxGateway_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxGatewayDestroy,
+		CheckDestroy: testAccCheckGatewayDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxGatewayConfig(rName, rBgpAsn),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxGatewayExists(resourceName, &v),
+					testAccCheckGatewayExists(resourceName, &v),
 					acctest.CheckResourceDisappears(acctest.Provider, tfdirectconnect.ResourceGateway(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -163,7 +163,7 @@ func TestAccAwsDxGateway_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAwsDxGateway_complex(t *testing.T) {
+func TestAccDirectConnectGateway_complex(t *testing.T) {
 	var v directconnect.Gateway
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
@@ -173,12 +173,12 @@ func TestAccAwsDxGateway_complex(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxGatewayDestroy,
+		CheckDestroy: testAccCheckGatewayDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxGatewayAssociationConfig_multiVpnGatewaysSingleAccount(rName, rBgpAsn),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxGatewayExists(resourceName, &v),
+					testAccCheckGatewayExists(resourceName, &v),
 					acctest.CheckResourceAttrAccountID(resourceName, "owner_account_id"),
 				),
 			},
@@ -191,7 +191,7 @@ func TestAccAwsDxGateway_complex(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsDxGatewayDestroy(s *terraform.State) error {
+func testAccCheckGatewayDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DirectConnectConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -214,7 +214,7 @@ func testAccCheckAwsDxGatewayDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsDxGatewayExists(name string, v *directconnect.Gateway) resource.TestCheckFunc {
+func testAccCheckGatewayExists(name string, v *directconnect.Gateway) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
