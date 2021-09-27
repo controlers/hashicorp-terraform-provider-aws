@@ -35,7 +35,7 @@ func testSweepSagemakerHumanTaskUis(region string) error {
 	err = conn.ListHumanTaskUisPages(&sagemaker.ListHumanTaskUisInput{}, func(page *sagemaker.ListHumanTaskUisOutput, lastPage bool) bool {
 		for _, humanTaskUi := range page.HumanTaskUiSummaries {
 
-			r := ResourceHumanTaskUI()
+			r := tfsagemaker.ResourceHumanTaskUI()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(humanTaskUi.HumanTaskUiName))
 			err := r.Delete(d, client)
@@ -153,7 +153,7 @@ func TestAccAWSSagemakerHumanTaskUi_disappears(t *testing.T) {
 				Config: testAccAWSSagemakerHumanTaskUiCognitoBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSSagemakerHumanTaskUiExists(resourceName, &humanTaskUi),
-					acctest.CheckResourceDisappears(acctest.Provider, ResourceHumanTaskUI(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, tfsagemaker.ResourceHumanTaskUI(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
