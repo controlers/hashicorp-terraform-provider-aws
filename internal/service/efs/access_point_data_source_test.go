@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAWSEFSAccessPoint_basic(t *testing.T) {
+func TestAccEFSAccessPointDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_efs_access_point.test"
 	resourceName := "aws_efs_access_point.test"
@@ -22,7 +22,7 @@ func TestAccDataSourceAWSEFSAccessPoint_basic(t *testing.T) {
 		CheckDestroy: testAccCheckEfsAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSEFSAccessPointConfig(rName),
+				Config: testAccAccessPointDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "owner_id", resourceName, "owner_id"),
@@ -35,7 +35,7 @@ func TestAccDataSourceAWSEFSAccessPoint_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAWSEFSAccessPointConfig(rName string) string {
+func testAccAccessPointDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = "%s"

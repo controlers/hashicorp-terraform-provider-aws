@@ -64,7 +64,7 @@ func testSweepEfsFileSystems(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSEFSFileSystem_basic(t *testing.T) {
+func TestAccEFSFileSystem_basic(t *testing.T) {
 	var desc efs.FileSystemDescription
 	resourceName := "aws_efs_file_system.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc")
@@ -76,7 +76,7 @@ func TestAccAWSEFSFileSystem_basic(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfig(rName),
+				Config: testAccFileSystemConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "elasticfilesystem", regexp.MustCompile(`file-system/fs-.+`)),
@@ -101,7 +101,7 @@ func TestAccAWSEFSFileSystem_basic(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfigWithPerformanceMode,
+				Config: testAccFileSystemWithPerformanceModeConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem("aws_efs_file_system.test2", &desc),
 					resource.TestCheckResourceAttr("aws_efs_file_system.test2", "creation_token", "supercalifragilisticexpialidocious"),
@@ -112,7 +112,7 @@ func TestAccAWSEFSFileSystem_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSFileSystem_availabilityZoneName(t *testing.T) {
+func TestAccEFSFileSystem_availabilityZoneName(t *testing.T) {
 	var desc efs.FileSystemDescription
 	resourceName := "aws_efs_file_system.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc")
@@ -124,7 +124,7 @@ func TestAccAWSEFSFileSystem_availabilityZoneName(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfigAvailabilityZoneName(rName),
+				Config: testAccFileSystemAvailabilityZoneNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttrPair(resourceName, "availability_zone_id", "data.aws_availability_zones.available", "zone_ids.0"),
@@ -140,7 +140,7 @@ func TestAccAWSEFSFileSystem_availabilityZoneName(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSFileSystem_tags(t *testing.T) {
+func TestAccEFSFileSystem_tags(t *testing.T) {
 	var desc efs.FileSystemDescription
 	rName := sdkacctest.RandomWithPrefix("tf-acc-tags")
 	resourceName := "aws_efs_file_system.test"
@@ -152,7 +152,7 @@ func TestAccAWSEFSFileSystem_tags(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfigTags1(rName, "key1", "value1"),
+				Config: testAccFileSystemTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -165,7 +165,7 @@ func TestAccAWSEFSFileSystem_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccFileSystemTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -174,7 +174,7 @@ func TestAccAWSEFSFileSystem_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfigTags1(rName, "key2", "value2"),
+				Config: testAccFileSystemTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -182,7 +182,7 @@ func TestAccAWSEFSFileSystem_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfigWithMaxTags(rName),
+				Config: testAccFileSystemWithMaxTagsConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "50"),
@@ -195,7 +195,7 @@ func TestAccAWSEFSFileSystem_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSFileSystem_pagedTags(t *testing.T) {
+func TestAccEFSFileSystem_pagedTags(t *testing.T) {
 	var desc efs.FileSystemDescription
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_efs_file_system.test"
@@ -207,7 +207,7 @@ func TestAccAWSEFSFileSystem_pagedTags(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfigPagedTags(rInt),
+				Config: testAccFileSystemPagedTagsConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "10"),
@@ -222,7 +222,7 @@ func TestAccAWSEFSFileSystem_pagedTags(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSFileSystem_kmsKey(t *testing.T) {
+func TestAccEFSFileSystem_kmsKey(t *testing.T) {
 	var desc efs.FileSystemDescription
 	rInt := sdkacctest.RandInt()
 	kmsKeyResourceName := "aws_kms_key.test"
@@ -235,7 +235,7 @@ func TestAccAWSEFSFileSystem_kmsKey(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfigWithKmsKey(rInt, true),
+				Config: testAccFileSystemWithKMSKeyConfig(rInt, true),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttrPair(resourceName, "kms_key_id", kmsKeyResourceName, "arn"),
@@ -251,7 +251,7 @@ func TestAccAWSEFSFileSystem_kmsKey(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSFileSystem_kmsConfigurationWithoutEncryption(t *testing.T) {
+func TestAccEFSFileSystem_kmsWithoutEncryption(t *testing.T) {
 	rInt := sdkacctest.RandInt()
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -261,14 +261,14 @@ func TestAccAWSEFSFileSystem_kmsConfigurationWithoutEncryption(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSEFSFileSystemConfigWithKmsKey(rInt, false),
+				Config:      testAccFileSystemWithKMSKeyConfig(rInt, false),
 				ExpectError: regexp.MustCompile(`encrypted must be set to true when kms_key_id is specified`),
 			},
 		},
 	})
 }
 
-func TestAccAWSEFSFileSystem_ProvisionedThroughputInMibps(t *testing.T) {
+func TestAccEFSFileSystem_provisionedThroughputInMibps(t *testing.T) {
 	var desc efs.FileSystemDescription
 	resourceName := "aws_efs_file_system.test"
 
@@ -279,7 +279,7 @@ func TestAccAWSEFSFileSystem_ProvisionedThroughputInMibps(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfig_ProvisionedThroughputInMibps(1.0),
+				Config: testAccFileSystemConfig_ProvisionedThroughputInMibps(1.0),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "provisioned_throughput_in_mibps", "1"),
@@ -287,7 +287,7 @@ func TestAccAWSEFSFileSystem_ProvisionedThroughputInMibps(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfig_ProvisionedThroughputInMibps(2.0),
+				Config: testAccFileSystemConfig_ProvisionedThroughputInMibps(2.0),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "provisioned_throughput_in_mibps", "2"),
@@ -303,7 +303,7 @@ func TestAccAWSEFSFileSystem_ProvisionedThroughputInMibps(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSFileSystem_ThroughputMode(t *testing.T) {
+func TestAccEFSFileSystem_throughputMode(t *testing.T) {
 	var desc efs.FileSystemDescription
 	resourceName := "aws_efs_file_system.test"
 
@@ -314,7 +314,7 @@ func TestAccAWSEFSFileSystem_ThroughputMode(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfig_ProvisionedThroughputInMibps(1.0),
+				Config: testAccFileSystemConfig_ProvisionedThroughputInMibps(1.0),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "provisioned_throughput_in_mibps", "1"),
@@ -322,7 +322,7 @@ func TestAccAWSEFSFileSystem_ThroughputMode(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfig_ThroughputMode(efs.ThroughputModeBursting),
+				Config: testAccFileSystemConfig_ThroughputMode(efs.ThroughputModeBursting),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "provisioned_throughput_in_mibps", "0"),
@@ -338,7 +338,7 @@ func TestAccAWSEFSFileSystem_ThroughputMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSFileSystem_lifecyclePolicy(t *testing.T) {
+func TestAccEFSFileSystem_lifecyclePolicy(t *testing.T) {
 	var desc efs.FileSystemDescription
 	resourceName := "aws_efs_file_system.test"
 
@@ -349,14 +349,14 @@ func TestAccAWSEFSFileSystem_lifecyclePolicy(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfigWithLifecyclePolicy(
+				Config: testAccFileSystemWithLifecyclePolicyConfig(
 					"transition_to_ia",
 					"invalid_value",
 				),
 				ExpectError: regexp.MustCompile(`got invalid_value`),
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfigWithLifecyclePolicy(
+				Config: testAccFileSystemWithLifecyclePolicyConfig(
 					"transition_to_ia",
 					efs.TransitionToIARulesAfter30Days,
 				),
@@ -372,7 +372,7 @@ func TestAccAWSEFSFileSystem_lifecyclePolicy(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfigWithLifecyclePolicy(
+				Config: testAccFileSystemWithLifecyclePolicyConfig(
 					"transition_to_primary_storage_class",
 					efs.TransitionToPrimaryStorageClassRulesAfter1Access,
 				),
@@ -383,14 +383,14 @@ func TestAccAWSEFSFileSystem_lifecyclePolicy(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfigRemovedLifecyclePolicy,
+				Config: testAccFileSystemRemovedLifecyclePolicyConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					resource.TestCheckResourceAttr(resourceName, "lifecycle_policy.#", "0"),
 				),
 			},
 			{
-				Config: testAccAWSEFSFileSystemConfigWithLifecyclePolicyMulti(
+				Config: testAccFileSystemWithLifecyclePolicyMultiConfig(
 					"transition_to_primary_storage_class",
 					efs.TransitionToPrimaryStorageClassRulesAfter1Access,
 					"transition_to_ia",
@@ -407,7 +407,7 @@ func TestAccAWSEFSFileSystem_lifecyclePolicy(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSFileSystem_disappears(t *testing.T) {
+func TestAccEFSFileSystem_disappears(t *testing.T) {
 	var desc efs.FileSystemDescription
 	resourceName := "aws_efs_file_system.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -419,7 +419,7 @@ func TestAccAWSEFSFileSystem_disappears(t *testing.T) {
 		CheckDestroy: testAccCheckEfsFileSystemDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSFileSystemConfig(rName),
+				Config: testAccFileSystemConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsFileSystem(resourceName, &desc),
 					acctest.CheckResourceDisappears(acctest.Provider, tfefs.ResourceFileSystem(), resourceName),
@@ -479,7 +479,7 @@ func testAccCheckEfsFileSystem(resourceID string, fDesc *efs.FileSystemDescripti
 	}
 }
 
-func testAccAWSEFSFileSystemConfig(rName string) string {
+func testAccFileSystemConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = %q
@@ -487,7 +487,7 @@ resource "aws_efs_file_system" "test" {
 `, rName)
 }
 
-func testAccAWSEFSFileSystemConfigAvailabilityZoneName(rName string) string {
+func testAccFileSystemAvailabilityZoneNameConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -505,7 +505,7 @@ resource "aws_efs_file_system" "test" {
 `, rName)
 }
 
-func testAccAWSEFSFileSystemConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccFileSystemTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = %[1]q
@@ -516,7 +516,7 @@ resource "aws_efs_file_system" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSEFSFileSystemConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccFileSystemTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = %[1]q
@@ -528,7 +528,7 @@ resource "aws_efs_file_system" "test" {
 `, rName, tagKey1, tagValue1, tagKey2, tagValue2)
 }
 
-func testAccAWSEFSFileSystemConfigPagedTags(rInt int) string {
+func testAccFileSystemPagedTagsConfig(rInt int) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   tags = {
@@ -547,7 +547,7 @@ resource "aws_efs_file_system" "test" {
 `, rInt)
 }
 
-func testAccAWSEFSFileSystemConfigWithMaxTags(rName string) string {
+func testAccFileSystemWithMaxTagsConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   tags = {
@@ -606,14 +606,14 @@ resource "aws_efs_file_system" "test" {
 `, rName)
 }
 
-const testAccAWSEFSFileSystemConfigWithPerformanceMode = `
+const testAccFileSystemWithPerformanceModeConfig = `
 resource "aws_efs_file_system" "test2" {
   creation_token   = "supercalifragilisticexpialidocious"
   performance_mode = "maxIO"
 }
 `
 
-func testAccAWSEFSFileSystemConfigWithKmsKey(rInt int, enable bool) string {
+func testAccFileSystemWithKMSKeyConfig(rInt int, enable bool) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description = "Terraform acc test %[1]d"
@@ -626,7 +626,7 @@ resource "aws_efs_file_system" "test" {
 `, rInt, enable)
 }
 
-func testAccAWSEFSFileSystemConfig_ThroughputMode(throughputMode string) string {
+func testAccFileSystemConfig_ThroughputMode(throughputMode string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   throughput_mode = %q
@@ -634,7 +634,7 @@ resource "aws_efs_file_system" "test" {
 `, throughputMode)
 }
 
-func testAccAWSEFSFileSystemConfig_ProvisionedThroughputInMibps(provisionedThroughputInMibps float64) string {
+func testAccFileSystemConfig_ProvisionedThroughputInMibps(provisionedThroughputInMibps float64) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   provisioned_throughput_in_mibps = %f
@@ -643,7 +643,7 @@ resource "aws_efs_file_system" "test" {
 `, provisionedThroughputInMibps)
 }
 
-func testAccAWSEFSFileSystemConfigWithLifecyclePolicy(lpName, lpVal string) string {
+func testAccFileSystemWithLifecyclePolicyConfig(lpName, lpVal string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   lifecycle_policy {
@@ -653,7 +653,7 @@ resource "aws_efs_file_system" "test" {
 `, lpName, lpVal)
 }
 
-func testAccAWSEFSFileSystemConfigWithLifecyclePolicyMulti(lpName1, lpVal1, lpName2, lpVal2 string) string {
+func testAccFileSystemWithLifecyclePolicyMultiConfig(lpName1, lpVal1, lpName2, lpVal2 string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   lifecycle_policy {
@@ -667,6 +667,6 @@ resource "aws_efs_file_system" "test" {
 `, lpName1, lpVal1, lpName2, lpVal2)
 }
 
-const testAccAWSEFSFileSystemConfigRemovedLifecyclePolicy = `
+const testAccFileSystemRemovedLifecyclePolicyConfig = `
 resource "aws_efs_file_system" "test" {}
 `

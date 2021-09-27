@@ -86,7 +86,7 @@ func testSweepEfsAccessPoints(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSEFSAccessPoint_basic(t *testing.T) {
+func TestAccEFSAccessPoint_basic(t *testing.T) {
 	var ap efs.AccessPointDescription
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_efs_access_point.test"
@@ -99,7 +99,7 @@ func TestAccAWSEFSAccessPoint_basic(t *testing.T) {
 		CheckDestroy: testAccCheckEfsAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSAccessPointConfig(rName),
+				Config: testAccAccessPointConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					resource.TestCheckResourceAttrPair(resourceName, "file_system_arn", fsResourceName, "arn"),
@@ -121,7 +121,7 @@ func TestAccAWSEFSAccessPoint_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSAccessPoint_root_directory(t *testing.T) {
+func TestAccEFSAccessPoint_Root_directory(t *testing.T) {
 	var ap efs.AccessPointDescription
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_efs_access_point.test"
@@ -133,7 +133,7 @@ func TestAccAWSEFSAccessPoint_root_directory(t *testing.T) {
 		CheckDestroy: testAccCheckEfsAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSAccessPointConfigRootDirectory(rName, "/home/test"),
+				Config: testAccAccessPointRootDirectoryConfig(rName, "/home/test"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					resource.TestCheckResourceAttr(resourceName, "root_directory.#", "1"),
@@ -150,7 +150,7 @@ func TestAccAWSEFSAccessPoint_root_directory(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSAccessPoint_root_directory_creation_info(t *testing.T) {
+func TestAccEFSAccessPoint_RootDirectoryCreation_info(t *testing.T) {
 	var ap efs.AccessPointDescription
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_efs_access_point.test"
@@ -162,7 +162,7 @@ func TestAccAWSEFSAccessPoint_root_directory_creation_info(t *testing.T) {
 		CheckDestroy: testAccCheckEfsAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSAccessPointConfigRootDirectoryCreationInfo(rName, "/home/test"),
+				Config: testAccAccessPointRootDirectoryCreationInfoConfig(rName, "/home/test"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					resource.TestCheckResourceAttr(resourceName, "root_directory.#", "1"),
@@ -182,7 +182,7 @@ func TestAccAWSEFSAccessPoint_root_directory_creation_info(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSAccessPoint_posix_user(t *testing.T) {
+func TestAccEFSAccessPoint_POSIX_user(t *testing.T) {
 	var ap efs.AccessPointDescription
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_efs_access_point.test"
@@ -194,7 +194,7 @@ func TestAccAWSEFSAccessPoint_posix_user(t *testing.T) {
 		CheckDestroy: testAccCheckEfsAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSAccessPointConfigPosixUser(rName),
+				Config: testAccAccessPointPOSIXUserConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					resource.TestCheckResourceAttr(resourceName, "posix_user.#", "1"),
@@ -212,7 +212,7 @@ func TestAccAWSEFSAccessPoint_posix_user(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSAccessPoint_posix_user_secondary_gids(t *testing.T) {
+func TestAccEFSAccessPoint_POSIXUserSecondary_gids(t *testing.T) {
 	var ap efs.AccessPointDescription
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_efs_access_point.test"
@@ -224,7 +224,7 @@ func TestAccAWSEFSAccessPoint_posix_user_secondary_gids(t *testing.T) {
 		CheckDestroy: testAccCheckEfsAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSAccessPointConfigPosixUserSecondaryGids(rName),
+				Config: testAccAccessPointPOSIXUserSecondaryGidsConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					resource.TestCheckResourceAttr(resourceName, "posix_user.#", "1"),
@@ -241,7 +241,7 @@ func TestAccAWSEFSAccessPoint_posix_user_secondary_gids(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSAccessPoint_tags(t *testing.T) {
+func TestAccEFSAccessPoint_tags(t *testing.T) {
 	var ap efs.AccessPointDescription
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_efs_access_point.test"
@@ -253,7 +253,7 @@ func TestAccAWSEFSAccessPoint_tags(t *testing.T) {
 		CheckDestroy: testAccCheckEfsAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSAccessPointConfigTags1(rName, "key1", "value1"),
+				Config: testAccAccessPointTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -266,7 +266,7 @@ func TestAccAWSEFSAccessPoint_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSEFSAccessPointConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccAccessPointTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -275,7 +275,7 @@ func TestAccAWSEFSAccessPoint_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSEFSAccessPointConfigTags1(rName, "key2", "value2"),
+				Config: testAccAccessPointTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -286,7 +286,7 @@ func TestAccAWSEFSAccessPoint_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSEFSAccessPoint_disappears(t *testing.T) {
+func TestAccEFSAccessPoint_disappears(t *testing.T) {
 	var ap efs.AccessPointDescription
 	resourceName := "aws_efs_access_point.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -298,7 +298,7 @@ func TestAccAWSEFSAccessPoint_disappears(t *testing.T) {
 		CheckDestroy: testAccCheckEfsAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEFSAccessPointConfig(rName),
+				Config: testAccAccessPointConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEfsAccessPointExists(resourceName, &ap),
 					acctest.CheckResourceDisappears(acctest.Provider, tfefs.ResourceAccessPoint(), resourceName),
@@ -368,7 +368,7 @@ func testAccCheckEfsAccessPointExists(resourceID string, mount *efs.AccessPointD
 	}
 }
 
-func testAccAWSEFSAccessPointConfig(rName string) string {
+func testAccAccessPointConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = "%s"
@@ -380,7 +380,7 @@ resource "aws_efs_access_point" "test" {
 `, rName)
 }
 
-func testAccAWSEFSAccessPointConfigRootDirectory(rName, dir string) string {
+func testAccAccessPointRootDirectoryConfig(rName, dir string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = %[1]q
@@ -395,7 +395,7 @@ resource "aws_efs_access_point" "test" {
 `, rName, dir)
 }
 
-func testAccAWSEFSAccessPointConfigRootDirectoryCreationInfo(rName, dir string) string {
+func testAccAccessPointRootDirectoryCreationInfoConfig(rName, dir string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = %[1]q
@@ -415,7 +415,7 @@ resource "aws_efs_access_point" "test" {
 `, rName, dir)
 }
 
-func testAccAWSEFSAccessPointConfigPosixUser(rName string) string {
+func testAccAccessPointPOSIXUserConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = "%s"
@@ -431,7 +431,7 @@ resource "aws_efs_access_point" "test" {
 `, rName)
 }
 
-func testAccAWSEFSAccessPointConfigPosixUserSecondaryGids(rName string) string {
+func testAccAccessPointPOSIXUserSecondaryGidsConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = "%s"
@@ -448,7 +448,7 @@ resource "aws_efs_access_point" "test" {
 `, rName)
 }
 
-func testAccAWSEFSAccessPointConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccAccessPointTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = %[1]q
@@ -464,7 +464,7 @@ resource "aws_efs_access_point" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSEFSAccessPointConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccAccessPointTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_efs_file_system" "test" {
   creation_token = %[1]q
