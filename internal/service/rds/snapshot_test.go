@@ -87,7 +87,7 @@ func testSweepDbSnapshots(region string) error {
 	return sweeperErrs
 }
 
-func TestAccAWSDBSnapshot_basic(t *testing.T) {
+func TestAccRDSSnapshot_basic(t *testing.T) {
 	var v rds.DBSnapshot
 	resourceName := "aws_db_snapshot.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -99,7 +99,7 @@ func TestAccAWSDBSnapshot_basic(t *testing.T) {
 		CheckDestroy: testAccCheckDbSnapshotDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDbSnapshotConfig(rName),
+				Config: testAccSnapshotConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbSnapshotExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),
@@ -115,7 +115,7 @@ func TestAccAWSDBSnapshot_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBSnapshot_tags(t *testing.T) {
+func TestAccRDSSnapshot_tags(t *testing.T) {
 	var v rds.DBSnapshot
 	resourceName := "aws_db_snapshot.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -127,7 +127,7 @@ func TestAccAWSDBSnapshot_tags(t *testing.T) {
 		CheckDestroy: testAccCheckDbSnapshotDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDbSnapshotConfigTags1(rName, "key1", "value1"),
+				Config: testAccSnapshotTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbSnapshotExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -140,7 +140,7 @@ func TestAccAWSDBSnapshot_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsDbSnapshotConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccSnapshotTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbSnapshotExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -149,7 +149,7 @@ func TestAccAWSDBSnapshot_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsDbSnapshotConfigTags1(rName, "key2", "value2"),
+				Config: testAccSnapshotTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbSnapshotExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -160,7 +160,7 @@ func TestAccAWSDBSnapshot_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBSnapshot_disappears(t *testing.T) {
+func TestAccRDSSnapshot_disappears(t *testing.T) {
 	var v rds.DBSnapshot
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_snapshot.test"
@@ -172,7 +172,7 @@ func TestAccAWSDBSnapshot_disappears(t *testing.T) {
 		CheckDestroy: testAccCheckDbSnapshotDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDbSnapshotConfig(rName),
+				Config: testAccSnapshotConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbSnapshotExists(resourceName, &v),
 					testAccCheckDbSnapshotDisappears(&v),
@@ -257,7 +257,7 @@ func testAccCheckDbSnapshotDisappears(snapshot *rds.DBSnapshot) resource.TestChe
 	}
 }
 
-func testAccAwsDbSnapshotConfigBase(rName string) string {
+func testAccSnapshotBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage       = 10
@@ -275,8 +275,8 @@ resource "aws_db_instance" "test" {
 }`, rName)
 }
 
-func testAccAwsDbSnapshotConfig(rName string) string {
-	return testAccAwsDbSnapshotConfigBase(rName) + fmt.Sprintf(`
+func testAccSnapshotConfig(rName string) string {
+	return testAccSnapshotBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_snapshot" "test" {
   db_instance_identifier = aws_db_instance.test.id
   db_snapshot_identifier = %[1]q
@@ -284,8 +284,8 @@ resource "aws_db_snapshot" "test" {
 `, rName)
 }
 
-func testAccAwsDbSnapshotConfigTags1(rName, tag1Key, tag1Value string) string {
-	return testAccAwsDbSnapshotConfigBase(rName) + fmt.Sprintf(`
+func testAccSnapshotTags1Config(rName, tag1Key, tag1Value string) string {
+	return testAccSnapshotBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_snapshot" "test" {
   db_instance_identifier = aws_db_instance.test.id
   db_snapshot_identifier = %[1]q
@@ -297,8 +297,8 @@ resource "aws_db_snapshot" "test" {
 `, rName, tag1Key, tag1Value)
 }
 
-func testAccAwsDbSnapshotConfigTags2(rName, tag1Key, tag1Value, tag2Key, tag2Value string) string {
-	return testAccAwsDbSnapshotConfigBase(rName) + fmt.Sprintf(`
+func testAccSnapshotTags2Config(rName, tag1Key, tag1Value, tag2Key, tag2Value string) string {
+	return testAccSnapshotBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_snapshot" "test" {
   db_instance_identifier = aws_db_instance.test.id
   db_snapshot_identifier = %[1]q

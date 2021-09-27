@@ -73,21 +73,21 @@ func testSweepRdsGlobalClusters(region string) error {
 	return nil
 }
 
-func TestAccAWSRdsGlobalCluster_basic(t *testing.T) {
+func TestAccRDSGlobalCluster_basic(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfig(rName),
+				Config: testAccGlobalClusterConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					acctest.CheckResourceAttrGlobalARN(resourceName, "arn", "rds", fmt.Sprintf("global-cluster:%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "database_name", ""),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "false"),
@@ -107,22 +107,22 @@ func TestAccAWSRdsGlobalCluster_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_disappears(t *testing.T) {
+func TestAccRDSGlobalCluster_disappears(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfig(rName),
+				Config: testAccGlobalClusterConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
-					testAccCheckAWSRdsGlobalClusterDisappears(&globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterDisappears(&globalCluster1),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -130,21 +130,21 @@ func TestAccAWSRdsGlobalCluster_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_DatabaseName(t *testing.T) {
+func TestAccRDSGlobalCluster_databaseName(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigDatabaseName(rName, "database1"),
+				Config: testAccGlobalClusterDatabaseNameConfig(rName, "database1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttr(resourceName, "database_name", "database1"),
 				),
 			},
@@ -154,10 +154,10 @@ func TestAccAWSRdsGlobalCluster_DatabaseName(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSRdsGlobalClusterConfigDatabaseName(rName, "database2"),
+				Config: testAccGlobalClusterDatabaseNameConfig(rName, "database2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster2),
-					testAccCheckAWSRdsGlobalClusterRecreated(&globalCluster1, &globalCluster2),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster2),
+					testAccCheckGlobalClusterRecreated(&globalCluster1, &globalCluster2),
 					resource.TestCheckResourceAttr(resourceName, "database_name", "database2"),
 				),
 			},
@@ -165,21 +165,21 @@ func TestAccAWSRdsGlobalCluster_DatabaseName(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_DeletionProtection(t *testing.T) {
+func TestAccRDSGlobalCluster_deletionProtection(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigDeletionProtection(rName, true),
+				Config: testAccGlobalClusterDeletionProtectionConfig(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "true"),
 				),
 			},
@@ -189,10 +189,10 @@ func TestAccAWSRdsGlobalCluster_DeletionProtection(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSRdsGlobalClusterConfigDeletionProtection(rName, false),
+				Config: testAccGlobalClusterDeletionProtectionConfig(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster2),
-					testAccCheckAWSRdsGlobalClusterNotRecreated(&globalCluster1, &globalCluster2),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster2),
+					testAccCheckGlobalClusterNotRecreated(&globalCluster1, &globalCluster2),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "false"),
 				),
 			},
@@ -200,21 +200,21 @@ func TestAccAWSRdsGlobalCluster_DeletionProtection(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_Engine_Aurora(t *testing.T) {
+func TestAccRDSGlobalCluster_Engine_aurora(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigEngine(rName, "aurora"),
+				Config: testAccGlobalClusterEngineConfig(rName, "aurora"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttr(resourceName, "engine", "aurora"),
 				),
 			},
@@ -227,21 +227,21 @@ func TestAccAWSRdsGlobalCluster_Engine_Aurora(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_EngineVersion_Aurora(t *testing.T) {
+func TestAccRDSGlobalCluster_EngineVersion_aurora(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigEngineVersion(rName, "aurora", "5.6.10a"),
+				Config: testAccGlobalClusterEngineVersionConfig(rName, "aurora", "5.6.10a"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "5.6.10a"),
 				),
 			},
@@ -254,28 +254,28 @@ func TestAccAWSRdsGlobalCluster_EngineVersion_Aurora(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_EngineVersionUpdateMinor(t *testing.T) {
+func TestAccRDSGlobalCluster_engineVersionUpdateMinor(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterWithPrimaryConfigEngineVersion(rName, "aurora", "5.6.mysql_aurora.1.22.2"),
+				Config: testAccGlobalClusterWithPrimaryEngineVersionConfig(rName, "aurora", "5.6.mysql_aurora.1.22.2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 				),
 			},
 			{
-				Config: testAccAWSRdsGlobalClusterWithPrimaryConfigEngineVersion(rName, "aurora", "5.6.mysql_aurora.1.23.2"),
+				Config: testAccGlobalClusterWithPrimaryEngineVersionConfig(rName, "aurora", "5.6.mysql_aurora.1.23.2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster2),
-					testAccCheckAWSRdsGlobalClusterNotRecreated(&globalCluster1, &globalCluster2),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster2),
+					testAccCheckGlobalClusterNotRecreated(&globalCluster1, &globalCluster2),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "5.6.mysql_aurora.1.23.2"),
 				),
 			},
@@ -288,29 +288,29 @@ func TestAccAWSRdsGlobalCluster_EngineVersionUpdateMinor(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_EngineVersionUpdateMajor(t *testing.T) {
+func TestAccRDSGlobalCluster_engineVersionUpdateMajor(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterWithPrimaryConfigEngineVersion(rName, "aurora", "5.6.mysql_aurora.1.22.2"),
+				Config: testAccGlobalClusterWithPrimaryEngineVersionConfig(rName, "aurora", "5.6.mysql_aurora.1.22.2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 				),
 			},
 			{
-				Config:             testAccAWSRdsGlobalClusterWithPrimaryConfigEngineVersion(rName, "aurora", "5.7.mysql_aurora.2.07.2"),
+				Config:             testAccGlobalClusterWithPrimaryEngineVersionConfig(rName, "aurora", "5.7.mysql_aurora.2.07.2"),
 				ExpectNonEmptyPlan: true,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster2),
-					testAccCheckAWSRdsGlobalClusterNotRecreated(&globalCluster1, &globalCluster2),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster2),
+					testAccCheckGlobalClusterNotRecreated(&globalCluster1, &globalCluster2),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "5.7.mysql_aurora.2.07.2"),
 				),
 			},
@@ -323,21 +323,21 @@ func TestAccAWSRdsGlobalCluster_EngineVersionUpdateMajor(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_EngineVersion_AuroraMySQL(t *testing.T) {
+func TestAccRDSGlobalCluster_EngineVersion_auroraMySQL(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigEngineVersion(rName, "aurora-mysql", "5.7.mysql_aurora.2.07.1"),
+				Config: testAccGlobalClusterEngineVersionConfig(rName, "aurora-mysql", "5.7.mysql_aurora.2.07.1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "5.7.mysql_aurora.2.07.1"),
 				),
 			},
@@ -350,21 +350,21 @@ func TestAccAWSRdsGlobalCluster_EngineVersion_AuroraMySQL(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_EngineVersion_AuroraPostgresql(t *testing.T) {
+func TestAccRDSGlobalCluster_EngineVersion_auroraPostgresql(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigEngineVersion(rName, "aurora-postgresql", "10.11"),
+				Config: testAccGlobalClusterEngineVersionConfig(rName, "aurora-postgresql", "10.11"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "10.11"),
 				),
 			},
@@ -377,22 +377,22 @@ func TestAccAWSRdsGlobalCluster_EngineVersion_AuroraPostgresql(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_SourceDbClusterIdentifier(t *testing.T) {
+func TestAccRDSGlobalCluster_sourceDBClusterIdentifier(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	clusterResourceName := "aws_rds_cluster.test"
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigSourceDbClusterIdentifier(rName),
+				Config: testAccGlobalClusterSourceClusterIdentifierConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttrPair(resourceName, "source_db_cluster_identifier", clusterResourceName, "arn"),
 				),
 			},
@@ -406,22 +406,22 @@ func TestAccAWSRdsGlobalCluster_SourceDbClusterIdentifier(t *testing.T) {
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_SourceDbClusterIdentifier_StorageEncrypted(t *testing.T) {
+func TestAccRDSGlobalCluster_SourceDBClusterIdentifier_storageEncrypted(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	clusterResourceName := "aws_rds_cluster.test"
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigSourceDbClusterIdentifierStorageEncrypted(rName),
+				Config: testAccGlobalClusterSourceClusterIdentifierStorageEncryptedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttrPair(resourceName, "source_db_cluster_identifier", clusterResourceName, "arn"),
 				),
 			},
@@ -435,21 +435,21 @@ func TestAccAWSRdsGlobalCluster_SourceDbClusterIdentifier_StorageEncrypted(t *te
 	})
 }
 
-func TestAccAWSRdsGlobalCluster_StorageEncrypted(t *testing.T) {
+func TestAccRDSGlobalCluster_storageEncrypted(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRdsGlobalCluster(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalCluster(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSRdsGlobalClusterDestroy,
+		CheckDestroy: testAccCheckGlobalClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRdsGlobalClusterConfigStorageEncrypted(rName, true),
+				Config: testAccGlobalClusterStorageEncryptedConfig(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster1),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster1),
 					resource.TestCheckResourceAttr(resourceName, "storage_encrypted", "true"),
 				),
 			},
@@ -459,10 +459,10 @@ func TestAccAWSRdsGlobalCluster_StorageEncrypted(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSRdsGlobalClusterConfigStorageEncrypted(rName, false),
+				Config: testAccGlobalClusterStorageEncryptedConfig(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSRdsGlobalClusterExists(resourceName, &globalCluster2),
-					testAccCheckAWSRdsGlobalClusterRecreated(&globalCluster1, &globalCluster2),
+					testAccCheckGlobalClusterExists(resourceName, &globalCluster2),
+					testAccCheckGlobalClusterRecreated(&globalCluster1, &globalCluster2),
 					resource.TestCheckResourceAttr(resourceName, "storage_encrypted", "false"),
 				),
 			},
@@ -470,7 +470,7 @@ func TestAccAWSRdsGlobalCluster_StorageEncrypted(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSRdsGlobalClusterExists(resourceName string, globalCluster *rds.GlobalCluster) resource.TestCheckFunc {
+func testAccCheckGlobalClusterExists(resourceName string, globalCluster *rds.GlobalCluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -503,7 +503,7 @@ func testAccCheckAWSRdsGlobalClusterExists(resourceName string, globalCluster *r
 	}
 }
 
-func testAccCheckAWSRdsGlobalClusterDestroy(s *terraform.State) error {
+func testAccCheckGlobalClusterDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -531,7 +531,7 @@ func testAccCheckAWSRdsGlobalClusterDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSRdsGlobalClusterDisappears(globalCluster *rds.GlobalCluster) resource.TestCheckFunc {
+func testAccCheckGlobalClusterDisappears(globalCluster *rds.GlobalCluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 
@@ -549,7 +549,7 @@ func testAccCheckAWSRdsGlobalClusterDisappears(globalCluster *rds.GlobalCluster)
 	}
 }
 
-func testAccCheckAWSRdsGlobalClusterNotRecreated(i, j *rds.GlobalCluster) resource.TestCheckFunc {
+func testAccCheckGlobalClusterNotRecreated(i, j *rds.GlobalCluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(i.GlobalClusterArn) != aws.StringValue(j.GlobalClusterArn) {
 			return fmt.Errorf("RDS Global Cluster was recreated. got: %s, expected: %s", aws.StringValue(i.GlobalClusterArn), aws.StringValue(j.GlobalClusterArn))
@@ -559,7 +559,7 @@ func testAccCheckAWSRdsGlobalClusterNotRecreated(i, j *rds.GlobalCluster) resour
 	}
 }
 
-func testAccCheckAWSRdsGlobalClusterRecreated(i, j *rds.GlobalCluster) resource.TestCheckFunc {
+func testAccCheckGlobalClusterRecreated(i, j *rds.GlobalCluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(i.GlobalClusterResourceId) == aws.StringValue(j.GlobalClusterResourceId) {
 			return errors.New("RDS Global Cluster was not recreated")
@@ -569,7 +569,7 @@ func testAccCheckAWSRdsGlobalClusterRecreated(i, j *rds.GlobalCluster) resource.
 	}
 }
 
-func testAccPreCheckAWSRdsGlobalCluster(t *testing.T) {
+func testAccPreCheckGlobalCluster(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 
 	input := &rds.DescribeGlobalClustersInput{}
@@ -585,7 +585,7 @@ func testAccPreCheckAWSRdsGlobalCluster(t *testing.T) {
 	}
 }
 
-func testAccAWSRdsGlobalClusterConfig(rName string) string {
+func testAccGlobalClusterConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_global_cluster" "test" {
   global_cluster_identifier = %q
@@ -593,7 +593,7 @@ resource "aws_rds_global_cluster" "test" {
 `, rName)
 }
 
-func testAccAWSRdsGlobalClusterConfigDatabaseName(rName, databaseName string) string {
+func testAccGlobalClusterDatabaseNameConfig(rName, databaseName string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_global_cluster" "test" {
   database_name             = %q
@@ -602,7 +602,7 @@ resource "aws_rds_global_cluster" "test" {
 `, databaseName, rName)
 }
 
-func testAccAWSRdsGlobalClusterConfigDeletionProtection(rName string, deletionProtection bool) string {
+func testAccGlobalClusterDeletionProtectionConfig(rName string, deletionProtection bool) string {
 	return fmt.Sprintf(`
 resource "aws_rds_global_cluster" "test" {
   deletion_protection       = %t
@@ -611,7 +611,7 @@ resource "aws_rds_global_cluster" "test" {
 `, deletionProtection, rName)
 }
 
-func testAccAWSRdsGlobalClusterConfigEngine(rName, engine string) string {
+func testAccGlobalClusterEngineConfig(rName, engine string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_global_cluster" "test" {
   engine                    = %q
@@ -620,7 +620,7 @@ resource "aws_rds_global_cluster" "test" {
 `, engine, rName)
 }
 
-func testAccAWSRdsGlobalClusterConfigEngineVersion(rName, engine, engineVersion string) string {
+func testAccGlobalClusterEngineVersionConfig(rName, engine, engineVersion string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_global_cluster" "test" {
   engine                    = %q
@@ -630,7 +630,7 @@ resource "aws_rds_global_cluster" "test" {
 `, engine, engineVersion, rName)
 }
 
-func testAccAWSRdsGlobalClusterWithPrimaryConfigEngineVersion(rName, engine, engineVersion string) string {
+func testAccGlobalClusterWithPrimaryEngineVersionConfig(rName, engine, engineVersion string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_global_cluster" "test" {
   engine                    = %[1]q
@@ -666,7 +666,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, engine, engineVersion, rName)
 }
 
-func testAccAWSRdsGlobalClusterConfigSourceDbClusterIdentifier(rName string) string {
+func testAccGlobalClusterSourceClusterIdentifierConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier  = %[1]q
@@ -691,7 +691,7 @@ resource "aws_rds_global_cluster" "test" {
 `, rName)
 }
 
-func testAccAWSRdsGlobalClusterConfigSourceDbClusterIdentifierStorageEncrypted(rName string) string {
+func testAccGlobalClusterSourceClusterIdentifierStorageEncryptedConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier  = %[1]q
@@ -717,7 +717,7 @@ resource "aws_rds_global_cluster" "test" {
 `, rName)
 }
 
-func testAccAWSRdsGlobalClusterConfigStorageEncrypted(rName string, storageEncrypted bool) string {
+func testAccGlobalClusterStorageEncryptedConfig(rName string, storageEncrypted bool) string {
 	return fmt.Sprintf(`
 resource "aws_rds_global_cluster" "test" {
   global_cluster_identifier = %q

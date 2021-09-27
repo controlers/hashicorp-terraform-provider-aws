@@ -77,7 +77,7 @@ func testSweepDbClusterSnapshots(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSDBClusterSnapshot_basic(t *testing.T) {
+func TestAccRDSClusterSnapshot_basic(t *testing.T) {
 	var dbClusterSnapshot rds.DBClusterSnapshot
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_cluster_snapshot.test"
@@ -89,7 +89,7 @@ func TestAccAWSDBClusterSnapshot_basic(t *testing.T) {
 		CheckDestroy: testAccCheckDbClusterSnapshotDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDbClusterSnapshotConfig(rName),
+				Config: testAccClusterSnapshotConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbClusterSnapshotExists(resourceName, &dbClusterSnapshot),
 					resource.TestCheckResourceAttrSet(resourceName, "allocated_storage"),
@@ -117,7 +117,7 @@ func TestAccAWSDBClusterSnapshot_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBClusterSnapshot_Tags(t *testing.T) {
+func TestAccRDSClusterSnapshot_tags(t *testing.T) {
 	var dbClusterSnapshot rds.DBClusterSnapshot
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_cluster_snapshot.test"
@@ -129,7 +129,7 @@ func TestAccAWSDBClusterSnapshot_Tags(t *testing.T) {
 		CheckDestroy: testAccCheckDbClusterSnapshotDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDbClusterSnapshotConfigTags1(rName, "key1", "value1"),
+				Config: testAccClusterSnapshotTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbClusterSnapshotExists(resourceName, &dbClusterSnapshot),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -149,7 +149,7 @@ func TestAccAWSDBClusterSnapshot_Tags(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAwsDbClusterSnapshotConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccClusterSnapshotTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbClusterSnapshotExists(resourceName, &dbClusterSnapshot),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -158,7 +158,7 @@ func TestAccAWSDBClusterSnapshot_Tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsDbClusterSnapshotConfigTags1(rName, "key2", "value2"),
+				Config: testAccClusterSnapshotTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDbClusterSnapshotExists(resourceName, &dbClusterSnapshot),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -229,7 +229,7 @@ func testAccCheckDbClusterSnapshotExists(resourceName string, dbClusterSnapshot 
 	}
 }
 
-func testAccAwsDbClusterSnapshotConfig(rName string) string {
+func testAccClusterSnapshotConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -280,7 +280,7 @@ resource "aws_db_cluster_snapshot" "test" {
 `, rName)
 }
 
-func testAccAwsDbClusterSnapshotConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccClusterSnapshotTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -334,7 +334,7 @@ resource "aws_db_cluster_snapshot" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAwsDbClusterSnapshotConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccClusterSnapshotTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"

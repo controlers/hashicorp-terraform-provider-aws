@@ -142,7 +142,7 @@ func resourceEventSubscriptionCreate(d *schema.ResourceData, meta interface{}) e
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{"creating"},
 		Target:     []string{"active"},
-		Refresh:    resourceAwsDbEventSubscriptionRefreshFunc(d.Id(), conn),
+		Refresh:    resourceEventSubscriptionRefreshFunc(d.Id(), conn),
 		Timeout:    d.Timeout(schema.TimeoutCreate),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -300,7 +300,7 @@ func resourceEventSubscriptionUpdate(d *schema.ResourceData, meta interface{}) e
 		stateConf := &resource.StateChangeConf{
 			Pending:    []string{"modifying"},
 			Target:     []string{"active"},
-			Refresh:    resourceAwsDbEventSubscriptionRefreshFunc(d.Id(), conn),
+			Refresh:    resourceEventSubscriptionRefreshFunc(d.Id(), conn),
 			Timeout:    d.Timeout(schema.TimeoutUpdate),
 			MinTimeout: 10 * time.Second,
 			Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -390,7 +390,7 @@ func resourceEventSubscriptionDelete(d *schema.ResourceData, meta interface{}) e
 	return nil
 }
 
-func resourceAwsDbEventSubscriptionRefreshFunc(name string, conn *rds.RDS) resource.StateRefreshFunc {
+func resourceEventSubscriptionRefreshFunc(name string, conn *rds.RDS) resource.StateRefreshFunc {
 
 	return func() (interface{}, string, error) {
 		sub, err := EventSubscriptionRetrieve(name, conn)
@@ -415,7 +415,7 @@ func WaitForEventSubscriptionDeletion(conn *rds.RDS, name string, timeout time.D
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{"deleting"},
 		Target:     []string{},
-		Refresh:    resourceAwsDbEventSubscriptionRefreshFunc(name, conn),
+		Refresh:    resourceEventSubscriptionRefreshFunc(name, conn),
 		Timeout:    timeout,
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second, // Wait 30 secs before starting

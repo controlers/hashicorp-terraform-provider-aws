@@ -321,7 +321,7 @@ func resourceClusterInstanceCreate(d *schema.ResourceData, meta interface{}) err
 	stateConf := &resource.StateChangeConf{
 		Pending:    resourceAwsRdsClusterInstanceCreateUpdatePendingStates,
 		Target:     []string{"available"},
-		Refresh:    resourceAwsDbInstanceStateRefreshFunc(d.Id(), conn),
+		Refresh:    resourceInstanceStateRefreshFunc(d.Id(), conn),
 		Timeout:    d.Timeout(schema.TimeoutCreate),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second,
@@ -394,7 +394,7 @@ func resourceClusterInstanceCreate(d *schema.ResourceData, meta interface{}) err
 }
 
 func resourceClusterInstanceRead(d *schema.ResourceData, meta interface{}) error {
-	db, err := resourceAwsDbInstanceRetrieve(d.Id(), meta.(*conns.AWSClient).RDSConn)
+	db, err := resourceInstanceRetrieve(d.Id(), meta.(*conns.AWSClient).RDSConn)
 	// Errors from this helper are always reportable
 	if err != nil {
 		return fmt.Errorf("Error on retrieving RDS Cluster Instance (%s): %s", d.Id(), err)
@@ -593,7 +593,7 @@ func resourceClusterInstanceUpdate(d *schema.ResourceData, meta interface{}) err
 		stateConf := &resource.StateChangeConf{
 			Pending:    resourceAwsRdsClusterInstanceCreateUpdatePendingStates,
 			Target:     []string{"available"},
-			Refresh:    resourceAwsDbInstanceStateRefreshFunc(d.Id(), conn),
+			Refresh:    resourceInstanceStateRefreshFunc(d.Id(), conn),
 			Timeout:    d.Timeout(schema.TimeoutUpdate),
 			MinTimeout: 10 * time.Second,
 			Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -637,7 +637,7 @@ func resourceClusterInstanceDelete(d *schema.ResourceData, meta interface{}) err
 	stateConf := &resource.StateChangeConf{
 		Pending:    resourceAwsRdsClusterInstanceDeletePendingStates,
 		Target:     []string{},
-		Refresh:    resourceAwsDbInstanceStateRefreshFunc(d.Id(), conn),
+		Refresh:    resourceInstanceStateRefreshFunc(d.Id(), conn),
 		Timeout:    d.Timeout(schema.TimeoutDelete),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second, // Wait 30 secs before starting

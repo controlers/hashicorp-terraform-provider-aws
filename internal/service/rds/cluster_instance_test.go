@@ -18,7 +18,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSRDSClusterInstance_basic(t *testing.T) {
+func TestAccRDSClusterInstance_basic(t *testing.T) {
 	var v rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.cluster_instances"
 
@@ -26,13 +26,13 @@ func TestAccAWSRDSClusterInstance_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfig(sdkacctest.RandInt()),
+				Config: testAccClusterInstanceConfig(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &v),
-					testAccCheckAWSDBClusterInstanceAttributes(&v),
+					testAccCheckClusterInstanceExists(resourceName, &v),
+					testAccCheckClusterInstanceAttributes(&v),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "rds", regexp.MustCompile(`db:.+`)),
 					resource.TestCheckResourceAttr(resourceName, "auto_minor_version_upgrade", "true"),
 					resource.TestCheckResourceAttr(resourceName, "copy_tags_to_snapshot", "false"),
@@ -54,10 +54,10 @@ func TestAccAWSRDSClusterInstance_basic(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSClusterInstanceConfigModified(sdkacctest.RandInt()),
+				Config: testAccClusterInstanceModifiedConfig(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &v),
-					testAccCheckAWSDBClusterInstanceAttributes(&v),
+					testAccCheckClusterInstanceExists(resourceName, &v),
+					testAccCheckClusterInstanceAttributes(&v),
 					resource.TestCheckResourceAttr(resourceName, "auto_minor_version_upgrade", "false"),
 				),
 			},
@@ -65,7 +65,7 @@ func TestAccAWSRDSClusterInstance_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSClusterInstance_isAlreadyBeingDeleted(t *testing.T) {
+func TestAccRDSClusterInstance_isAlreadyBeingDeleted(t *testing.T) {
 	var v rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.cluster_instances"
 	rInt := sdkacctest.RandInt()
@@ -74,12 +74,12 @@ func TestAccAWSRDSClusterInstance_isAlreadyBeingDeleted(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfig(rInt),
+				Config: testAccClusterInstanceConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &v),
+					testAccCheckClusterInstanceExists(resourceName, &v),
 				),
 			},
 			{
@@ -95,14 +95,14 @@ func TestAccAWSRDSClusterInstance_isAlreadyBeingDeleted(t *testing.T) {
 						t.Fatalf("error deleting Database Instance: %s", err)
 					}
 				},
-				Config:  testAccAWSClusterInstanceConfig(rInt),
+				Config:  testAccClusterInstanceConfig(rInt),
 				Destroy: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSRDSClusterInstance_az(t *testing.T) {
+func TestAccRDSClusterInstance_az(t *testing.T) {
 	var v rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.cluster_instances"
 	availabilityZonesDataSourceName := "data.aws_availability_zones.available"
@@ -111,13 +111,13 @@ func TestAccAWSRDSClusterInstance_az(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfig_az(sdkacctest.RandInt()),
+				Config: testAccClusterInstanceConfig_az(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &v),
-					testAccCheckAWSDBClusterInstanceAttributes(&v),
+					testAccCheckClusterInstanceExists(resourceName, &v),
+					testAccCheckClusterInstanceAttributes(&v),
 					resource.TestCheckResourceAttrPair(resourceName, "availability_zone", availabilityZonesDataSourceName, "names.0"),
 				),
 			},
@@ -134,7 +134,7 @@ func TestAccAWSRDSClusterInstance_az(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSClusterInstance_namePrefix(t *testing.T) {
+func TestAccRDSClusterInstance_namePrefix(t *testing.T) {
 	var v rds.DBInstance
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_rds_cluster_instance.test"
@@ -143,13 +143,13 @@ func TestAccAWSRDSClusterInstance_namePrefix(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfig_namePrefix(rInt),
+				Config: testAccClusterInstanceConfig_namePrefix(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &v),
-					testAccCheckAWSDBClusterInstanceAttributes(&v),
+					testAccCheckClusterInstanceExists(resourceName, &v),
+					testAccCheckClusterInstanceAttributes(&v),
 					resource.TestCheckResourceAttr(resourceName, "db_subnet_group_name", fmt.Sprintf("tf-test-%d", rInt)),
 					resource.TestMatchResourceAttr(resourceName, "identifier", regexp.MustCompile("^tf-cluster-instance-")),
 				),
@@ -167,7 +167,7 @@ func TestAccAWSRDSClusterInstance_namePrefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSClusterInstance_generatedName(t *testing.T) {
+func TestAccRDSClusterInstance_generatedName(t *testing.T) {
 	var v rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
 
@@ -175,13 +175,13 @@ func TestAccAWSRDSClusterInstance_generatedName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfig_generatedName(sdkacctest.RandInt()),
+				Config: testAccClusterInstanceConfig_generatedName(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &v),
-					testAccCheckAWSDBClusterInstanceAttributes(&v),
+					testAccCheckClusterInstanceExists(resourceName, &v),
+					testAccCheckClusterInstanceAttributes(&v),
 					resource.TestMatchResourceAttr(resourceName, "identifier", regexp.MustCompile("^tf-")),
 				),
 			},
@@ -198,7 +198,7 @@ func TestAccAWSRDSClusterInstance_generatedName(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSClusterInstance_kmsKey(t *testing.T) {
+func TestAccRDSClusterInstance_kmsKey(t *testing.T) {
 	var v rds.DBInstance
 	kmsKeyResourceName := "aws_kms_key.foo"
 	resourceName := "aws_rds_cluster_instance.cluster_instances"
@@ -207,12 +207,12 @@ func TestAccAWSRDSClusterInstance_kmsKey(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigKmsKey(sdkacctest.RandInt()),
+				Config: testAccClusterInstanceKMSKeyConfig(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &v),
+					testAccCheckClusterInstanceExists(resourceName, &v),
 					resource.TestCheckResourceAttrPair(resourceName, "kms_key_id", kmsKeyResourceName, "arn"),
 				),
 			},
@@ -230,7 +230,7 @@ func TestAccAWSRDSClusterInstance_kmsKey(t *testing.T) {
 }
 
 // https://github.com/hashicorp/terraform/issues/5350
-func TestAccAWSRDSClusterInstance_disappears(t *testing.T) {
+func TestAccRDSClusterInstance_disappears(t *testing.T) {
 	var v rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.cluster_instances"
 
@@ -238,13 +238,13 @@ func TestAccAWSRDSClusterInstance_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfig(sdkacctest.RandInt()),
+				Config: testAccClusterInstanceConfig(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &v),
-					testAccAWSClusterInstanceDisappears(&v),
+					testAccCheckClusterInstanceExists(resourceName, &v),
+					testAccClusterInstanceDisappears(&v),
 				),
 				// A non-empty plan is what we want. A crash is what we don't want. :)
 				ExpectNonEmptyPlan: true,
@@ -253,7 +253,7 @@ func TestAccAWSRDSClusterInstance_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PubliclyAccessible(t *testing.T) {
+func TestAccRDSClusterInstance_publiclyAccessible(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster_instance.test"
@@ -262,12 +262,12 @@ func TestAccAWSRDSClusterInstance_PubliclyAccessible(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRDSClusterInstanceConfig_PubliclyAccessible(rName, true),
+				Config: testAccClusterInstanceConfig_PubliclyAccessible(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "publicly_accessible", "true"),
 				),
 			},
@@ -281,9 +281,9 @@ func TestAccAWSRDSClusterInstance_PubliclyAccessible(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSRDSClusterInstanceConfig_PubliclyAccessible(rName, false),
+				Config: testAccClusterInstanceConfig_PubliclyAccessible(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "publicly_accessible", "false"),
 				),
 			},
@@ -291,7 +291,7 @@ func TestAccAWSRDSClusterInstance_PubliclyAccessible(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSClusterInstance_CopyTagsToSnapshot(t *testing.T) {
+func TestAccRDSClusterInstance_copyTagsToSnapshot(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rNameSuffix := sdkacctest.RandInt()
 	resourceName := "aws_rds_cluster_instance.cluster_instances"
@@ -300,12 +300,12 @@ func TestAccAWSRDSClusterInstance_CopyTagsToSnapshot(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfig_CopyTagsToSnapshot(rNameSuffix, true),
+				Config: testAccClusterInstanceConfig_CopyTagsToSnapshot(rNameSuffix, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "copy_tags_to_snapshot", "true"),
 				),
 			},
@@ -319,9 +319,9 @@ func TestAccAWSRDSClusterInstance_CopyTagsToSnapshot(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSClusterInstanceConfig_CopyTagsToSnapshot(rNameSuffix, false),
+				Config: testAccClusterInstanceConfig_CopyTagsToSnapshot(rNameSuffix, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "copy_tags_to_snapshot", "false"),
 				),
 			},
@@ -329,7 +329,7 @@ func TestAccAWSRDSClusterInstance_CopyTagsToSnapshot(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSDBClusterInstanceAttributes(v *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckClusterInstanceAttributes(v *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if *v.Engine != "aurora" && *v.Engine != "aurora-postgresql" && *v.Engine != "aurora-mysql" {
 			return fmt.Errorf("bad engine, expected \"aurora\", \"aurora-mysql\" or \"aurora-postgresql\": %#v", *v.Engine)
@@ -343,7 +343,7 @@ func testAccCheckAWSDBClusterInstanceAttributes(v *rds.DBInstance) resource.Test
 	}
 }
 
-func testAccAWSClusterInstanceDisappears(v *rds.DBInstance) resource.TestCheckFunc {
+func testAccClusterInstanceDisappears(v *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 		opts := &rds.DeleteDBInstanceInput{
@@ -371,7 +371,7 @@ func testAccAWSClusterInstanceDisappears(v *rds.DBInstance) resource.TestCheckFu
 	}
 }
 
-func testAccCheckAWSClusterInstanceExists(n string, v *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckClusterInstanceExists(n string, v *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -402,7 +402,7 @@ func testAccCheckAWSClusterInstanceExists(n string, v *rds.DBInstance) resource.
 	}
 }
 
-func TestAccAWSRDSClusterInstance_MonitoringInterval(t *testing.T) {
+func TestAccRDSClusterInstance_monitoringInterval(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -411,12 +411,12 @@ func TestAccAWSRDSClusterInstance_MonitoringInterval(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringInterval(rName, 30),
+				Config: testAccClusterInstanceMonitoringIntervalConfig(rName, 30),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "30"),
 				),
 			},
@@ -430,23 +430,23 @@ func TestAccAWSRDSClusterInstance_MonitoringInterval(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringInterval(rName, 60),
+				Config: testAccClusterInstanceMonitoringIntervalConfig(rName, 60),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "60"),
 				),
 			},
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringInterval(rName, 0),
+				Config: testAccClusterInstanceMonitoringIntervalConfig(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "0"),
 				),
 			},
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringInterval(rName, 30),
+				Config: testAccClusterInstanceMonitoringIntervalConfig(rName, 30),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "30"),
 				),
 			},
@@ -454,7 +454,7 @@ func TestAccAWSRDSClusterInstance_MonitoringInterval(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSClusterInstance_MonitoringRoleArn_EnabledToDisabled(t *testing.T) {
+func TestAccRDSClusterInstance_MonitoringRoleARN_enabledToDisabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_rds_cluster_instance.test"
@@ -464,12 +464,12 @@ func TestAccAWSRDSClusterInstance_MonitoringRoleArn_EnabledToDisabled(t *testing
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringRoleArn(rName),
+				Config: testAccClusterInstanceMonitoringRoleARNConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttrPair(resourceName, "monitoring_role_arn", iamRoleResourceName, "arn"),
 				),
 			},
@@ -483,9 +483,9 @@ func TestAccAWSRDSClusterInstance_MonitoringRoleArn_EnabledToDisabled(t *testing
 				},
 			},
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringInterval(rName, 0),
+				Config: testAccClusterInstanceMonitoringIntervalConfig(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "0"),
 				),
 			},
@@ -493,7 +493,7 @@ func TestAccAWSRDSClusterInstance_MonitoringRoleArn_EnabledToDisabled(t *testing
 	})
 }
 
-func TestAccAWSRDSClusterInstance_MonitoringRoleArn_EnabledToRemoved(t *testing.T) {
+func TestAccRDSClusterInstance_MonitoringRoleARN_enabledToRemoved(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_rds_cluster_instance.test"
@@ -503,12 +503,12 @@ func TestAccAWSRDSClusterInstance_MonitoringRoleArn_EnabledToRemoved(t *testing.
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringRoleArn(rName),
+				Config: testAccClusterInstanceMonitoringRoleARNConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttrPair(resourceName, "monitoring_role_arn", iamRoleResourceName, "arn"),
 				),
 			},
@@ -522,16 +522,16 @@ func TestAccAWSRDSClusterInstance_MonitoringRoleArn_EnabledToRemoved(t *testing.
 				},
 			},
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringRoleArnRemoved(rName),
+				Config: testAccClusterInstanceMonitoringRoleARNRemovedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSRDSClusterInstance_MonitoringRoleArn_RemovedToEnabled(t *testing.T) {
+func TestAccRDSClusterInstance_MonitoringRoleARN_removedToEnabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_rds_cluster_instance.test"
@@ -541,12 +541,12 @@ func TestAccAWSRDSClusterInstance_MonitoringRoleArn_RemovedToEnabled(t *testing.
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringRoleArnRemoved(rName),
+				Config: testAccClusterInstanceMonitoringRoleARNRemovedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 				),
 			},
 			{
@@ -559,9 +559,9 @@ func TestAccAWSRDSClusterInstance_MonitoringRoleArn_RemovedToEnabled(t *testing.
 				},
 			},
 			{
-				Config: testAccAWSClusterInstanceConfigMonitoringRoleArn(rName),
+				Config: testAccClusterInstanceMonitoringRoleARNConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttrPair(resourceName, "monitoring_role_arn", iamRoleResourceName, "arn"),
 				),
 			},
@@ -569,7 +569,7 @@ func TestAccAWSRDSClusterInstance_MonitoringRoleArn_RemovedToEnabled(t *testing.
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraMysql1(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsEnabled_auroraMySQL1(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -579,12 +579,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraMysql1(t *tes
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, engine) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraMysql1(rName, engine),
+				Config: testAccClusterInstancePerformanceInsightsEnabledAuroraMySQL1Config(rName, engine),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 				),
 			},
@@ -601,7 +601,7 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraMysql1(t *tes
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraMysql2(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsEnabled_auroraMySQL2(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -612,12 +612,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraMysql2(t *tes
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsPreCheck(t, engine, engineVersion) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraMysql2(rName, engine, engineVersion),
+				Config: testAccClusterInstancePerformanceInsightsEnabledAuroraMySQL2Config(rName, engine, engineVersion),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 				),
 			},
@@ -634,7 +634,7 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraMysql2(t *tes
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraPostgresql(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsEnabled_auroraPostgresql(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -644,12 +644,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraPostgresql(t 
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, engine) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraPostgresql(rName, engine),
+				Config: testAccClusterInstancePerformanceInsightsEnabledAuroraPostgresqlConfig(rName, engine),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 				),
 			},
@@ -666,7 +666,7 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsEnabled_AuroraPostgresql(t 
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql1(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraMySQL1(t *testing.T) {
 	var dbInstance rds.DBInstance
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_rds_cluster_instance.test"
@@ -677,12 +677,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql1(t *te
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, engine) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraMysql1(rName, engine),
+				Config: testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraMySQL1Config(rName, engine),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttrPair(resourceName, "performance_insights_kms_key_id", kmsKeyResourceName, "arn"),
 				),
@@ -700,7 +700,7 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql1(t *te
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql1_DefaultKeyToCustomKey(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyIDAuroraMySQL1_defaultKeyToCustomKey(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -710,12 +710,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql1_Defau
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, engine) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraMysql1(rName, engine),
+				Config: testAccClusterInstancePerformanceInsightsEnabledAuroraMySQL1Config(rName, engine),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 				),
 			},
@@ -729,14 +729,14 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql1_Defau
 				},
 			},
 			{
-				Config:      testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraMysql1(rName, engine),
+				Config:      testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraMySQL1Config(rName, engine),
 				ExpectError: regexp.MustCompile(`InvalidParameterCombination: You cannot change your Performance Insights KMS key`),
 			},
 		},
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql2(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraMySQL2(t *testing.T) {
 	var dbInstance rds.DBInstance
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_rds_cluster_instance.test"
@@ -748,12 +748,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql2(t *te
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsPreCheck(t, engine, engineVersion) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraMysql2(rName, engine, engineVersion),
+				Config: testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraMySQL2Config(rName, engine, engineVersion),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttrPair(resourceName, "performance_insights_kms_key_id", kmsKeyResourceName, "arn"),
 				),
@@ -771,7 +771,7 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql2(t *te
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql2_DefaultKeyToCustomKey(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyIDAuroraMySQL2_defaultKeyToCustomKey(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -782,12 +782,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql2_Defau
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsPreCheck(t, engine, engineVersion) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraMysql2(rName, engine, engineVersion),
+				Config: testAccClusterInstancePerformanceInsightsEnabledAuroraMySQL2Config(rName, engine, engineVersion),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 				),
 			},
@@ -801,14 +801,14 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraMysql2_Defau
 				},
 			},
 			{
-				Config:      testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraMysql2(rName, engine, engineVersion),
+				Config:      testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraMySQL2Config(rName, engine, engineVersion),
 				ExpectError: regexp.MustCompile(`InvalidParameterCombination: You cannot change your Performance Insights KMS key`),
 			},
 		},
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraPostgresql(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraPostgresql(t *testing.T) {
 	var dbInstance rds.DBInstance
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_rds_cluster_instance.test"
@@ -819,12 +819,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraPostgresql(t
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, engine) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraPostgresql(rName, engine),
+				Config: testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraPostgresqlConfig(rName, engine),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttrPair(resourceName, "performance_insights_kms_key_id", kmsKeyResourceName, "arn"),
 				),
@@ -842,7 +842,7 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraPostgresql(t
 	})
 }
 
-func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraPostgresql_DefaultKeyToCustomKey(t *testing.T) {
+func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyIDAuroraPostgresql_defaultKeyToCustomKey(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -852,12 +852,12 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraPostgresql_D
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, engine) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraPostgresql(rName, engine),
+				Config: testAccClusterInstancePerformanceInsightsEnabledAuroraPostgresqlConfig(rName, engine),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 				),
 			},
@@ -871,14 +871,14 @@ func TestAccAWSRDSClusterInstance_PerformanceInsightsKmsKeyId_AuroraPostgresql_D
 				},
 			},
 			{
-				Config:      testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraPostgresql(rName, engine),
+				Config:      testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraPostgresqlConfig(rName, engine),
 				ExpectError: regexp.MustCompile(`InvalidParameterCombination: You cannot change your Performance Insights KMS key`),
 			},
 		},
 	})
 }
 
-func TestAccAWSRDSClusterInstance_CACertificateIdentifier(t *testing.T) {
+func TestAccRDSClusterInstance_caCertificateIdentifier(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster_instance.test"
@@ -888,12 +888,12 @@ func TestAccAWSRDSClusterInstance_CACertificateIdentifier(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSRDSClusterInstanceConfig_CACertificateIdentifier(rName),
+				Config: testAccClusterInstanceConfig_CACertificateIdentifier(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSClusterInstanceExists(resourceName, &dbInstance),
+					testAccCheckClusterInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttrPair(resourceName, "ca_cert_identifier", dataSourceName, "id"),
 				),
 			},
@@ -967,7 +967,7 @@ func testAccRDSPerformanceInsightsPreCheck(t *testing.T, engine string, engineVe
 }
 
 // Add some random to the name, to avoid collision
-func testAccAWSClusterInstanceConfig(n int) string {
+func testAccClusterInstanceConfig(n int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine                     = aws_rds_cluster.default.engine
@@ -1013,7 +1013,7 @@ resource "aws_db_parameter_group" "bar" {
 `, n))
 }
 
-func testAccAWSClusterInstanceConfigModified(n int) string {
+func testAccClusterInstanceModifiedConfig(n int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_rds_cluster" "default" {
   cluster_identifier = "tf-aurora-cluster-test-%[1]d"
@@ -1060,7 +1060,7 @@ resource "aws_db_parameter_group" "bar" {
 `, n))
 }
 
-func testAccAWSClusterInstanceConfig_az(n int) string {
+func testAccClusterInstanceConfig_az(n int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_rds_cluster" "default" {
   cluster_identifier = "tf-aurora-cluster-test-%[1]d"
@@ -1107,7 +1107,7 @@ resource "aws_db_parameter_group" "bar" {
 `, n))
 }
 
-func testAccAWSClusterInstanceConfig_namePrefix(n int) string {
+func testAccClusterInstanceConfig_namePrefix(n int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine                     = aws_rds_cluster.test.engine
@@ -1164,7 +1164,7 @@ resource "aws_db_subnet_group" "test" {
 `, n))
 }
 
-func testAccAWSClusterInstanceConfig_generatedName(n int) string {
+func testAccClusterInstanceConfig_generatedName(n int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine                     = aws_rds_cluster.test.engine
@@ -1220,7 +1220,7 @@ resource "aws_db_subnet_group" "test" {
 `, n))
 }
 
-func testAccAWSClusterInstanceConfigKmsKey(n int) string {
+func testAccClusterInstanceKMSKeyConfig(n int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_kms_key" "foo" {
   description = "Terraform acc test %[1]d"
@@ -1289,7 +1289,7 @@ resource "aws_db_parameter_group" "bar" {
 `, n))
 }
 
-func testAccAWSClusterInstanceConfigMonitoringInterval(rName string, monitoringInterval int) string {
+func testAccClusterInstanceMonitoringIntervalConfig(rName string, monitoringInterval int) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -1344,7 +1344,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName, monitoringInterval)
 }
 
-func testAccAWSClusterInstanceConfigMonitoringRoleArnRemoved(rName string) string {
+func testAccClusterInstanceMonitoringRoleARNRemovedConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier  = %[1]q
@@ -1368,7 +1368,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName)
 }
 
-func testAccAWSClusterInstanceConfigMonitoringRoleArn(rName string) string {
+func testAccClusterInstanceMonitoringRoleARNConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -1423,7 +1423,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName)
 }
 
-func testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraMysql1(rName, engine string) string {
+func testAccClusterInstancePerformanceInsightsEnabledAuroraMySQL1Config(rName, engine string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier  = %[1]q
@@ -1451,7 +1451,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName, engine)
 }
 
-func testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraMysql2(rName, engine, engineVersion string) string {
+func testAccClusterInstancePerformanceInsightsEnabledAuroraMySQL2Config(rName, engine, engineVersion string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier  = %[1]q
@@ -1481,7 +1481,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName, engine, engineVersion)
 }
 
-func testAccAWSClusterInstanceConfigPerformanceInsightsEnabledAuroraPostgresql(rName, engine string) string {
+func testAccClusterInstancePerformanceInsightsEnabledAuroraPostgresqlConfig(rName, engine string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier  = %[1]q
@@ -1509,7 +1509,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName, engine)
 }
 
-func testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraMysql1(rName, engine string) string {
+func testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraMySQL1Config(rName, engine string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   deletion_window_in_days = 7
@@ -1542,7 +1542,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName, engine)
 }
 
-func testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraMysql2(rName, engine, engineVersion string) string {
+func testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraMySQL2Config(rName, engine, engineVersion string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   deletion_window_in_days = 7
@@ -1577,7 +1577,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName, engine, engineVersion)
 }
 
-func testAccAWSClusterInstanceConfigPerformanceInsightsKmsKeyIdAuroraPostgresql(rName, engine string) string {
+func testAccClusterInstancePerformanceInsightsKMSKeyIdAuroraPostgresqlConfig(rName, engine string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   deletion_window_in_days = 7
@@ -1610,7 +1610,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName, engine)
 }
 
-func testAccAWSRDSClusterInstanceConfig_PubliclyAccessible(rName string, publiclyAccessible bool) string {
+func testAccClusterInstanceConfig_PubliclyAccessible(rName string, publiclyAccessible bool) string {
 	return fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier  = %[1]q
@@ -1635,7 +1635,7 @@ resource "aws_rds_cluster_instance" "test" {
 `, rName, publiclyAccessible)
 }
 
-func testAccAWSClusterInstanceConfig_CopyTagsToSnapshot(n int, f bool) string {
+func testAccClusterInstanceConfig_CopyTagsToSnapshot(n int, f bool) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_rds_cluster" "default" {
   cluster_identifier = "tf-aurora-cluster-test-%[1]d"
@@ -1666,7 +1666,7 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
 `, n, f))
 }
 
-func testAccAWSRDSClusterInstanceConfig_CACertificateIdentifier(rName string) string {
+func testAccClusterInstanceConfig_CACertificateIdentifier(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_rds_cluster" "test" {
   cluster_identifier  = %[1]q

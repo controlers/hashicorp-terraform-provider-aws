@@ -67,7 +67,7 @@ func testSweepRdsDbProxies(region string) error {
 	return nil
 }
 
-func TestAccAWSDBProxy_basic(t *testing.T) {
+func TestAccRDSProxy_basic(t *testing.T) {
 	var v rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -76,12 +76,12 @@ func TestAccAWSDBProxy_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfig(rName),
+				Config: testAccProxyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &v),
+					testAccCheckProxyExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "engine_family", "MYSQL"),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "rds", regexp.MustCompile(`db-proxy:.+`)),
@@ -109,7 +109,7 @@ func TestAccAWSDBProxy_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_Name(t *testing.T) {
+func TestAccRDSProxy_name(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -119,12 +119,12 @@ func TestAccAWSDBProxy_Name(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigName(rName, rName),
+				Config: testAccProxyNameConfig(rName, rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 				),
 			},
@@ -134,9 +134,9 @@ func TestAccAWSDBProxy_Name(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigName(rName, nName),
+				Config: testAccProxyNameConfig(rName, nName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "name", nName),
 				),
 			},
@@ -144,7 +144,7 @@ func TestAccAWSDBProxy_Name(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_DebugLogging(t *testing.T) {
+func TestAccRDSProxy_debugLogging(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -153,12 +153,12 @@ func TestAccAWSDBProxy_DebugLogging(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigDebugLogging(rName, true),
+				Config: testAccProxyDebugLoggingConfig(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "debug_logging", "true"),
 				),
 			},
@@ -168,9 +168,9 @@ func TestAccAWSDBProxy_DebugLogging(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigDebugLogging(rName, false),
+				Config: testAccProxyDebugLoggingConfig(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "debug_logging", "false"),
 				),
 			},
@@ -178,7 +178,7 @@ func TestAccAWSDBProxy_DebugLogging(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_IdleClientTimeout(t *testing.T) {
+func TestAccRDSProxy_idleClientTimeout(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -187,12 +187,12 @@ func TestAccAWSDBProxy_IdleClientTimeout(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigIdleClientTimeout(rName, 900),
+				Config: testAccProxyIdleClientTimeoutConfig(rName, 900),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "idle_client_timeout", "900"),
 				),
 			},
@@ -202,9 +202,9 @@ func TestAccAWSDBProxy_IdleClientTimeout(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigIdleClientTimeout(rName, 3600),
+				Config: testAccProxyIdleClientTimeoutConfig(rName, 3600),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "idle_client_timeout", "3600"),
 				),
 			},
@@ -212,7 +212,7 @@ func TestAccAWSDBProxy_IdleClientTimeout(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_RequireTls(t *testing.T) {
+func TestAccRDSProxy_requireTLS(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -221,12 +221,12 @@ func TestAccAWSDBProxy_RequireTls(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigRequireTls(rName, true),
+				Config: testAccProxyRequireTLSConfig(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "require_tls", "true"),
 				),
 			},
@@ -236,9 +236,9 @@ func TestAccAWSDBProxy_RequireTls(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigRequireTls(rName, false),
+				Config: testAccProxyRequireTLSConfig(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "require_tls", "false"),
 				),
 			},
@@ -246,7 +246,7 @@ func TestAccAWSDBProxy_RequireTls(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_RoleArn(t *testing.T) {
+func TestAccRDSProxy_roleARN(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -256,12 +256,12 @@ func TestAccAWSDBProxy_RoleArn(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigName(rName, rName),
+				Config: testAccProxyNameConfig(rName, rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttrPair(resourceName, "role_arn", "aws_iam_role.test", "arn"),
 				),
 			},
@@ -271,9 +271,9 @@ func TestAccAWSDBProxy_RoleArn(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigRoleArn(rName, nName),
+				Config: testAccProxyRoleARNConfig(rName, nName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttrPair(resourceName, "role_arn", "aws_iam_role.test2", "arn"),
 				),
 			},
@@ -281,7 +281,7 @@ func TestAccAWSDBProxy_RoleArn(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_VpcSecurityGroupIds(t *testing.T) {
+func TestAccRDSProxy_vpcSecurityGroupIDs(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -291,12 +291,12 @@ func TestAccAWSDBProxy_VpcSecurityGroupIds(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigName(rName, rName),
+				Config: testAccProxyNameConfig(rName, rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "vpc_security_group_ids.#", "1"),
 					resource.TestCheckTypeSetElemAttrPair(resourceName, "vpc_security_group_ids.*", "aws_security_group.test", "id"),
 				),
@@ -307,9 +307,9 @@ func TestAccAWSDBProxy_VpcSecurityGroupIds(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigVpcSecurityGroupIds(rName, nName),
+				Config: testAccProxyVPCSecurityGroupIDsConfig(rName, nName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "vpc_security_group_ids.#", "1"),
 					resource.TestCheckTypeSetElemAttrPair(resourceName, "vpc_security_group_ids.*", "aws_security_group.test2", "id"),
 				),
@@ -318,7 +318,7 @@ func TestAccAWSDBProxy_VpcSecurityGroupIds(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_AuthDescription(t *testing.T) {
+func TestAccRDSProxy_authDescription(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -328,12 +328,12 @@ func TestAccAWSDBProxy_AuthDescription(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigName(rName, rName),
+				Config: testAccProxyNameConfig(rName, rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "auth.0.description", "test"),
 				),
 			},
@@ -343,9 +343,9 @@ func TestAccAWSDBProxy_AuthDescription(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigAuthDescription(rName, description),
+				Config: testAccProxyAuthDescriptionConfig(rName, description),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "auth.0.description", description),
 				),
 			},
@@ -353,7 +353,7 @@ func TestAccAWSDBProxy_AuthDescription(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_AuthIamAuth(t *testing.T) {
+func TestAccRDSProxy_authIAMAuth(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -363,12 +363,12 @@ func TestAccAWSDBProxy_AuthIamAuth(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigName(rName, rName),
+				Config: testAccProxyNameConfig(rName, rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "auth.0.iam_auth", "DISABLED"),
 				),
 			},
@@ -378,9 +378,9 @@ func TestAccAWSDBProxy_AuthIamAuth(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigAuthIamAuth(rName, iamAuth),
+				Config: testAccProxyAuthIAMAuthConfig(rName, iamAuth),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "auth.0.iam_auth", iamAuth),
 				),
 			},
@@ -388,7 +388,7 @@ func TestAccAWSDBProxy_AuthIamAuth(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_AuthSecretArn(t *testing.T) {
+func TestAccRDSProxy_authSecretARN(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -398,12 +398,12 @@ func TestAccAWSDBProxy_AuthSecretArn(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigName(rName, rName),
+				Config: testAccProxyNameConfig(rName, rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttrPair(resourceName, "auth.0.secret_arn", "aws_secretsmanager_secret.test", "arn"),
 				),
 			},
@@ -413,9 +413,9 @@ func TestAccAWSDBProxy_AuthSecretArn(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigAuthSecretArn(rName, nName),
+				Config: testAccProxyAuthSecretARNConfig(rName, nName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttrPair(resourceName, "auth.0.secret_arn", "aws_secretsmanager_secret.test2", "arn"),
 				),
 			},
@@ -423,7 +423,7 @@ func TestAccAWSDBProxy_AuthSecretArn(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_Tags(t *testing.T) {
+func TestAccRDSProxy_tags(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -434,12 +434,12 @@ func TestAccAWSDBProxy_Tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfigName(rName, rName),
+				Config: testAccProxyNameConfig(rName, rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "tags.#", "0"),
 				),
 			},
@@ -449,9 +449,9 @@ func TestAccAWSDBProxy_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSDBProxyConfigTags(rName, key, value),
+				Config: testAccProxyTagsConfig(rName, key, value),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &dbProxy),
+					testAccCheckProxyExists(resourceName, &dbProxy),
 					resource.TestCheckResourceAttr(resourceName, "tags.foo", value),
 				),
 			},
@@ -459,7 +459,7 @@ func TestAccAWSDBProxy_Tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBProxy_disappears(t *testing.T) {
+func TestAccRDSProxy_disappears(t *testing.T) {
 	var v rds.DBProxy
 	resourceName := "aws_db_proxy.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -467,12 +467,12 @@ func TestAccAWSDBProxy_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBProxyDestroy,
+		CheckDestroy: testAccCheckProxyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBProxyConfig(rName),
+				Config: testAccProxyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBProxyExists(resourceName, &v),
+					testAccCheckProxyExists(resourceName, &v),
 					acctest.CheckResourceDisappears(acctest.Provider, tfrds.ResourceProxy(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -497,7 +497,7 @@ func testAccDBProxyPreCheck(t *testing.T) {
 	}
 }
 
-func testAccCheckAWSDBProxyDestroy(s *terraform.State) error {
+func testAccCheckProxyDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -526,7 +526,7 @@ func testAccCheckAWSDBProxyDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSDBProxyExists(n string, v *rds.DBProxy) resource.TestCheckFunc {
+func testAccCheckProxyExists(n string, v *rds.DBProxy) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -560,7 +560,7 @@ func testAccCheckAWSDBProxyExists(n string, v *rds.DBProxy) resource.TestCheckFu
 	}
 }
 
-func testAccAWSDBProxyConfigBase(rName string) string {
+func testAccProxyBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 # Secrets Manager setup
 
@@ -649,8 +649,8 @@ resource "aws_subnet" "test" {
 `, rName)
 }
 
-func testAccAWSDBProxyConfig(rName string) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyConfig(rName string) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -680,8 +680,8 @@ resource "aws_db_proxy" "test" {
 `, rName)
 }
 
-func testAccAWSDBProxyConfigName(rName, nName string) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyNameConfig(rName, nName string) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -704,8 +704,8 @@ resource "aws_db_proxy" "test" {
 `, rName, nName)
 }
 
-func testAccAWSDBProxyConfigDebugLogging(rName string, debugLogging bool) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyDebugLoggingConfig(rName string, debugLogging bool) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -728,8 +728,8 @@ resource "aws_db_proxy" "test" {
 `, rName, debugLogging)
 }
 
-func testAccAWSDBProxyConfigIdleClientTimeout(rName string, idleClientTimeout int) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyIdleClientTimeoutConfig(rName string, idleClientTimeout int) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -752,8 +752,8 @@ resource "aws_db_proxy" "test" {
 `, rName, idleClientTimeout)
 }
 
-func testAccAWSDBProxyConfigRequireTls(rName string, requireTls bool) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyRequireTLSConfig(rName string, requireTls bool) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -776,8 +776,8 @@ resource "aws_db_proxy" "test" {
 `, rName, requireTls)
 }
 
-func testAccAWSDBProxyConfigRoleArn(rName, nName string) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyRoleARNConfig(rName, nName string) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -811,8 +811,8 @@ resource "aws_iam_role_policy" "test2" {
 `, rName, nName)
 }
 
-func testAccAWSDBProxyConfigVpcSecurityGroupIds(rName, nName string) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyVPCSecurityGroupIDsConfig(rName, nName string) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -840,8 +840,8 @@ resource "aws_security_group" "test2" {
 `, rName, nName)
 }
 
-func testAccAWSDBProxyConfigAuthDescription(rName, description string) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyAuthDescriptionConfig(rName, description string) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -864,8 +864,8 @@ resource "aws_db_proxy" "test" {
 `, rName, description)
 }
 
-func testAccAWSDBProxyConfigAuthIamAuth(rName, iamAuth string) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyAuthIAMAuthConfig(rName, iamAuth string) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -889,8 +889,8 @@ resource "aws_db_proxy" "test" {
 `, rName, iamAuth)
 }
 
-func testAccAWSDBProxyConfigAuthSecretArn(rName, nName string) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyAuthSecretARNConfig(rName, nName string) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,
@@ -923,8 +923,8 @@ resource "aws_secretsmanager_secret_version" "test2" {
 `, rName, nName)
 }
 
-func testAccAWSDBProxyConfigTags(rName, key, value string) string {
-	return testAccAWSDBProxyConfigBase(rName) + fmt.Sprintf(`
+func testAccProxyTagsConfig(rName, key, value string) string {
+	return testAccProxyBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_db_proxy" "test" {
   depends_on = [
     aws_secretsmanager_secret_version.test,

@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDbEventCategories_basic(t *testing.T) {
+func TestAccRDSEventCategoriesDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_db_event_categories.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -18,7 +18,7 @@ func TestAccAWSDbEventCategories_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsDbEventCategoriesConfig(),
+				Config: testAccCheckEventCategoriesConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// These checks are not meant to be exhaustive, as regions have different support.
 					// Instead these are generally to indicate that filtering works as expected.
@@ -40,7 +40,7 @@ func TestAccAWSDbEventCategories_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDbEventCategories_SourceType(t *testing.T) {
+func TestAccRDSEventCategoriesDataSource_sourceType(t *testing.T) {
 	dataSourceName := "data.aws_db_event_categories.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -49,7 +49,7 @@ func TestAccAWSDbEventCategories_SourceType(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsDbEventCategoriesConfigSourceType("db-snapshot"),
+				Config: testAccCheckEventCategoriesSourceTypeConfig("db-snapshot"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// These checks are not meant to be exhaustive, as regions have different support.
 					// Instead these are generally to indicate that filtering works as expected.
@@ -63,13 +63,13 @@ func TestAccAWSDbEventCategories_SourceType(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsDbEventCategoriesConfig() string {
+func testAccCheckEventCategoriesConfig() string {
 	return `
 data "aws_db_event_categories" "test" {}
 `
 }
 
-func testAccCheckAwsDbEventCategoriesConfigSourceType(sourceType string) string {
+func testAccCheckEventCategoriesSourceTypeConfig(sourceType string) string {
 	return fmt.Sprintf(`
 data "aws_db_event_categories" "test" {
   source_type = %[1]q
