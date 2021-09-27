@@ -80,11 +80,11 @@ func testSweepConnectInstance(region string) error {
 }
 
 //Serialized acceptance tests due to Connect account limits (max 2 parallel tests)
-func TestAccAwsConnectInstance_serial(t *testing.T) {
+func TestAccConnectInstance_serial(t *testing.T) {
 	testCases := map[string]func(t *testing.T){
-		"basic":     testAccAwsConnectInstance_basic,
-		"directory": testAccAwsConnectInstance_directory,
-		"saml":      testAccAwsConnectInstance_saml,
+		"basic":     testAccInstance_basic,
+		"directory": testAccInstance_directory,
+		"saml":      testAccInstance_saml,
 	}
 
 	for name, tc := range testCases {
@@ -95,7 +95,7 @@ func TestAccAwsConnectInstance_serial(t *testing.T) {
 	}
 }
 
-func testAccAwsConnectInstance_basic(t *testing.T) {
+func testAccInstance_basic(t *testing.T) {
 	var v connect.DescribeInstanceOutput
 	rName := sdkacctest.RandomWithPrefix("resource-test-terraform")
 	resourceName := "aws_connect_instance.test"
@@ -104,12 +104,12 @@ func testAccAwsConnectInstance_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, connect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsConnectInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsConnectInstanceConfigBasic(rName),
+				Config: testAccInstanceBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsConnectInstanceExists(resourceName, &v),
+					testAccCheckInstanceExists(resourceName, &v),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "connect", regexp.MustCompile(`instance/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "auto_resolve_best_voices_enabled", "true"), //verified default result from ListInstanceAttributes()
 					resource.TestCheckResourceAttr(resourceName, "contact_flow_logs_enabled", "false"),       //verified default result from ListInstanceAttributes()
@@ -130,9 +130,9 @@ func testAccAwsConnectInstance_basic(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsConnectInstanceConfigBasicFlipped(rName),
+				Config: testAccInstanceBasicFlippedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsConnectInstanceExists(resourceName, &v),
+					testAccCheckInstanceExists(resourceName, &v),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "connect", regexp.MustCompile(`instance/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "auto_resolve_best_voices_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "contact_flow_logs_enabled", "true"),
@@ -149,7 +149,7 @@ func testAccAwsConnectInstance_basic(t *testing.T) {
 	})
 }
 
-func testAccAwsConnectInstance_directory(t *testing.T) {
+func testAccInstance_directory(t *testing.T) {
 	var v connect.DescribeInstanceOutput
 	rName := sdkacctest.RandomWithPrefix("resource-test-terraform")
 	resourceName := "aws_connect_instance.test"
@@ -158,12 +158,12 @@ func testAccAwsConnectInstance_directory(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, connect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsConnectInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsConnectInstanceConfigDirectory(rName),
+				Config: testAccInstanceDirectoryConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsConnectInstanceExists(resourceName, &v),
+					testAccCheckInstanceExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "identity_management_type", connect.DirectoryTypeExistingDirectory),
 					resource.TestCheckResourceAttr(resourceName, "status", connect.InstanceStatusActive),
 				),
@@ -178,7 +178,7 @@ func testAccAwsConnectInstance_directory(t *testing.T) {
 	})
 }
 
-func testAccAwsConnectInstance_saml(t *testing.T) {
+func testAccInstance_saml(t *testing.T) {
 	var v connect.DescribeInstanceOutput
 	rName := sdkacctest.RandomWithPrefix("resource-test-terraform")
 	resourceName := "aws_connect_instance.test"
@@ -187,13 +187,13 @@ func testAccAwsConnectInstance_saml(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, connect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsConnectInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsConnectInstanceConfigSAML(rName),
+				Config: testAccInstanceSAMLConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "identity_management_type", connect.DirectoryTypeSaml),
-					testAccCheckAwsConnectInstanceExists(resourceName, &v),
+					testAccCheckInstanceExists(resourceName, &v),
 				),
 			},
 			{
@@ -205,7 +205,7 @@ func testAccAwsConnectInstance_saml(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsConnectInstanceExists(resourceName string, instance *connect.DescribeInstanceOutput) resource.TestCheckFunc {
+func testAccCheckInstanceExists(resourceName string, instance *connect.DescribeInstanceOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -236,7 +236,7 @@ func testAccCheckAwsConnectInstanceExists(resourceName string, instance *connect
 	}
 }
 
-func testAccCheckAwsConnectInstanceDestroy(s *terraform.State) error {
+func testAccCheckInstanceDestroy(s *terraform.State) error {
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_connect_instance" {
 			continue
@@ -262,7 +262,7 @@ func testAccCheckAwsConnectInstanceDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAwsConnectInstanceConfigBasic(rName string) string {
+func testAccInstanceBasicConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_connect_instance" "test" {
   identity_management_type = "CONNECT_MANAGED"
@@ -273,7 +273,7 @@ resource "aws_connect_instance" "test" {
 `, rName)
 }
 
-func testAccAwsConnectInstanceConfigBasicFlipped(rName string) string {
+func testAccInstanceBasicFlippedConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_connect_instance" "test" {
   auto_resolve_best_voices_enabled = false
@@ -288,7 +288,7 @@ resource "aws_connect_instance" "test" {
 `, rName)
 }
 
-func testAccAwsConnectInstanceConfigDirectory(rName string) string {
+func testAccInstanceDirectoryConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -345,7 +345,7 @@ resource "aws_connect_instance" "test" {
 `, rName)
 }
 
-func testAccAwsConnectInstanceConfigSAML(rName string) string {
+func testAccInstanceSAMLConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_connect_instance" "test" {
   identity_management_type = "SAML"
