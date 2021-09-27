@@ -72,7 +72,7 @@ func testSweepAPIGatewayV2Apis(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSAPIGatewayV2Api_basicWebSocket(t *testing.T) {
+func TestAccAPIGatewayV2API_basicWebSocket(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -81,12 +81,12 @@ func TestAccAWSAPIGatewayV2Api_basicWebSocket(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_basicWebSocket(rName),
+				Config: testAccAPIConfig_basicWebSocket(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -110,7 +110,7 @@ func TestAccAWSAPIGatewayV2Api_basicWebSocket(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_basicHttp(t *testing.T) {
+func TestAccAPIGatewayV2API_basicHTTP(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -119,12 +119,12 @@ func TestAccAWSAPIGatewayV2Api_basicHttp(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_basicHttp(rName),
+				Config: testAccAPIConfig_basicHTTP(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -148,7 +148,7 @@ func TestAccAWSAPIGatewayV2Api_basicHttp(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_disappears(t *testing.T) {
+func TestAccAPIGatewayV2API_disappears(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -157,12 +157,12 @@ func TestAccAWSAPIGatewayV2Api_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_basicWebSocket(rName),
+				Config: testAccAPIConfig_basicWebSocket(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					acctest.CheckResourceDisappears(acctest.Provider, tfapigatewayv2.ResourceAPI(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -171,7 +171,7 @@ func TestAccAWSAPIGatewayV2Api_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_AllAttributesWebSocket(t *testing.T) {
+func TestAccAPIGatewayV2API_allAttributesWebSocket(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -181,12 +181,12 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesWebSocket(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_allAttributesWebSocket(rName1),
+				Config: testAccAPIConfig_allAttributesWebSocket(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$context.authorizer.usageIdentifierKey"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -202,9 +202,9 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesWebSocket(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_basicWebSocket(rName1),
+				Config: testAccAPIConfig_basicWebSocket(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
@@ -217,9 +217,9 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesWebSocket(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_allAttributesWebSocket(rName2),
+				Config: testAccAPIConfig_allAttributesWebSocket(rName2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$context.authorizer.usageIdentifierKey"),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", "test description"),
@@ -231,9 +231,9 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesWebSocket(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_allAttributesWebSocket(rName1),
+				Config: testAccAPIConfig_allAttributesWebSocket(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$context.authorizer.usageIdentifierKey"),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", "test description"),
@@ -253,7 +253,7 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesWebSocket(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_AllAttributesHttp(t *testing.T) {
+func TestAccAPIGatewayV2API_allAttributesHTTP(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -263,12 +263,12 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesHttp(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_allAttributesHttp(rName1),
+				Config: testAccAPIConfig_allAttributesHTTP(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -284,9 +284,9 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesHttp(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_basicHttp(rName1),
+				Config: testAccAPIConfig_basicHTTP(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
@@ -299,9 +299,9 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesHttp(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_allAttributesHttp(rName2),
+				Config: testAccAPIConfig_allAttributesHTTP(rName2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", "test description"),
@@ -313,9 +313,9 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesHttp(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_allAttributesHttp(rName1),
+				Config: testAccAPIConfig_allAttributesHTTP(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", "test description"),
@@ -335,7 +335,7 @@ func TestAccAWSAPIGatewayV2Api_AllAttributesHttp(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_Openapi(t *testing.T) {
+func TestAccAPIGatewayV2API_openAPI(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -344,12 +344,12 @@ func TestAccAWSAPIGatewayV2Api_Openapi(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_OpenAPI(rName),
+				Config: testAccAPIConfig_OpenAPI(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
 					resource.TestCheckResourceAttr(resourceName, "disable_execute_api_endpoint", "false"),
@@ -357,7 +357,7 @@ func TestAccAWSAPIGatewayV2Api_Openapi(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "version", ""),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /test"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /test"}),
 				),
 			},
 			{
@@ -367,22 +367,22 @@ func TestAccAWSAPIGatewayV2Api_Openapi(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"body"},
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_UpdatedOpenAPIYaml(rName),
+				Config: testAccAPIConfig_UpdatedOpenAPIYAML(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
 					resource.TestCheckResourceAttr(resourceName, "disable_execute_api_endpoint", "false"),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "version", ""),
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /update"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /update"}),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_Openapi_WithTags(t *testing.T) {
+func TestAccAPIGatewayV2API_OpenAPI_withTags(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -391,16 +391,16 @@ func TestAccAWSAPIGatewayV2Api_Openapi_WithTags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_tags(rName),
+				Config: testAccAPIConfig_OpenAPIYAML_tags(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /test"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /test"}),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Key1", "Value1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Key2", "Value2"),
@@ -413,11 +413,11 @@ func TestAccAWSAPIGatewayV2Api_Openapi_WithTags(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"body"},
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_tagsUpdated(rName),
+				Config: testAccAPIConfig_OpenAPIYAML_tagsUpdated(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /update"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /update"}),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Key1", "Value1U"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Key2", "Value2U"),
@@ -427,7 +427,7 @@ func TestAccAWSAPIGatewayV2Api_Openapi_WithTags(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_Openapi_WithCorsConfiguration(t *testing.T) {
+func TestAccAPIGatewayV2API_OpenAPI_withCors(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -436,12 +436,12 @@ func TestAccAWSAPIGatewayV2Api_Openapi_WithCorsConfiguration(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_corsConfiguration(rName),
+				Config: testAccAPIConfig_OpenAPIYAML_corsConfiguration(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
@@ -458,20 +458,20 @@ func TestAccAWSAPIGatewayV2Api_Openapi_WithCorsConfiguration(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"body"},
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_corsConfigurationUpdated(rName),
+				Config: testAccAPIConfig_OpenAPIYAML_corsConfigurationUpdated(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /update"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /update"}),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.#", "0"),
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_corsConfigurationUpdated2(rName),
+				Config: testAccAPIConfig_OpenAPIYAML_corsConfigurationUpdated2(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /update"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /update"}),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.0.allow_methods.#", "2"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "cors_configuration.0.allow_methods.*", "get"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "cors_configuration.0.allow_methods.*", "put"),
@@ -484,7 +484,7 @@ func TestAccAWSAPIGatewayV2Api_Openapi_WithCorsConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_OpenapiWithMoreFields(t *testing.T) {
+func TestAccAPIGatewayV2API_OpenAPI_withMoreFields(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -493,12 +493,12 @@ func TestAccAWSAPIGatewayV2Api_OpenapiWithMoreFields(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml(rName),
+				Config: testAccAPIConfig_OpenAPIYAML(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
 					resource.TestCheckResourceAttr(resourceName, "disable_execute_api_endpoint", "false"),
@@ -506,7 +506,7 @@ func TestAccAWSAPIGatewayV2Api_OpenapiWithMoreFields(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "version", ""),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /test"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /test"}),
 				),
 			},
 			{
@@ -516,15 +516,15 @@ func TestAccAWSAPIGatewayV2Api_OpenapiWithMoreFields(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"body"},
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_UpdatedOpenAPI2(rName),
+				Config: testAccAPIConfig_UpdatedOpenAPI2(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "description", "description test"),
 					resource.TestCheckResourceAttr(resourceName, "disable_execute_api_endpoint", "false"),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "version", "2017-04-21T04:08:08Z"),
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /update"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /update"}),
 				),
 			},
 			{
@@ -537,7 +537,7 @@ func TestAccAWSAPIGatewayV2Api_OpenapiWithMoreFields(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_Openapi_FailOnWarnings(t *testing.T) {
+func TestAccAPIGatewayV2API_OpenAPI_failOnWarnings(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -546,22 +546,22 @@ func TestAccAWSAPIGatewayV2Api_Openapi_FailOnWarnings(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			// Invalid body should not be accepted when fail_on_warnings is enabled
 			{
-				Config:      testAccAWSAPIGatewayV2ApiConfig_FailOnWarnings(rName, "fail_on_warnings = true"),
+				Config:      testAccAPIConfig_FailOnWarnings(rName, "fail_on_warnings = true"),
 				ExpectError: regexp.MustCompile(`BadRequestException: Warnings found during import`),
 			},
 			// Warnings do not break the deployment when fail_on_warnings is disabled
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_FailOnWarnings(rName, "fail_on_warnings = false"),
+				Config: testAccAPIConfig_FailOnWarnings(rName, "fail_on_warnings = false"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
 					resource.TestCheckResourceAttr(resourceName, "fail_on_warnings", "false"),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /update"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /update"}),
 				),
 			},
 			{
@@ -572,12 +572,12 @@ func TestAccAWSAPIGatewayV2Api_Openapi_FailOnWarnings(t *testing.T) {
 			},
 			// fail_on_warnings should be optional and false by default
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_FailOnWarnings(rName, ""),
+				Config: testAccAPIConfig_FailOnWarnings(rName, ""),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "protocol_type", apigatewayv2.ProtocolTypeHttp),
-					testAccCheckAWSAPIGatewayV2ApiRoutes(&v, []string{"GET /update"}),
+					testAccCheckAPIRoutes(&v, []string{"GET /update"}),
 				),
 			},
 			{
@@ -590,7 +590,7 @@ func TestAccAWSAPIGatewayV2Api_Openapi_FailOnWarnings(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSAPIGatewayV2ApiRoutes(v *apigatewayv2.GetApiOutput, routes []string) resource.TestCheckFunc {
+func testAccCheckAPIRoutes(v *apigatewayv2.GetApiOutput, routes []string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).APIGatewayV2Conn
 
@@ -621,7 +621,7 @@ func testAccCheckAWSAPIGatewayV2ApiRoutes(v *apigatewayv2.GetApiOutput, routes [
 	}
 }
 
-func TestAccAWSAPIGatewayV2Api_Tags(t *testing.T) {
+func TestAccAPIGatewayV2API_tags(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -630,12 +630,12 @@ func TestAccAWSAPIGatewayV2Api_Tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_tags(rName),
+				Config: testAccAPIConfig_tags(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -657,9 +657,9 @@ func TestAccAWSAPIGatewayV2Api_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_basicWebSocket(rName),
+				Config: testAccAPIConfig_basicWebSocket(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					resource.TestCheckResourceAttr(resourceName, "cors_configuration.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
@@ -674,7 +674,7 @@ func TestAccAWSAPIGatewayV2Api_Tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_CorsConfiguration(t *testing.T) {
+func TestAccAPIGatewayV2API_cors(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -683,12 +683,12 @@ func TestAccAWSAPIGatewayV2Api_CorsConfiguration(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_corsConfiguration(rName),
+				Config: testAccAPIConfig_corsConfiguration(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -718,9 +718,9 @@ func TestAccAWSAPIGatewayV2Api_CorsConfiguration(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_corsConfigurationUpdated(rName),
+				Config: testAccAPIConfig_corsConfigurationUpdated(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -745,9 +745,9 @@ func TestAccAWSAPIGatewayV2Api_CorsConfiguration(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_basicHttp(rName),
+				Config: testAccAPIConfig_basicHTTP(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
+					testAccCheckAPIExists(resourceName, &v),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -765,7 +765,7 @@ func TestAccAWSAPIGatewayV2Api_CorsConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2Api_QuickCreate(t *testing.T) {
+func TestAccAPIGatewayV2API_quickCreate(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -774,15 +774,15 @@ func TestAccAWSAPIGatewayV2Api_QuickCreate(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2ApiDestroy,
+		CheckDestroy: testAccCheckAPIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2ApiConfig_quickCreate(rName),
+				Config: testAccAPIConfig_quickCreate(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2ApiExists(resourceName, &v),
-					testAccCheckAWSAPIGatewayV2ApiQuickCreateIntegration(resourceName, "HTTP_PROXY", "http://www.example.com/"),
-					testAccCheckAWSAPIGatewayV2ApiQuickCreateRoute(resourceName, "GET /pets"),
-					testAccCheckAWSAPIGatewayV2ApiQuickCreateStage(resourceName, "$default"),
+					testAccCheckAPIExists(resourceName, &v),
+					testAccCheckAPIQuickCreateIntegration(resourceName, "HTTP_PROXY", "http://www.example.com/"),
+					testAccCheckAPIQuickCreateRoute(resourceName, "GET /pets"),
+					testAccCheckAPIQuickCreateStage(resourceName, "$default"),
 					resource.TestCheckResourceAttrSet(resourceName, "api_endpoint"),
 					resource.TestCheckResourceAttr(resourceName, "api_key_selection_expression", "$request.header.x-api-key"),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/apis/.+`)),
@@ -811,7 +811,7 @@ func TestAccAWSAPIGatewayV2Api_QuickCreate(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSAPIGatewayV2ApiDestroy(s *terraform.State) error {
+func testAccCheckAPIDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).APIGatewayV2Conn
 
 	for _, rs := range s.RootModule().Resources {
@@ -835,7 +835,7 @@ func testAccCheckAWSAPIGatewayV2ApiDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSAPIGatewayV2ApiExists(n string, v *apigatewayv2.GetApiOutput) resource.TestCheckFunc {
+func testAccCheckAPIExists(n string, v *apigatewayv2.GetApiOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -861,7 +861,7 @@ func testAccCheckAWSAPIGatewayV2ApiExists(n string, v *apigatewayv2.GetApiOutput
 	}
 }
 
-func testAccCheckAWSAPIGatewayV2ApiQuickCreateIntegration(n, expectedType, expectedUri string) resource.TestCheckFunc {
+func testAccCheckAPIQuickCreateIntegration(n, expectedType, expectedUri string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -896,7 +896,7 @@ func testAccCheckAWSAPIGatewayV2ApiQuickCreateIntegration(n, expectedType, expec
 	}
 }
 
-func testAccCheckAWSAPIGatewayV2ApiQuickCreateRoute(n, expectedRouteKey string) resource.TestCheckFunc {
+func testAccCheckAPIQuickCreateRoute(n, expectedRouteKey string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -928,7 +928,7 @@ func testAccCheckAWSAPIGatewayV2ApiQuickCreateRoute(n, expectedRouteKey string) 
 	}
 }
 
-func testAccCheckAWSAPIGatewayV2ApiQuickCreateStage(n, expectedName string) resource.TestCheckFunc {
+func testAccCheckAPIQuickCreateStage(n, expectedName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -960,7 +960,7 @@ func testAccCheckAWSAPIGatewayV2ApiQuickCreateStage(n, expectedName string) reso
 	}
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_basicWebSocket(rName string) string {
+func testAccAPIConfig_basicWebSocket(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name                       = %[1]q
@@ -970,7 +970,7 @@ resource "aws_apigatewayv2_api" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_basicHttp(rName string) string {
+func testAccAPIConfig_basicHTTP(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = %[1]q
@@ -979,7 +979,7 @@ resource "aws_apigatewayv2_api" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_allAttributesWebSocket(rName string) string {
+func testAccAPIConfig_allAttributesWebSocket(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   api_key_selection_expression = "$context.authorizer.usageIdentifierKey"
@@ -993,7 +993,7 @@ resource "aws_apigatewayv2_api" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_allAttributesHttp(rName string) string {
+func testAccAPIConfig_allAttributesHTTP(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   description                  = "test description"
@@ -1005,7 +1005,7 @@ resource "aws_apigatewayv2_api" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_tags(rName string) string {
+func testAccAPIConfig_tags(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name                       = %[1]q
@@ -1020,7 +1020,7 @@ resource "aws_apigatewayv2_api" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_corsConfiguration(rName string) string {
+func testAccAPIConfig_corsConfiguration(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = %[1]q
@@ -1035,7 +1035,7 @@ resource "aws_apigatewayv2_api" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_corsConfigurationUpdated(rName string) string {
+func testAccAPIConfig_corsConfigurationUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = %[1]q
@@ -1052,7 +1052,7 @@ resource "aws_apigatewayv2_api" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_quickCreate(rName string) string {
+func testAccAPIConfig_quickCreate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = %[1]q
@@ -1063,7 +1063,7 @@ resource "aws_apigatewayv2_api" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_OpenAPI(rName string) string {
+func testAccAPIConfig_OpenAPI(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1093,7 +1093,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml(rName string) string {
+func testAccAPIConfig_OpenAPIYAML(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1117,7 +1117,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_corsConfiguration(rName string) string {
+func testAccAPIConfig_OpenAPIYAML_corsConfiguration(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1150,7 +1150,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_corsConfigurationUpdated(rName string) string {
+func testAccAPIConfig_OpenAPIYAML_corsConfigurationUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1179,7 +1179,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_corsConfigurationUpdated2(rName string) string {
+func testAccAPIConfig_OpenAPIYAML_corsConfigurationUpdated2(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1212,7 +1212,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_tags(rName string) string {
+func testAccAPIConfig_OpenAPIYAML_tags(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1243,7 +1243,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_OpenAPIYaml_tagsUpdated(rName string) string {
+func testAccAPIConfig_OpenAPIYAML_tagsUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1276,7 +1276,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_UpdatedOpenAPIYaml(rName string) string {
+func testAccAPIConfig_UpdatedOpenAPIYAML(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1300,7 +1300,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_UpdatedOpenAPI2(rName string) string {
+func testAccAPIConfig_UpdatedOpenAPI2(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = "%s"
@@ -1333,7 +1333,7 @@ EOF
 `, rName, rName)
 }
 
-func testAccAWSAPIGatewayV2ApiConfig_FailOnWarnings(rName string, failOnWarnings string) string {
+func testAccAPIConfig_FailOnWarnings(rName string, failOnWarnings string) string {
 	return fmt.Sprintf(`
 resource "aws_apigatewayv2_api" "test" {
   name          = %[1]q

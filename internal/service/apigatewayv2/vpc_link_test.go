@@ -80,7 +80,7 @@ func testSweepAPIGatewayV2VpcLinks(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSAPIGatewayV2VpcLink_basic(t *testing.T) {
+func TestAccAPIGatewayV2VPCLink_basic(t *testing.T) {
 	var v apigatewayv2.GetVpcLinkOutput
 	resourceName := "aws_apigatewayv2_vpc_link.test"
 	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -90,12 +90,12 @@ func TestAccAWSAPIGatewayV2VpcLink_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2VpcLinkDestroy,
+		CheckDestroy: testAccCheckVPCLinkDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2VpcLinkConfig_basic(rName1),
+				Config: testAccVPCLinkConfig_basic(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2VpcLinkExists(resourceName, &v),
+					testAccCheckVPCLinkExists(resourceName, &v),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/vpclinks/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "name", rName1),
 					resource.TestCheckResourceAttr(resourceName, "security_group_ids.#", "1"),
@@ -104,9 +104,9 @@ func TestAccAWSAPIGatewayV2VpcLink_basic(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAPIGatewayV2VpcLinkConfig_basic(rName2),
+				Config: testAccVPCLinkConfig_basic(rName2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2VpcLinkExists(resourceName, &v),
+					testAccCheckVPCLinkExists(resourceName, &v),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/vpclinks/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "name", rName2),
 					resource.TestCheckResourceAttr(resourceName, "security_group_ids.#", "1"),
@@ -123,7 +123,7 @@ func TestAccAWSAPIGatewayV2VpcLink_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2VpcLink_disappears(t *testing.T) {
+func TestAccAPIGatewayV2VPCLink_disappears(t *testing.T) {
 	var v apigatewayv2.GetVpcLinkOutput
 	resourceName := "aws_apigatewayv2_vpc_link.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -132,13 +132,13 @@ func TestAccAWSAPIGatewayV2VpcLink_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2VpcLinkDestroy,
+		CheckDestroy: testAccCheckVPCLinkDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2VpcLinkConfig_basic(rName),
+				Config: testAccVPCLinkConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2VpcLinkExists(resourceName, &v),
-					testAccCheckAWSAPIGatewayV2VpcLinkDisappears(&v),
+					testAccCheckVPCLinkExists(resourceName, &v),
+					testAccCheckVPCLinkDisappears(&v),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -146,7 +146,7 @@ func TestAccAWSAPIGatewayV2VpcLink_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSAPIGatewayV2VpcLink_Tags(t *testing.T) {
+func TestAccAPIGatewayV2VPCLink_tags(t *testing.T) {
 	var v apigatewayv2.GetVpcLinkOutput
 	resourceName := "aws_apigatewayv2_vpc_link.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -155,12 +155,12 @@ func TestAccAWSAPIGatewayV2VpcLink_Tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigatewayv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayV2VpcLinkDestroy,
+		CheckDestroy: testAccCheckVPCLinkDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAPIGatewayV2VpcLinkConfig_tags(rName),
+				Config: testAccVPCLinkConfig_tags(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2VpcLinkExists(resourceName, &v),
+					testAccCheckVPCLinkExists(resourceName, &v),
 					acctest.MatchResourceAttrRegionalARNNoAccount(resourceName, "arn", "apigateway", regexp.MustCompile(`/vpclinks/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "security_group_ids.#", "1"),
@@ -176,9 +176,9 @@ func TestAccAWSAPIGatewayV2VpcLink_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSAPIGatewayV2VpcLinkConfig_basic(rName),
+				Config: testAccVPCLinkConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAPIGatewayV2VpcLinkExists(resourceName, &v),
+					testAccCheckVPCLinkExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),
 				),
@@ -187,7 +187,7 @@ func TestAccAWSAPIGatewayV2VpcLink_Tags(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSAPIGatewayV2VpcLinkDestroy(s *terraform.State) error {
+func testAccCheckVPCLinkDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).APIGatewayV2Conn
 
 	for _, rs := range s.RootModule().Resources {
@@ -211,7 +211,7 @@ func testAccCheckAWSAPIGatewayV2VpcLinkDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSAPIGatewayV2VpcLinkDisappears(v *apigatewayv2.GetVpcLinkOutput) resource.TestCheckFunc {
+func testAccCheckVPCLinkDisappears(v *apigatewayv2.GetVpcLinkOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).APIGatewayV2Conn
 
@@ -233,7 +233,7 @@ func testAccCheckAWSAPIGatewayV2VpcLinkDisappears(v *apigatewayv2.GetVpcLinkOutp
 	}
 }
 
-func testAccCheckAWSAPIGatewayV2VpcLinkExists(n string, v *apigatewayv2.GetVpcLinkOutput) resource.TestCheckFunc {
+func testAccCheckVPCLinkExists(n string, v *apigatewayv2.GetVpcLinkOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -259,7 +259,7 @@ func testAccCheckAWSAPIGatewayV2VpcLinkExists(n string, v *apigatewayv2.GetVpcLi
 	}
 }
 
-func testAccAWSAPIGatewayV2VpcLinkConfig_base(rName string) string {
+func testAccVPCLinkConfig_base(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -300,8 +300,8 @@ resource "aws_security_group" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2VpcLinkConfig_basic(rName string) string {
-	return testAccAWSAPIGatewayV2VpcLinkConfig_base(rName) + fmt.Sprintf(`
+func testAccVPCLinkConfig_basic(rName string) string {
+	return testAccVPCLinkConfig_base(rName) + fmt.Sprintf(`
 resource "aws_apigatewayv2_vpc_link" "test" {
   name               = %[1]q
   security_group_ids = [aws_security_group.test.id]
@@ -310,8 +310,8 @@ resource "aws_apigatewayv2_vpc_link" "test" {
 `, rName)
 }
 
-func testAccAWSAPIGatewayV2VpcLinkConfig_tags(rName string) string {
-	return testAccAWSAPIGatewayV2VpcLinkConfig_base(rName) + fmt.Sprintf(`
+func testAccVPCLinkConfig_tags(rName string) string {
+	return testAccVPCLinkConfig_base(rName) + fmt.Sprintf(`
 resource "aws_apigatewayv2_vpc_link" "test" {
   name               = %[1]q
   security_group_ids = [aws_security_group.test.id]
