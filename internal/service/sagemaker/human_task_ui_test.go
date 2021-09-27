@@ -61,7 +61,7 @@ func testSweepSagemakerHumanTaskUis(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSSagemakerHumanTaskUi_basic(t *testing.T) {
+func TestAccSageMakerHumanTaskUI_basic(t *testing.T) {
 	var humanTaskUi sagemaker.DescribeHumanTaskUiOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_human_task_ui.test"
@@ -70,12 +70,12 @@ func TestAccAWSSagemakerHumanTaskUi_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerHumanTaskUiDestroy,
+		CheckDestroy: testAccCheckHumanTaskUIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerHumanTaskUiCognitoBasicConfig(rName),
+				Config: testAccHumanTaskUICognitoBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerHumanTaskUiExists(resourceName, &humanTaskUi),
+					testAccCheckHumanTaskUIExists(resourceName, &humanTaskUi),
 					resource.TestCheckResourceAttr(resourceName, "human_task_ui_name", rName),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "sagemaker", fmt.Sprintf("human-task-ui/%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "ui_template.#", "1"),
@@ -92,7 +92,7 @@ func TestAccAWSSagemakerHumanTaskUi_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSSagemakerHumanTaskUi_tags(t *testing.T) {
+func TestAccSageMakerHumanTaskUI_tags(t *testing.T) {
 	var humanTaskUi sagemaker.DescribeHumanTaskUiOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_human_task_ui.test"
@@ -101,12 +101,12 @@ func TestAccAWSSagemakerHumanTaskUi_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerHumanTaskUiDestroy,
+		CheckDestroy: testAccCheckHumanTaskUIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerHumanTaskUiTagsConfig1(rName, "key1", "value1"),
+				Config: testAccHumanTaskUITags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerHumanTaskUiExists(resourceName, &humanTaskUi),
+					testAccCheckHumanTaskUIExists(resourceName, &humanTaskUi),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -118,18 +118,18 @@ func TestAccAWSSagemakerHumanTaskUi_tags(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"ui_template.0.content", "ui_template.0.url"},
 			},
 			{
-				Config: testAccAWSSagemakerHumanTaskUiTagsConfig2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccHumanTaskUITags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerHumanTaskUiExists(resourceName, &humanTaskUi),
+					testAccCheckHumanTaskUIExists(resourceName, &humanTaskUi),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSSagemakerHumanTaskUiTagsConfig1(rName, "key2", "value2"),
+				Config: testAccHumanTaskUITags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerHumanTaskUiExists(resourceName, &humanTaskUi),
+					testAccCheckHumanTaskUIExists(resourceName, &humanTaskUi),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -138,7 +138,7 @@ func TestAccAWSSagemakerHumanTaskUi_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSSagemakerHumanTaskUi_disappears(t *testing.T) {
+func TestAccSageMakerHumanTaskUI_disappears(t *testing.T) {
 	var humanTaskUi sagemaker.DescribeHumanTaskUiOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_human_task_ui.test"
@@ -147,12 +147,12 @@ func TestAccAWSSagemakerHumanTaskUi_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerHumanTaskUiDestroy,
+		CheckDestroy: testAccCheckHumanTaskUIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerHumanTaskUiCognitoBasicConfig(rName),
+				Config: testAccHumanTaskUICognitoBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerHumanTaskUiExists(resourceName, &humanTaskUi),
+					testAccCheckHumanTaskUIExists(resourceName, &humanTaskUi),
 					acctest.CheckResourceDisappears(acctest.Provider, tfsagemaker.ResourceHumanTaskUI(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -161,7 +161,7 @@ func TestAccAWSSagemakerHumanTaskUi_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSSagemakerHumanTaskUiDestroy(s *terraform.State) error {
+func testAccCheckHumanTaskUIDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -185,7 +185,7 @@ func testAccCheckAWSSagemakerHumanTaskUiDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSSagemakerHumanTaskUiExists(n string, humanTaskUi *sagemaker.DescribeHumanTaskUiOutput) resource.TestCheckFunc {
+func testAccCheckHumanTaskUIExists(n string, humanTaskUi *sagemaker.DescribeHumanTaskUiOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -210,7 +210,7 @@ func testAccCheckAWSSagemakerHumanTaskUiExists(n string, humanTaskUi *sagemaker.
 	}
 }
 
-func testAccAWSSagemakerHumanTaskUiCognitoBasicConfig(rName string) string {
+func testAccHumanTaskUICognitoBasicConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_sagemaker_human_task_ui" "test" {
   human_task_ui_name = %[1]q
@@ -222,7 +222,7 @@ resource "aws_sagemaker_human_task_ui" "test" {
 `, rName)
 }
 
-func testAccAWSSagemakerHumanTaskUiTagsConfig1(rName, tagKey1, tagValue1 string) string {
+func testAccHumanTaskUITags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_sagemaker_human_task_ui" "test" {
   human_task_ui_name = %[1]q
@@ -238,7 +238,7 @@ resource "aws_sagemaker_human_task_ui" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSSagemakerHumanTaskUiTagsConfig2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccHumanTaskUITags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_sagemaker_human_task_ui" "test" {
   human_task_ui_name = %[1]q

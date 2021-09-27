@@ -60,7 +60,7 @@ func testSweepSagemakerImages(region string) error {
 	return nil
 }
 
-func TestAccAWSSagemakerImage_basic(t *testing.T) {
+func TestAccSageMakerImage_basic(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_image.test"
@@ -69,12 +69,12 @@ func TestAccAWSSagemakerImage_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerImageDestroy,
+		CheckDestroy: testAccCheckImageDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerImageBasicConfig(rName),
+				Config: testAccImageBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "image_name", rName),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "sagemaker", fmt.Sprintf("image/%s", rName)),
 					resource.TestCheckResourceAttrPair(resourceName, "role_arn", "aws_iam_role.test", "arn"),
@@ -90,7 +90,7 @@ func TestAccAWSSagemakerImage_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSSagemakerImage_description(t *testing.T) {
+func TestAccSageMakerImage_description(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_image.test"
@@ -99,12 +99,12 @@ func TestAccAWSSagemakerImage_description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerImageDestroy,
+		CheckDestroy: testAccCheckImageDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerImageDescription(rName),
+				Config: testAccImageDescription(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
 				),
 			},
@@ -114,16 +114,16 @@ func TestAccAWSSagemakerImage_description(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSagemakerImageBasicConfig(rName),
+				Config: testAccImageBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
 				),
 			},
 			{
-				Config: testAccAWSSagemakerImageDescription(rName),
+				Config: testAccImageDescription(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
 				),
 			},
@@ -131,7 +131,7 @@ func TestAccAWSSagemakerImage_description(t *testing.T) {
 	})
 }
 
-func TestAccAWSSagemakerImage_displayName(t *testing.T) {
+func TestAccSageMakerImage_displayName(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_image.test"
@@ -140,12 +140,12 @@ func TestAccAWSSagemakerImage_displayName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerImageDestroy,
+		CheckDestroy: testAccCheckImageDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerImageDisplayName(rName),
+				Config: testAccImageDisplayName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "display_name", rName),
 				),
 			},
@@ -155,16 +155,16 @@ func TestAccAWSSagemakerImage_displayName(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSagemakerImageBasicConfig(rName),
+				Config: testAccImageBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "display_name", ""),
 				),
 			},
 			{
-				Config: testAccAWSSagemakerImageDisplayName(rName),
+				Config: testAccImageDisplayName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "display_name", rName),
 				),
 			},
@@ -172,7 +172,7 @@ func TestAccAWSSagemakerImage_displayName(t *testing.T) {
 	})
 }
 
-func TestAccAWSSagemakerImage_tags(t *testing.T) {
+func TestAccSageMakerImage_tags(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_image.test"
@@ -181,12 +181,12 @@ func TestAccAWSSagemakerImage_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerImageDestroy,
+		CheckDestroy: testAccCheckImageDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerImageConfigTags1(rName, "key1", "value1"),
+				Config: testAccImageTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -197,18 +197,18 @@ func TestAccAWSSagemakerImage_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSagemakerImageConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccImageTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSSagemakerImageConfigTags1(rName, "key2", "value2"),
+				Config: testAccImageTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -217,7 +217,7 @@ func TestAccAWSSagemakerImage_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSSagemakerImage_disappears(t *testing.T) {
+func TestAccSageMakerImage_disappears(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_image.test"
@@ -226,12 +226,12 @@ func TestAccAWSSagemakerImage_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerImageDestroy,
+		CheckDestroy: testAccCheckImageDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerImageBasicConfig(rName),
+				Config: testAccImageBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerImageExists(resourceName, &image),
+					testAccCheckImageExists(resourceName, &image),
 					acctest.CheckResourceDisappears(acctest.Provider, tfsagemaker.ResourceImage(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -240,7 +240,7 @@ func TestAccAWSSagemakerImage_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSSagemakerImageDestroy(s *terraform.State) error {
+func testAccCheckImageDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -266,7 +266,7 @@ func testAccCheckAWSSagemakerImageDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSSagemakerImageExists(n string, image *sagemaker.DescribeImageOutput) resource.TestCheckFunc {
+func testAccCheckImageExists(n string, image *sagemaker.DescribeImageOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -289,7 +289,7 @@ func testAccCheckAWSSagemakerImageExists(n string, image *sagemaker.DescribeImag
 	}
 }
 
-func testAccAWSSagemakerImageConfigBase(rName string) string {
+func testAccImageBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -311,8 +311,8 @@ data "aws_iam_policy_document" "test" {
 `, rName)
 }
 
-func testAccAWSSagemakerImageBasicConfig(rName string) string {
-	return testAccAWSSagemakerImageConfigBase(rName) + fmt.Sprintf(`
+func testAccImageBasicConfig(rName string) string {
+	return testAccImageBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_sagemaker_image" "test" {
   image_name = %[1]q
   role_arn   = aws_iam_role.test.arn
@@ -320,8 +320,8 @@ resource "aws_sagemaker_image" "test" {
 `, rName)
 }
 
-func testAccAWSSagemakerImageDescription(rName string) string {
-	return testAccAWSSagemakerImageConfigBase(rName) + fmt.Sprintf(`
+func testAccImageDescription(rName string) string {
+	return testAccImageBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_sagemaker_image" "test" {
   image_name  = %[1]q
   role_arn    = aws_iam_role.test.arn
@@ -330,8 +330,8 @@ resource "aws_sagemaker_image" "test" {
 `, rName)
 }
 
-func testAccAWSSagemakerImageDisplayName(rName string) string {
-	return testAccAWSSagemakerImageConfigBase(rName) + fmt.Sprintf(`
+func testAccImageDisplayName(rName string) string {
+	return testAccImageBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_sagemaker_image" "test" {
   image_name   = %[1]q
   role_arn     = aws_iam_role.test.arn
@@ -340,8 +340,8 @@ resource "aws_sagemaker_image" "test" {
 `, rName)
 }
 
-func testAccAWSSagemakerImageConfigTags1(rName, tagKey1, tagValue1 string) string {
-	return testAccAWSSagemakerImageConfigBase(rName) + fmt.Sprintf(`
+func testAccImageTags1Config(rName, tagKey1, tagValue1 string) string {
+	return testAccImageBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_sagemaker_image" "test" {
   image_name = %[1]q
   role_arn   = aws_iam_role.test.arn
@@ -353,8 +353,8 @@ resource "aws_sagemaker_image" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSSagemakerImageConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
-	return testAccAWSSagemakerImageConfigBase(rName) + fmt.Sprintf(`
+func testAccImageTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+	return testAccImageBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_sagemaker_image" "test" {
   image_name = %[1]q
   role_arn   = aws_iam_role.test.arn

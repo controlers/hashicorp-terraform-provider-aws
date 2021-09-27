@@ -70,7 +70,7 @@ func testSweepSagemakerNotebookInstanceLifecycleConfiguration(region string) err
 	return nil
 }
 
-func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_basic(t *testing.T) {
+func TestAccSageMakerNotebookInstanceLifecycleConfiguration_basic(t *testing.T) {
 	var lifecycleConfig sagemaker.DescribeNotebookInstanceLifecycleConfigOutput
 	rName := sdkacctest.RandomWithPrefix(SagemakerNotebookInstanceLifecycleConfigurationResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance_lifecycle_configuration.test"
@@ -79,12 +79,12 @@ func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_basic(t *testing.
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerNotebookInstanceLifecycleConfigurationDestroy,
+		CheckDestroy: testAccCheckNotebookInstanceLifecycleConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSagemakerNotebookInstanceLifecycleConfigurationConfig_Basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerNotebookInstanceLifecycleConfigurationExists(resourceName, &lifecycleConfig),
+					testAccCheckNotebookInstanceLifecycleConfigurationExists(resourceName, &lifecycleConfig),
 
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckNoResourceAttr(resourceName, "on_create"),
@@ -101,7 +101,7 @@ func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_basic(t *testing.
 	})
 }
 
-func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_Update(t *testing.T) {
+func TestAccSageMakerNotebookInstanceLifecycleConfiguration_update(t *testing.T) {
 	var lifecycleConfig sagemaker.DescribeNotebookInstanceLifecycleConfigOutput
 	rName := sdkacctest.RandomWithPrefix(SagemakerNotebookInstanceLifecycleConfigurationResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance_lifecycle_configuration.test"
@@ -110,12 +110,12 @@ func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_Update(t *testing
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerNotebookInstanceLifecycleConfigurationDestroy,
+		CheckDestroy: testAccCheckNotebookInstanceLifecycleConfigurationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSagemakerNotebookInstanceLifecycleConfigurationConfig_Basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerNotebookInstanceLifecycleConfigurationExists(resourceName, &lifecycleConfig),
+					testAccCheckNotebookInstanceLifecycleConfigurationExists(resourceName, &lifecycleConfig),
 
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 				),
@@ -123,7 +123,7 @@ func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_Update(t *testing
 			{
 				Config: testAccSagemakerNotebookInstanceLifecycleConfigurationConfig_Update(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerNotebookInstanceLifecycleConfigurationExists(resourceName, &lifecycleConfig),
+					testAccCheckNotebookInstanceLifecycleConfigurationExists(resourceName, &lifecycleConfig),
 
 					resource.TestCheckResourceAttr(resourceName, "on_create", verify.Base64Encode([]byte("echo bla"))),
 					resource.TestCheckResourceAttr(resourceName, "on_start", verify.Base64Encode([]byte("echo blub"))),
@@ -138,7 +138,7 @@ func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_Update(t *testing
 	})
 }
 
-func testAccCheckAWSSagemakerNotebookInstanceLifecycleConfigurationExists(resourceName string, lifecycleConfig *sagemaker.DescribeNotebookInstanceLifecycleConfigOutput) resource.TestCheckFunc {
+func testAccCheckNotebookInstanceLifecycleConfigurationExists(resourceName string, lifecycleConfig *sagemaker.DescribeNotebookInstanceLifecycleConfigOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -168,7 +168,7 @@ func testAccCheckAWSSagemakerNotebookInstanceLifecycleConfigurationExists(resour
 	}
 }
 
-func testAccCheckAWSSagemakerNotebookInstanceLifecycleConfigurationDestroy(s *terraform.State) error {
+func testAccCheckNotebookInstanceLifecycleConfigurationDestroy(s *terraform.State) error {
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_sagemaker_notebook_instance_lifecycle_configuration" {
 			continue

@@ -62,7 +62,7 @@ func testSweepSagemakerWorkteams(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func testAccAWSSagemakerWorkteam_cognitoConfig(t *testing.T) {
+func testAccWorkteam_cognitoConfig(t *testing.T) {
 	var workteam sagemaker.Workteam
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_workteam.test"
@@ -71,12 +71,12 @@ func testAccAWSSagemakerWorkteam_cognitoConfig(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerWorkteamDestroy,
+		CheckDestroy: testAccCheckWorkteamDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerWorkteamCognitoConfig(rName),
+				Config: testAccWorkteamCognitoConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -96,9 +96,9 @@ func testAccAWSSagemakerWorkteam_cognitoConfig(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"workforce_name"},
 			},
 			{
-				Config: testAccAWSSagemakerWorkteamCognitoUpdatedConfig(rName),
+				Config: testAccWorkteamCognitoUpdatedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -115,9 +115,9 @@ func testAccAWSSagemakerWorkteam_cognitoConfig(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSSagemakerWorkteamCognitoConfig(rName),
+				Config: testAccWorkteamCognitoConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -133,7 +133,7 @@ func testAccAWSSagemakerWorkteam_cognitoConfig(t *testing.T) {
 	})
 }
 
-func testAccAWSSagemakerWorkteam_oidcConfig(t *testing.T) {
+func testAccWorkteam_oidcConfig(t *testing.T) {
 	var workteam sagemaker.Workteam
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_workteam.test"
@@ -142,12 +142,12 @@ func testAccAWSSagemakerWorkteam_oidcConfig(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerWorkteamDestroy,
+		CheckDestroy: testAccCheckWorkteamDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerWorkteamOidcConfig(rName),
+				Config: testAccWorkteamOIDCConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "member_definition.#", "1"),
@@ -163,9 +163,9 @@ func testAccAWSSagemakerWorkteam_oidcConfig(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"workforce_name"},
 			},
 			{
-				Config: testAccAWSSagemakerWorkteamOidcConfig2(rName, "test"),
+				Config: testAccWorkteamOIDC2Config(rName, "test"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "member_definition.#", "1"),
@@ -176,9 +176,9 @@ func testAccAWSSagemakerWorkteam_oidcConfig(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSSagemakerWorkteamOidcConfig(rName),
+				Config: testAccWorkteamOIDCConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "member_definition.#", "1"),
@@ -190,7 +190,7 @@ func testAccAWSSagemakerWorkteam_oidcConfig(t *testing.T) {
 	})
 }
 
-func testAccAWSSagemakerWorkteam_tags(t *testing.T) {
+func testAccWorkteam_tags(t *testing.T) {
 	var workteam sagemaker.Workteam
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_workteam.test"
@@ -199,12 +199,12 @@ func testAccAWSSagemakerWorkteam_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerWorkteamDestroy,
+		CheckDestroy: testAccCheckWorkteamDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerWorkteamTagsConfig1(rName, "key1", "value1"),
+				Config: testAccWorkteamTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -216,18 +216,18 @@ func testAccAWSSagemakerWorkteam_tags(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"workforce_name"},
 			},
 			{
-				Config: testAccAWSSagemakerWorkteamTagsConfig2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccWorkteamTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSSagemakerWorkteamTagsConfig1(rName, "key2", "value2"),
+				Config: testAccWorkteamTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -236,7 +236,7 @@ func testAccAWSSagemakerWorkteam_tags(t *testing.T) {
 	})
 }
 
-func testAccAWSSagemakerWorkteam_notificationConfig(t *testing.T) {
+func testAccWorkteam_notificationConfig(t *testing.T) {
 	var workteam sagemaker.Workteam
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_workteam.test"
@@ -245,12 +245,12 @@ func testAccAWSSagemakerWorkteam_notificationConfig(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerWorkteamDestroy,
+		CheckDestroy: testAccCheckWorkteamDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerWorkteamNotificationConfig(rName),
+				Config: testAccWorkteamNotificationConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -265,9 +265,9 @@ func testAccAWSSagemakerWorkteam_notificationConfig(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"workforce_name"},
 			},
 			{
-				Config: testAccAWSSagemakerWorkteamOidcConfig(rName),
+				Config: testAccWorkteamOIDCConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -275,9 +275,9 @@ func testAccAWSSagemakerWorkteam_notificationConfig(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSSagemakerWorkteamNotificationConfig(rName),
+				Config: testAccWorkteamNotificationConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					resource.TestCheckResourceAttr(resourceName, "workteam_name", rName),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "sagemaker", regexp.MustCompile(`workteam/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -289,7 +289,7 @@ func testAccAWSSagemakerWorkteam_notificationConfig(t *testing.T) {
 	})
 }
 
-func testAccAWSSagemakerWorkteam_disappears(t *testing.T) {
+func testAccWorkteam_disappears(t *testing.T) {
 	var workteam sagemaker.Workteam
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_workteam.test"
@@ -298,12 +298,12 @@ func testAccAWSSagemakerWorkteam_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerWorkteamDestroy,
+		CheckDestroy: testAccCheckWorkteamDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerWorkteamOidcConfig(rName),
+				Config: testAccWorkteamOIDCConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerWorkteamExists(resourceName, &workteam),
+					testAccCheckWorkteamExists(resourceName, &workteam),
 					acctest.CheckResourceDisappears(acctest.Provider, tfsagemaker.ResourceWorkteam(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -312,7 +312,7 @@ func testAccAWSSagemakerWorkteam_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSSagemakerWorkteamDestroy(s *terraform.State) error {
+func testAccCheckWorkteamDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -336,7 +336,7 @@ func testAccCheckAWSSagemakerWorkteamDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSSagemakerWorkteamExists(n string, workteam *sagemaker.Workteam) resource.TestCheckFunc {
+func testAccCheckWorkteamExists(n string, workteam *sagemaker.Workteam) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -361,7 +361,7 @@ func testAccCheckAWSSagemakerWorkteamExists(n string, workteam *sagemaker.Workte
 	}
 }
 
-func testAccAWSSagemakerWorkteamCognitoBaseConfig(rName string) string {
+func testAccWorkteamCognitoBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -394,8 +394,8 @@ resource "aws_sagemaker_workforce" "test" {
 `, rName)
 }
 
-func testAccAWSSagemakerWorkteamCognitoConfig(rName string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerWorkteamCognitoBaseConfig(rName), fmt.Sprintf(`
+func testAccWorkteamCognitoConfig(rName string) string {
+	return acctest.ConfigCompose(testAccWorkteamCognitoBaseConfig(rName), fmt.Sprintf(`
 resource "aws_sagemaker_workteam" "test" {
   workteam_name  = %[1]q
   workforce_name = aws_sagemaker_workforce.test.id
@@ -412,8 +412,8 @@ resource "aws_sagemaker_workteam" "test" {
 `, rName))
 }
 
-func testAccAWSSagemakerWorkteamCognitoUpdatedConfig(rName string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerWorkteamCognitoBaseConfig(rName), fmt.Sprintf(`
+func testAccWorkteamCognitoUpdatedConfig(rName string) string {
+	return acctest.ConfigCompose(testAccWorkteamCognitoBaseConfig(rName), fmt.Sprintf(`
 resource "aws_cognito_user_group" "test2" {
   name         = "%[1]s-2"
   user_pool_id = aws_cognito_user_pool.test.id
@@ -443,7 +443,7 @@ resource "aws_sagemaker_workteam" "test" {
 `, rName))
 }
 
-func testAccAWSSagemakerWorkteamOidcBaseConfig(rName string) string {
+func testAccWorkteamOIDCBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_sagemaker_workforce" "test" {
   workforce_name = %[1]q
@@ -462,8 +462,8 @@ resource "aws_sagemaker_workforce" "test" {
 `, rName)
 }
 
-func testAccAWSSagemakerWorkteamOidcConfig(rName string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerWorkteamOidcBaseConfig(rName), fmt.Sprintf(`
+func testAccWorkteamOIDCConfig(rName string) string {
+	return acctest.ConfigCompose(testAccWorkteamOIDCBaseConfig(rName), fmt.Sprintf(`
 resource "aws_sagemaker_workteam" "test" {
   workteam_name  = %[1]q
   workforce_name = aws_sagemaker_workforce.test.id
@@ -478,8 +478,8 @@ resource "aws_sagemaker_workteam" "test" {
 `, rName))
 }
 
-func testAccAWSSagemakerWorkteamOidcConfig2(rName, group string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerWorkteamOidcBaseConfig(rName), fmt.Sprintf(`
+func testAccWorkteamOIDC2Config(rName, group string) string {
+	return acctest.ConfigCompose(testAccWorkteamOIDCBaseConfig(rName), fmt.Sprintf(`
 resource "aws_sagemaker_workteam" "test" {
   workteam_name  = %[1]q
   workforce_name = aws_sagemaker_workforce.test.id
@@ -494,8 +494,8 @@ resource "aws_sagemaker_workteam" "test" {
 `, rName, group))
 }
 
-func testAccAWSSagemakerWorkteamNotificationConfig(rName string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerWorkteamOidcBaseConfig(rName), fmt.Sprintf(`
+func testAccWorkteamNotificationConfig(rName string) string {
+	return acctest.ConfigCompose(testAccWorkteamOIDCBaseConfig(rName), fmt.Sprintf(`
 resource "aws_sns_topic" "test" {
   name = %[1]q
 }
@@ -540,8 +540,8 @@ resource "aws_sagemaker_workteam" "test" {
 `, rName))
 }
 
-func testAccAWSSagemakerWorkteamTagsConfig1(rName, tagKey1, tagValue1 string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerWorkteamOidcBaseConfig(rName), fmt.Sprintf(`
+func testAccWorkteamTags1Config(rName, tagKey1, tagValue1 string) string {
+	return acctest.ConfigCompose(testAccWorkteamOIDCBaseConfig(rName), fmt.Sprintf(`
 resource "aws_sagemaker_workteam" "test" {
   workteam_name  = %[1]q
   workforce_name = aws_sagemaker_workforce.test.id
@@ -560,8 +560,8 @@ resource "aws_sagemaker_workteam" "test" {
 `, rName, tagKey1, tagValue1))
 }
 
-func testAccAWSSagemakerWorkteamTagsConfig2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerWorkteamOidcBaseConfig(rName), fmt.Sprintf(`
+func testAccWorkteamTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+	return acctest.ConfigCompose(testAccWorkteamOIDCBaseConfig(rName), fmt.Sprintf(`
 resource "aws_sagemaker_workteam" "test" {
   workteam_name  = %[1]q
   workforce_name = aws_sagemaker_workforce.test.id

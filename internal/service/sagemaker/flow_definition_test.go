@@ -61,7 +61,7 @@ func testSweepSagemakerFlowDefinitions(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func testAccAWSSagemakerFlowDefinition_basic(t *testing.T) {
+func testAccFlowDefinition_basic(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_flow_definition.test"
@@ -70,12 +70,12 @@ func testAccAWSSagemakerFlowDefinition_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerFlowDefinitionDestroy,
+		CheckDestroy: testAccCheckFlowDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerFlowDefinitionBasicConfig(rName),
+				Config: testAccFlowDefinitionBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerFlowDefinitionExists(resourceName, &flowDefinition),
+					testAccCheckFlowDefinitionExists(resourceName, &flowDefinition),
 					resource.TestCheckResourceAttr(resourceName, "flow_definition_name", rName),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "sagemaker", fmt.Sprintf("flow-definition/%s", rName)),
 					resource.TestCheckResourceAttrPair(resourceName, "role_arn", "aws_iam_role.test", "arn"),
@@ -103,7 +103,7 @@ func testAccAWSSagemakerFlowDefinition_basic(t *testing.T) {
 	})
 }
 
-func testAccAWSSagemakerFlowDefinition_humanLoopConfig_publicWorkforce(t *testing.T) {
+func testAccFlowDefinition_humanLoopConfig_publicWorkforce(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_flow_definition.test"
@@ -112,12 +112,12 @@ func testAccAWSSagemakerFlowDefinition_humanLoopConfig_publicWorkforce(t *testin
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerFlowDefinitionDestroy,
+		CheckDestroy: testAccCheckFlowDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerFlowDefinitionPublicWorkforceConfig(rName),
+				Config: testAccFlowDefinitionPublicWorkforceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerFlowDefinitionExists(resourceName, &flowDefinition),
+					testAccCheckFlowDefinitionExists(resourceName, &flowDefinition),
 					resource.TestCheckResourceAttr(resourceName, "flow_definition_name", rName),
 					resource.TestCheckResourceAttr(resourceName, "human_loop_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "human_loop_config.0.public_workforce_task_price.#", "1"),
@@ -135,7 +135,7 @@ func testAccAWSSagemakerFlowDefinition_humanLoopConfig_publicWorkforce(t *testin
 	})
 }
 
-func testAccAWSSagemakerFlowDefinition_humanLoopRequestSource(t *testing.T) {
+func testAccFlowDefinition_humanLoopRequestSource(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_flow_definition.test"
@@ -144,12 +144,12 @@ func testAccAWSSagemakerFlowDefinition_humanLoopRequestSource(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerFlowDefinitionDestroy,
+		CheckDestroy: testAccCheckFlowDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerFlowDefinitionHumanLoopRequestSourceConfig(rName),
+				Config: testAccFlowDefinitionHumanLoopRequestSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerFlowDefinitionExists(resourceName, &flowDefinition),
+					testAccCheckFlowDefinitionExists(resourceName, &flowDefinition),
 					resource.TestCheckResourceAttr(resourceName, "flow_definition_name", rName),
 					resource.TestCheckResourceAttr(resourceName, "human_loop_request_source.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "human_loop_request_source.0.aws_managed_human_loop_request_source", "AWS/Textract/AnalyzeDocument/Forms/V1"),
@@ -167,7 +167,7 @@ func testAccAWSSagemakerFlowDefinition_humanLoopRequestSource(t *testing.T) {
 	})
 }
 
-func testAccAWSSagemakerFlowDefinition_tags(t *testing.T) {
+func testAccFlowDefinition_tags(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_flow_definition.test"
@@ -176,12 +176,12 @@ func testAccAWSSagemakerFlowDefinition_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerFlowDefinitionDestroy,
+		CheckDestroy: testAccCheckFlowDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerFlowDefinitionTagsConfig1(rName, "key1", "value1"),
+				Config: testAccFlowDefinitionTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerFlowDefinitionExists(resourceName, &flowDefinition),
+					testAccCheckFlowDefinitionExists(resourceName, &flowDefinition),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -192,18 +192,18 @@ func testAccAWSSagemakerFlowDefinition_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSagemakerFlowDefinitionTagsConfig2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccFlowDefinitionTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerFlowDefinitionExists(resourceName, &flowDefinition),
+					testAccCheckFlowDefinitionExists(resourceName, &flowDefinition),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSSagemakerFlowDefinitionTagsConfig1(rName, "key2", "value2"),
+				Config: testAccFlowDefinitionTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerFlowDefinitionExists(resourceName, &flowDefinition),
+					testAccCheckFlowDefinitionExists(resourceName, &flowDefinition),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -212,7 +212,7 @@ func testAccAWSSagemakerFlowDefinition_tags(t *testing.T) {
 	})
 }
 
-func testAccAWSSagemakerFlowDefinition_disappears(t *testing.T) {
+func testAccFlowDefinition_disappears(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_flow_definition.test"
@@ -221,12 +221,12 @@ func testAccAWSSagemakerFlowDefinition_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSagemakerFlowDefinitionDestroy,
+		CheckDestroy: testAccCheckFlowDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSagemakerFlowDefinitionBasicConfig(rName),
+				Config: testAccFlowDefinitionBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSagemakerFlowDefinitionExists(resourceName, &flowDefinition),
+					testAccCheckFlowDefinitionExists(resourceName, &flowDefinition),
 					acctest.CheckResourceDisappears(acctest.Provider, tfsagemaker.ResourceFlowDefinition(), resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfsagemaker.ResourceFlowDefinition(), resourceName),
 				),
@@ -236,7 +236,7 @@ func testAccAWSSagemakerFlowDefinition_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSSagemakerFlowDefinitionDestroy(s *terraform.State) error {
+func testAccCheckFlowDefinitionDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -260,7 +260,7 @@ func testAccCheckAWSSagemakerFlowDefinitionDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSSagemakerFlowDefinitionExists(n string, flowDefinition *sagemaker.DescribeFlowDefinitionOutput) resource.TestCheckFunc {
+func testAccCheckFlowDefinitionExists(n string, flowDefinition *sagemaker.DescribeFlowDefinitionOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -285,7 +285,7 @@ func testAccCheckAWSSagemakerFlowDefinitionExists(n string, flowDefinition *sage
 	}
 }
 
-func testAccAWSSagemakerFlowDefinitionBaseConfig(rName string) string {
+func testAccFlowDefinitionBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_sagemaker_human_task_ui" "test" {
   human_task_ui_name = %[1]q
@@ -351,9 +351,9 @@ EOF
 `, rName)
 }
 
-func testAccAWSSagemakerFlowDefinitionBasicConfig(rName string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerFlowDefinitionBaseConfig(rName),
-		testAccAWSSagemakerWorkteamCognitoConfig(rName),
+func testAccFlowDefinitionBasicConfig(rName string) string {
+	return acctest.ConfigCompose(testAccFlowDefinitionBaseConfig(rName),
+		testAccWorkteamCognitoConfig(rName),
 		fmt.Sprintf(`
 resource "aws_sagemaker_flow_definition" "test" {
   flow_definition_name = %[1]q
@@ -375,8 +375,8 @@ resource "aws_sagemaker_flow_definition" "test" {
 `, rName))
 }
 
-func testAccAWSSagemakerFlowDefinitionPublicWorkforceConfig(rName string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerFlowDefinitionBaseConfig(rName),
+func testAccFlowDefinitionPublicWorkforceConfig(rName string) string {
+	return acctest.ConfigCompose(testAccFlowDefinitionBaseConfig(rName),
 		fmt.Sprintf(`
 data "aws_region" "current" {}
 
@@ -409,9 +409,9 @@ resource "aws_sagemaker_flow_definition" "test" {
 `, rName))
 }
 
-func testAccAWSSagemakerFlowDefinitionHumanLoopRequestSourceConfig(rName string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerFlowDefinitionBaseConfig(rName),
-		testAccAWSSagemakerWorkteamCognitoConfig(rName),
+func testAccFlowDefinitionHumanLoopRequestSourceConfig(rName string) string {
+	return acctest.ConfigCompose(testAccFlowDefinitionBaseConfig(rName),
+		testAccWorkteamCognitoConfig(rName),
 		fmt.Sprintf(`
 resource "aws_sagemaker_flow_definition" "test" {
   flow_definition_name = %[1]q
@@ -454,9 +454,9 @@ resource "aws_sagemaker_flow_definition" "test" {
 `, rName))
 }
 
-func testAccAWSSagemakerFlowDefinitionTagsConfig1(rName, tagKey1, tagValue1 string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerFlowDefinitionBaseConfig(rName),
-		testAccAWSSagemakerWorkteamCognitoConfig(rName),
+func testAccFlowDefinitionTags1Config(rName, tagKey1, tagValue1 string) string {
+	return acctest.ConfigCompose(testAccFlowDefinitionBaseConfig(rName),
+		testAccWorkteamCognitoConfig(rName),
 		fmt.Sprintf(`
 resource "aws_sagemaker_flow_definition" "test" {
   flow_definition_name = %[1]q
@@ -482,9 +482,9 @@ resource "aws_sagemaker_flow_definition" "test" {
 `, rName, tagKey1, tagValue1))
 }
 
-func testAccAWSSagemakerFlowDefinitionTagsConfig2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
-	return acctest.ConfigCompose(testAccAWSSagemakerFlowDefinitionBaseConfig(rName),
-		testAccAWSSagemakerWorkteamCognitoConfig(rName),
+func testAccFlowDefinitionTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+	return acctest.ConfigCompose(testAccFlowDefinitionBaseConfig(rName),
+		testAccWorkteamCognitoConfig(rName),
 		fmt.Sprintf(`
 resource "aws_sagemaker_flow_definition" "test" {
   flow_definition_name = %[1]q
