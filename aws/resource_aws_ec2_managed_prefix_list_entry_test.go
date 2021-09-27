@@ -24,7 +24,7 @@ func TestAccAwsEc2ManagedPrefixListEntry_ipv4(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSEc2ManagedPrefixListEntryDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -55,7 +55,7 @@ func TestAccAwsEc2ManagedPrefixListEntry_ipv6(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSEc2ManagedPrefixListEntryDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -83,7 +83,7 @@ func TestAccAwsEc2ManagedPrefixListEntry_expectInvalidTypeError(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSEc2ManagedPrefixListEntryDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -100,7 +100,7 @@ func TestAccAwsEc2ManagedPrefixListEntry_expectInvalidCIDR(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSEc2ManagedPrefixListEntryDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -124,7 +124,7 @@ func TestAccAwsEc2ManagedPrefixListEntry_description(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSEc2ManagedPrefixListEntryDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -154,14 +154,14 @@ func TestAccAwsEc2ManagedPrefixListEntry_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSEc2ManagedPrefixListEntryDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAwsEc2ManagedPrefixListEntryIpv4Config(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					testAccCheckAWSEc2ManagedPrefixListEntryExists(resourceName, &entry),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsEc2ManagedPrefixListEntry(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsEc2ManagedPrefixListEntry(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -170,7 +170,7 @@ func TestAccAwsEc2ManagedPrefixListEntry_disappears(t *testing.T) {
 }
 
 func testAccCheckAWSEc2ManagedPrefixListEntryDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).ec2conn
+	conn := acctest.Provider.Meta().(*AWSClient).ec2conn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_ec2_managed_prefix_list_entry" {
@@ -210,7 +210,7 @@ func testAccCheckAWSEc2ManagedPrefixListEntryExists(n string, v *ec2.PrefixListE
 			return fmt.Errorf("No EC2 Managed Prefix List Entry ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).ec2conn
+		conn := acctest.Provider.Meta().(*AWSClient).ec2conn
 
 		plID, cidr, err := tfec2.ManagedPrefixListEntryParseID(rs.Primary.ID)
 

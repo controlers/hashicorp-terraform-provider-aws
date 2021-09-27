@@ -26,7 +26,7 @@ func init() {
 }
 
 func testSweepConnectInstance(region string) error {
-	client, err := sharedClientForRegion(region)
+	client, err := acctest.SharedRegionalSweeperClient(region)
 	if err != nil {
 		return fmt.Errorf("error getting client: %s", err)
 	}
@@ -34,7 +34,7 @@ func testSweepConnectInstance(region string) error {
 	conn := client.(*AWSClient).connectconn
 	ctx := context.Background()
 	var errs *multierror.Error
-	sweepResources := make([]*testSweepResource, 0)
+	sweepResources := make([]*acctest.SweepResource, 0)
 
 	// MaxResults:  Maximum value of 10. https://docs.aws.amazon.com/connect/latest/APIReference/API_ListInstances.html
 	input := &connect.ListInstancesInput{MaxResults: aws.Int64(tfconnect.ListInstancesMaxResults)}
@@ -56,7 +56,7 @@ func testSweepConnectInstance(region string) error {
 			d := r.Data(nil)
 			d.SetId(id)
 
-			sweepResources = append(sweepResources, NewTestSweepResource(r, d, client))
+			sweepResources = append(sweepResources, acctest.NewSweepResource(r, d, client))
 		}
 
 		return !lastPage
@@ -66,11 +66,11 @@ func testSweepConnectInstance(region string) error {
 		errs = multierror.Append(errs, fmt.Errorf("error listing Connect Instances: %w", err))
 	}
 
-	if err = testSweepResourceOrchestrator(sweepResources); err != nil {
+	if err = acctest.SweepOrchestrator(sweepResources); err != nil {
 		errs = multierror.Append(errs, fmt.Errorf("error sweeping Connect Instances for %s: %w", region, err))
 	}
 
-	if testSweepSkipSweepError(errs.ErrorOrNil()) {
+	if acctest.SkipSweepError(errs.ErrorOrNil()) {
 		log.Printf("[WARN] Skipping Connect Instances sweep for %s: %s", region, errs)
 		return nil
 	}
@@ -102,7 +102,7 @@ func testAccAwsConnectInstance_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, connect.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsConnectInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -156,7 +156,7 @@ func testAccAwsConnectInstance_directory(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, connect.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsConnectInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -185,7 +185,7 @@ func testAccAwsConnectInstance_saml(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, connect.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsConnectInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -215,7 +215,7 @@ func testAccCheckAwsConnectInstanceExists(resourceName string, instance *connect
 			return fmt.Errorf("Connect instance ID not set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).connectconn
+		conn := acctest.Provider.Meta().(*AWSClient).connectconn
 
 		input := &connect.DescribeInstanceInput{
 			InstanceId: aws.String(rs.Primary.ID),
@@ -241,7 +241,7 @@ func testAccCheckAwsConnectInstanceDestroy(s *terraform.State) error {
 			continue
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).connectconn
+		conn := acctest.Provider.Meta().(*AWSClient).connectconn
 
 		instanceID := rs.Primary.ID
 
