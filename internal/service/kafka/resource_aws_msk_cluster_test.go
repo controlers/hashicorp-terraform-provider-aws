@@ -928,7 +928,7 @@ func testAccCheckMskClusterDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.ClusterByARN(conn, rs.Primary.ID)
+		_, err := finder.FindClusterByARN(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -957,7 +957,7 @@ func testAccCheckMskClusterExists(n string, v *kafka.ClusterInfo) resource.TestC
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).KafkaConn
 
-		output, err := finder.ClusterByARN(conn, rs.Primary.ID)
+		output, err := finder.FindClusterByARN(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err

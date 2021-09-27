@@ -9,9 +9,9 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
-func ClusterState(conn *kafka.Kafka, arn string) resource.StateRefreshFunc {
+func statusClusterState(conn *kafka.Kafka, arn string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.ClusterByARN(conn, arn)
+		output, err := finder.FindClusterByARN(conn, arn)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
@@ -25,9 +25,9 @@ func ClusterState(conn *kafka.Kafka, arn string) resource.StateRefreshFunc {
 	}
 }
 
-func ClusterOperationState(conn *kafka.Kafka, arn string) resource.StateRefreshFunc {
+func statusClusterOperationState(conn *kafka.Kafka, arn string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.ClusterOperationByARN(conn, arn)
+		output, err := finder.FindClusterOperationByARN(conn, arn)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
@@ -41,9 +41,9 @@ func ClusterOperationState(conn *kafka.Kafka, arn string) resource.StateRefreshF
 	}
 }
 
-func ConfigurationState(conn *kafka.Kafka, arn string) resource.StateRefreshFunc {
+func statusConfigurationState(conn *kafka.Kafka, arn string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.ConfigurationByARN(conn, arn)
+		output, err := finder.FindConfigurationByARN(conn, arn)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil

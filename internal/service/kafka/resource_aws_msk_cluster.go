@@ -410,7 +410,7 @@ func resourceClusterCreate(d *schema.ResourceData, meta interface{}) error {
 
 	d.SetId(aws.StringValue(output.ClusterArn))
 
-	_, err = waiter.ClusterCreated(conn, d.Id(), d.Timeout(schema.TimeoutCreate))
+	_, err = waiter.waitClusterCreated(conn, d.Id(), d.Timeout(schema.TimeoutCreate))
 
 	if err != nil {
 		return fmt.Errorf("error waiting for MSK Cluster (%s) create: %w", d.Id(), err)
@@ -424,7 +424,7 @@ func resourceClusterRead(d *schema.ResourceData, meta interface{}) error {
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	cluster, err := finder.ClusterByARN(conn, d.Id())
+	cluster, err := finder.FindClusterByARN(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] MSK Cluster (%s) not found, removing from state", d.Id())
@@ -523,7 +523,7 @@ func resourceClusterUpdate(d *schema.ResourceData, meta interface{}) error {
 
 		clusterOperationARN := aws.StringValue(output.ClusterOperationArn)
 
-		_, err = waiter.ClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
+		_, err = waiter.waitClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
 
 		if err != nil {
 			return fmt.Errorf("error waiting for MSK Cluster (%s) operation (%s): %w", d.Id(), clusterOperationARN, err)
@@ -545,7 +545,7 @@ func resourceClusterUpdate(d *schema.ResourceData, meta interface{}) error {
 
 		clusterOperationARN := aws.StringValue(output.ClusterOperationArn)
 
-		_, err = waiter.ClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
+		_, err = waiter.waitClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
 
 		if err != nil {
 			return fmt.Errorf("error waiting for MSK Cluster (%s) operation (%s): %w", d.Id(), clusterOperationARN, err)
@@ -567,7 +567,7 @@ func resourceClusterUpdate(d *schema.ResourceData, meta interface{}) error {
 
 		clusterOperationARN := aws.StringValue(output.ClusterOperationArn)
 
-		_, err = waiter.ClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
+		_, err = waiter.waitClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
 
 		if err != nil {
 			return fmt.Errorf("error waiting for MSK Cluster (%s) operation (%s): %w", d.Id(), clusterOperationARN, err)
@@ -591,7 +591,7 @@ func resourceClusterUpdate(d *schema.ResourceData, meta interface{}) error {
 
 		clusterOperationARN := aws.StringValue(output.ClusterOperationArn)
 
-		_, err = waiter.ClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
+		_, err = waiter.waitClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
 
 		if err != nil {
 			return fmt.Errorf("error waiting for MSK Cluster (%s) operation (%s): %w", d.Id(), clusterOperationARN, err)
@@ -613,7 +613,7 @@ func resourceClusterUpdate(d *schema.ResourceData, meta interface{}) error {
 
 		clusterOperationARN := aws.StringValue(output.ClusterOperationArn)
 
-		_, err = waiter.ClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
+		_, err = waiter.waitClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
 
 		if err != nil {
 			return fmt.Errorf("error waiting for MSK Cluster (%s) operation (%s): %w", d.Id(), clusterOperationARN, err)
@@ -639,7 +639,7 @@ func resourceClusterUpdate(d *schema.ResourceData, meta interface{}) error {
 
 		clusterOperationARN := aws.StringValue(output.ClusterOperationArn)
 
-		_, err = waiter.ClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
+		_, err = waiter.waitClusterOperationCompleted(conn, clusterOperationARN, d.Timeout(schema.TimeoutUpdate))
 
 		if err != nil {
 			return fmt.Errorf("error waiting for MSK Cluster (%s) operation (%s): %w", d.Id(), clusterOperationARN, err)
@@ -673,7 +673,7 @@ func resourceClusterDelete(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error deleting MSK Cluster (%s): %w", d.Id(), err)
 	}
 
-	_, err = waiter.ClusterDeleted(conn, d.Id(), d.Timeout(schema.TimeoutDelete))
+	_, err = waiter.waitClusterDeleted(conn, d.Id(), d.Timeout(schema.TimeoutDelete))
 
 	if err != nil {
 		return fmt.Errorf("error waiting for MSK Cluster (%s) delete: %w", d.Id(), err)
