@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAWSMqBroker_basic(t *testing.T) {
+func TestAccMQBrokerDataSource_basic(t *testing.T) {
 	rString := sdkacctest.RandString(7)
 	prefix := "tf-acc-test-d-mq-broker"
 	brokerName := fmt.Sprintf("%s-%s", prefix, rString)
@@ -25,7 +25,7 @@ func TestAccDataSourceAWSMqBroker_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSMqBrokerConfig_byId(brokerName, prefix),
+				Config: testAccBrokerDataSourceConfig_byID(brokerName, prefix),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceByIdName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceByIdName, "broker_name", resourceName, "broker_name"),
@@ -50,7 +50,7 @@ func TestAccDataSourceAWSMqBroker_basic(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccDataSourceAWSMqBrokerConfig_byName(brokerName, prefix),
+				Config: testAccBrokerDataSourceConfig_byName(brokerName, prefix),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceByNameName, "broker_id", resourceName, "id"),
 					resource.TestCheckResourceAttrPair(dataSourceByNameName, "broker_name", resourceName, "broker_name"),
@@ -60,7 +60,7 @@ func TestAccDataSourceAWSMqBroker_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAWSMqBrokerConfig_base(brokerName, prefix string) string {
+func testAccBrokerDataSourceConfig_base(brokerName, prefix string) string {
 	return fmt.Sprintf(`
 variable "prefix" {
   default = "%s"
@@ -173,16 +173,16 @@ resource "aws_mq_broker" "acctest" {
 `, prefix, brokerName)
 }
 
-func testAccDataSourceAWSMqBrokerConfig_byId(brokerName, prefix string) string {
-	return testAccDataSourceAWSMqBrokerConfig_base(brokerName, prefix) + `
+func testAccBrokerDataSourceConfig_byID(brokerName, prefix string) string {
+	return testAccBrokerDataSourceConfig_base(brokerName, prefix) + `
 data "aws_mq_broker" "by_id" {
   broker_id = aws_mq_broker.sdkacctest.id
 }
 `
 }
 
-func testAccDataSourceAWSMqBrokerConfig_byName(brokerName, prefix string) string {
-	return testAccDataSourceAWSMqBrokerConfig_base(brokerName, prefix) + `
+func testAccBrokerDataSourceConfig_byName(brokerName, prefix string) string {
+	return testAccBrokerDataSourceConfig_base(brokerName, prefix) + `
 data "aws_mq_broker" "by_name" {
   broker_name = aws_mq_broker.sdkacctest.broker_name
 }
