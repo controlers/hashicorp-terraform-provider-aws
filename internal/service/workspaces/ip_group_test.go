@@ -66,7 +66,7 @@ func testSweepWorkspacesIpGroups(region string) error {
 	return nil
 }
 
-func testAccAwsWorkspacesIpGroup_basic(t *testing.T) {
+func testAccIPGroup_basic(t *testing.T) {
 	var v workspaces.IpGroup
 	ipGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	ipGroupNewName := sdkacctest.RandomWithPrefix("tf-acc-test-upd")
@@ -77,12 +77,12 @@ func testAccAwsWorkspacesIpGroup_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, workspaces.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsWorkspacesIpGroupDestroy,
+		CheckDestroy: testAccCheckIPGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsWorkspacesIpGroupConfigA(ipGroupName, ipGroupDescription),
+				Config: testAccIPGroupAConfig(ipGroupName, ipGroupDescription),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsWorkspacesIpGroupExists(resourceName, &v),
+					testAccCheckIPGroupExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "name", ipGroupName),
 					resource.TestCheckResourceAttr(resourceName, "description", ipGroupDescription),
 					resource.TestCheckResourceAttr(resourceName, "rules.#", "2"),
@@ -95,9 +95,9 @@ func testAccAwsWorkspacesIpGroup_basic(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsWorkspacesIpGroupConfigB(ipGroupNewName, ipGroupDescription),
+				Config: testAccIPGroupBConfig(ipGroupNewName, ipGroupDescription),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsWorkspacesIpGroupExists(resourceName, &v),
+					testAccCheckIPGroupExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "name", ipGroupNewName),
 					resource.TestCheckResourceAttr(resourceName, "description", ipGroupDescription),
 					resource.TestCheckResourceAttr(resourceName, "rules.#", "1"),
@@ -112,7 +112,7 @@ func testAccAwsWorkspacesIpGroup_basic(t *testing.T) {
 	})
 }
 
-func testAccAwsWorkspacesIpGroup_tags(t *testing.T) {
+func testAccIPGroup_tags(t *testing.T) {
 	var v workspaces.IpGroup
 	resourceName := "aws_workspaces_ip_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -121,12 +121,12 @@ func testAccAwsWorkspacesIpGroup_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, workspaces.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsWorkspacesIpGroupDestroy,
+		CheckDestroy: testAccCheckIPGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsWorkspacesIpGroupConfigTags1(rName, "key1", "value1"),
+				Config: testAccIPGroupTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsWorkspacesIpGroupExists(resourceName, &v),
+					testAccCheckIPGroupExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -137,18 +137,18 @@ func testAccAwsWorkspacesIpGroup_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAwsWorkspacesIpGroupConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccIPGroupTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsWorkspacesIpGroupExists(resourceName, &v),
+					testAccCheckIPGroupExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAwsWorkspacesIpGroupConfigTags1(rName, "key2", "value2"),
+				Config: testAccIPGroupTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsWorkspacesIpGroupExists(resourceName, &v),
+					testAccCheckIPGroupExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -157,7 +157,7 @@ func testAccAwsWorkspacesIpGroup_tags(t *testing.T) {
 	})
 }
 
-func testAccAwsWorkspacesIpGroup_disappears(t *testing.T) {
+func testAccIPGroup_disappears(t *testing.T) {
 	var v workspaces.IpGroup
 	ipGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	ipGroupDescription := fmt.Sprintf("Terraform Acceptance Test %s", strings.Title(sdkacctest.RandString(20)))
@@ -167,12 +167,12 @@ func testAccAwsWorkspacesIpGroup_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, workspaces.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsWorkspacesIpGroupDestroy,
+		CheckDestroy: testAccCheckIPGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsWorkspacesIpGroupConfigA(ipGroupName, ipGroupDescription),
+				Config: testAccIPGroupAConfig(ipGroupName, ipGroupDescription),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsWorkspacesIpGroupExists(resourceName, &v),
+					testAccCheckIPGroupExists(resourceName, &v),
 					acctest.CheckResourceDisappears(acctest.Provider, tfworkspaces.ResourceIPGroup(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -181,7 +181,7 @@ func testAccAwsWorkspacesIpGroup_disappears(t *testing.T) {
 	})
 }
 
-func testAccAwsWorkspacesIpGroup_MultipleDirectories(t *testing.T) {
+func testAccIPGroup_MultipleDirectories(t *testing.T) {
 	var v workspaces.IpGroup
 	var d1, d2 workspaces.WorkspaceDirectory
 
@@ -196,15 +196,15 @@ func testAccAwsWorkspacesIpGroup_MultipleDirectories(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, workspaces.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsWorkspacesIpGroupDestroy,
+		CheckDestroy: testAccCheckIPGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsWorkspacesIpGroupConfigMultipleDirectories(ipGroupName, domain),
+				Config: testAccIPGroupMultipleDirectoriesConfig(ipGroupName, domain),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsWorkspacesIpGroupExists(resourceName, &v),
-					testAccCheckAwsWorkspacesDirectoryExists(directoryResourceName1, &d1),
+					testAccCheckIPGroupExists(resourceName, &v),
+					testAccCheckDirectoryExists(directoryResourceName1, &d1),
 					resource.TestCheckTypeSetElemAttrPair(directoryResourceName1, "ip_group_ids.*", "aws_workspaces_ip_group.test", "id"),
-					testAccCheckAwsWorkspacesDirectoryExists(directoryResourceName2, &d2),
+					testAccCheckDirectoryExists(directoryResourceName2, &d2),
 					resource.TestCheckTypeSetElemAttrPair(directoryResourceName2, "ip_group_ids.*", "aws_workspaces_ip_group.test", "id"),
 				),
 			},
@@ -212,7 +212,7 @@ func testAccAwsWorkspacesIpGroup_MultipleDirectories(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsWorkspacesIpGroupDestroy(s *terraform.State) error {
+func testAccCheckIPGroupDestroy(s *terraform.State) error {
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_workspaces_ip_group" {
 			continue
@@ -240,7 +240,7 @@ func testAccCheckAwsWorkspacesIpGroupDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsWorkspacesIpGroupExists(n string, v *workspaces.IpGroup) resource.TestCheckFunc {
+func testAccCheckIPGroupExists(n string, v *workspaces.IpGroup) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -268,7 +268,7 @@ func testAccCheckAwsWorkspacesIpGroupExists(n string, v *workspaces.IpGroup) res
 	}
 }
 
-func testAccAwsWorkspacesIpGroupConfigA(name, description string) string {
+func testAccIPGroupAConfig(name, description string) string {
 	return fmt.Sprintf(`
 resource "aws_workspaces_ip_group" "test" {
   name        = %[1]q
@@ -286,7 +286,7 @@ resource "aws_workspaces_ip_group" "test" {
 `, name, description)
 }
 
-func testAccAwsWorkspacesIpGroupConfigB(name, description string) string {
+func testAccIPGroupBConfig(name, description string) string {
 	return fmt.Sprintf(`
 resource "aws_workspaces_ip_group" "test" {
   name        = %[1]q
@@ -300,7 +300,7 @@ resource "aws_workspaces_ip_group" "test" {
 `, name, description)
 }
 
-func testAccAwsWorkspacesIpGroupConfigTags1(name, tagKey1, tagValue1 string) string {
+func testAccIPGroupTags1Config(name, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_workspaces_ip_group" "test" {
   name = %[1]q
@@ -321,7 +321,7 @@ resource "aws_workspaces_ip_group" "test" {
 `, name, tagKey1, tagValue1)
 }
 
-func testAccAwsWorkspacesIpGroupConfigTags2(name, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccIPGroupTags2Config(name, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_workspaces_ip_group" "test" {
   name = %[1]q
@@ -343,9 +343,9 @@ resource "aws_workspaces_ip_group" "test" {
 `, name, tagKey1, tagValue1, tagKey2, tagValue2)
 }
 
-func testAccAwsWorkspacesIpGroupConfigMultipleDirectories(name, domain string) string {
+func testAccIPGroupMultipleDirectoriesConfig(name, domain string) string {
 	return acctest.ConfigCompose(
-		testAccAwsWorkspacesDirectoryConfig_Prerequisites(name, domain),
+		testAccDirectoryConfig_Prerequisites(name, domain),
 		fmt.Sprintf(`
 resource "aws_workspaces_ip_group" "test" {
   name = %[1]q
