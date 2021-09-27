@@ -92,7 +92,7 @@ func testSweepAutoscalingGroups(region string) error {
 	return nil
 }
 
-func TestAccAWSAutoScalingGroup_basic(t *testing.T) {
+func TestAccAutoScalingGroup_basic(t *testing.T) {
 	var group autoscaling.Group
 	var lc autoscaling.LaunchConfiguration
 
@@ -102,14 +102,14 @@ func TestAccAWSAutoScalingGroup_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig(randName),
+				Config: testAccGroupConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSAutoScalingGroupHealthyCapacity(&group, 2),
-					testAccCheckAWSAutoScalingGroupAttributes(&group, randName),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupHealthyCapacity(&group, 2),
+					testAccCheckGroupAttributes(&group, randName),
 					acctest.MatchResourceAttrRegionalARN("aws_autoscaling_group.bar", "arn", "autoscaling", regexp.MustCompile(`autoScalingGroup:.+`)),
 					resource.TestCheckTypeSetElemAttrPair("aws_autoscaling_group.bar", "availability_zones.*", "data.aws_availability_zones.available", "names.0"),
 					testAccCheckAutoScalingInstanceRefreshCount(&group, 0),
@@ -157,10 +157,10 @@ func TestAccAWSAutoScalingGroup_basic(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfigUpdate(randName),
+				Config: testAccGroupUpdateConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSLaunchConfigurationExists("aws_launch_configuration.new", &lc),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckLaunchConfigurationExists("aws_launch_configuration.new", &lc),
 					testAccCheckAutoScalingInstanceRefreshCount(&group, 0),
 					resource.TestCheckResourceAttr("aws_autoscaling_group.bar", "desired_capacity", "5"),
 					resource.TestCheckResourceAttr("aws_autoscaling_group.bar", "termination_policies.0", "ClosestToNextInstanceHour"),
@@ -184,7 +184,7 @@ func TestAccAWSAutoScalingGroup_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_Name_Generated(t *testing.T) {
+func TestAccAutoScalingGroup_Name_generated(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 
@@ -192,12 +192,12 @@ func TestAccAWSAutoScalingGroup_Name_Generated(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfigNameGenerated(),
+				Config: testAccGroupNameGeneratedConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					create.TestCheckResourceAttrNameGenerated(resourceName, "name"),
 					resource.TestCheckResourceAttr(resourceName, "name_prefix", "terraform-"),
 				),
@@ -219,7 +219,7 @@ func TestAccAWSAutoScalingGroup_Name_Generated(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_NamePrefix(t *testing.T) {
+func TestAccAutoScalingGroup_namePrefix(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 
@@ -227,12 +227,12 @@ func TestAccAWSAutoScalingGroup_NamePrefix(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfigNamePrefix("tf-acc-test-prefix-"),
+				Config: testAccGroupNamePrefixConfig("tf-acc-test-prefix-"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					create.TestCheckResourceAttrNameFromPrefix(resourceName, "name", "tf-acc-test-prefix-"),
 					resource.TestCheckResourceAttr(resourceName, "name_prefix", "tf-acc-test-prefix-"),
 				),
@@ -254,15 +254,15 @@ func TestAccAWSAutoScalingGroup_NamePrefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_terminationPolicies(t *testing.T) {
+func TestAccAutoScalingGroup_terminationPolicies(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_terminationPoliciesEmpty(),
+				Config: testAccGroupConfig_terminationPoliciesEmpty(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "termination_policies.#", "0"),
@@ -282,7 +282,7 @@ func TestAccAWSAutoScalingGroup_terminationPolicies(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_terminationPoliciesUpdate(),
+				Config: testAccGroupConfig_terminationPoliciesUpdate(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "termination_policies.#", "1"),
@@ -304,7 +304,7 @@ func TestAccAWSAutoScalingGroup_terminationPolicies(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_terminationPoliciesExplicitDefault(),
+				Config: testAccGroupConfig_terminationPoliciesExplicitDefault(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "termination_policies.#", "1"),
@@ -313,7 +313,7 @@ func TestAccAWSAutoScalingGroup_terminationPolicies(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_terminationPoliciesEmpty(),
+				Config: testAccGroupConfig_terminationPoliciesEmpty(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "termination_policies.#", "0"),
@@ -323,7 +323,7 @@ func TestAccAWSAutoScalingGroup_terminationPolicies(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_tags(t *testing.T) {
+func TestAccAutoScalingGroup_tags(t *testing.T) {
 	var group autoscaling.Group
 
 	randName := fmt.Sprintf("tf-test-%s", sdkacctest.RandString(5))
@@ -332,12 +332,12 @@ func TestAccAWSAutoScalingGroup_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig(randName),
+				Config: testAccGroupConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					testAccCheckAutoscalingTags(&group.Tags, "FromTags1", map[string]interface{}{
 						"value":               "value1",
 						"propagate_at_launch": true,
@@ -366,9 +366,9 @@ func TestAccAWSAutoScalingGroup_tags(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfigUpdate(randName),
+				Config: testAccGroupUpdateConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					testAccCheckAutoscalingTagNotExists(&group.Tags, "Foo"),
 					testAccCheckAutoscalingTags(&group.Tags, "FromTags1Changed", map[string]interface{}{
 						"value":               "value1changed",
@@ -388,19 +388,19 @@ func TestAccAWSAutoScalingGroup_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_VpcUpdates(t *testing.T) {
+func TestAccAutoScalingGroup_vpcUpdates(t *testing.T) {
 	var group autoscaling.Group
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfigWithAZ(),
+				Config: testAccGroupWithAZConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "availability_zones.#", "1"),
 					resource.TestCheckTypeSetElemAttrPair("aws_autoscaling_group.bar", "availability_zones.*", "data.aws_availability_zones.available", "names.0"),
@@ -422,10 +422,10 @@ func TestAccAWSAutoScalingGroup_VpcUpdates(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfigWithVPCIdent(),
+				Config: testAccGroupWithVPCIdentConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSAutoScalingGroupAttributesVPCZoneIdentifier(&group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupAttributesVPCZoneIdentifier(&group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "availability_zones.#", "1"),
 					resource.TestCheckTypeSetElemAttrPair("aws_autoscaling_group.bar", "availability_zones.*", "data.aws_availability_zones.available", "names.0"),
@@ -437,20 +437,20 @@ func TestAccAWSAutoScalingGroup_VpcUpdates(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_WithLoadBalancer(t *testing.T) {
+func TestAccAutoScalingGroup_withLoadBalancer(t *testing.T) {
 	var group autoscaling.Group
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfigWithLoadBalancer(),
+				Config: testAccGroupWithLoadBalancerConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSAutoScalingGroupAttributesLoadBalancer(&group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupAttributesLoadBalancer(&group),
 				),
 			},
 			{
@@ -470,7 +470,7 @@ func TestAccAWSAutoScalingGroup_WithLoadBalancer(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_WithLoadBalancer_ToTargetGroup(t *testing.T) {
+func TestAccAutoScalingGroup_WithLoadBalancer_toTargetGroup(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.bar"
 
@@ -478,12 +478,12 @@ func TestAccAWSAutoScalingGroup_WithLoadBalancer_ToTargetGroup(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfigWithLoadBalancer(),
+				Config: testAccGroupWithLoadBalancerConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "load_balancers.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "target_group_arns.#", "0"),
 				),
@@ -502,9 +502,9 @@ func TestAccAWSAutoScalingGroup_WithLoadBalancer_ToTargetGroup(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfigWithTargetGroup(),
+				Config: testAccGroupWithTargetGroupConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "target_group_arns.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "load_balancers.#", "0"),
 				),
@@ -523,9 +523,9 @@ func TestAccAWSAutoScalingGroup_WithLoadBalancer_ToTargetGroup(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfigWithLoadBalancer(),
+				Config: testAccGroupWithLoadBalancerConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "load_balancers.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "target_group_arns.#", "0"),
 				),
@@ -547,7 +547,7 @@ func TestAccAWSAutoScalingGroup_WithLoadBalancer_ToTargetGroup(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_withPlacementGroup(t *testing.T) {
+func TestAccAutoScalingGroup_withPlacementGroup(t *testing.T) {
 	var group autoscaling.Group
 
 	randName := fmt.Sprintf("tf-test-%s", sdkacctest.RandString(5))
@@ -555,12 +555,12 @@ func TestAccAWSAutoScalingGroup_withPlacementGroup(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withPlacementGroup(randName),
+				Config: testAccGroupConfig_withPlacementGroup(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr("aws_autoscaling_group.bar", "placement_group", randName),
 				),
 			},
@@ -581,7 +581,7 @@ func TestAccAWSAutoScalingGroup_withPlacementGroup(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_enablingMetrics(t *testing.T) {
+func TestAccAutoScalingGroup_enablingMetrics(t *testing.T) {
 	var group autoscaling.Group
 	randName := fmt.Sprintf("terraform-test-%s", sdkacctest.RandString(10))
 
@@ -589,12 +589,12 @@ func TestAccAWSAutoScalingGroup_enablingMetrics(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig(randName),
+				Config: testAccGroupConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckNoResourceAttr(
 						"aws_autoscaling_group.bar", "enabled_metrics"),
 				),
@@ -613,9 +613,9 @@ func TestAccAWSAutoScalingGroup_enablingMetrics(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoscalingMetricsCollectionConfig_updatingMetricsCollected(),
+				Config: testAccMetricsCollectionConfig_updatingMetricsCollected(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "enabled_metrics.#", "5"),
 				),
@@ -624,7 +624,7 @@ func TestAccAWSAutoScalingGroup_enablingMetrics(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_suspendingProcesses(t *testing.T) {
+func TestAccAutoScalingGroup_suspendingProcesses(t *testing.T) {
 	var group autoscaling.Group
 	randName := fmt.Sprintf("terraform-test-%s", sdkacctest.RandString(10))
 
@@ -632,20 +632,20 @@ func TestAccAWSAutoScalingGroup_suspendingProcesses(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig(randName),
+				Config: testAccGroupConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "suspended_processes.#", "0"),
 				),
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfigWithSuspendedProcesses(randName),
+				Config: testAccGroupWithSuspendedProcessesConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "suspended_processes.#", "2"),
 				),
@@ -664,9 +664,9 @@ func TestAccAWSAutoScalingGroup_suspendingProcesses(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfigWithSuspendedProcessesUpdated(randName),
+				Config: testAccGroupWithSuspendedProcessesUpdatedConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "suspended_processes.#", "2"),
 				),
@@ -675,19 +675,19 @@ func TestAccAWSAutoScalingGroup_suspendingProcesses(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_withMetrics(t *testing.T) {
+func TestAccAutoScalingGroup_withMetrics(t *testing.T) {
 	var group autoscaling.Group
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoscalingMetricsCollectionConfig_allMetricsCollected(),
+				Config: testAccMetricsCollectionConfig_allMetricsCollected(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "enabled_metrics.#", "13"),
 				),
@@ -706,9 +706,9 @@ func TestAccAWSAutoScalingGroup_withMetrics(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoscalingMetricsCollectionConfig_updatingMetricsCollected(),
+				Config: testAccMetricsCollectionConfig_updatingMetricsCollected(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "enabled_metrics.#", "5"),
 				),
@@ -717,19 +717,19 @@ func TestAccAWSAutoScalingGroup_withMetrics(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_serviceLinkedRoleARN(t *testing.T) {
+func TestAccAutoScalingGroup_serviceLinkedRoleARN(t *testing.T) {
 	var group autoscaling.Group
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withServiceLinkedRoleARN(),
+				Config: testAccGroupConfig_withServiceLinkedRoleARN(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttrSet(
 						"aws_autoscaling_group.bar", "service_linked_role_arn"),
 				),
@@ -751,19 +751,19 @@ func TestAccAWSAutoScalingGroup_serviceLinkedRoleARN(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MaxInstanceLifetime(t *testing.T) {
+func TestAccAutoScalingGroup_maxInstanceLifetime(t *testing.T) {
 	var group autoscaling.Group
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withMaxInstanceLifetime(),
+				Config: testAccGroupConfig_withMaxInstanceLifetime(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "max_instance_lifetime", "864000"),
 				),
@@ -782,9 +782,9 @@ func TestAccAWSAutoScalingGroup_MaxInstanceLifetime(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withMaxInstanceLifetime_update(),
+				Config: testAccGroupConfig_withMaxInstanceLifetime_update(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "max_instance_lifetime", "604800"),
 				),
@@ -793,7 +793,7 @@ func TestAccAWSAutoScalingGroup_MaxInstanceLifetime(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_ALB_TargetGroups(t *testing.T) {
+func TestAccAutoScalingGroup_ALB_targetGroups(t *testing.T) {
 	var group autoscaling.Group
 	var tg elbv2.TargetGroup
 	var tg2 elbv2.TargetGroup
@@ -824,24 +824,24 @@ func TestAccAWSAutoScalingGroup_ALB_TargetGroups(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_pre(),
+				Config: testAccGroupConfig_ALB_TargetGroup_pre(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSLBTargetGroupExists("aws_lb_target_group.test", &tg),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckLBTargetGroupExists("aws_lb_target_group.test", &tg),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "target_group_arns.#", "0"),
 				),
 			},
 
 			{
-				Config: testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_post_duo(),
+				Config: testAccGroupConfig_ALB_TargetGroup_post_duo(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSLBTargetGroupExists("aws_lb_target_group.test", &tg),
-					testAccCheckAWSLBTargetGroupExists("aws_lb_target_group.test_more", &tg2),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckLBTargetGroupExists("aws_lb_target_group.test", &tg),
+					testAccCheckLBTargetGroupExists("aws_lb_target_group.test_more", &tg2),
 					testCheck([]*elbv2.TargetGroup{&tg, &tg2}),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "target_group_arns.#", "2"),
@@ -861,10 +861,10 @@ func TestAccAWSAutoScalingGroup_ALB_TargetGroups(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_post(),
+				Config: testAccGroupConfig_ALB_TargetGroup_post(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSLBTargetGroupExists("aws_lb_target_group.test", &tg),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckLBTargetGroupExists("aws_lb_target_group.test", &tg),
 					testCheck([]*elbv2.TargetGroup{&tg}),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "target_group_arns.#", "1"),
@@ -875,7 +875,7 @@ func TestAccAWSAutoScalingGroup_ALB_TargetGroups(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/256
-func TestAccAWSAutoScalingGroup_TargetGroupArns(t *testing.T) {
+func TestAccAutoScalingGroup_targetGroupARNs(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -884,12 +884,12 @@ func TestAccAWSAutoScalingGroup_TargetGroupArns(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_TargetGroupArns(rName, 11),
+				Config: testAccGroupConfig_TargetGroupARNs(rName, 11),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "target_group_arns.#", "11"),
 				),
 			},
@@ -907,16 +907,16 @@ func TestAccAWSAutoScalingGroup_TargetGroupArns(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_TargetGroupArns(rName, 0),
+				Config: testAccGroupConfig_TargetGroupARNs(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "target_group_arns.#", "0"),
 				),
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_TargetGroupArns(rName, 11),
+				Config: testAccGroupConfig_TargetGroupARNs(rName, 11),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "target_group_arns.#", "11"),
 				),
 			},
@@ -924,7 +924,7 @@ func TestAccAWSAutoScalingGroup_TargetGroupArns(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_initialLifecycleHook(t *testing.T) {
+func TestAccAutoScalingGroup_initialLifecycleHook(t *testing.T) {
 	var group autoscaling.Group
 
 	randName := fmt.Sprintf("terraform-test-%s", sdkacctest.RandString(10))
@@ -933,13 +933,13 @@ func TestAccAWSAutoScalingGroup_initialLifecycleHook(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupWithHookConfig(randName),
+				Config: testAccGroupWithHookConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSAutoScalingGroupHealthyCapacity(&group, 2),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupHealthyCapacity(&group, 2),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "initial_lifecycle_hook.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs("aws_autoscaling_group.bar", "initial_lifecycle_hook.*", map[string]string{
@@ -965,7 +965,7 @@ func TestAccAWSAutoScalingGroup_initialLifecycleHook(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_ALB_TargetGroups_ELBCapacity(t *testing.T) {
+func TestAccAutoScalingGroup_ALBTargetGroups_elbCapacity(t *testing.T) {
 	var group autoscaling.Group
 	var tg elbv2.TargetGroup
 
@@ -975,14 +975,14 @@ func TestAccAWSAutoScalingGroup_ALB_TargetGroups_ELBCapacity(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_ELBCapacity(rInt),
+				Config: testAccGroupConfig_ALB_TargetGroup_ELBCapacity(rInt),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
-					testAccCheckAWSLBTargetGroupExists("aws_lb_target_group.test", &tg),
-					testAccCheckAWSALBTargetGroupHealthy(&tg),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckLBTargetGroupExists("aws_lb_target_group.test", &tg),
+					testAccCheckALBTargetGroupHealthy(&tg),
 				),
 			},
 			{
@@ -1002,7 +1002,7 @@ func TestAccAWSAutoScalingGroup_ALB_TargetGroups_ELBCapacity(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_InstanceRefresh_Basic(t *testing.T) {
+func TestAccAutoScalingGroup_InstanceRefresh_basic(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 
@@ -1010,12 +1010,12 @@ func TestAccAWSAutoScalingGroup_InstanceRefresh_Basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsAutoScalingGroupConfig_InstanceRefresh_Basic(),
+				Config: testAccGroupConfig_InstanceRefresh_Basic(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.0.strategy", "Rolling"),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.0.preferences.#", "0"),
@@ -1032,9 +1032,9 @@ func TestAccAWSAutoScalingGroup_InstanceRefresh_Basic(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAwsAutoScalingGroupConfig_InstanceRefresh_Full(),
+				Config: testAccGroupConfig_InstanceRefresh_Full(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.0.strategy", "Rolling"),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.0.preferences.#", "1"),
@@ -1043,9 +1043,9 @@ func TestAccAWSAutoScalingGroup_InstanceRefresh_Basic(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsAutoScalingGroupConfig_InstanceRefresh_Disabled(),
+				Config: testAccGroupConfig_InstanceRefresh_Disabled(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckNoResourceAttr(resourceName, "instance_refresh.#"),
 				),
 			},
@@ -1053,7 +1053,7 @@ func TestAccAWSAutoScalingGroup_InstanceRefresh_Basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_InstanceRefresh_Start(t *testing.T) {
+func TestAccAutoScalingGroup_InstanceRefresh_start(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	launchConfigurationName := "aws_launch_configuration.test"
@@ -1062,29 +1062,29 @@ func TestAccAWSAutoScalingGroup_InstanceRefresh_Start(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsAutoScalingGroupConfig_InstanceRefresh_Start("one"),
+				Config: testAccGroupConfig_InstanceRefresh_Start("one"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttrPair(resourceName, "launch_configuration", launchConfigurationName, "name"),
 					testAccCheckAutoScalingInstanceRefreshCount(&group, 0),
 				),
 			},
 			{
-				Config: testAccAwsAutoScalingGroupConfig_InstanceRefresh_Start("two"),
+				Config: testAccGroupConfig_InstanceRefresh_Start("two"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttrPair(resourceName, "launch_configuration", launchConfigurationName, "name"),
 					testAccCheckAutoScalingInstanceRefreshCount(&group, 1),
 					testAccCheckAutoScalingInstanceRefreshStatus(&group, 0, autoscaling.InstanceRefreshStatusPending, autoscaling.InstanceRefreshStatusInProgress),
 				),
 			},
 			{
-				Config: testAccAwsAutoScalingGroupConfig_InstanceRefresh_Start("three"),
+				Config: testAccGroupConfig_InstanceRefresh_Start("three"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttrPair(resourceName, "launch_configuration", launchConfigurationName, "name"),
 					testAccCheckAutoScalingInstanceRefreshCount(&group, 2),
 					testAccCheckAutoScalingInstanceRefreshStatus(&group, 0, autoscaling.InstanceRefreshStatusPending, autoscaling.InstanceRefreshStatusInProgress),
@@ -1095,7 +1095,7 @@ func TestAccAWSAutoScalingGroup_InstanceRefresh_Start(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_InstanceRefresh_Triggers(t *testing.T) {
+func TestAccAutoScalingGroup_InstanceRefresh_triggers(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 
@@ -1103,21 +1103,21 @@ func TestAccAWSAutoScalingGroup_InstanceRefresh_Triggers(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsAutoScalingGroupConfig_InstanceRefresh_Basic(),
+				Config: testAccGroupConfig_InstanceRefresh_Basic(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.0.strategy", "Rolling"),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.0.preferences.#", "0"),
 				),
 			},
 			{
-				Config: testAccAwsAutoScalingGroupConfig_InstanceRefresh_Triggers(),
+				Config: testAccGroupConfig_InstanceRefresh_Triggers(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "instance_refresh.0.triggers.#", "1"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "instance_refresh.0.triggers.*", "tags"),
 					testAccCheckAutoScalingInstanceRefreshCount(&group, 1),
@@ -1128,7 +1128,7 @@ func TestAccAWSAutoScalingGroup_InstanceRefresh_Triggers(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_WarmPool(t *testing.T) {
+func TestAccAutoScalingGroup_warmPool(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 
@@ -1136,12 +1136,12 @@ func TestAccAWSAutoScalingGroup_WarmPool(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsAutoScalingGroupConfig_WarmPool_Empty(),
+				Config: testAccGroupConfig_WarmPool_Empty(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "warm_pool.#", "1"),
 				),
 			},
@@ -1156,9 +1156,9 @@ func TestAccAWSAutoScalingGroup_WarmPool(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAwsAutoScalingGroupConfig_WarmPool_Full(),
+				Config: testAccGroupConfig_WarmPool_Full(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "warm_pool.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "warm_pool.0.pool_state", "Stopped"),
 					resource.TestCheckResourceAttr(resourceName, "warm_pool.0.min_size", "0"),
@@ -1166,9 +1166,9 @@ func TestAccAWSAutoScalingGroup_WarmPool(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsAutoScalingGroupConfig_WarmPool_Remove(),
+				Config: testAccGroupConfig_WarmPool_Remove(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckNoResourceAttr(resourceName, "warm_pool.#"),
 				),
 			},
@@ -1176,7 +1176,7 @@ func TestAccAWSAutoScalingGroup_WarmPool(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSAutoScalingGroupExists(n string, group *autoscaling.Group) resource.TestCheckFunc {
+func testAccCheckGroupExists(n string, group *autoscaling.Group) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -1209,7 +1209,7 @@ func testAccCheckAWSAutoScalingGroupExists(n string, group *autoscaling.Group) r
 	}
 }
 
-func testAccCheckAWSAutoScalingGroupDestroy(s *terraform.State) error {
+func testAccCheckGroupDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).AutoScalingConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -1243,7 +1243,7 @@ func testAccCheckAWSAutoScalingGroupDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSAutoScalingGroupAttributes(group *autoscaling.Group, name string) resource.TestCheckFunc {
+func testAccCheckGroupAttributes(group *autoscaling.Group, name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if *group.AutoScalingGroupName != name {
 			return fmt.Errorf("Bad Auto Scaling Group name, expected (%s), got (%s)", name, *group.AutoScalingGroupName)
@@ -1292,7 +1292,7 @@ func testAccCheckAWSAutoScalingGroupAttributes(group *autoscaling.Group, name st
 	}
 }
 
-func testAccCheckAWSAutoScalingGroupAttributesLoadBalancer(group *autoscaling.Group) resource.TestCheckFunc {
+func testAccCheckGroupAttributesLoadBalancer(group *autoscaling.Group) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if len(group.LoadBalancerNames) != 1 {
 			return fmt.Errorf("Bad load_balancers: %v", group.LoadBalancerNames)
@@ -1317,7 +1317,7 @@ func testLaunchConfigurationName(n string, lc *autoscaling.LaunchConfiguration) 
 	}
 }
 
-func testAccCheckAWSAutoScalingGroupHealthyCapacity(
+func testAccCheckGroupHealthyCapacity(
 	g *autoscaling.Group, exp int) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		healthy := 0
@@ -1336,7 +1336,7 @@ func testAccCheckAWSAutoScalingGroupHealthyCapacity(
 	}
 }
 
-func testAccCheckAWSAutoScalingGroupAttributesVPCZoneIdentifier(group *autoscaling.Group) resource.TestCheckFunc {
+func testAccCheckGroupAttributesVPCZoneIdentifier(group *autoscaling.Group) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		// Grab Subnet Ids
 		var subnets []string
@@ -1415,9 +1415,9 @@ func autoscalingTagDescriptionsToMap(ts *[]*autoscaling.TagDescription) map[stri
 	return tags
 }
 
-// testAccCheckAWSALBTargetGroupHealthy checks an *elbv2.TargetGroup to make
+// testAccCheckALBTargetGroupHealthy checks an *elbv2.TargetGroup to make
 // sure that all instances in it are healthy.
-func testAccCheckAWSALBTargetGroupHealthy(res *elbv2.TargetGroup) resource.TestCheckFunc {
+func testAccCheckALBTargetGroupHealthy(res *elbv2.TargetGroup) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ELBV2Conn
 
@@ -1439,19 +1439,19 @@ func testAccCheckAWSALBTargetGroupHealthy(res *elbv2.TargetGroup) resource.TestC
 	}
 }
 
-func TestAccAWSAutoScalingGroup_classicVpcZoneIdentifier(t *testing.T) {
+func TestAccAutoScalingGroup_classicVPCZoneIdentifier(t *testing.T) {
 	var group autoscaling.Group
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_classicVpcZoneIdentifier(),
+				Config: testAccGroupConfig_classicVPCZoneIdentifier(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.test", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.test", &group),
 					resource.TestCheckResourceAttr("aws_autoscaling_group.test", "vpc_zone_identifier.#", "0"),
 				),
 			},
@@ -1472,19 +1472,19 @@ func TestAccAWSAutoScalingGroup_classicVpcZoneIdentifier(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_launchTemplate(t *testing.T) {
+func TestAccAutoScalingGroup_launchTemplate(t *testing.T) {
 	var group autoscaling.Group
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withLaunchTemplate(),
+				Config: testAccGroupConfig_withLaunchTemplate(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttrSet(
 						"aws_autoscaling_group.bar", "launch_template.0.id"),
 				),
@@ -1506,19 +1506,19 @@ func TestAccAWSAutoScalingGroup_launchTemplate(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_launchTemplate_update(t *testing.T) {
+func TestAccAutoScalingGroup_LaunchTemplate_update(t *testing.T) {
 	var group autoscaling.Group
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withLaunchTemplate(),
+				Config: testAccGroupConfig_withLaunchTemplate(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttrSet(
 						"aws_autoscaling_group.bar", "launch_template.0.name"),
 				),
@@ -1537,9 +1537,9 @@ func TestAccAWSAutoScalingGroup_launchTemplate_update(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withLaunchTemplate_toLaunchConfig(),
+				Config: testAccGroupConfig_withLaunchTemplate_toLaunchConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttrSet(
 						"aws_autoscaling_group.bar", "launch_configuration"),
 					resource.TestCheckNoResourceAttr(
@@ -1548,9 +1548,9 @@ func TestAccAWSAutoScalingGroup_launchTemplate_update(t *testing.T) {
 			},
 
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withLaunchTemplate_toLaunchTemplateName(),
+				Config: testAccGroupConfig_withLaunchTemplate_toLaunchTemplateName(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "launch_configuration", ""),
 					resource.TestCheckResourceAttr(
@@ -1561,18 +1561,18 @@ func TestAccAWSAutoScalingGroup_launchTemplate_update(t *testing.T) {
 			},
 
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withLaunchTemplate_toLaunchTemplateVersion(),
+				Config: testAccGroupConfig_withLaunchTemplate_toLaunchTemplateVersion(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttr(
 						"aws_autoscaling_group.bar", "launch_template.0.version", "$Latest"),
 				),
 			},
 
 			{
-				Config: testAccAWSAutoScalingGroupConfig_withLaunchTemplate(),
+				Config: testAccGroupConfig_withLaunchTemplate(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.bar", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.bar", &group),
 					resource.TestCheckResourceAttrSet(
 						"aws_autoscaling_group.bar", "launch_template.0.name"),
 					resource.TestCheckResourceAttr(
@@ -1583,7 +1583,7 @@ func TestAccAWSAutoScalingGroup_launchTemplate_update(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_LaunchTemplate_IAMInstanceProfile(t *testing.T) {
+func TestAccAutoScalingGroup_LaunchTemplate_iamInstanceProfile(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1592,12 +1592,12 @@ func TestAccAWSAutoScalingGroup_LaunchTemplate_IAMInstanceProfile(t *testing.T) 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_LaunchTemplate_IAMInstanceProfile(rName),
+				Config: testAccGroupConfig_LaunchTemplate_IAMInstanceProfile(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 				),
 			},
 			{
@@ -1618,7 +1618,7 @@ func TestAccAWSAutoScalingGroup_LaunchTemplate_IAMInstanceProfile(t *testing.T) 
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/256
-func TestAccAWSAutoScalingGroup_LoadBalancers(t *testing.T) {
+func TestAccAutoScalingGroup_loadBalancers(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1627,12 +1627,12 @@ func TestAccAWSAutoScalingGroup_LoadBalancers(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_LoadBalancers(rName, 11),
+				Config: testAccGroupConfig_LoadBalancers(rName, 11),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "load_balancers.#", "11"),
 				),
 			},
@@ -1650,16 +1650,16 @@ func TestAccAWSAutoScalingGroup_LoadBalancers(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_LoadBalancers(rName, 0),
+				Config: testAccGroupConfig_LoadBalancers(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "load_balancers.#", "0"),
 				),
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_LoadBalancers(rName, 11),
+				Config: testAccGroupConfig_LoadBalancers(rName, 11),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "load_balancers.#", "11"),
 				),
 			},
@@ -1667,7 +1667,7 @@ func TestAccAWSAutoScalingGroup_LoadBalancers(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy(t *testing.T) {
+func TestAccAutoScalingGroup_mixedInstancesPolicy(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1676,12 +1676,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy(rName),
+				Config: testAccGroupConfig_MixedInstancesPolicy(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.0.launch_template_specification.#", "1"),
@@ -1710,7 +1710,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy(t *testing.T) {
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_CapacityRebalance(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicy_capacityRebalance(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1719,12 +1719,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_CapacityRebalance(t *testin
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_CapacityRebalance(rName),
+				Config: testAccGroupConfig_MixedInstancesPolicy_CapacityRebalance(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "capacity_rebalance", "true"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
@@ -1754,7 +1754,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_CapacityRebalance(t *testin
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDemandAllocationStrategy(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandAllocationStrategy(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1763,12 +1763,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDem
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandAllocationStrategy(rName, "prioritized"),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandAllocationStrategy(rName, "prioritized"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.on_demand_allocation_strategy", "prioritized"),
@@ -1791,7 +1791,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDem
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandBaseCapacity(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1800,12 +1800,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDem
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 1),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.on_demand_base_capacity", "1"),
@@ -1825,18 +1825,18 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDem
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 2),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.on_demand_base_capacity", "2"),
 				),
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 0),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.on_demand_base_capacity", "0"),
@@ -1847,7 +1847,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDem
 }
 
 // Test to verify fix for behavior in GH-ISSUE 7368
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_UpdateToZeroOnDemandBaseCapacity(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_updateToZeroOnDemandBaseCapacity(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1856,12 +1856,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_Updat
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 1),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.on_demand_base_capacity", "1"),
@@ -1881,9 +1881,9 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_Updat
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 0),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.on_demand_base_capacity", "0"),
@@ -1906,7 +1906,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_Updat
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDemandPercentageAboveBaseCapacity(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandPercentageAboveBaseCapacity(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1915,12 +1915,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDem
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandPercentageAboveBaseCapacity(rName, 1),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandPercentageAboveBaseCapacity(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.on_demand_percentage_above_base_capacity", "1"),
@@ -1940,9 +1940,9 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDem
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandPercentageAboveBaseCapacity(rName, 2),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandPercentageAboveBaseCapacity(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.on_demand_percentage_above_base_capacity", "2"),
@@ -1952,7 +1952,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_OnDem
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotAllocationStrategy(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotAllocationStrategy(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1961,12 +1961,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotA
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotAllocationStrategy(rName, "lowest-price"),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotAllocationStrategy(rName, "lowest-price"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.spot_allocation_strategy", "lowest-price"),
@@ -1989,7 +1989,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotA
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotInstancePools(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotInstancePools(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1998,12 +1998,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotI
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotInstancePools(rName, 2),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotInstancePools(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.spot_instance_pools", "2"),
@@ -2023,9 +2023,9 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotI
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotInstancePools(rName, 3),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotInstancePools(rName, 3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.spot_instance_pools", "3"),
@@ -2035,7 +2035,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotI
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotMaxPrice(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2044,12 +2044,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotM
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(rName, "0.50"),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(rName, "0.50"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.spot_max_price", "0.50"),
@@ -2069,18 +2069,18 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotM
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(rName, "0.51"),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(rName, "0.51"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.spot_max_price", "0.51"),
 				),
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(rName, ""),
+				Config: testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(rName, ""),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.instances_distribution.0.spot_max_price", ""),
@@ -2090,7 +2090,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_InstancesDistribution_SpotM
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_LaunchTemplateName(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateLaunchTemplateSpecification_launchTemplateName(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2099,12 +2099,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTempla
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_LaunchTemplateName(rName),
+				Config: testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_LaunchTemplateName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.0.launch_template_specification.#", "1"),
@@ -2128,7 +2128,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTempla
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_Version(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateLaunchTemplateSpecification_version(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2137,12 +2137,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTempla
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_Version(rName, "1"),
+				Config: testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_Version(rName, "1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.0.launch_template_specification.#", "1"),
@@ -2163,9 +2163,9 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTempla
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_Version(rName, "$Latest"),
+				Config: testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_Version(rName, "$Latest"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.0.launch_template_specification.#", "1"),
@@ -2176,7 +2176,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTempla
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateOverride_instanceType(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2185,12 +2185,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_Ins
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType(rName, "t3.small"),
+				Config: testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType(rName, "t3.small"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.0.override.#", "2"),
@@ -2212,9 +2212,9 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_Ins
 				},
 			},
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType(rName, "t3.medium"),
+				Config: testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType(rName, "t3.medium"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.0.override.#", "2"),
@@ -2226,7 +2226,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_Ins
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType_With_LaunchTemplateSpecification(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateOverride_instanceTypeWithLaunchTemplateSpecification(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2236,12 +2236,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_Ins
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType_With_LaunchTemplateSpecification(rName, rName2),
+				Config: testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType_With_LaunchTemplateSpecification(rName, rName2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.0.override.#", "2"),
@@ -2269,7 +2269,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_Ins
 	})
 }
 
-func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_WeightedCapacity(t *testing.T) {
+func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateOverride_weightedCapacity(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2278,12 +2278,12 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_Wei
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_WeightedCapacity(rName),
+				Config: testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_WeightedCapacity(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists(resourceName, &group),
+					testAccCheckGroupExists(resourceName, &group),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mixed_instances_policy.0.launch_template.0.override.#", "2"),
@@ -2310,7 +2310,7 @@ func TestAccAWSAutoScalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_Wei
 	})
 }
 
-func TestAccAWSAutoScalingGroup_launchTempPartitionNum(t *testing.T) {
+func TestAccAutoScalingGroup_launchTempPartitionNum(t *testing.T) {
 	var group autoscaling.Group
 
 	randName := fmt.Sprintf("terraform-test-%s", sdkacctest.RandString(10))
@@ -2319,12 +2319,12 @@ func TestAccAWSAutoScalingGroup_launchTempPartitionNum(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAutoScalingGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSAutoScalingGroupPartitionConfig(randName),
+				Config: testAccGroupPartitionConfig(randName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSAutoScalingGroupExists("aws_autoscaling_group.test", &group),
+					testAccCheckGroupExists("aws_autoscaling_group.test", &group),
 				),
 			},
 			{
@@ -2344,7 +2344,7 @@ func TestAccAWSAutoScalingGroup_launchTempPartitionNum(t *testing.T) {
 	})
 }
 
-func testAccAWSAutoScalingGroupConfigNameGenerated() string {
+func testAccGroupNameGeneratedConfig() string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
@@ -2363,7 +2363,7 @@ resource "aws_autoscaling_group" "test" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfigNamePrefix(namePrefix string) string {
+func testAccGroupNamePrefixConfig(namePrefix string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
@@ -2383,7 +2383,7 @@ resource "aws_autoscaling_group" "test" {
 `, namePrefix))
 }
 
-func testAccAWSAutoScalingGroupConfig_terminationPoliciesEmpty() string {
+func testAccGroupConfig_terminationPoliciesEmpty() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -2412,7 +2412,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_terminationPoliciesExplicitDefault() string {
+func testAccGroupConfig_terminationPoliciesExplicitDefault() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -2442,7 +2442,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_terminationPoliciesUpdate() string {
+func testAccGroupConfig_terminationPoliciesUpdate() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -2472,7 +2472,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig(name string) string {
+func testAccGroupConfig(name string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test_ami" {
@@ -2529,7 +2529,7 @@ resource "aws_autoscaling_group" "bar" {
 `, name, name)
 }
 
-func testAccAWSAutoScalingGroupConfigUpdate(name string) string {
+func testAccGroupUpdateConfig(name string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test_ami" {
@@ -2587,7 +2587,7 @@ resource "aws_autoscaling_group" "bar" {
 `, name)
 }
 
-func testAccAWSAutoScalingGroupConfigWithLoadBalancer() string {
+func testAccGroupWithLoadBalancerConfig() string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
 		acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
@@ -2680,7 +2680,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfigWithTargetGroup() string {
+func testAccGroupWithTargetGroupConfig() string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
 		acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
@@ -2779,7 +2779,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfigWithAZ() string {
+func testAccGroupWithAZConfig() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 resource "aws_vpc" "default" {
@@ -2825,7 +2825,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfigWithVPCIdent() string {
+func testAccGroupWithVPCIdentConfig() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 resource "aws_vpc" "default" {
@@ -2871,7 +2871,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_withPlacementGroup(name string) string {
+func testAccGroupConfig_withPlacementGroup(name string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test_ami" {
@@ -2917,7 +2917,7 @@ resource "aws_autoscaling_group" "bar" {
 `, name, name)
 }
 
-func testAccAWSAutoScalingGroupConfig_withServiceLinkedRoleARN() string {
+func testAccGroupConfig_withServiceLinkedRoleARN() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -2950,7 +2950,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_withMaxInstanceLifetime() string {
+func testAccGroupConfig_withMaxInstanceLifetime() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -2979,7 +2979,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_withMaxInstanceLifetime_update() string {
+func testAccGroupConfig_withMaxInstanceLifetime_update() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -3008,7 +3008,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoscalingMetricsCollectionConfig_allMetricsCollected() string {
+func testAccMetricsCollectionConfig_allMetricsCollected() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -3055,7 +3055,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoscalingMetricsCollectionConfig_updatingMetricsCollected() string {
+func testAccMetricsCollectionConfig_updatingMetricsCollected() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -3094,7 +3094,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_pre() string {
+func testAccGroupConfig_ALB_TargetGroup_pre() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 resource "aws_vpc" "default" {
@@ -3184,7 +3184,7 @@ resource "aws_security_group" "tf_test_self" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_post() string {
+func testAccGroupConfig_ALB_TargetGroup_post() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 resource "aws_vpc" "default" {
@@ -3276,7 +3276,7 @@ resource "aws_security_group" "tf_test_self" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_post_duo() string {
+func testAccGroupConfig_ALB_TargetGroup_post_duo() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 resource "aws_vpc" "default" {
@@ -3378,7 +3378,7 @@ resource "aws_security_group" "tf_test_self" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_TargetGroupArns(rName string, tgCount int) string {
+func testAccGroupConfig_TargetGroupARNs(rName string, tgCount int) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test" {
@@ -3437,7 +3437,7 @@ resource "aws_autoscaling_group" "test" {
 `, rName, tgCount)
 }
 
-func testAccAWSAutoScalingGroupWithHookConfig(name string) string {
+func testAccGroupWithHookConfig(name string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test_ami" {
@@ -3477,7 +3477,7 @@ resource "aws_autoscaling_group" "bar" {
 `, name)
 }
 
-func testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_ELBCapacity(rInt int) string {
+func testAccGroupConfig_ALB_TargetGroup_ELBCapacity(rInt int) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 resource "aws_vpc" "default" {
@@ -3494,7 +3494,7 @@ resource "aws_lb" "test_lb" {
   subnets = [aws_subnet.main.id, aws_subnet.alt.id]
 
   tags = {
-    Name = "testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_ELBCapacity"
+    Name = "testAccGroupConfig_ALB_TargetGroup_ELBCapacity"
   }
 }
 
@@ -3523,7 +3523,7 @@ resource "aws_lb_target_group" "test" {
   }
 
   tags = {
-    Name = "testAccAWSAutoScalingGroupConfig_ALB_TargetGroup_ELBCapacity"
+    Name = "testAccGroupConfig_ALB_TargetGroup_ELBCapacity"
   }
 }
 
@@ -3616,7 +3616,7 @@ resource "aws_autoscaling_group" "bar" {
 `, rInt)
 }
 
-func testAccAWSAutoScalingGroupConfigWithSuspendedProcesses(name string) string {
+func testAccGroupWithSuspendedProcessesConfig(name string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test_ami" {
@@ -3662,7 +3662,7 @@ resource "aws_autoscaling_group" "bar" {
 `, name, name)
 }
 
-func testAccAWSAutoScalingGroupConfigWithSuspendedProcessesUpdated(name string) string {
+func testAccGroupWithSuspendedProcessesUpdatedConfig(name string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test_ami" {
@@ -3708,7 +3708,7 @@ resource "aws_autoscaling_group" "bar" {
 `, name, name)
 }
 
-func testAccAWSAutoScalingGroupConfig_classicVpcZoneIdentifier() string {
+func testAccGroupConfig_classicVPCZoneIdentifier() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 resource "aws_autoscaling_group" "test" {
@@ -3736,7 +3736,7 @@ resource "aws_launch_configuration" "test" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_withLaunchTemplate() string {
+func testAccGroupConfig_withLaunchTemplate() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -3768,7 +3768,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_withLaunchTemplate_toLaunchConfig() string {
+func testAccGroupConfig_withLaunchTemplate_toLaunchConfig() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -3802,7 +3802,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_withLaunchTemplate_toLaunchTemplateName() string {
+func testAccGroupConfig_withLaunchTemplate_toLaunchTemplateName() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -3844,7 +3844,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_withLaunchTemplate_toLaunchTemplateVersion() string {
+func testAccGroupConfig_withLaunchTemplate_toLaunchTemplateVersion() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(),
 		`
 data "aws_ami" "test_ami" {
@@ -3887,7 +3887,7 @@ resource "aws_autoscaling_group" "bar" {
 `)
 }
 
-func testAccAWSAutoScalingGroupConfig_LaunchTemplate_IAMInstanceProfile(rName string) string {
+func testAccGroupConfig_LaunchTemplate_IAMInstanceProfile(rName string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test" {
@@ -3934,7 +3934,7 @@ resource "aws_autoscaling_group" "test" {
 `, rName, rName, rName, rName)
 }
 
-func testAccAWSAutoScalingGroupConfig_LoadBalancers(rName string, elbCount int) string {
+func testAccGroupConfig_LoadBalancers(rName string, elbCount int) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test" {
@@ -4003,7 +4003,7 @@ resource "aws_autoscaling_group" "test" {
 `, rName, elbCount)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName string) string {
+func testAccGroupConfig_MixedInstancesPolicy_Base(rName string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test" {
@@ -4024,7 +4024,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Arm_Base(rName string) string {
+func testAccGroupConfig_MixedInstancesPolicy_Arm_Base(rName string) string {
 	return fmt.Sprintf(`
 data "aws_ami" "testarm" {
   most_recent = true
@@ -4044,8 +4044,8 @@ resource "aws_launch_template" "testarm" {
 `, rName)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy(rName string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy(rName string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4074,8 +4074,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_CapacityRebalance(rName string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_CapacityRebalance(rName string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4105,8 +4105,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandAllocationStrategy(rName, onDemandAllocationStrategy string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandAllocationStrategy(rName, onDemandAllocationStrategy string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4137,8 +4137,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName, onDemandAllocationStrategy)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName string, onDemandBaseCapacity int) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandBaseCapacity(rName string, onDemandBaseCapacity int) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4169,8 +4169,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName, onDemandBaseCapacity)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandPercentageAboveBaseCapacity(rName string, onDemandPercentageAboveBaseCapacity int) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_OnDemandPercentageAboveBaseCapacity(rName string, onDemandPercentageAboveBaseCapacity int) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4201,8 +4201,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName, onDemandPercentageAboveBaseCapacity)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotAllocationStrategy(rName, spotAllocationStrategy string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotAllocationStrategy(rName, spotAllocationStrategy string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4233,8 +4233,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName, spotAllocationStrategy)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotInstancePools(rName string, spotInstancePools int) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotInstancePools(rName string, spotInstancePools int) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4265,8 +4265,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName, spotInstancePools)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(rName, spotMaxPrice string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_InstancesDistribution_SpotMaxPrice(rName, spotMaxPrice string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4297,8 +4297,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName, spotMaxPrice)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_LaunchTemplateName(rName string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_LaunchTemplateName(rName string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4325,8 +4325,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_Version(rName, version string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification_Version(rName, version string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4354,8 +4354,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName, version)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType(rName, instanceType string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType(rName, instanceType string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4382,9 +4382,9 @@ resource "aws_autoscaling_group" "test" {
 `, rName, instanceType)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType_With_LaunchTemplateSpecification(rName, rName2 string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
-		testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Arm_Base(rName2) +
+func testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_InstanceType_With_LaunchTemplateSpecification(rName, rName2 string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
+		testAccGroupConfig_MixedInstancesPolicy_Arm_Base(rName2) +
 		fmt.Sprintf(`
 
 resource "aws_autoscaling_group" "test" {
@@ -4415,8 +4415,8 @@ resource "aws_autoscaling_group" "test" {
 `, rName)
 }
 
-func testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_WeightedCapacity(rName string) string {
-	return testAccAWSAutoScalingGroupConfig_MixedInstancesPolicy_Base(rName) +
+func testAccGroupConfig_MixedInstancesPolicy_LaunchTemplate_Override_WeightedCapacity(rName string) string {
+	return testAccGroupConfig_MixedInstancesPolicy_Base(rName) +
 		fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones = [data.aws_availability_zones.available.names[0]]
@@ -4445,7 +4445,7 @@ resource "aws_autoscaling_group" "test" {
 `, rName)
 }
 
-func testAccAWSAutoScalingGroupPartitionConfig(rName string) string {
+func testAccGroupPartitionConfig(rName string) string {
 	return acctest.ConfigAvailableAZsNoOptInDefaultExclude() +
 		fmt.Sprintf(`
 data "aws_ami" "test_ami" {
@@ -4488,7 +4488,7 @@ resource "aws_autoscaling_group" "test" {
 `, rName)
 }
 
-func testAccAwsAutoScalingGroupConfig_InstanceRefresh_Basic() string {
+func testAccGroupConfig_InstanceRefresh_Basic() string {
 	return `
 resource "aws_autoscaling_group" "test" {
   availability_zones   = [data.aws_availability_zones.current.names[0]]
@@ -4528,7 +4528,7 @@ resource "aws_launch_configuration" "test" {
 `
 }
 
-func testAccAwsAutoScalingGroupConfig_InstanceRefresh_Full() string {
+func testAccGroupConfig_InstanceRefresh_Full() string {
 	return `
 resource "aws_autoscaling_group" "test" {
   availability_zones   = [data.aws_availability_zones.current.names[0]]
@@ -4572,7 +4572,7 @@ resource "aws_launch_configuration" "test" {
 `
 }
 
-func testAccAwsAutoScalingGroupConfig_InstanceRefresh_Disabled() string {
+func testAccGroupConfig_InstanceRefresh_Disabled() string {
 	return `
 resource "aws_autoscaling_group" "test" {
   availability_zones   = [data.aws_availability_zones.current.names[0]]
@@ -4608,7 +4608,7 @@ resource "aws_launch_configuration" "test" {
 `
 }
 
-func testAccAwsAutoScalingGroupConfig_InstanceRefresh_Start(launchConfigurationName string) string {
+func testAccGroupConfig_InstanceRefresh_Start(launchConfigurationName string) string {
 	return fmt.Sprintf(`
 resource "aws_autoscaling_group" "test" {
   availability_zones   = [data.aws_availability_zones.current.names[0]]
@@ -4653,7 +4653,7 @@ resource "aws_launch_configuration" "test" {
 `, launchConfigurationName)
 }
 
-func testAccAwsAutoScalingGroupConfig_InstanceRefresh_Triggers() string {
+func testAccGroupConfig_InstanceRefresh_Triggers() string {
 	return `
 resource "aws_autoscaling_group" "test" {
   availability_zones   = [data.aws_availability_zones.current.names[0]]
@@ -4700,7 +4700,7 @@ resource "aws_launch_configuration" "test" {
 `
 }
 
-func testAccAwsAutoScalingGroupConfig_WarmPool_Base() string {
+func testAccGroupConfig_WarmPool_Base() string {
 	return `
 data "aws_ami" "test" {
   most_recent = true
@@ -4728,8 +4728,8 @@ resource "aws_launch_configuration" "test" {
 `
 }
 
-func testAccAwsAutoScalingGroupConfig_WarmPool_Empty() string {
-	return testAccAwsAutoScalingGroupConfig_WarmPool_Base() + `
+func testAccGroupConfig_WarmPool_Empty() string {
+	return testAccGroupConfig_WarmPool_Base() + `
 resource "aws_autoscaling_group" "test" {
   availability_zones   = [data.aws_availability_zones.current.names[0]]
   max_size             = 5
@@ -4742,8 +4742,8 @@ resource "aws_autoscaling_group" "test" {
 `
 }
 
-func testAccAwsAutoScalingGroupConfig_WarmPool_Full() string {
-	return testAccAwsAutoScalingGroupConfig_WarmPool_Base() + `
+func testAccGroupConfig_WarmPool_Full() string {
+	return testAccGroupConfig_WarmPool_Base() + `
 resource "aws_autoscaling_group" "test" {
   availability_zones   = [data.aws_availability_zones.current.names[0]]
   max_size             = 5
@@ -4760,8 +4760,8 @@ resource "aws_autoscaling_group" "test" {
 `
 }
 
-func testAccAwsAutoScalingGroupConfig_WarmPool_Remove() string {
-	return testAccAwsAutoScalingGroupConfig_WarmPool_Base() + `
+func testAccGroupConfig_WarmPool_Remove() string {
+	return testAccGroupConfig_WarmPool_Base() + `
 resource "aws_autoscaling_group" "test" {
   availability_zones   = [data.aws_availability_zones.current.names[0]]
   max_size             = 5
@@ -5096,7 +5096,7 @@ func TestFlattenWarmPoolConfiguration(t *testing.T) {
 	}
 }
 
-func testAccCheckAWSLBTargetGroupExists(n string, res *elbv2.TargetGroup) resource.TestCheckFunc {
+func testAccCheckLBTargetGroupExists(n string, res *elbv2.TargetGroup) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
