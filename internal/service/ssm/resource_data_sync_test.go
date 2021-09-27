@@ -70,19 +70,19 @@ func testSweepSsmResourceDataSyncs(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSSsmResourceDataSync_basic(t *testing.T) {
+func TestAccSSMResourceDataSync_basic(t *testing.T) {
 	resourceName := "aws_ssm_resource_data_sync.test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSsmResourceDataSyncDestroy,
+		CheckDestroy: testAccCheckResourceDataSyncDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSsmResourceDataSyncConfig(sdkacctest.RandInt(), sdkacctest.RandString(5)),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSsmResourceDataSyncExists(resourceName),
+					testAccCheckResourceDataSyncExists(resourceName),
 				),
 			},
 			{
@@ -94,7 +94,7 @@ func TestAccAWSSsmResourceDataSync_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSSsmResourceDataSync_update(t *testing.T) {
+func TestAccSSMResourceDataSync_update(t *testing.T) {
 	rName := sdkacctest.RandString(5)
 	resourceName := "aws_ssm_resource_data_sync.test"
 
@@ -102,12 +102,12 @@ func TestAccAWSSsmResourceDataSync_update(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSsmResourceDataSyncDestroy,
+		CheckDestroy: testAccCheckResourceDataSyncDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSsmResourceDataSyncConfig(sdkacctest.RandInt(), rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSsmResourceDataSyncExists(resourceName),
+					testAccCheckResourceDataSyncExists(resourceName),
 				),
 			},
 			{
@@ -118,14 +118,14 @@ func TestAccAWSSsmResourceDataSync_update(t *testing.T) {
 			{
 				Config: testAccSsmResourceDataSyncConfigUpdate(sdkacctest.RandInt(), rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSsmResourceDataSyncExists(resourceName),
+					testAccCheckResourceDataSyncExists(resourceName),
 				),
 			},
 		},
 	})
 }
 
-func testAccCheckAWSSsmResourceDataSyncDestroy(s *terraform.State) error {
+func testAccCheckResourceDataSyncDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SSMConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -143,7 +143,7 @@ func testAccCheckAWSSsmResourceDataSyncDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSSsmResourceDataSyncExists(name string) resource.TestCheckFunc {
+func testAccCheckResourceDataSyncExists(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		log.Println(s.RootModule().Resources)
 		_, ok := s.RootModule().Resources[name]

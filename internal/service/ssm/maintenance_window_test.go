@@ -79,7 +79,7 @@ func testSweepSsmMaintenanceWindows(region string) error {
 	return nil
 }
 
-func TestAccAWSSSMMaintenanceWindow_basic(t *testing.T) {
+func TestAccSSMMaintenanceWindow_basic(t *testing.T) {
 	var winId ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -88,12 +88,12 @@ func TestAccAWSSSMMaintenanceWindow_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfig(rName),
+				Config: testAccMaintenanceWindowConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &winId),
+					testAccCheckMaintenanceWindowExists(resourceName, &winId),
 					resource.TestCheckResourceAttr(resourceName, "cutoff", "1"),
 					resource.TestCheckResourceAttr(resourceName, "duration", "3"),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "true"),
@@ -115,7 +115,7 @@ func TestAccAWSSSMMaintenanceWindow_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_description(t *testing.T) {
+func TestAccSSMMaintenanceWindow_description(t *testing.T) {
 	var winId ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -124,12 +124,12 @@ func TestAccAWSSSMMaintenanceWindow_description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigDescription(rName, "foo"),
+				Config: testAccMaintenanceWindowDescriptionConfig(rName, "foo"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &winId),
+					testAccCheckMaintenanceWindowExists(resourceName, &winId),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "description", "foo"),
 				),
@@ -140,9 +140,9 @@ func TestAccAWSSSMMaintenanceWindow_description(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigDescription(rName, "bar"),
+				Config: testAccMaintenanceWindowDescriptionConfig(rName, "bar"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &winId),
+					testAccCheckMaintenanceWindowExists(resourceName, &winId),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "description", "bar"),
 				),
@@ -151,7 +151,7 @@ func TestAccAWSSSMMaintenanceWindow_description(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_tags(t *testing.T) {
+func TestAccSSMMaintenanceWindow_tags(t *testing.T) {
 	var winId ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -160,12 +160,12 @@ func TestAccAWSSSMMaintenanceWindow_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigTags1(rName, "key1", "value1"),
+				Config: testAccMaintenanceWindowTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &winId),
+					testAccCheckMaintenanceWindowExists(resourceName, &winId),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -176,18 +176,18 @@ func TestAccAWSSSMMaintenanceWindow_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccMaintenanceWindowTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &winId),
+					testAccCheckMaintenanceWindowExists(resourceName, &winId),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigTags1(rName, "key2", "value2"),
+				Config: testAccMaintenanceWindowTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &winId),
+					testAccCheckMaintenanceWindowExists(resourceName, &winId),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -196,7 +196,7 @@ func TestAccAWSSSMMaintenanceWindow_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_disappears(t *testing.T) {
+func TestAccSSMMaintenanceWindow_disappears(t *testing.T) {
 	var winId ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -205,13 +205,13 @@ func TestAccAWSSSMMaintenanceWindow_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfig(rName),
+				Config: testAccMaintenanceWindowConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &winId),
-					testAccCheckAWSSSMMaintenanceWindowDisappears(&winId),
+					testAccCheckMaintenanceWindowExists(resourceName, &winId),
+					testAccCheckMaintenanceWindowDisappears(&winId),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -219,7 +219,7 @@ func TestAccAWSSSMMaintenanceWindow_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_multipleUpdates(t *testing.T) {
+func TestAccSSMMaintenanceWindow_multipleUpdates(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2 ssm.MaintenanceWindowIdentity
 	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -229,12 +229,12 @@ func TestAccAWSSSMMaintenanceWindow_multipleUpdates(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfig(rName1),
+				Config: testAccMaintenanceWindowConfig(rName1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "cutoff", "1"),
 					resource.TestCheckResourceAttr(resourceName, "duration", "3"),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "true"),
@@ -243,9 +243,9 @@ func TestAccAWSSSMMaintenanceWindow_multipleUpdates(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigMultipleUpdates(rName2),
+				Config: testAccMaintenanceWindowMultipleUpdatesConfig(rName2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "cutoff", "8"),
 					resource.TestCheckResourceAttr(resourceName, "duration", "10"),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "false"),
@@ -257,7 +257,7 @@ func TestAccAWSSSMMaintenanceWindow_multipleUpdates(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_Cutoff(t *testing.T) {
+func TestAccSSMMaintenanceWindow_cutoff(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2 ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -266,12 +266,12 @@ func TestAccAWSSSMMaintenanceWindow_Cutoff(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigCutoff(rName, 1),
+				Config: testAccMaintenanceWindowCutoffConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "cutoff", "1"),
 				),
 			},
@@ -281,9 +281,9 @@ func TestAccAWSSSMMaintenanceWindow_Cutoff(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigCutoff(rName, 2),
+				Config: testAccMaintenanceWindowCutoffConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "cutoff", "2"),
 				),
 			},
@@ -291,7 +291,7 @@ func TestAccAWSSSMMaintenanceWindow_Cutoff(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_Duration(t *testing.T) {
+func TestAccSSMMaintenanceWindow_duration(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2 ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -300,12 +300,12 @@ func TestAccAWSSSMMaintenanceWindow_Duration(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigDuration(rName, 3),
+				Config: testAccMaintenanceWindowDurationConfig(rName, 3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "duration", "3"),
 				),
 			},
@@ -315,9 +315,9 @@ func TestAccAWSSSMMaintenanceWindow_Duration(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigDuration(rName, 10),
+				Config: testAccMaintenanceWindowDurationConfig(rName, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "duration", "10"),
 				),
 			},
@@ -325,7 +325,7 @@ func TestAccAWSSSMMaintenanceWindow_Duration(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_Enabled(t *testing.T) {
+func TestAccSSMMaintenanceWindow_enabled(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2 ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -334,12 +334,12 @@ func TestAccAWSSSMMaintenanceWindow_Enabled(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigEnabled(rName, false),
+				Config: testAccMaintenanceWindowEnabledConfig(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "false"),
 				),
 			},
@@ -349,9 +349,9 @@ func TestAccAWSSSMMaintenanceWindow_Enabled(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigEnabled(rName, true),
+				Config: testAccMaintenanceWindowEnabledConfig(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "enabled", "true"),
 				),
 			},
@@ -359,7 +359,7 @@ func TestAccAWSSSMMaintenanceWindow_Enabled(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_EndDate(t *testing.T) {
+func TestAccSSMMaintenanceWindow_endDate(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2, maintenanceWindow3 ssm.MaintenanceWindowIdentity
 	endDate1 := time.Now().UTC().Add(365 * 24 * time.Hour).Format(time.RFC3339)
 	endDate2 := time.Now().UTC().Add(730 * 24 * time.Hour).Format(time.RFC3339)
@@ -370,12 +370,12 @@ func TestAccAWSSSMMaintenanceWindow_EndDate(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigEndDate(rName, endDate1),
+				Config: testAccMaintenanceWindowEndDateConfig(rName, endDate1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "end_date", endDate1),
 				),
 			},
@@ -385,16 +385,16 @@ func TestAccAWSSSMMaintenanceWindow_EndDate(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigEndDate(rName, endDate2),
+				Config: testAccMaintenanceWindowEndDateConfig(rName, endDate2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "end_date", endDate2),
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfig(rName),
+				Config: testAccMaintenanceWindowConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow3),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow3),
 					resource.TestCheckResourceAttr(resourceName, "end_date", ""),
 				),
 			},
@@ -402,7 +402,7 @@ func TestAccAWSSSMMaintenanceWindow_EndDate(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_Schedule(t *testing.T) {
+func TestAccSSMMaintenanceWindow_schedule(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2 ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -411,12 +411,12 @@ func TestAccAWSSSMMaintenanceWindow_Schedule(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigSchedule(rName, "cron(0 16 ? * TUE *)"),
+				Config: testAccMaintenanceWindowScheduleConfig(rName, "cron(0 16 ? * TUE *)"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "schedule", "cron(0 16 ? * TUE *)"),
 				),
 			},
@@ -426,9 +426,9 @@ func TestAccAWSSSMMaintenanceWindow_Schedule(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigSchedule(rName, "cron(0 16 ? * WED *)"),
+				Config: testAccMaintenanceWindowScheduleConfig(rName, "cron(0 16 ? * WED *)"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "schedule", "cron(0 16 ? * WED *)"),
 				),
 			},
@@ -436,7 +436,7 @@ func TestAccAWSSSMMaintenanceWindow_Schedule(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_ScheduleTimezone(t *testing.T) {
+func TestAccSSMMaintenanceWindow_scheduleTimezone(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2, maintenanceWindow3 ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -445,12 +445,12 @@ func TestAccAWSSSMMaintenanceWindow_ScheduleTimezone(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigScheduleTimezone(rName, "America/Los_Angeles"),
+				Config: testAccMaintenanceWindowScheduleTimezoneConfig(rName, "America/Los_Angeles"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "schedule_timezone", "America/Los_Angeles"),
 				),
 			},
@@ -460,16 +460,16 @@ func TestAccAWSSSMMaintenanceWindow_ScheduleTimezone(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigScheduleTimezone(rName, "America/New_York"),
+				Config: testAccMaintenanceWindowScheduleTimezoneConfig(rName, "America/New_York"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "schedule_timezone", "America/New_York"),
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfig(rName),
+				Config: testAccMaintenanceWindowConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow3),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow3),
 					resource.TestCheckResourceAttr(resourceName, "schedule_timezone", ""),
 				),
 			},
@@ -477,7 +477,7 @@ func TestAccAWSSSMMaintenanceWindow_ScheduleTimezone(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_ScheduleOffset(t *testing.T) {
+func TestAccSSMMaintenanceWindow_scheduleOffset(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2 ssm.MaintenanceWindowIdentity
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window.test"
@@ -486,12 +486,12 @@ func TestAccAWSSSMMaintenanceWindow_ScheduleOffset(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigScheduleOffset(rName, 2),
+				Config: testAccMaintenanceWindowScheduleOffsetConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "schedule_offset", "2"),
 				),
 			},
@@ -501,9 +501,9 @@ func TestAccAWSSSMMaintenanceWindow_ScheduleOffset(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigScheduleOffset(rName, 5),
+				Config: testAccMaintenanceWindowScheduleOffsetConfig(rName, 5),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "schedule_offset", "5"),
 				),
 			},
@@ -511,7 +511,7 @@ func TestAccAWSSSMMaintenanceWindow_ScheduleOffset(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindow_StartDate(t *testing.T) {
+func TestAccSSMMaintenanceWindow_startDate(t *testing.T) {
 	var maintenanceWindow1, maintenanceWindow2, maintenanceWindow3 ssm.MaintenanceWindowIdentity
 	startDate1 := time.Now().UTC().Add(1 * time.Hour).Format(time.RFC3339)
 	startDate2 := time.Now().UTC().Add(2 * time.Hour).Format(time.RFC3339)
@@ -522,12 +522,12 @@ func TestAccAWSSSMMaintenanceWindow_StartDate(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigStartDate(rName, startDate1),
+				Config: testAccMaintenanceWindowStartDateConfig(rName, startDate1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow1),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow1),
 					resource.TestCheckResourceAttr(resourceName, "start_date", startDate1),
 				),
 			},
@@ -537,16 +537,16 @@ func TestAccAWSSSMMaintenanceWindow_StartDate(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfigStartDate(rName, startDate2),
+				Config: testAccMaintenanceWindowStartDateConfig(rName, startDate2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow2),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow2),
 					resource.TestCheckResourceAttr(resourceName, "start_date", startDate2),
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowConfig(rName),
+				Config: testAccMaintenanceWindowConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowExists(resourceName, &maintenanceWindow3),
+					testAccCheckMaintenanceWindowExists(resourceName, &maintenanceWindow3),
 					resource.TestCheckResourceAttr(resourceName, "start_date", ""),
 				),
 			},
@@ -554,7 +554,7 @@ func TestAccAWSSSMMaintenanceWindow_StartDate(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSSSMMaintenanceWindowExists(n string, res *ssm.MaintenanceWindowIdentity) resource.TestCheckFunc {
+func testAccCheckMaintenanceWindowExists(n string, res *ssm.MaintenanceWindowIdentity) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -590,7 +590,7 @@ func testAccCheckAWSSSMMaintenanceWindowExists(n string, res *ssm.MaintenanceWin
 	}
 }
 
-func testAccCheckAWSSSMMaintenanceWindowDisappears(maintenanceWindowIdentity *ssm.MaintenanceWindowIdentity) resource.TestCheckFunc {
+func testAccCheckMaintenanceWindowDisappears(maintenanceWindowIdentity *ssm.MaintenanceWindowIdentity) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SSMConn
 
@@ -605,7 +605,7 @@ func testAccCheckAWSSSMMaintenanceWindowDisappears(maintenanceWindowIdentity *ss
 	}
 }
 
-func testAccCheckAWSSSMMaintenanceWindowDestroy(s *terraform.State) error {
+func testAccCheckMaintenanceWindowDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SSMConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -634,7 +634,7 @@ func testAccCheckAWSSSMMaintenanceWindowDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSSSMMaintenanceWindowConfig(rName string) string {
+func testAccMaintenanceWindowConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 1
@@ -645,7 +645,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, rName)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigDescription(rName, desc string) string {
+func testAccMaintenanceWindowDescriptionConfig(rName, desc string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff      = 1
@@ -657,7 +657,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, rName, desc)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccMaintenanceWindowTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 1
@@ -672,7 +672,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccMaintenanceWindowTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 1
@@ -688,7 +688,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, rName, tagKey1, tagValue1, tagKey2, tagValue2)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigCutoff(rName string, cutoff int) string {
+func testAccMaintenanceWindowCutoffConfig(rName string, cutoff int) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = %d
@@ -699,7 +699,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, cutoff, rName)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigDuration(rName string, duration int) string {
+func testAccMaintenanceWindowDurationConfig(rName string, duration int) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 1
@@ -710,7 +710,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, duration, rName)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigEnabled(rName string, enabled bool) string {
+func testAccMaintenanceWindowEnabledConfig(rName string, enabled bool) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 1
@@ -722,7 +722,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, enabled, rName)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigEndDate(rName, endDate string) string {
+func testAccMaintenanceWindowEndDateConfig(rName, endDate string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 1
@@ -734,7 +734,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, endDate, rName)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigMultipleUpdates(rName string) string {
+func testAccMaintenanceWindowMultipleUpdatesConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 8
@@ -746,7 +746,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, rName)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigSchedule(rName, schedule string) string {
+func testAccMaintenanceWindowScheduleConfig(rName, schedule string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 1
@@ -757,7 +757,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, rName, schedule)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigScheduleTimezone(rName, scheduleTimezone string) string {
+func testAccMaintenanceWindowScheduleTimezoneConfig(rName, scheduleTimezone string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff            = 1
@@ -769,7 +769,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, rName, scheduleTimezone)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigScheduleOffset(rName string, scheduleOffset int) string {
+func testAccMaintenanceWindowScheduleOffsetConfig(rName string, scheduleOffset int) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff          = 1
@@ -781,7 +781,7 @@ resource "aws_ssm_maintenance_window" "test" {
 `, rName, scheduleOffset)
 }
 
-func testAccAWSSSMMaintenanceWindowConfigStartDate(rName, startDate string) string {
+func testAccMaintenanceWindowStartDateConfig(rName, startDate string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff     = 1

@@ -15,7 +15,7 @@ import (
 	tfssm "github.com/hashicorp/terraform-provider-aws/internal/service/ssm"
 )
 
-func TestAccAWSSSMMaintenanceWindowTask_basic(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_basic(t *testing.T) {
 	var before, after ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 
@@ -24,18 +24,18 @@ func TestAccAWSSSMMaintenanceWindowTask_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskBasicConfig(rName),
+				Config: testAccMaintenanceWindowTaskBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &before),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &before),
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskBasicConfigUpdate(rName, "test description", "RUN_COMMAND", "AWS-InstallPowerShellModule", 3, 3, 2),
+				Config: testAccMaintenanceWindowTaskBasicUpdateConfig(rName, "test description", "RUN_COMMAND", "AWS-InstallPowerShellModule", 3, 3, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &after),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &after),
 					resource.TestCheckResourceAttr(resourceName, "name", fmt.Sprintf("maintenance-window-task-%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "description", "test description"),
 					resource.TestCheckResourceAttr(resourceName, "task_type", "RUN_COMMAND"),
@@ -43,20 +43,20 @@ func TestAccAWSSSMMaintenanceWindowTask_basic(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "priority", "3"),
 					resource.TestCheckResourceAttr(resourceName, "max_concurrency", "3"),
 					resource.TestCheckResourceAttr(resourceName, "max_errors", "2"),
-					testAccCheckAwsSsmWindowsTaskNotRecreated(t, &before, &after),
+					testAccCheckWindowsTaskNotRecreated(t, &before, &after),
 				),
 			},
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccMaintenanceWindowTaskImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_noRole(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_noRole(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window_task.test"
@@ -65,19 +65,19 @@ func TestAccAWSSSMMaintenanceWindowTask_noRole(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskNoRoleConfig(rName),
+				Config: testAccMaintenanceWindowTaskNoRoleConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_updateForcesNewResource(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_updateForcesNewResource(t *testing.T) {
 	var before, after ssm.MaintenanceWindowTask
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window_task.test"
@@ -86,34 +86,34 @@ func TestAccAWSSSMMaintenanceWindowTask_updateForcesNewResource(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskBasicConfig(rName),
+				Config: testAccMaintenanceWindowTaskBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &before),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &before),
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskBasicConfigUpdated(rName),
+				Config: testAccMaintenanceWindowTaskBasicUpdatedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &after),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &after),
 					resource.TestCheckResourceAttr(resourceName, "name", "TestMaintenanceWindowTask"),
 					resource.TestCheckResourceAttr(resourceName, "description", "This resource is for test purpose only"),
-					testAccCheckAwsSsmWindowsTaskRecreated(t, &before, &after),
+					testAccCheckWindowsTaskRecreated(t, &before, &after),
 				),
 			},
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccMaintenanceWindowTaskImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_Description(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_description(t *testing.T) {
 	var task1, task2 ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -122,34 +122,34 @@ func TestAccAWSSSMMaintenanceWindowTask_Description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskConfigDescription(rName, "description1"),
+				Config: testAccMaintenanceWindowTaskDescriptionConfig(rName, "description1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task1),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task1),
 					resource.TestCheckResourceAttr(resourceName, "description", "description1"),
 				),
 			},
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccMaintenanceWindowTaskImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskConfigDescription(rName, "description2"),
+				Config: testAccMaintenanceWindowTaskDescriptionConfig(rName, "description2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task2),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task2),
 					resource.TestCheckResourceAttr(resourceName, "description", "description2"),
-					testAccCheckAwsSsmWindowsTaskNotRecreated(t, &task1, &task2),
+					testAccCheckWindowsTaskNotRecreated(t, &task1, &task2),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationAutomationParameters(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_taskInvocationAutomationParameters(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 
@@ -158,33 +158,33 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationAutomationParameters(t *te
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskAutomationConfig(rName, "$DEFAULT"),
+				Config: testAccMaintenanceWindowTaskAutomationConfig(rName, "$DEFAULT"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 					resource.TestCheckResourceAttr(resourceName, "task_invocation_parameters.0.automation_parameters.0.document_version", "$DEFAULT"),
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskAutomationConfigUpdate(rName, "$LATEST"),
+				Config: testAccMaintenanceWindowTaskAutomationUpdateConfig(rName, "$LATEST"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 					resource.TestCheckResourceAttr(resourceName, "task_invocation_parameters.0.automation_parameters.0.document_version", "$LATEST"),
 				),
 			},
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccMaintenanceWindowTaskImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationLambdaParameters(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_taskInvocationLambdaParameters(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 	rString := sdkacctest.RandString(8)
@@ -199,25 +199,25 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationLambdaParameters(t *testin
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskLambdaConfig(funcName, policyName, roleName, sgName, rString, rInt),
+				Config: testAccMaintenanceWindowTaskLambdaConfig(funcName, policyName, roleName, sgName, rString, rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 				),
 			},
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccMaintenanceWindowTaskImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationRunCommandParameters(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_taskInvocationRunCommandParameters(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 	serviceRoleResourceName := "aws_iam_role.test"
@@ -228,12 +228,12 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationRunCommandParameters(t *te
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskRunCommandConfig(rName, "test comment", 30),
+				Config: testAccMaintenanceWindowTaskRunCommandConfig(rName, "test comment", 30),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 					resource.TestCheckResourceAttrPair(resourceName, "service_role_arn", serviceRoleResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "task_invocation_parameters.0.run_command_parameters.0.service_role_arn", serviceRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "task_invocation_parameters.0.run_command_parameters.0.comment", "test comment"),
@@ -241,9 +241,9 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationRunCommandParameters(t *te
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskRunCommandConfigUpdate(rName, "test comment update", 60),
+				Config: testAccMaintenanceWindowTaskRunCommandUpdateConfig(rName, "test comment update", 60),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 					resource.TestCheckResourceAttr(resourceName, "task_invocation_parameters.0.run_command_parameters.0.comment", "test comment update"),
 					resource.TestCheckResourceAttr(resourceName, "task_invocation_parameters.0.run_command_parameters.0.timeout_seconds", "60"),
 					resource.TestCheckResourceAttrPair(resourceName, "task_invocation_parameters.0.run_command_parameters.0.output_s3_bucket", s3BucketResourceName, "id"),
@@ -252,14 +252,14 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationRunCommandParameters(t *te
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccMaintenanceWindowTaskImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationRunCommandParametersCloudWatch(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_taskInvocationRunCommandParametersCloudWatch(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 	serviceRoleResourceName := "aws_iam_role.test"
@@ -270,12 +270,12 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationRunCommandParametersCloudW
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskRunCommandCloudWatchConfig(name, true),
+				Config: testAccMaintenanceWindowTaskRunCommandCloudWatchConfig(name, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 					resource.TestCheckResourceAttrPair(resourceName, "service_role_arn", serviceRoleResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "task_invocation_parameters.0.run_command_parameters.0.service_role_arn", serviceRoleResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "task_invocation_parameters.0.run_command_parameters.0.cloudwatch_config.0.cloudwatch_log_group_name", cwResourceName, "name"),
@@ -285,22 +285,22 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationRunCommandParametersCloudW
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccMaintenanceWindowTaskImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskRunCommandCloudWatchConfig(name, false),
+				Config: testAccMaintenanceWindowTaskRunCommandCloudWatchConfig(name, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 					resource.TestCheckResourceAttrPair(resourceName, "service_role_arn", serviceRoleResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "task_invocation_parameters.0.run_command_parameters.0.service_role_arn", serviceRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "task_invocation_parameters.0.run_command_parameters.0.cloudwatch_config.0.cloudwatch_output_enabled", "false"),
 				),
 			},
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskRunCommandCloudWatchConfig(name, true),
+				Config: testAccMaintenanceWindowTaskRunCommandCloudWatchConfig(name, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 					resource.TestCheckResourceAttrPair(resourceName, "service_role_arn", serviceRoleResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "task_invocation_parameters.0.run_command_parameters.0.service_role_arn", serviceRoleResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "task_invocation_parameters.0.run_command_parameters.0.cloudwatch_config.0.cloudwatch_log_group_name", cwResourceName, "name"),
@@ -311,7 +311,7 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationRunCommandParametersCloudW
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationStepFunctionParameters(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_taskInvocationStepFunctionParameters(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 	rString := sdkacctest.RandString(8)
@@ -320,25 +320,25 @@ func TestAccAWSSSMMaintenanceWindowTask_TaskInvocationStepFunctionParameters(t *
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskStepFunctionConfig(rString),
+				Config: testAccMaintenanceWindowTaskStepFunctionConfig(rString),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 				),
 			},
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccMaintenanceWindowTaskImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_emptyNotificationConfig(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_emptyNotification(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ssm_maintenance_window_task.test"
@@ -347,12 +347,12 @@ func TestAccAWSSSMMaintenanceWindowTask_emptyNotificationConfig(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskConfigEmptyNotifcationConfig(rName),
+				Config: testAccMaintenanceWindowTaskEmptyNotifcationConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &task),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &task),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -360,7 +360,7 @@ func TestAccAWSSSMMaintenanceWindowTask_emptyNotificationConfig(t *testing.T) {
 	})
 }
 
-func TestAccAWSSSMMaintenanceWindowTask_disappears(t *testing.T) {
+func TestAccSSMMaintenanceWindowTask_disappears(t *testing.T) {
 	var before ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 
@@ -369,12 +369,12 @@ func TestAccAWSSSMMaintenanceWindowTask_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSSSMMaintenanceWindowTaskDestroy,
+		CheckDestroy: testAccCheckMaintenanceWindowTaskDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSSMMaintenanceWindowTaskBasicConfig(name),
+				Config: testAccMaintenanceWindowTaskBasicConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSSSMMaintenanceWindowTaskExists(resourceName, &before),
+					testAccCheckMaintenanceWindowTaskExists(resourceName, &before),
 					acctest.CheckResourceDisappears(acctest.Provider, tfssm.ResourceMaintenanceWindowTask(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -383,7 +383,7 @@ func TestAccAWSSSMMaintenanceWindowTask_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsSsmWindowsTaskNotRecreated(t *testing.T,
+func testAccCheckWindowsTaskNotRecreated(t *testing.T,
 	before, after *ssm.MaintenanceWindowTask) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(before.WindowTaskId) != aws.StringValue(after.WindowTaskId) {
@@ -393,7 +393,7 @@ func testAccCheckAwsSsmWindowsTaskNotRecreated(t *testing.T,
 	}
 }
 
-func testAccCheckAwsSsmWindowsTaskRecreated(t *testing.T,
+func testAccCheckWindowsTaskRecreated(t *testing.T,
 	before, after *ssm.MaintenanceWindowTask) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if before.WindowTaskId == after.WindowTaskId {
@@ -403,7 +403,7 @@ func testAccCheckAwsSsmWindowsTaskRecreated(t *testing.T,
 	}
 }
 
-func testAccCheckAWSSSMMaintenanceWindowTaskExists(n string, task *ssm.MaintenanceWindowTask) resource.TestCheckFunc {
+func testAccCheckMaintenanceWindowTaskExists(n string, task *ssm.MaintenanceWindowTask) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -434,7 +434,7 @@ func testAccCheckAWSSSMMaintenanceWindowTaskExists(n string, task *ssm.Maintenan
 	}
 }
 
-func testAccCheckAWSSSMMaintenanceWindowTaskDestroy(s *terraform.State) error {
+func testAccCheckMaintenanceWindowTaskDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SSMConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -464,7 +464,7 @@ func testAccCheckAWSSSMMaintenanceWindowTaskDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName string) resource.ImportStateIdFunc {
+func testAccMaintenanceWindowTaskImportStateIdFunc(resourceName string) resource.ImportStateIdFunc {
 	return func(s *terraform.State) (string, error) {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {
@@ -475,7 +475,7 @@ func testAccAWSSSMMaintenanceWindowTaskImportStateIdFunc(resourceName string) re
 	}
 }
 
-func testAccAWSSSMMaintenanceWindowTaskConfigBase(rName string) string {
+func testAccMaintenanceWindowTaskBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_ssm_maintenance_window" "test" {
   cutoff   = 1
@@ -535,8 +535,8 @@ POLICY
 `, rName)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskBasicConfig(rName string) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName) + `
+func testAccMaintenanceWindowTaskBasicConfig(rName string) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName) + `
 
 resource "aws_ssm_maintenance_window_task" "test" {
   window_id        = aws_ssm_maintenance_window.test.id
@@ -564,8 +564,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskBasicConfigUpdate(rName, description, taskType, taskArn string, priority, maxConcurrency, maxErrors int) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName)+`
+func testAccMaintenanceWindowTaskBasicUpdateConfig(rName, description, taskType, taskArn string, priority, maxConcurrency, maxErrors int) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName)+`
 
 resource "aws_ssm_maintenance_window_task" "test" {
   window_id        = aws_ssm_maintenance_window.test.id
@@ -633,8 +633,8 @@ EOF
 `, rName, taskType, taskArn, description, priority, maxConcurrency, maxErrors)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskBasicConfigUpdated(rName string) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName) + `
+func testAccMaintenanceWindowTaskBasicUpdatedConfig(rName string) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName) + `
 
 resource "aws_ssm_maintenance_window_task" "test" {
   window_id        = aws_ssm_maintenance_window.test.id
@@ -664,9 +664,9 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskConfigDescription(rName string, description string) string {
+func testAccMaintenanceWindowTaskDescriptionConfig(rName string, description string) string {
 	return acctest.ConfigCompose(
-		testAccAWSSSMMaintenanceWindowTaskConfigBase(rName),
+		testAccMaintenanceWindowTaskBaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_ssm_maintenance_window_task" "test" {
   description     = %[1]q
@@ -693,8 +693,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `, description))
 }
 
-func testAccAWSSSMMaintenanceWindowTaskConfigEmptyNotifcationConfig(rName string) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName) + `
+func testAccMaintenanceWindowTaskEmptyNotifcationConfig(rName string) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName) + `
 
 resource "aws_ssm_maintenance_window_task" "test" {
   window_id        = aws_ssm_maintenance_window.test.id
@@ -726,8 +726,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskNoRoleConfig(rName string) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName) + `
+func testAccMaintenanceWindowTaskNoRoleConfig(rName string) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName) + `
 resource "aws_ssm_maintenance_window_task" "test" {
   description     = "This resource is for test purpose only"
   max_concurrency = 2
@@ -755,8 +755,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskAutomationConfig(rName, version string) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName)+`
+func testAccMaintenanceWindowTaskAutomationConfig(rName, version string) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName)+`
 
 resource "aws_ssm_maintenance_window_task" "test" {
   window_id        = aws_ssm_maintenance_window.test.id
@@ -791,8 +791,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `, rName, version)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskAutomationConfigUpdate(rName, version string) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName)+`
+func testAccMaintenanceWindowTaskAutomationUpdateConfig(rName, version string) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName)+`
 resource "aws_s3_bucket" "test" {
   bucket        = %[1]q
   acl           = "private"
@@ -832,9 +832,9 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `, rName, version)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskLambdaConfig(funcName, policyName, roleName, sgName, rName string, rInt int) string {
-	return fmt.Sprintf(testAccAWSLambdaConfigBasic(funcName, policyName, roleName, sgName)+
-		testAccAWSSSMMaintenanceWindowTaskConfigBase(rName)+`
+func testAccMaintenanceWindowTaskLambdaConfig(funcName, policyName, roleName, sgName, rName string, rInt int) string {
+	return fmt.Sprintf(testAccLambdaBasicConfig(funcName, policyName, roleName, sgName)+
+		testAccMaintenanceWindowTaskBaseConfig(rName)+`
 
 resource "aws_ssm_maintenance_window_task" "test" {
   window_id        = aws_ssm_maintenance_window.test.id
@@ -866,8 +866,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `, rName, rInt)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskRunCommandConfig(rName, comment string, timeoutSeconds int) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName)+`
+func testAccMaintenanceWindowTaskRunCommandConfig(rName, comment string, timeoutSeconds int) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName)+`
 
 resource "aws_ssm_maintenance_window_task" "test" {
   window_id        = aws_ssm_maintenance_window.test.id
@@ -901,8 +901,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `, rName, comment, timeoutSeconds)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskRunCommandConfigUpdate(rName, comment string, timeoutSeconds int) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName)+`
+func testAccMaintenanceWindowTaskRunCommandUpdateConfig(rName, comment string, timeoutSeconds int) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName)+`
 resource "aws_s3_bucket" "test" {
   bucket        = %[1]q
   acl           = "private"
@@ -943,8 +943,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `, rName, comment, timeoutSeconds)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskRunCommandCloudWatchConfig(rName string, enabled bool) string {
-	return fmt.Sprintf(testAccAWSSSMMaintenanceWindowTaskConfigBase(rName)+`
+func testAccMaintenanceWindowTaskRunCommandCloudWatchConfig(rName string, enabled bool) string {
+	return fmt.Sprintf(testAccMaintenanceWindowTaskBaseConfig(rName)+`
 resource "aws_cloudwatch_log_group" "test" {
   name = %[1]q
 }
@@ -984,8 +984,8 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `, rName, enabled)
 }
 
-func testAccAWSSSMMaintenanceWindowTaskStepFunctionConfig(rName string) string {
-	return testAccAWSSSMMaintenanceWindowTaskConfigBase(rName) + fmt.Sprintf(`
+func testAccMaintenanceWindowTaskStepFunctionConfig(rName string) string {
+	return testAccMaintenanceWindowTaskBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_sfn_activity" "test" {
   name = %[1]q
 }
@@ -1018,7 +1018,7 @@ resource "aws_ssm_maintenance_window_task" "test" {
 `, rName)
 }
 
-func testAccAWSLambdaConfigBasic(funcName, policyName, roleName, sgName string) string {
+func testAccLambdaBasicConfig(funcName, policyName, roleName, sgName string) string {
 	return fmt.Sprintf(acctest.ConfigLambdaBase(policyName, roleName, sgName)+`
 resource "aws_lambda_function" "test" {
   filename      = "test-fixtures/lambdatest.zip"
