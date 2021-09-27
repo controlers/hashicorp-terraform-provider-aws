@@ -2464,7 +2464,7 @@ func extractCopyCommandConfiguration(redshift map[string]interface{}) *firehose.
 }
 
 func resourceDeliveryStreamCreate(d *schema.ResourceData, meta interface{}) error {
-	validateError := validateAwsKinesisFirehoseSchema(d)
+	validateError := validSchema(d)
 
 	if validateError != nil {
 		return validateError
@@ -2591,7 +2591,7 @@ func resourceDeliveryStreamCreate(d *schema.ResourceData, meta interface{}) erro
 	return resourceDeliveryStreamRead(d, meta)
 }
 
-func validateAwsKinesisFirehoseSchema(d *schema.ResourceData) error {
+func validSchema(d *schema.ResourceData) error {
 
 	_, s3Exists := d.GetOk("s3_configuration")
 	_, extendedS3Exists := d.GetOk("extended_s3_configuration")
@@ -2623,7 +2623,7 @@ func validateAwsKinesisFirehoseSchema(d *schema.ResourceData) error {
 }
 
 func resourceDeliveryStreamUpdate(d *schema.ResourceData, meta interface{}) error {
-	validateError := validateAwsKinesisFirehoseSchema(d)
+	validateError := validSchema(d)
 
 	if validateError != nil {
 		return validateError
