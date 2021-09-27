@@ -72,7 +72,7 @@ func testSweepCodeArtifactRepositories(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSCodeArtifactRepository_basic(t *testing.T) {
+func TestAccCodeArtifactRepository_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codeartifact_repository.test"
 
@@ -80,12 +80,12 @@ func TestAccAWSCodeArtifactRepository_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codeartifact.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codeartifact.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeArtifactRepositoryDestroy,
+		CheckDestroy: testAccCheckRepositoryDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeArtifactRepositoryBasicConfig(rName),
+				Config: testAccRepositoryBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "codeartifact", fmt.Sprintf("repository/%s/%s", rName, rName)),
 					resource.TestCheckResourceAttr(resourceName, "repository", rName),
 					resource.TestCheckResourceAttr(resourceName, "domain", rName),
@@ -106,7 +106,7 @@ func TestAccAWSCodeArtifactRepository_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeArtifactRepository_tags(t *testing.T) {
+func TestAccCodeArtifactRepository_tags(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codeartifact_repository.test"
 
@@ -114,12 +114,12 @@ func TestAccAWSCodeArtifactRepository_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService("codeartifact", t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codeartifact.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeArtifactRepositoryDestroy,
+		CheckDestroy: testAccCheckRepositoryDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeArtifactRepositoryConfigTags1(rName, "key1", "value1"),
+				Config: testAccRepositoryTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -130,18 +130,18 @@ func TestAccAWSCodeArtifactRepository_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCodeArtifactRepositoryConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccRepositoryTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSCodeArtifactRepositoryConfigTags1(rName, "key2", "value2"),
+				Config: testAccRepositoryTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -150,7 +150,7 @@ func TestAccAWSCodeArtifactRepository_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeArtifactRepository_owner(t *testing.T) {
+func TestAccCodeArtifactRepository_owner(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codeartifact_repository.test"
 
@@ -158,12 +158,12 @@ func TestAccAWSCodeArtifactRepository_owner(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codeartifact.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codeartifact.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeArtifactRepositoryDestroy,
+		CheckDestroy: testAccCheckRepositoryDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeArtifactRepositoryOwnerConfig(rName),
+				Config: testAccRepositoryOwnerConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "codeartifact", fmt.Sprintf("repository/%s/%s", rName, rName)),
 					resource.TestCheckResourceAttr(resourceName, "repository", rName),
 					resource.TestCheckResourceAttr(resourceName, "domain", rName),
@@ -183,7 +183,7 @@ func TestAccAWSCodeArtifactRepository_owner(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeArtifactRepository_description(t *testing.T) {
+func TestAccCodeArtifactRepository_description(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codeartifact_repository.test"
 
@@ -191,12 +191,12 @@ func TestAccAWSCodeArtifactRepository_description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codeartifact.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codeartifact.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeArtifactRepositoryDestroy,
+		CheckDestroy: testAccCheckRepositoryDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeArtifactRepositoryDescConfig(rName, "desc"),
+				Config: testAccRepositoryDescConfig(rName, "desc"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "description", "desc"),
 				),
 			},
@@ -206,9 +206,9 @@ func TestAccAWSCodeArtifactRepository_description(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCodeArtifactRepositoryDescConfig(rName, "desc2"),
+				Config: testAccRepositoryDescConfig(rName, "desc2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "description", "desc2"),
 				),
 			},
@@ -216,7 +216,7 @@ func TestAccAWSCodeArtifactRepository_description(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeArtifactRepository_upstreams(t *testing.T) {
+func TestAccCodeArtifactRepository_upstreams(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codeartifact_repository.test"
 
@@ -224,12 +224,12 @@ func TestAccAWSCodeArtifactRepository_upstreams(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codeartifact.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codeartifact.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeArtifactRepositoryDestroy,
+		CheckDestroy: testAccCheckRepositoryDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeArtifactRepositoryUpstreamsConfig1(rName),
+				Config: testAccRepositoryUpstreams1Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "upstream.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "upstream.0.repository_name", fmt.Sprintf("%s-upstream1", rName)),
 				),
@@ -240,18 +240,18 @@ func TestAccAWSCodeArtifactRepository_upstreams(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCodeArtifactRepositoryUpstreamsConfig2(rName),
+				Config: testAccRepositoryUpstreams2Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "upstream.#", "2"),
 					resource.TestCheckResourceAttr(resourceName, "upstream.0.repository_name", fmt.Sprintf("%s-upstream1", rName)),
 					resource.TestCheckResourceAttr(resourceName, "upstream.1.repository_name", fmt.Sprintf("%s-upstream2", rName)),
 				),
 			},
 			{
-				Config: testAccAWSCodeArtifactRepositoryUpstreamsConfig1(rName),
+				Config: testAccRepositoryUpstreams1Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "upstream.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "upstream.0.repository_name", fmt.Sprintf("%s-upstream1", rName)),
 				),
@@ -260,7 +260,7 @@ func TestAccAWSCodeArtifactRepository_upstreams(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeArtifactRepository_externalConnection(t *testing.T) {
+func TestAccCodeArtifactRepository_externalConnection(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codeartifact_repository.test"
 
@@ -268,12 +268,12 @@ func TestAccAWSCodeArtifactRepository_externalConnection(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codeartifact.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codeartifact.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeArtifactRepositoryDestroy,
+		CheckDestroy: testAccCheckRepositoryDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeArtifactRepositoryExternalConnectionConfig(rName),
+				Config: testAccRepositoryExternalConnectionConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "external_connections.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "external_connections.0.external_connection_name", "public:npmjs"),
 					resource.TestCheckResourceAttr(resourceName, "external_connections.0.package_format", "npm"),
@@ -286,16 +286,16 @@ func TestAccAWSCodeArtifactRepository_externalConnection(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCodeArtifactRepositoryBasicConfig(rName),
+				Config: testAccRepositoryBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "external_connections.#", "0"),
 				),
 			},
 			{
-				Config: testAccAWSCodeArtifactRepositoryExternalConnectionConfig(rName),
+				Config: testAccRepositoryExternalConnectionConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "external_connections.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "external_connections.0.external_connection_name", "public:npmjs"),
 					resource.TestCheckResourceAttr(resourceName, "external_connections.0.package_format", "npm"),
@@ -306,7 +306,7 @@ func TestAccAWSCodeArtifactRepository_externalConnection(t *testing.T) {
 	})
 }
 
-func TestAccAWSCodeArtifactRepository_disappears(t *testing.T) {
+func TestAccCodeArtifactRepository_disappears(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_codeartifact_repository.test"
 
@@ -314,12 +314,12 @@ func TestAccAWSCodeArtifactRepository_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codeartifact.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, codeartifact.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCodeArtifactRepositoryDestroy,
+		CheckDestroy: testAccCheckRepositoryDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCodeArtifactRepositoryBasicConfig(rName),
+				Config: testAccRepositoryBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSCodeArtifactRepositoryExists(resourceName),
+					testAccCheckRepositoryExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfcodeartifact.ResourceRepository(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -328,7 +328,7 @@ func TestAccAWSCodeArtifactRepository_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSCodeArtifactRepositoryExists(n string) resource.TestCheckFunc {
+func testAccCheckRepositoryExists(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -354,7 +354,7 @@ func testAccCheckAWSCodeArtifactRepositoryExists(n string) resource.TestCheckFun
 	}
 }
 
-func testAccCheckAWSCodeArtifactRepositoryDestroy(s *terraform.State) error {
+func testAccCheckRepositoryDestroy(s *terraform.State) error {
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_codeartifact_repository" {
 			continue
@@ -389,7 +389,7 @@ func testAccCheckAWSCodeArtifactRepositoryDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSCodeArtifactRepositoryBaseConfig(rName string) string {
+func testAccRepositoryBaseConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -403,8 +403,8 @@ resource "aws_codeartifact_domain" "test" {
 `, rName)
 }
 
-func testAccAWSCodeArtifactRepositoryBasicConfig(rName string) string {
-	return testAccAWSCodeArtifactRepositoryBaseConfig(rName) + fmt.Sprintf(`
+func testAccRepositoryBasicConfig(rName string) string {
+	return testAccRepositoryBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_codeartifact_repository" "test" {
   repository = %[1]q
   domain     = aws_codeartifact_domain.test.domain
@@ -412,8 +412,8 @@ resource "aws_codeartifact_repository" "test" {
 `, rName)
 }
 
-func testAccAWSCodeArtifactRepositoryOwnerConfig(rName string) string {
-	return testAccAWSCodeArtifactRepositoryBaseConfig(rName) + fmt.Sprintf(`
+func testAccRepositoryOwnerConfig(rName string) string {
+	return testAccRepositoryBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_codeartifact_repository" "test" {
   repository   = %[1]q
   domain       = aws_codeartifact_domain.test.domain
@@ -422,8 +422,8 @@ resource "aws_codeartifact_repository" "test" {
 `, rName)
 }
 
-func testAccAWSCodeArtifactRepositoryDescConfig(rName, desc string) string {
-	return testAccAWSCodeArtifactRepositoryBaseConfig(rName) + fmt.Sprintf(`
+func testAccRepositoryDescConfig(rName, desc string) string {
+	return testAccRepositoryBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_codeartifact_repository" "test" {
   repository  = %[1]q
   domain      = aws_codeartifact_domain.test.domain
@@ -432,8 +432,8 @@ resource "aws_codeartifact_repository" "test" {
 `, rName, desc)
 }
 
-func testAccAWSCodeArtifactRepositoryUpstreamsConfig1(rName string) string {
-	return testAccAWSCodeArtifactRepositoryBaseConfig(rName) + fmt.Sprintf(`
+func testAccRepositoryUpstreams1Config(rName string) string {
+	return testAccRepositoryBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_codeartifact_repository" "upstream1" {
   repository = "%[1]s-upstream1"
   domain     = aws_codeartifact_domain.test.domain
@@ -450,8 +450,8 @@ resource "aws_codeartifact_repository" "test" {
 `, rName)
 }
 
-func testAccAWSCodeArtifactRepositoryUpstreamsConfig2(rName string) string {
-	return testAccAWSCodeArtifactRepositoryBaseConfig(rName) + fmt.Sprintf(`
+func testAccRepositoryUpstreams2Config(rName string) string {
+	return testAccRepositoryBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_codeartifact_repository" "upstream1" {
   repository = "%[1]s-upstream1"
   domain     = aws_codeartifact_domain.test.domain
@@ -477,8 +477,8 @@ resource "aws_codeartifact_repository" "test" {
 `, rName)
 }
 
-func testAccAWSCodeArtifactRepositoryExternalConnectionConfig(rName string) string {
-	return testAccAWSCodeArtifactRepositoryBaseConfig(rName) + fmt.Sprintf(`
+func testAccRepositoryExternalConnectionConfig(rName string) string {
+	return testAccRepositoryBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_codeartifact_repository" "test" {
   repository = %[1]q
   domain     = aws_codeartifact_domain.test.domain
@@ -490,8 +490,8 @@ resource "aws_codeartifact_repository" "test" {
 `, rName)
 }
 
-func testAccAWSCodeArtifactRepositoryConfigTags1(rName, tagKey1, tagValue1 string) string {
-	return testAccAWSCodeArtifactRepositoryBaseConfig(rName) + fmt.Sprintf(`
+func testAccRepositoryTags1Config(rName, tagKey1, tagValue1 string) string {
+	return testAccRepositoryBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_codeartifact_repository" "test" {
   repository = %[1]q
   domain     = aws_codeartifact_domain.test.domain
@@ -503,8 +503,8 @@ resource "aws_codeartifact_repository" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSCodeArtifactRepositoryConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
-	return testAccAWSCodeArtifactRepositoryBaseConfig(rName) + fmt.Sprintf(`
+func testAccRepositoryTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+	return testAccRepositoryBaseConfig(rName) + fmt.Sprintf(`
 resource "aws_codeartifact_repository" "test" {
   repository = %[1]q
   domain     = aws_codeartifact_domain.test.domain
