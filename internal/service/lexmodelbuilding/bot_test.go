@@ -71,7 +71,7 @@ func testSweepLexBots(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAwsLexBot_basic(t *testing.T) {
+func TestAccLexModelBuildingBot_basic(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -83,16 +83,16 @@ func TestAccAwsLexBot_basic(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
-					testAccCheckAwsLexBotNotExists(testBotID, "1"),
+					testAccCheckBotExists(rName, &v),
+					testAccCheckBotNotExists(testBotID, "1"),
 
 					resource.TestCheckNoResourceAttr(rName, "abort_statement"),
 					resource.TestCheckResourceAttrSet(rName, "arn"),
@@ -126,12 +126,12 @@ func TestAccAwsLexBot_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_version_serial(t *testing.T) {
+func TestAccLexModelBuildingBot_Version_serial(t *testing.T) {
 	testCases := map[string]func(t *testing.T){
-		"LexBot_createVersion":         testAccAwsLexBot_createVersion,
-		"LexBotAlias_botVersion":       testAccAwsLexBotAlias_botVersion,
-		"DataSourceLexBot_withVersion": testAccDataSourceAwsLexBot_withVersion,
-		"DataSourceLexBotAlias_basic":  testAccDataSourceAwsLexBotAlias_basic,
+		"LexBot_createVersion":         testAccBot_createVersion,
+		"LexBotAlias_botVersion":       testAccBotAlias_botVersion,
+		"DataSourceLexBot_withVersion": testAccBotDataSource_withVersion,
+		"DataSourceLexBotAlias_basic":  testAccBotAliasDataSource_basic,
 	}
 
 	for name, tc := range testCases {
@@ -142,7 +142,7 @@ func TestAccAwsLexBot_version_serial(t *testing.T) {
 	}
 }
 
-func testAccAwsLexBot_createVersion(t *testing.T) {
+func testAccBot_createVersion(t *testing.T) {
 	var v1, v2 lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -155,28 +155,28 @@ func testAccAwsLexBot_createVersion(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v1),
-					testAccCheckAwsLexBotNotExists(testBotID, "1"),
+					testAccCheckBotExists(rName, &v1),
+					testAccCheckBotNotExists(testBotID, "1"),
 					resource.TestCheckResourceAttr(rName, "version", tflexmodelbuilding.BotVersionLatest),
 					resource.TestCheckResourceAttr(rName, "description", "Bot to order flowers on the behalf of a user"),
 				),
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_createVersion(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_createVersion(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v2),
-					testAccCheckAwsLexBotExistsWithVersion(rName, "1", &v2),
+					testAccCheckBotExists(rName, &v2),
+					testAccCheckBotExistsWithVersion(rName, "1", &v2),
 					resource.TestCheckResourceAttr(rName, "version", "1"),
 					resource.TestCheckResourceAttr(rName, "description", "Bot to order flowers on the behalf of a user"),
 				),
@@ -190,7 +190,7 @@ func testAccAwsLexBot_createVersion(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_abortStatement(t *testing.T) {
+func TestAccLexModelBuildingBot_abortStatement(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -202,15 +202,15 @@ func TestAccAwsLexBot_abortStatement(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_abortStatement(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_abortStatement(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "abort_statement.#", "1"),
 					resource.TestCheckResourceAttr(rName, "abort_statement.0.message.#", "1"),
 					resource.TestCheckResourceAttr(rName, "abort_statement.0.message.0.content", "Sorry, I'm not able to assist at this time"),
@@ -226,11 +226,11 @@ func TestAccAwsLexBot_abortStatement(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_abortStatementUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_abortStatementUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "abort_statement.0.message.#", "2"),
 					resource.TestCheckResourceAttr(rName, "abort_statement.0.message.0.content", "Sorry, I'm not able to assist at this time"),
 					resource.TestCheckResourceAttr(rName, "abort_statement.0.message.0.content_type", "PlainText"),
@@ -250,7 +250,7 @@ func TestAccAwsLexBot_abortStatement(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_clarificationPrompt(t *testing.T) {
+func TestAccLexModelBuildingBot_clarificationPrompt(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -262,15 +262,15 @@ func TestAccAwsLexBot_clarificationPrompt(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_clarificationPrompt(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_clarificationPrompt(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "clarification_prompt.#", "1"),
 					resource.TestCheckResourceAttr(rName, "clarification_prompt.0.max_attempts", "2"),
 					resource.TestCheckResourceAttr(rName, "clarification_prompt.0.message.#", "1"),
@@ -287,11 +287,11 @@ func TestAccAwsLexBot_clarificationPrompt(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_clarificationPromptUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_clarificationPromptUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "clarification_prompt.0.max_attempts", "3"),
 					resource.TestCheckResourceAttr(rName, "clarification_prompt.0.message.#", "2"),
 					resource.TestCheckResourceAttr(rName, "clarification_prompt.0.response_card", "I didn't understand you, what would you like to do?"),
@@ -306,7 +306,7 @@ func TestAccAwsLexBot_clarificationPrompt(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_childDirected(t *testing.T) {
+func TestAccLexModelBuildingBot_childDirected(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -318,15 +318,15 @@ func TestAccAwsLexBot_childDirected(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 				),
 			},
 			{
@@ -336,11 +336,11 @@ func TestAccAwsLexBot_childDirected(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_childDirectedUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_childDirectedUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "child_directed", "true"),
 				),
 			},
@@ -353,7 +353,7 @@ func TestAccAwsLexBot_childDirected(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_description(t *testing.T) {
+func TestAccLexModelBuildingBot_description(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -365,15 +365,15 @@ func TestAccAwsLexBot_description(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 				),
 			},
 			{
@@ -383,11 +383,11 @@ func TestAccAwsLexBot_description(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_descriptionUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_descriptionUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "description", "Bot to order flowers"),
 				),
 			},
@@ -400,7 +400,7 @@ func TestAccAwsLexBot_description(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_detectSentiment(t *testing.T) {
+func TestAccLexModelBuildingBot_detectSentiment(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -412,15 +412,15 @@ func TestAccAwsLexBot_detectSentiment(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 				),
 			},
 			{
@@ -430,11 +430,11 @@ func TestAccAwsLexBot_detectSentiment(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_detectSentimentUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_detectSentimentUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "detect_sentiment", "true"),
 				),
 			},
@@ -447,7 +447,7 @@ func TestAccAwsLexBot_detectSentiment(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_enableModelImprovements(t *testing.T) {
+func TestAccLexModelBuildingBot_enableModelImprovements(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -459,15 +459,15 @@ func TestAccAwsLexBot_enableModelImprovements(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 				),
 			},
 			{
@@ -477,11 +477,11 @@ func TestAccAwsLexBot_enableModelImprovements(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_enableModelImprovementsUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_enableModelImprovementsUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "enable_model_improvements", "true"),
 					resource.TestCheckResourceAttr(rName, "nlu_intent_confidence_threshold", "0.5"),
 				),
@@ -495,7 +495,7 @@ func TestAccAwsLexBot_enableModelImprovements(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_idleSessionTtlInSeconds(t *testing.T) {
+func TestAccLexModelBuildingBot_idleSessionTTLInSeconds(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -507,15 +507,15 @@ func TestAccAwsLexBot_idleSessionTtlInSeconds(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 				),
 			},
 			{
@@ -525,11 +525,11 @@ func TestAccAwsLexBot_idleSessionTtlInSeconds(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_idleSessionTtlInSecondsUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_idleSessionTTLInSecondsUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "idle_session_ttl_in_seconds", "600"),
 				),
 			},
@@ -542,7 +542,7 @@ func TestAccAwsLexBot_idleSessionTtlInSeconds(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_intents(t *testing.T) {
+func TestAccLexModelBuildingBot_intents(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -554,15 +554,15 @@ func TestAccAwsLexBot_intents(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intentMultiple(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intentMultiple(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 				),
 			},
 			{
@@ -572,11 +572,11 @@ func TestAccAwsLexBot_intents(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intentMultiple(testBotID),
-					testAccAwsLexBotConfig_intentsUpdate(testBotID),
+					testAccBotConfig_intentMultiple(testBotID),
+					testAccBotConfig_intentsUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "intent.#", "2"),
 				),
 			},
@@ -589,7 +589,7 @@ func TestAccAwsLexBot_intents(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_computeVersion(t *testing.T) {
+func TestAccLexModelBuildingBot_computeVersion(t *testing.T) {
 	var v1 lexmodelbuildingservice.GetBotOutput
 	var v2 lexmodelbuildingservice.GetBotAliasOutput
 
@@ -610,32 +610,32 @@ func TestAccAwsLexBot_computeVersion(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_createVersion(testBotID),
-					testAccAwsLexBotConfig_intentMultiple(testBotID),
-					testAccAwsLexBotAliasConfig_basic(testBotID),
+					testAccBotConfig_createVersion(testBotID),
+					testAccBotConfig_intentMultiple(testBotID),
+					testAccBotAliasConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExistsWithVersion(botResourceName, version, &v1),
+					testAccCheckBotExistsWithVersion(botResourceName, version, &v1),
 					resource.TestCheckResourceAttr(botResourceName, "version", version),
 					resource.TestCheckResourceAttr(botResourceName, "intent.#", "1"),
 					resource.TestCheckResourceAttr(botResourceName, "intent.0.intent_version", version),
-					testAccCheckAwsLexBotAliasExists(botAliasResourceName, &v2),
+					testAccCheckBotAliasExists(botAliasResourceName, &v2),
 					resource.TestCheckResourceAttr(botAliasResourceName, "bot_version", version),
 					resource.TestCheckResourceAttr(intentResourceName, "version", version),
 				),
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intentMultipleSecondUpdated(testBotID),
-					testAccAwsLexBotConfig_multipleIntentsWithVersion(testBotID),
-					testAccAwsLexBotAliasConfig_basic(testBotID),
+					testAccBotConfig_intentMultipleSecondUpdated(testBotID),
+					testAccBotConfig_multipleIntentsWithVersion(testBotID),
+					testAccBotAliasConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExistsWithVersion(botResourceName, updatedVersion, &v1),
+					testAccCheckBotExistsWithVersion(botResourceName, updatedVersion, &v1),
 					resource.TestCheckResourceAttr(botResourceName, "version", updatedVersion),
 					resource.TestCheckResourceAttr(botResourceName, "intent.#", "2"),
 					resource.TestCheckResourceAttr(botResourceName, "intent.0.intent_version", version),
@@ -649,7 +649,7 @@ func TestAccAwsLexBot_computeVersion(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_locale(t *testing.T) {
+func TestAccLexModelBuildingBot_locale(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -661,15 +661,15 @@ func TestAccAwsLexBot_locale(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 				),
 			},
 			{
@@ -679,11 +679,11 @@ func TestAccAwsLexBot_locale(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_localeUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_localeUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "locale", "en-GB"),
 				),
 			},
@@ -696,7 +696,7 @@ func TestAccAwsLexBot_locale(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_voiceId(t *testing.T) {
+func TestAccLexModelBuildingBot_voiceID(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -708,15 +708,15 @@ func TestAccAwsLexBot_voiceId(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 				),
 			},
 			{
@@ -726,11 +726,11 @@ func TestAccAwsLexBot_voiceId(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_voiceIdUpdate(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_voiceIdUpdate(testBotID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "voice_id", "Justin"),
 				),
 			},
@@ -743,7 +743,7 @@ func TestAccAwsLexBot_voiceId(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBot_disappears(t *testing.T) {
+func TestAccLexModelBuildingBot_disappears(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotOutput
 	rName := "aws_lex_bot.test"
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -755,15 +755,15 @@ func TestAccAwsLexBot_disappears(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
 				),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLexBotExists(rName, &v),
+					testAccCheckBotExists(rName, &v),
 					acctest.CheckResourceDisappears(acctest.Provider, tflexmodelbuilding.ResourceBot(), rName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -772,7 +772,7 @@ func TestAccAwsLexBot_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsLexBotExistsWithVersion(rName, botVersion string, output *lexmodelbuildingservice.GetBotOutput) resource.TestCheckFunc {
+func testAccCheckBotExistsWithVersion(rName, botVersion string, output *lexmodelbuildingservice.GetBotOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[rName]
 		if !ok {
@@ -801,11 +801,11 @@ func testAccCheckAwsLexBotExistsWithVersion(rName, botVersion string, output *le
 	}
 }
 
-func testAccCheckAwsLexBotExists(rName string, output *lexmodelbuildingservice.GetBotOutput) resource.TestCheckFunc {
-	return testAccCheckAwsLexBotExistsWithVersion(rName, tflexmodelbuilding.BotVersionLatest, output)
+func testAccCheckBotExists(rName string, output *lexmodelbuildingservice.GetBotOutput) resource.TestCheckFunc {
+	return testAccCheckBotExistsWithVersion(rName, tflexmodelbuilding.BotVersionLatest, output)
 }
 
-func testAccCheckAwsLexBotNotExists(botName, botVersion string) resource.TestCheckFunc {
+func testAccCheckBotNotExists(botName, botVersion string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).LexModelBuildingConn
 
@@ -824,7 +824,7 @@ func testAccCheckAwsLexBotNotExists(botName, botVersion string) resource.TestChe
 	}
 }
 
-func testAccCheckAwsLexBotDestroy(s *terraform.State) error {
+func testAccCheckBotDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).LexModelBuildingConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -852,7 +852,7 @@ func testAccCheckAwsLexBotDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAwsLexBotConfig_intent(rName string) string {
+func testAccBotConfig_intent(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_intent" "test" {
   create_version = true
@@ -867,7 +867,7 @@ resource "aws_lex_intent" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_intentMultiple(rName string) string {
+func testAccBotConfig_intentMultiple(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_intent" "test" {
   create_version = true
@@ -893,7 +893,7 @@ resource "aws_lex_intent" "test_2" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_intentMultipleSecondUpdated(rName string) string {
+func testAccBotConfig_intentMultipleSecondUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_intent" "test" {
   create_version = true
@@ -919,7 +919,7 @@ resource "aws_lex_intent" "test_2" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_basic(rName string) string {
+func testAccBotConfig_basic(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = false
@@ -939,7 +939,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_createVersion(rName string) string {
+func testAccBotConfig_createVersion(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed   = false
@@ -961,7 +961,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_abortStatement(rName string) string {
+func testAccBotConfig_abortStatement(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = false
@@ -981,7 +981,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_abortStatementUpdate(rName string) string {
+func testAccBotConfig_abortStatementUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = false
@@ -1008,7 +1008,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_clarificationPrompt(rName string) string {
+func testAccBotConfig_clarificationPrompt(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = false
@@ -1035,7 +1035,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_clarificationPromptUpdate(rName string) string {
+func testAccBotConfig_clarificationPromptUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = false
@@ -1069,7 +1069,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_childDirectedUpdate(rName string) string {
+func testAccBotConfig_childDirectedUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = true
@@ -1089,7 +1089,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_descriptionUpdate(rName string) string {
+func testAccBotConfig_descriptionUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = false
@@ -1109,7 +1109,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_detectSentimentUpdate(rName string) string {
+func testAccBotConfig_detectSentimentUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed   = false
@@ -1130,7 +1130,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_enableModelImprovementsUpdate(rName string) string {
+func testAccBotConfig_enableModelImprovementsUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed                  = false
@@ -1152,7 +1152,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_idleSessionTtlInSecondsUpdate(rName string) string {
+func testAccBotConfig_idleSessionTTLInSecondsUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed              = false
@@ -1173,7 +1173,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_intentsUpdate(rName string) string {
+func testAccBotConfig_intentsUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = false
@@ -1197,7 +1197,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_localeUpdate(rName string) string {
+func testAccBotConfig_localeUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed            = false
@@ -1219,7 +1219,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_voiceIdUpdate(rName string) string {
+func testAccBotConfig_voiceIdUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed = false
@@ -1240,7 +1240,7 @@ resource "aws_lex_bot" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotConfig_multipleIntentsWithVersion(rName string) string {
+func testAccBotConfig_multipleIntentsWithVersion(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot" "test" {
   child_directed   = false

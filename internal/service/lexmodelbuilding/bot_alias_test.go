@@ -98,7 +98,7 @@ func testSweepLexBotAliases(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAwsLexBotAlias_basic(t *testing.T) {
+func TestAccLexModelBuildingBotAlias_basic(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotAliasOutput
 	resourceName := "aws_lex_bot_alias.test"
 	testBotAliasID := "test_bot_alias" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -110,16 +110,16 @@ func TestAccAwsLexBotAlias_basic(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotAliasDestroy(testBotAliasID, testBotAliasID),
+		CheckDestroy: testAccCheckBotAliasDestroy(testBotAliasID, testBotAliasID),
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotAliasID),
-					testAccAwsLexBotConfig_basic(testBotAliasID),
-					testAccAwsLexBotAliasConfig_basic(testBotAliasID),
+					testAccBotConfig_intent(testBotAliasID),
+					testAccBotConfig_basic(testBotAliasID),
+					testAccBotAliasConfig_basic(testBotAliasID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 
 					resource.TestCheckResourceAttrSet(resourceName, "arn"),
 					resource.TestCheckResourceAttrSet(resourceName, "checksum"),
@@ -141,7 +141,7 @@ func TestAccAwsLexBotAlias_basic(t *testing.T) {
 	})
 }
 
-func testAccAwsLexBotAlias_botVersion(t *testing.T) {
+func testAccBotAlias_botVersion(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotAliasOutput
 	resourceName := "aws_lex_bot_alias.test"
 	testBotAliasID := "test_bot_alias" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -154,16 +154,16 @@ func testAccAwsLexBotAlias_botVersion(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotAliasDestroy(testBotAliasID, testBotAliasID),
+		CheckDestroy: testAccCheckBotAliasDestroy(testBotAliasID, testBotAliasID),
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotAliasID),
-					testAccAwsLexBotConfig_basic(testBotAliasID),
-					testAccAwsLexBotAliasConfig_basic(testBotAliasID),
+					testAccBotConfig_intent(testBotAliasID),
+					testAccBotConfig_basic(testBotAliasID),
+					testAccBotAliasConfig_basic(testBotAliasID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "bot_version", tflexmodelbuilding.BotVersionLatest),
 				),
 			},
@@ -174,12 +174,12 @@ func testAccAwsLexBotAlias_botVersion(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotAliasID),
-					testAccAwsLexBotConfig_createVersion(testBotAliasID),
-					testAccAwsLexBotAliasConfig_botVersionUpdate(testBotAliasID),
+					testAccBotConfig_intent(testBotAliasID),
+					testAccBotConfig_createVersion(testBotAliasID),
+					testAccBotAliasConfig_botVersionUpdate(testBotAliasID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "bot_version", "1"),
 				),
 			},
@@ -192,7 +192,7 @@ func testAccAwsLexBotAlias_botVersion(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBotAlias_conversationLogsText(t *testing.T) {
+func TestAccLexModelBuildingBotAlias_conversationLogsText(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotAliasOutput
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 	testBotAliasID := "test_bot_alias" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -208,16 +208,16 @@ func TestAccAwsLexBotAlias_conversationLogsText(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotAliasDestroy(testBotID, testBotAliasID),
+		CheckDestroy: testAccCheckBotAliasDestroy(testBotID, testBotAliasID),
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
-					testAccAwsLexBotAliasConfig_conversationLogsText(testBotAliasID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
+					testAccBotAliasConfig_conversationLogsText(testBotAliasID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "bot_version", tflexmodelbuilding.BotVersionLatest),
 					resource.TestCheckResourceAttrPair(resourceName, "conversation_logs.0.iam_role_arn", iamRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "conversation_logs.0.log_settings.#", "1"),
@@ -241,7 +241,7 @@ func TestAccAwsLexBotAlias_conversationLogsText(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBotAlias_conversationLogsAudio(t *testing.T) {
+func TestAccLexModelBuildingBotAlias_conversationLogsAudio(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotAliasOutput
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 	testBotAliasID := sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -258,16 +258,16 @@ func TestAccAwsLexBotAlias_conversationLogsAudio(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotAliasDestroy(testBotID, testBotAliasID),
+		CheckDestroy: testAccCheckBotAliasDestroy(testBotID, testBotAliasID),
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
-					testAccAwsLexBotAliasConfig_conversationLogsAudio(testBotAliasID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
+					testAccBotAliasConfig_conversationLogsAudio(testBotAliasID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "bot_version", tflexmodelbuilding.BotVersionLatest),
 					resource.TestCheckResourceAttrPair(resourceName, "conversation_logs.0.iam_role_arn", iamRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "conversation_logs.0.log_settings.#", "1"),
@@ -291,7 +291,7 @@ func TestAccAwsLexBotAlias_conversationLogsAudio(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBotAlias_conversationLogsBoth(t *testing.T) {
+func TestAccLexModelBuildingBotAlias_conversationLogsBoth(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotAliasOutput
 	testBotID := "test_bot_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 	testBotAliasID := sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -309,16 +309,16 @@ func TestAccAwsLexBotAlias_conversationLogsBoth(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotAliasDestroy(testBotID, testBotAliasID),
+		CheckDestroy: testAccCheckBotAliasDestroy(testBotID, testBotAliasID),
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotID),
-					testAccAwsLexBotConfig_basic(testBotID),
-					testAccAwsLexBotAliasConfig_conversationLogsBoth(testBotAliasID),
+					testAccBotConfig_intent(testBotID),
+					testAccBotConfig_basic(testBotID),
+					testAccBotAliasConfig_conversationLogsBoth(testBotAliasID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "bot_version", tflexmodelbuilding.BotVersionLatest),
 					resource.TestCheckResourceAttrPair(resourceName, "conversation_logs.0.iam_role_arn", iamRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "conversation_logs.0.log_settings.#", "2"),
@@ -347,7 +347,7 @@ func TestAccAwsLexBotAlias_conversationLogsBoth(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBotAlias_description(t *testing.T) {
+func TestAccLexModelBuildingBotAlias_description(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotAliasOutput
 	resourceName := "aws_lex_bot_alias.test"
 	testBotAliasID := "test_bot_alias" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -359,16 +359,16 @@ func TestAccAwsLexBotAlias_description(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotAliasDestroy(testBotAliasID, testBotAliasID),
+		CheckDestroy: testAccCheckBotAliasDestroy(testBotAliasID, testBotAliasID),
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotAliasID),
-					testAccAwsLexBotConfig_basic(testBotAliasID),
-					testAccAwsLexBotAliasConfig_basic(testBotAliasID),
+					testAccBotConfig_intent(testBotAliasID),
+					testAccBotConfig_basic(testBotAliasID),
+					testAccBotAliasConfig_basic(testBotAliasID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 				),
 			},
 			{
@@ -378,12 +378,12 @@ func TestAccAwsLexBotAlias_description(t *testing.T) {
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotAliasID),
-					testAccAwsLexBotConfig_basic(testBotAliasID),
-					testAccAwsLexBotAliasConfig_descriptionUpdate(testBotAliasID),
+					testAccBotConfig_intent(testBotAliasID),
+					testAccBotConfig_basic(testBotAliasID),
+					testAccBotAliasConfig_descriptionUpdate(testBotAliasID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "description", "Testing lex bot alias update."),
 				),
 			},
@@ -396,7 +396,7 @@ func TestAccAwsLexBotAlias_description(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexBotAlias_disappears(t *testing.T) {
+func TestAccLexModelBuildingBotAlias_disappears(t *testing.T) {
 	var v lexmodelbuildingservice.GetBotAliasOutput
 	resourceName := "aws_lex_bot_alias.test"
 	testBotAliasID := "test_bot_alias" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -408,16 +408,16 @@ func TestAccAwsLexBotAlias_disappears(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexBotDestroy,
+		CheckDestroy: testAccCheckBotDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexBotConfig_intent(testBotAliasID),
-					testAccAwsLexBotConfig_basic(testBotAliasID),
-					testAccAwsLexBotAliasConfig_basic(testBotAliasID),
+					testAccBotConfig_intent(testBotAliasID),
+					testAccBotConfig_basic(testBotAliasID),
+					testAccBotAliasConfig_basic(testBotAliasID),
 				),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLexBotAliasExists(resourceName, &v),
+					testAccCheckBotAliasExists(resourceName, &v),
 					acctest.CheckResourceDisappears(acctest.Provider, tflexmodelbuilding.ResourceBotAlias(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -426,7 +426,7 @@ func TestAccAwsLexBotAlias_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsLexBotAliasExists(rName string, output *lexmodelbuildingservice.GetBotAliasOutput) resource.TestCheckFunc {
+func testAccCheckBotAliasExists(rName string, output *lexmodelbuildingservice.GetBotAliasOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[rName]
 		if !ok {
@@ -458,7 +458,7 @@ func testAccCheckAwsLexBotAliasExists(rName string, output *lexmodelbuildingserv
 	}
 }
 
-func testAccCheckAwsLexBotAliasDestroy(botName, botAliasName string) resource.TestCheckFunc {
+func testAccCheckBotAliasDestroy(botName, botAliasName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).LexModelBuildingConn
 
@@ -479,7 +479,7 @@ func testAccCheckAwsLexBotAliasDestroy(botName, botAliasName string) resource.Te
 	}
 }
 
-func testAccAwsLexBotAliasConfig_basic(rName string) string {
+func testAccBotAliasConfig_basic(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot_alias" "test" {
   bot_name    = aws_lex_bot.test.name
@@ -490,7 +490,7 @@ resource "aws_lex_bot_alias" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotAliasConfig_botVersionUpdate(rName string) string {
+func testAccBotAliasConfig_botVersionUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot_alias" "test" {
   bot_name    = aws_lex_bot.test.name
@@ -501,7 +501,7 @@ resource "aws_lex_bot_alias" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotAliasConfig_conversationLogsText(rName string) string {
+func testAccBotAliasConfig_conversationLogsText(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot_alias" "test" {
   bot_name    = aws_lex_bot.test.name
@@ -559,7 +559,7 @@ resource "aws_iam_role_policy" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotAliasConfig_conversationLogsAudio(rName string) string {
+func testAccBotAliasConfig_conversationLogsAudio(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot_alias" "test" {
   bot_name    = aws_lex_bot.test.name
@@ -619,7 +619,7 @@ resource "aws_iam_role_policy" "test" {
 `, rName)
 }
 
-func testAccAwsLexBotAliasConfig_conversationLogsBoth(rName string) string {
+func testAccBotAliasConfig_conversationLogsBoth(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot_alias" "test" {
   bot_name    = aws_lex_bot.test.name
@@ -707,7 +707,7 @@ resource "aws_iam_role_policy" "lex_s3_policy" {
 `, rName)
 }
 
-func testAccAwsLexBotAliasConfig_descriptionUpdate(rName string) string {
+func testAccBotAliasConfig_descriptionUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_bot_alias" "test" {
   bot_name    = aws_lex_bot.test.name

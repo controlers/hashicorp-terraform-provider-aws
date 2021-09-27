@@ -71,7 +71,7 @@ func testSweepLexSlotTypes(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAwsLexSlotType_basic(t *testing.T) {
+func TestAccLexModelBuildingSlotType_basic(t *testing.T) {
 	var v lexmodelbuildingservice.GetSlotTypeOutput
 	rName := "aws_lex_slot_type.test"
 	testSlotTypeID := "test_slot_type_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -83,13 +83,13 @@ func TestAccAwsLexSlotType_basic(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexSlotTypeDestroy,
+		CheckDestroy: testAccCheckSlotTypeDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsLexSlotTypeConfig_basic(testSlotTypeID),
+				Config: testAccSlotTypeConfig_basic(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
-					testAccCheckAwsLexSlotTypeNotExists(testSlotTypeID, "1"),
+					testAccCheckSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeNotExists(testSlotTypeID, "1"),
 					resource.TestCheckResourceAttr(rName, "create_version", "false"),
 					resource.TestCheckResourceAttr(rName, "description", ""),
 					resource.TestCheckResourceAttr(rName, "enumeration_value.#", "1"),
@@ -116,7 +116,7 @@ func TestAccAwsLexSlotType_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexSlotType_createVersion(t *testing.T) {
+func TestAccLexModelBuildingSlotType_createVersion(t *testing.T) {
 	var v lexmodelbuildingservice.GetSlotTypeOutput
 	rName := "aws_lex_slot_type.test"
 	testSlotTypeID := "test_slot_type_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -128,13 +128,13 @@ func TestAccAwsLexSlotType_createVersion(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexSlotTypeDestroy,
+		CheckDestroy: testAccCheckSlotTypeDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsLexSlotTypeConfig_basic(testSlotTypeID),
+				Config: testAccSlotTypeConfig_basic(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
-					testAccCheckAwsLexSlotTypeNotExists(testSlotTypeID, "1"),
+					testAccCheckSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeNotExists(testSlotTypeID, "1"),
 					resource.TestCheckResourceAttr(rName, "version", tflexmodelbuilding.SlotTypeVersionLatest),
 				),
 			},
@@ -145,10 +145,10 @@ func TestAccAwsLexSlotType_createVersion(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"create_version"},
 			},
 			{
-				Config: testAccAwsLexSlotTypeConfig_withVersion(testSlotTypeID),
+				Config: testAccSlotTypeConfig_withVersion(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
-					testAccCheckAwsLexSlotTypeExistsWithVersion(rName, "1", &v),
+					testAccCheckSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExistsWithVersion(rName, "1", &v),
 					resource.TestCheckResourceAttr(rName, "version", "1"),
 				),
 			},
@@ -162,7 +162,7 @@ func TestAccAwsLexSlotType_createVersion(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexSlotType_description(t *testing.T) {
+func TestAccLexModelBuildingSlotType_description(t *testing.T) {
 	var v lexmodelbuildingservice.GetSlotTypeOutput
 	rName := "aws_lex_slot_type.test"
 	testSlotTypeID := "test_slot_type_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -174,12 +174,12 @@ func TestAccAwsLexSlotType_description(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexSlotTypeDestroy,
+		CheckDestroy: testAccCheckSlotTypeDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsLexSlotTypeConfig_basic(testSlotTypeID),
+				Config: testAccSlotTypeConfig_basic(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "description", ""),
 				),
 			},
@@ -190,9 +190,9 @@ func TestAccAwsLexSlotType_description(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"create_version"},
 			},
 			{
-				Config: testAccAwsLexSlotTypeUpdateConfig_description(testSlotTypeID),
+				Config: testAccSlotTypeUpdateConfig_description(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "description", "Types of flowers to pick up"),
 				),
 			},
@@ -206,7 +206,7 @@ func TestAccAwsLexSlotType_description(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexSlotType_enumerationValues(t *testing.T) {
+func TestAccLexModelBuildingSlotType_enumerationValues(t *testing.T) {
 	var v lexmodelbuildingservice.GetSlotTypeOutput
 	rName := "aws_lex_slot_type.test"
 	testSlotTypeID := "test_slot_type_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -218,12 +218,12 @@ func TestAccAwsLexSlotType_enumerationValues(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexSlotTypeDestroy,
+		CheckDestroy: testAccCheckSlotTypeDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsLexSlotTypeConfig_basic(testSlotTypeID),
+				Config: testAccSlotTypeConfig_basic(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "enumeration_value.#", "1"),
 				),
 			},
@@ -234,9 +234,9 @@ func TestAccAwsLexSlotType_enumerationValues(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"create_version"},
 			},
 			{
-				Config: testAccAwsLexSlotTypeConfig_enumerationValues(testSlotTypeID),
+				Config: testAccSlotTypeConfig_enumerationValues(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "enumeration_value.#", "2"),
 					resource.TestCheckTypeSetElemNestedAttrs(rName, "enumeration_value.*", map[string]string{
 						"value": "tulips",
@@ -255,7 +255,7 @@ func TestAccAwsLexSlotType_enumerationValues(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexSlotType_name(t *testing.T) {
+func TestAccLexModelBuildingSlotType_name(t *testing.T) {
 	var v lexmodelbuildingservice.GetSlotTypeOutput
 	rName := "aws_lex_slot_type.test"
 	testSlotTypeID1 := "test_slot_type_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -268,12 +268,12 @@ func TestAccAwsLexSlotType_name(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexSlotTypeDestroy,
+		CheckDestroy: testAccCheckSlotTypeDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsLexSlotTypeConfig_basic(testSlotTypeID1),
+				Config: testAccSlotTypeConfig_basic(testSlotTypeID1),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "name", testSlotTypeID1),
 				),
 			},
@@ -284,9 +284,9 @@ func TestAccAwsLexSlotType_name(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"create_version"},
 			},
 			{
-				Config: testAccAwsLexSlotTypeConfig_basic(testSlotTypeID2),
+				Config: testAccSlotTypeConfig_basic(testSlotTypeID2),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "name", testSlotTypeID2),
 				),
 			},
@@ -300,7 +300,7 @@ func TestAccAwsLexSlotType_name(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexSlotType_valueSelectionStrategy(t *testing.T) {
+func TestAccLexModelBuildingSlotType_valueSelectionStrategy(t *testing.T) {
 	var v lexmodelbuildingservice.GetSlotTypeOutput
 	rName := "aws_lex_slot_type.test"
 	testSlotTypeID := "test_slot_type_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -312,12 +312,12 @@ func TestAccAwsLexSlotType_valueSelectionStrategy(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexSlotTypeDestroy,
+		CheckDestroy: testAccCheckSlotTypeDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsLexSlotTypeConfig_basic(testSlotTypeID),
+				Config: testAccSlotTypeConfig_basic(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "value_selection_strategy", lexmodelbuildingservice.SlotValueSelectionStrategyOriginalValue),
 				),
 			},
@@ -328,9 +328,9 @@ func TestAccAwsLexSlotType_valueSelectionStrategy(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"create_version"},
 			},
 			{
-				Config: testAccAwsLexSlotTypeConfig_valueSelectionStrategy(testSlotTypeID),
+				Config: testAccSlotTypeConfig_valueSelectionStrategy(testSlotTypeID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					resource.TestCheckResourceAttr(rName, "value_selection_strategy", lexmodelbuildingservice.SlotValueSelectionStrategyTopResolution),
 				),
 			},
@@ -344,7 +344,7 @@ func TestAccAwsLexSlotType_valueSelectionStrategy(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexSlotType_disappears(t *testing.T) {
+func TestAccLexModelBuildingSlotType_disappears(t *testing.T) {
 	var v lexmodelbuildingservice.GetSlotTypeOutput
 	rName := "aws_lex_slot_type.test"
 	testSlotTypeID := "test_slot_type_" + sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
@@ -356,12 +356,12 @@ func TestAccAwsLexSlotType_disappears(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexSlotTypeDestroy,
+		CheckDestroy: testAccCheckSlotTypeDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsLexSlotTypeConfig_basic(testSlotTypeID),
+				Config: testAccSlotTypeConfig_basic(testSlotTypeID),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExists(rName, &v),
+					testAccCheckSlotTypeExists(rName, &v),
 					acctest.CheckResourceDisappears(acctest.Provider, tflexmodelbuilding.ResourceSlotType(), rName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -370,7 +370,7 @@ func TestAccAwsLexSlotType_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAwsLexSlotType_computeVersion(t *testing.T) {
+func TestAccLexModelBuildingSlotType_computeVersion(t *testing.T) {
 	var v1 lexmodelbuildingservice.GetSlotTypeOutput
 	var v2 lexmodelbuildingservice.GetIntentOutput
 
@@ -388,28 +388,28 @@ func TestAccAwsLexSlotType_computeVersion(t *testing.T) {
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, lexmodelbuildingservice.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLexSlotTypeDestroy,
+		CheckDestroy: testAccCheckSlotTypeDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexSlotTypeConfig_withVersion(testSlotTypeID),
-					testAccAwsLexIntentConfig_slotsWithVersion(testSlotTypeID),
+					testAccSlotTypeConfig_withVersion(testSlotTypeID),
+					testAccIntentConfig_slotsWithVersion(testSlotTypeID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExistsWithVersion(slotTypeResourceName, version, &v1),
+					testAccCheckSlotTypeExistsWithVersion(slotTypeResourceName, version, &v1),
 					resource.TestCheckResourceAttr(slotTypeResourceName, "version", version),
-					testAccCheckAwsLexIntentExistsWithVersion(intentResourceName, version, &v2),
+					testAccCheckIntentExistsWithVersion(intentResourceName, version, &v2),
 					resource.TestCheckResourceAttr(intentResourceName, "version", version),
 					resource.TestCheckResourceAttr(intentResourceName, "slot.0.slot_type_version", version),
 				),
 			},
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexSlotTypeUpdateConfig_enumerationValuesWithVersion(testSlotTypeID),
-					testAccAwsLexIntentConfig_slotsWithVersion(testSlotTypeID),
+					testAccSlotTypeUpdateConfig_enumerationValuesWithVersion(testSlotTypeID),
+					testAccIntentConfig_slotsWithVersion(testSlotTypeID),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsLexSlotTypeExistsWithVersion(slotTypeResourceName, updatedVersion, &v1),
+					testAccCheckSlotTypeExistsWithVersion(slotTypeResourceName, updatedVersion, &v1),
 					resource.TestCheckResourceAttr(slotTypeResourceName, "version", updatedVersion),
 					resource.TestCheckResourceAttr(slotTypeResourceName, "enumeration_value.#", "2"),
 					resource.TestCheckTypeSetElemNestedAttrs(slotTypeResourceName, "enumeration_value.*", map[string]string{
@@ -417,7 +417,7 @@ func TestAccAwsLexSlotType_computeVersion(t *testing.T) {
 					}),
 					resource.TestCheckTypeSetElemAttr(slotTypeResourceName, "enumeration_value.*.synonyms.*", "Eduardoregelia"),
 					resource.TestCheckTypeSetElemAttr(slotTypeResourceName, "enumeration_value.*.synonyms.*", "Podonix"),
-					testAccCheckAwsLexIntentExistsWithVersion(intentResourceName, updatedVersion, &v2),
+					testAccCheckIntentExistsWithVersion(intentResourceName, updatedVersion, &v2),
 					resource.TestCheckResourceAttr(intentResourceName, "version", updatedVersion),
 					resource.TestCheckResourceAttr(intentResourceName, "slot.0.slot_type_version", updatedVersion),
 				),
@@ -426,7 +426,7 @@ func TestAccAwsLexSlotType_computeVersion(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsLexSlotTypeExistsWithVersion(rName, slotTypeVersion string, output *lexmodelbuildingservice.GetSlotTypeOutput) resource.TestCheckFunc {
+func testAccCheckSlotTypeExistsWithVersion(rName, slotTypeVersion string, output *lexmodelbuildingservice.GetSlotTypeOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[rName]
 		if !ok {
@@ -455,11 +455,11 @@ func testAccCheckAwsLexSlotTypeExistsWithVersion(rName, slotTypeVersion string, 
 	}
 }
 
-func testAccCheckAwsLexSlotTypeExists(rName string, output *lexmodelbuildingservice.GetSlotTypeOutput) resource.TestCheckFunc {
-	return testAccCheckAwsLexSlotTypeExistsWithVersion(rName, tflexmodelbuilding.SlotTypeVersionLatest, output)
+func testAccCheckSlotTypeExists(rName string, output *lexmodelbuildingservice.GetSlotTypeOutput) resource.TestCheckFunc {
+	return testAccCheckSlotTypeExistsWithVersion(rName, tflexmodelbuilding.SlotTypeVersionLatest, output)
 }
 
-func testAccCheckAwsLexSlotTypeNotExists(slotTypeName, slotTypeVersion string) resource.TestCheckFunc {
+func testAccCheckSlotTypeNotExists(slotTypeName, slotTypeVersion string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).LexModelBuildingConn
 
@@ -478,7 +478,7 @@ func testAccCheckAwsLexSlotTypeNotExists(slotTypeName, slotTypeVersion string) r
 	}
 }
 
-func testAccCheckAwsLexSlotTypeDestroy(s *terraform.State) error {
+func testAccCheckSlotTypeDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).LexModelBuildingConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -506,7 +506,7 @@ func testAccCheckAwsLexSlotTypeDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAwsLexSlotTypeConfig_basic(rName string) string {
+func testAccSlotTypeConfig_basic(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_slot_type" "test" {
   name = "%s"
@@ -521,7 +521,7 @@ resource "aws_lex_slot_type" "test" {
 `, rName)
 }
 
-func testAccAwsLexSlotTypeConfig_withVersion(rName string) string {
+func testAccSlotTypeConfig_withVersion(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_slot_type" "test" {
   create_version = true
@@ -537,7 +537,7 @@ resource "aws_lex_slot_type" "test" {
 `, rName)
 }
 
-func testAccAwsLexSlotTypeUpdateConfig_description(rName string) string {
+func testAccSlotTypeUpdateConfig_description(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_slot_type" "test" {
   description = "Types of flowers to pick up"
@@ -553,7 +553,7 @@ resource "aws_lex_slot_type" "test" {
 `, rName)
 }
 
-func testAccAwsLexSlotTypeConfig_enumerationValues(rName string) string {
+func testAccSlotTypeConfig_enumerationValues(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_slot_type" "test" {
   name = "%s"
@@ -576,7 +576,7 @@ resource "aws_lex_slot_type" "test" {
 `, rName)
 }
 
-func testAccAwsLexSlotTypeConfig_valueSelectionStrategy(rName string) string {
+func testAccSlotTypeConfig_valueSelectionStrategy(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_slot_type" "test" {
   name                     = "%s"
@@ -592,7 +592,7 @@ resource "aws_lex_slot_type" "test" {
 `, rName)
 }
 
-func testAccAwsLexSlotTypeUpdateConfig_enumerationValuesWithVersion(rName string) string {
+func testAccSlotTypeUpdateConfig_enumerationValuesWithVersion(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lex_slot_type" "test" {
   create_version = true

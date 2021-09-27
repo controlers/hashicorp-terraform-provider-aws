@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsLexIntent_basic(t *testing.T) {
+func TestAccLexModelBuildingIntentDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 	dataSourceName := "data.aws_lex_intent.test"
 	resourceName := "aws_lex_intent.test"
@@ -24,8 +24,8 @@ func TestAccDataSourceAwsLexIntent_basic(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexIntentConfig_basic(rName),
-					testAccDataSourceAwsLexIntentConfig_basic(),
+					testAccIntentConfig_basic(rName),
+					testAccIntentDataSourceConfig_basic(),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
@@ -41,7 +41,7 @@ func TestAccDataSourceAwsLexIntent_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsLexIntent_withVersion(t *testing.T) {
+func TestAccLexModelBuildingIntentDataSource_withVersion(t *testing.T) {
 	rName := sdkacctest.RandStringFromCharSet(8, sdkacctest.CharSetAlpha)
 	dataSourceName := "data.aws_lex_intent.test"
 	resourceName := "aws_lex_intent.test"
@@ -56,8 +56,8 @@ func TestAccDataSourceAwsLexIntent_withVersion(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAwsLexIntentConfig_createVersion(rName),
-					testAccDataSourceAwsLexIntentConfig_withVersion(),
+					testAccIntentConfig_createVersion(rName),
+					testAccIntentDataSourceConfig_withVersion(),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
@@ -73,7 +73,7 @@ func TestAccDataSourceAwsLexIntent_withVersion(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsLexIntentConfig_basic() string {
+func testAccIntentDataSourceConfig_basic() string {
 	return `
 data "aws_lex_intent" "test" {
   name = aws_lex_intent.test.name
@@ -81,7 +81,7 @@ data "aws_lex_intent" "test" {
 `
 }
 
-func testAccDataSourceAwsLexIntentConfig_withVersion() string {
+func testAccIntentDataSourceConfig_withVersion() string {
 	return `
 data "aws_lex_intent" "test" {
   name    = aws_lex_intent.test.name
