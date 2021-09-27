@@ -65,7 +65,7 @@ func testSweepCloudWatchLogResourcePolicies(region string) error {
 	return nil
 }
 
-func TestAccAWSCloudWatchLogResourcePolicy_basic(t *testing.T) {
+func TestAccCloudWatchLogsResourcePolicy_basic(t *testing.T) {
 	name := sdkacctest.RandString(5)
 	resourceName := "aws_cloudwatch_log_resource_policy.test"
 	var resourcePolicy cloudwatchlogs.ResourcePolicy
@@ -77,7 +77,7 @@ func TestAccAWSCloudWatchLogResourcePolicy_basic(t *testing.T) {
 		CheckDestroy: testAccCheckCloudWatchLogResourcePolicyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAWSCloudWatchLogResourcePolicyResourceConfigBasic1(name),
+				Config: testAccCheckResourcePolicyResourceBasic1Config(name),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchLogResourcePolicy(resourceName, &resourcePolicy),
 					resource.TestCheckResourceAttr(resourceName, "policy_name", name),
@@ -90,7 +90,7 @@ func TestAccAWSCloudWatchLogResourcePolicy_basic(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccCheckAWSCloudWatchLogResourcePolicyResourceConfigBasic2(name),
+				Config: testAccCheckResourcePolicyResourceBasic2Config(name),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchLogResourcePolicy(resourceName, &resourcePolicy),
 					resource.TestCheckResourceAttr(resourceName, "policy_name", name),
@@ -149,7 +149,7 @@ func testAccCheckCloudWatchLogResourcePolicyDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSCloudWatchLogResourcePolicyResourceConfigBasic1(name string) string {
+func testAccCheckResourcePolicyResourceBasic1Config(name string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -176,7 +176,7 @@ resource "aws_cloudwatch_log_resource_policy" "test" {
 `, name)
 }
 
-func testAccCheckAWSCloudWatchLogResourcePolicyResourceConfigBasic2(name string) string {
+func testAccCheckResourcePolicyResourceBasic2Config(name string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
