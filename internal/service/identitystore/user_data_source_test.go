@@ -11,22 +11,22 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSIdentityStoreUserDataSource_UserName(t *testing.T) {
+func TestAccIdentityStoreUserDataSource_userName(t *testing.T) {
 	dataSourceName := "data.aws_identitystore_user.test"
 	name := os.Getenv("AWS_IDENTITY_STORE_USER_NAME")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			testAccPreCheckAWSSSOAdminInstances(t)
-			testAccPreCheckAWSIdentityStoreUserName(t)
+			testAccPreCheckSSOAdminInstances(t)
+			testAccPreCheckUserName(t)
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, identitystore.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSIdentityStoreUserDataSourceConfigDisplayName(name),
+				Config: testAccUserDisplayNameDataSourceConfig(name),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(dataSourceName, "user_id"),
 					resource.TestCheckResourceAttr(dataSourceName, "user_name", name),
@@ -36,7 +36,7 @@ func TestAccAWSIdentityStoreUserDataSource_UserName(t *testing.T) {
 	})
 }
 
-func TestAccAWSIdentityStoreUserDataSource_UserID(t *testing.T) {
+func TestAccIdentityStoreUserDataSource_userID(t *testing.T) {
 	dataSourceName := "data.aws_identitystore_user.test"
 	name := os.Getenv("AWS_IDENTITY_STORE_USER_NAME")
 	userID := os.Getenv("AWS_IDENTITY_STORE_USER_ID")
@@ -44,16 +44,16 @@ func TestAccAWSIdentityStoreUserDataSource_UserID(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			testAccPreCheckAWSSSOAdminInstances(t)
-			testAccPreCheckAWSIdentityStoreUserName(t)
-			testAccPreCheckAWSIdentityStoreUserID(t)
+			testAccPreCheckSSOAdminInstances(t)
+			testAccPreCheckUserName(t)
+			testAccPreCheckUserID(t)
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, identitystore.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSIdentityStoreUserDataSourceConfigUserID(name, userID),
+				Config: testAccUserUserIDDataSourceConfig(name, userID),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "user_id", userID),
 					resource.TestCheckResourceAttrSet(dataSourceName, "user_name"),
@@ -63,36 +63,36 @@ func TestAccAWSIdentityStoreUserDataSource_UserID(t *testing.T) {
 	})
 }
 
-func TestAccAWSIdentityStoreUserDataSource_NonExistent(t *testing.T) {
+func TestAccIdentityStoreUserDataSource_nonExistent(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSSSOAdminInstances(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckSSOAdminInstances(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, identitystore.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSIdentityStoreUserDataSourceConfigNonExistent,
+				Config:      testAccUserNonExistentDataSourceConfig,
 				ExpectError: regexp.MustCompile(`no Identity Store User found matching criteria`),
 			},
 		},
 	})
 }
 
-func testAccPreCheckAWSIdentityStoreUserName(t *testing.T) {
+func testAccPreCheckUserName(t *testing.T) {
 	if os.Getenv("AWS_IDENTITY_STORE_USER_NAME") == "" {
 		t.Skip("AWS_IDENTITY_STORE_USER_NAME env var must be set for AWS Identity Store User acceptance test. " +
 			"This is required until ListUsers API returns results without filtering by name.")
 	}
 }
 
-func testAccPreCheckAWSIdentityStoreUserID(t *testing.T) {
+func testAccPreCheckUserID(t *testing.T) {
 	if os.Getenv("AWS_IDENTITY_STORE_USER_ID") == "" {
 		t.Skip("AWS_IDENTITY_STORE_USER_ID env var must be set for AWS Identity Store User acceptance test. " +
 			"This is required until ListUsers API returns results without filtering by name.")
 	}
 }
 
-func testAccAWSIdentityStoreUserDataSourceConfigDisplayName(name string) string {
+func testAccUserDisplayNameDataSourceConfig(name string) string {
 	return fmt.Sprintf(`
 data "aws_ssoadmin_instances" "test" {}
 
@@ -106,7 +106,7 @@ data "aws_identitystore_user" "test" {
 `, name)
 }
 
-func testAccAWSIdentityStoreUserDataSourceConfigUserID(name, id string) string {
+func testAccUserUserIDDataSourceConfig(name, id string) string {
 	return fmt.Sprintf(`
 data "aws_ssoadmin_instances" "test" {}
 
@@ -123,7 +123,7 @@ data "aws_identitystore_user" "test" {
 `, name, id)
 }
 
-const testAccAWSIdentityStoreUserDataSourceConfigNonExistent = `
+const testAccUserNonExistentDataSourceConfig = `
 data "aws_ssoadmin_instances" "test" {}
 
 data "aws_identitystore_user" "test" {
