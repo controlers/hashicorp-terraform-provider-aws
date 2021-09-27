@@ -12,6 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
+	"github.com/hashicorp/terraform-provider-aws/internal/provider"
 )
 
 func init() {
@@ -78,7 +79,7 @@ func TestAccAwsAppStreamFleet_disappears(t *testing.T) {
 				Config: testAccAwsAppStreamFleetConfig(rName, instanceType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsAppStreamFleetExists(resourceName, &fleetOutput),
-					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsAppStreamFleet(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, ResourceFleet(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
