@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSKinesisStreamConsumerDataSource_basic(t *testing.T) {
+func TestAccKinesisStreamConsumerDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_kinesis_stream_consumer.test"
 	resourceName := "aws_kinesis_stream_consumer.test"
@@ -23,7 +23,7 @@ func TestAccAWSKinesisStreamConsumerDataSource_basic(t *testing.T) {
 		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKinesisStreamConsumerDataSourceConfig(rName),
+				Config: testAccStreamConsumerDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "name", resourceName, "name"),
@@ -36,7 +36,7 @@ func TestAccAWSKinesisStreamConsumerDataSource_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSKinesisStreamConsumerDataSource_Name(t *testing.T) {
+func TestAccKinesisStreamConsumerDataSource_name(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_kinesis_stream_consumer.test"
 	resourceName := "aws_kinesis_stream_consumer.test"
@@ -49,7 +49,7 @@ func TestAccAWSKinesisStreamConsumerDataSource_Name(t *testing.T) {
 		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKinesisStreamConsumerDataSourceConfigName(rName),
+				Config: testAccStreamConsumerNameDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "name", resourceName, "name"),
@@ -62,7 +62,7 @@ func TestAccAWSKinesisStreamConsumerDataSource_Name(t *testing.T) {
 	})
 }
 
-func TestAccAWSKinesisStreamConsumerDataSource_Arn(t *testing.T) {
+func TestAccKinesisStreamConsumerDataSource_arn(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_kinesis_stream_consumer.test"
 	resourceName := "aws_kinesis_stream_consumer.test"
@@ -75,7 +75,7 @@ func TestAccAWSKinesisStreamConsumerDataSource_Arn(t *testing.T) {
 		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKinesisStreamConsumerDataSourceConfigArn(rName),
+				Config: testAccStreamConsumerARNDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "name", resourceName, "name"),
@@ -88,7 +88,7 @@ func TestAccAWSKinesisStreamConsumerDataSource_Arn(t *testing.T) {
 	})
 }
 
-func testAccAWSKinesisStreamConsumerDataSourceBaseConfig(rName string) string {
+func testAccStreamConsumerBaseDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kinesis_stream" "test" {
   name        = %q
@@ -97,9 +97,9 @@ resource "aws_kinesis_stream" "test" {
 `, rName)
 }
 
-func testAccAWSKinesisStreamConsumerDataSourceConfig(rName string) string {
+func testAccStreamConsumerDataSourceConfig(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSKinesisStreamConsumerDataSourceBaseConfig(rName),
+		testAccStreamConsumerBaseDataSourceConfig(rName),
 		fmt.Sprintf(`
 data "aws_kinesis_stream_consumer" "test" {
   stream_arn = aws_kinesis_stream_consumer.test.stream_arn
@@ -112,9 +112,9 @@ resource "aws_kinesis_stream_consumer" "test" {
 `, rName))
 }
 
-func testAccAWSKinesisStreamConsumerDataSourceConfigName(rName string) string {
+func testAccStreamConsumerNameDataSourceConfig(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSKinesisStreamConsumerDataSourceBaseConfig(rName),
+		testAccStreamConsumerBaseDataSourceConfig(rName),
 		fmt.Sprintf(`
 data "aws_kinesis_stream_consumer" "test" {
   name       = aws_kinesis_stream_consumer.test.name
@@ -128,9 +128,9 @@ resource "aws_kinesis_stream_consumer" "test" {
 `, rName))
 }
 
-func testAccAWSKinesisStreamConsumerDataSourceConfigArn(rName string) string {
+func testAccStreamConsumerARNDataSourceConfig(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSKinesisStreamConsumerDataSourceBaseConfig(rName),
+		testAccStreamConsumerBaseDataSourceConfig(rName),
 		fmt.Sprintf(`
 data "aws_kinesis_stream_consumer" "test" {
   arn        = aws_kinesis_stream_consumer.test.arn

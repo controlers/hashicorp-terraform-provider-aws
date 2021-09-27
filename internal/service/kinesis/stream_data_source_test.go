@@ -14,11 +14,11 @@ import (
 	tfkinesis "github.com/hashicorp/terraform-provider-aws/internal/service/kinesis"
 )
 
-func TestAccAWSKinesisStreamDataSource_basic(t *testing.T) {
+func TestAccKinesisStreamDataSource_basic(t *testing.T) {
 	var stream kinesis.StreamDescription
 
 	sn := fmt.Sprintf("terraform-kinesis-test-%d", sdkacctest.RandInt())
-	config := fmt.Sprintf(testAccCheckAwsKinesisStreamDataSourceConfig, sn)
+	config := fmt.Sprintf(testAccCheckAWSKinesisStreamDataSourceConfig, sn)
 
 	updateShardCount := func() {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).KinesisConn
@@ -76,7 +76,7 @@ func TestAccAWSKinesisStreamDataSource_basic(t *testing.T) {
 	})
 }
 
-var testAccCheckAwsKinesisStreamDataSourceConfig = `
+var testAccCheckAWSKinesisStreamDataSourceConfig = `
 resource "aws_kinesis_stream" "test_stream" {
   name             = "%s"
   shard_count      = 2
