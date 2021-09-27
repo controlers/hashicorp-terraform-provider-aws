@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDataGlobalAcceleratorAccelerator_basic(t *testing.T) {
+func TestAccGlobalAcceleratorAcceleratorDataSource_Data_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_globalaccelerator_accelerator.test"
 	dataSourceName := "data.aws_globalaccelerator_accelerator.test_by_arn"
@@ -22,7 +22,7 @@ func TestAccAWSDataGlobalAcceleratorAccelerator_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGlobalAcceleratorAcceleratorConfigWithDataSource(rName),
+				Config: testAccAcceleratorWithDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "attributes.#", resourceName, "attributes.#"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "attributes.0.flow_logs_enabled", resourceName, "attributes.0.flow_logs_enabled"),
@@ -58,7 +58,7 @@ func TestAccAWSDataGlobalAcceleratorAccelerator_basic(t *testing.T) {
 	})
 }
 
-func testAccAWSGlobalAcceleratorAcceleratorConfigWithDataSource(rName string) string {
+func testAccAcceleratorWithDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_globalaccelerator_accelerator" "test" {
   name = %[1]q
