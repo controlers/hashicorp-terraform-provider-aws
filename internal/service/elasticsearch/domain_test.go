@@ -111,7 +111,7 @@ func testSweepElasticSearchDomains(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSElasticSearchDomain_basic(t *testing.T) {
+func TestAccElasticSearchDomain_basic(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceName := "aws_elasticsearch_domain.test"
@@ -142,7 +142,7 @@ func TestAccAWSElasticSearchDomain_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_RequireHTTPS(t *testing.T) {
+func TestAccElasticSearchDomain_requireHTTPS(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -177,7 +177,7 @@ func TestAccAWSElasticSearchDomain_RequireHTTPS(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_CustomEndpoint(t *testing.T) {
+func TestAccElasticSearchDomain_customEndpoint(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -229,7 +229,7 @@ func TestAccAWSElasticSearchDomain_CustomEndpoint(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_ClusterConfig_ZoneAwarenessConfig(t *testing.T) {
+func TestAccElasticSearchDomain_Cluster_zoneAwareness(t *testing.T) {
 	var domain1, domain2, domain3, domain4 elasticsearch.ElasticsearchDomainStatus
 	rName := fmt.Sprintf("tf-acc-test-%s", sdkacctest.RandString(16)) // len = 28
 	resourceName := "aws_elasticsearch_domain.test"
@@ -259,7 +259,7 @@ func TestAccAWSElasticSearchDomain_ClusterConfig_ZoneAwarenessConfig(t *testing.
 				Config: testAccESDomainConfig_ClusterConfig_ZoneAwarenessConfig_AvailabilityZoneCount(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckESDomainExists(resourceName, &domain2),
-					testAccCheckAWSESDomainNotRecreated(&domain1, &domain2),
+					testAccCheckESDomainNotRecreated(&domain1, &domain2),
 					resource.TestCheckResourceAttr(resourceName, "cluster_config.0.zone_awareness_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_config.0.zone_awareness_config.0.availability_zone_count", "2"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_config.0.zone_awareness_enabled", "true"),
@@ -269,7 +269,7 @@ func TestAccAWSElasticSearchDomain_ClusterConfig_ZoneAwarenessConfig(t *testing.
 				Config: testAccESDomainConfig_ClusterConfig_ZoneAwarenessEnabled(rName, false),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckESDomainExists(resourceName, &domain3),
-					testAccCheckAWSESDomainNotRecreated(&domain2, &domain3),
+					testAccCheckESDomainNotRecreated(&domain2, &domain3),
 					resource.TestCheckResourceAttr(resourceName, "cluster_config.0.zone_awareness_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_config.0.zone_awareness_config.#", "0"),
 				),
@@ -278,7 +278,7 @@ func TestAccAWSElasticSearchDomain_ClusterConfig_ZoneAwarenessConfig(t *testing.
 				Config: testAccESDomainConfig_ClusterConfig_ZoneAwarenessConfig_AvailabilityZoneCount(rName, 3),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckESDomainExists(resourceName, &domain4),
-					testAccCheckAWSESDomainNotRecreated(&domain3, &domain4),
+					testAccCheckESDomainNotRecreated(&domain3, &domain4),
 					resource.TestCheckResourceAttr(resourceName, "cluster_config.0.zone_awareness_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_config.0.zone_awareness_config.0.availability_zone_count", "3"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_config.0.zone_awareness_enabled", "true"),
@@ -288,7 +288,7 @@ func TestAccAWSElasticSearchDomain_ClusterConfig_ZoneAwarenessConfig(t *testing.
 	})
 }
 
-func TestAccAWSElasticSearchDomain_warm(t *testing.T) {
+func TestAccElasticSearchDomain_warm(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	rName := fmt.Sprintf("tf-acc-test-%s", sdkacctest.RandString(16)) // len = 28
 	resourceName := "aws_elasticsearch_domain.test"
@@ -345,7 +345,7 @@ func TestAccAWSElasticSearchDomain_warm(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_withDedicatedMaster(t *testing.T) {
+func TestAccElasticSearchDomain_withDedicatedMaster(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceName := "aws_elasticsearch_domain.test"
@@ -385,7 +385,7 @@ func TestAccAWSElasticSearchDomain_withDedicatedMaster(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_duplicate(t *testing.T) {
+func TestAccElasticSearchDomain_duplicate(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -435,7 +435,7 @@ func TestAccAWSElasticSearchDomain_duplicate(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_v23(t *testing.T) {
+func TestAccElasticSearchDomain_v23(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -465,7 +465,7 @@ func TestAccAWSElasticSearchDomain_v23(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_complex(t *testing.T) {
+func TestAccElasticSearchDomain_complex(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -493,7 +493,7 @@ func TestAccAWSElasticSearchDomain_complex(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_vpc(t *testing.T) {
+func TestAccElasticSearchDomain_vpc(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -521,7 +521,7 @@ func TestAccAWSElasticSearchDomain_vpc(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_vpc_update(t *testing.T) {
+func TestAccElasticSearchDomain_VPC_update(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -557,7 +557,7 @@ func TestAccAWSElasticSearchDomain_vpc_update(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_internetToVpcEndpoint(t *testing.T) {
+func TestAccElasticSearchDomain_internetToVPCEndpoint(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -591,7 +591,7 @@ func TestAccAWSElasticSearchDomain_internetToVpcEndpoint(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_AdvancedSecurityOptions_UserDB(t *testing.T) {
+func TestAccElasticSearchDomain_AdvancedSecurityOptions_userDB(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	domainName := sdkacctest.RandomWithPrefix("tf-test")
 	resourceName := "aws_elasticsearch_domain.test"
@@ -624,7 +624,7 @@ func TestAccAWSElasticSearchDomain_AdvancedSecurityOptions_UserDB(t *testing.T) 
 	})
 }
 
-func TestAccAWSElasticSearchDomain_AdvancedSecurityOptions_IAM(t *testing.T) {
+func TestAccElasticSearchDomain_AdvancedSecurityOptions_iam(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	domainName := sdkacctest.RandomWithPrefix("tf-test")
 	resourceName := "aws_elasticsearch_domain.test"
@@ -657,7 +657,7 @@ func TestAccAWSElasticSearchDomain_AdvancedSecurityOptions_IAM(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_AdvancedSecurityOptions_Disabled(t *testing.T) {
+func TestAccElasticSearchDomain_AdvancedSecurityOptions_disabled(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	domainName := sdkacctest.RandomWithPrefix("tf-test")
 	resourceName := "aws_elasticsearch_domain.test"
@@ -690,7 +690,7 @@ func TestAccAWSElasticSearchDomain_AdvancedSecurityOptions_Disabled(t *testing.T
 	})
 }
 
-func TestAccAWSElasticSearchDomain_LogPublishingOptions_IndexSlowLogs(t *testing.T) {
+func TestAccElasticSearchDomain_LogPublishingOptions_indexSlowLogs(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -722,7 +722,7 @@ func TestAccAWSElasticSearchDomain_LogPublishingOptions_IndexSlowLogs(t *testing
 	})
 }
 
-func TestAccAWSElasticSearchDomain_LogPublishingOptions_SearchSlowLogs(t *testing.T) {
+func TestAccElasticSearchDomain_LogPublishingOptions_searchSlowLogs(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -754,7 +754,7 @@ func TestAccAWSElasticSearchDomain_LogPublishingOptions_SearchSlowLogs(t *testin
 	})
 }
 
-func TestAccAWSElasticSearchDomain_LogPublishingOptions_EsApplicationLogs(t *testing.T) {
+func TestAccElasticSearchDomain_LogPublishingOptions_esApplicationLogs(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -786,7 +786,7 @@ func TestAccAWSElasticSearchDomain_LogPublishingOptions_EsApplicationLogs(t *tes
 	})
 }
 
-func TestAccAWSElasticSearchDomain_LogPublishingOptions_AuditLogs(t *testing.T) {
+func TestAccElasticSearchDomain_LogPublishingOptions_auditLogs(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -820,7 +820,7 @@ func TestAccAWSElasticSearchDomain_LogPublishingOptions_AuditLogs(t *testing.T) 
 	})
 }
 
-func TestAccAWSElasticSearchDomain_CognitoOptionsCreateAndRemove(t *testing.T) {
+func TestAccElasticSearchDomain_cognitoOptionsCreateAndRemove(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceName := "aws_elasticsearch_domain.test"
@@ -829,7 +829,7 @@ func TestAccAWSElasticSearchDomain_CognitoOptionsCreateAndRemove(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			testAccPreCheckAWSCognitoIdentityProvider(t)
+			testAccPreCheckCognitoIdentityProvider(t)
 			testAccPreCheckIamServiceLinkedRoleEs(t)
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, elasticsearch.EndpointsID),
@@ -860,7 +860,7 @@ func TestAccAWSElasticSearchDomain_CognitoOptionsCreateAndRemove(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_CognitoOptionsUpdate(t *testing.T) {
+func TestAccElasticSearchDomain_cognitoOptionsUpdate(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -869,7 +869,7 @@ func TestAccAWSElasticSearchDomain_CognitoOptionsUpdate(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			testAccPreCheckAWSCognitoIdentityProvider(t)
+			testAccPreCheckCognitoIdentityProvider(t)
 			testAccPreCheckIamServiceLinkedRoleEs(t)
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, elasticsearch.EndpointsID),
@@ -900,7 +900,7 @@ func TestAccAWSElasticSearchDomain_CognitoOptionsUpdate(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_policy(t *testing.T) {
+func TestAccElasticSearchDomain_policy(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	resourceName := "aws_elasticsearch_domain.test"
 	ri := sdkacctest.RandInt()
@@ -928,7 +928,7 @@ func TestAccAWSElasticSearchDomain_policy(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_encrypt_at_rest_default_key(t *testing.T) {
+func TestAccElasticSearchDomain_EncryptAtRestDefault_key(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	resourceName := "aws_elasticsearch_domain.test"
 	ri := sdkacctest.RandInt()
@@ -957,7 +957,7 @@ func TestAccAWSElasticSearchDomain_encrypt_at_rest_default_key(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_encrypt_at_rest_specify_key(t *testing.T) {
+func TestAccElasticSearchDomain_EncryptAtRestSpecify_key(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	resourceName := "aws_elasticsearch_domain.test"
 	ri := sdkacctest.RandInt()
@@ -986,7 +986,7 @@ func TestAccAWSElasticSearchDomain_encrypt_at_rest_specify_key(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_NodeToNodeEncryption(t *testing.T) {
+func TestAccElasticSearchDomain_nodeToNodeEncryption(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	resourceName := "aws_elasticsearch_domain.test"
 	ri := sdkacctest.RandInt()
@@ -1015,7 +1015,7 @@ func TestAccAWSElasticSearchDomain_NodeToNodeEncryption(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_tags(t *testing.T) {
+func TestAccElasticSearchDomain_tags(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -1025,7 +1025,7 @@ func TestAccAWSElasticSearchDomain_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIamServiceLinkedRoleEs(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticsearch.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSELBDestroy,
+		CheckDestroy: testAccCheckELBDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccESDomainConfig(ri),
@@ -1053,7 +1053,7 @@ func TestAccAWSElasticSearchDomain_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_update(t *testing.T) {
+func TestAccElasticSearchDomain_update(t *testing.T) {
 	var input elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -1090,7 +1090,7 @@ func TestAccAWSElasticSearchDomain_update(t *testing.T) {
 		}})
 }
 
-func TestAccAWSElasticSearchDomain_update_volume_type(t *testing.T) {
+func TestAccElasticSearchDomain_UpdateVolume_type(t *testing.T) {
 	var input elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -1135,7 +1135,7 @@ func TestAccAWSElasticSearchDomain_update_volume_type(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/13867
-func TestAccAWSElasticSearchDomain_WithVolumeType_Missing(t *testing.T) {
+func TestAccElasticSearchDomain_WithVolumeType_missing(t *testing.T) {
 	var domain elasticsearch.ElasticsearchDomainStatus
 	resourceName := "aws_elasticsearch_domain.test"
 	rName := fmt.Sprintf("tf-acc-test-%s", sdkacctest.RandString(16))
@@ -1169,7 +1169,7 @@ func TestAccAWSElasticSearchDomain_WithVolumeType_Missing(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticSearchDomain_update_version(t *testing.T) {
+func TestAccElasticSearchDomain_Update_version(t *testing.T) {
 	var domain1, domain2, domain3 elasticsearch.ElasticsearchDomainStatus
 	ri := sdkacctest.RandInt()
 	resourceId := fmt.Sprintf("tf-test-%d", ri)
@@ -1198,7 +1198,7 @@ func TestAccAWSElasticSearchDomain_update_version(t *testing.T) {
 				Config: testAccESDomainConfig_ClusterUpdateVersion(ri, "5.6"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckESDomainExists(resourceName, &domain2),
-					testAccCheckAWSESDomainNotRecreated(&domain1, &domain2),
+					testAccCheckESDomainNotRecreated(&domain1, &domain2),
 					resource.TestCheckResourceAttr(resourceName, "elasticsearch_version", "5.6"),
 				),
 			},
@@ -1206,7 +1206,7 @@ func TestAccAWSElasticSearchDomain_update_version(t *testing.T) {
 				Config: testAccESDomainConfig_ClusterUpdateVersion(ri, "6.3"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckESDomainExists(resourceName, &domain3),
-					testAccCheckAWSESDomainNotRecreated(&domain2, &domain3),
+					testAccCheckESDomainNotRecreated(&domain2, &domain3),
 					resource.TestCheckResourceAttr(resourceName, "elasticsearch_version", "6.3"),
 				),
 			},
@@ -1382,7 +1382,7 @@ func testAccCheckESDomainExists(n string, domain *elasticsearch.ElasticsearchDom
 	}
 }
 
-func testAccCheckAWSESDomainNotRecreated(i, j *elasticsearch.ElasticsearchDomainStatus) resource.TestCheckFunc {
+func testAccCheckESDomainNotRecreated(i, j *elasticsearch.ElasticsearchDomainStatus) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ElasticSearchConn
 
@@ -2517,7 +2517,7 @@ resource "aws_elasticsearch_domain" "test" {
 `, randInt, cognitoOptions)
 }
 
-func testAccPreCheckAWSCognitoIdentityProvider(t *testing.T) {
+func testAccPreCheckCognitoIdentityProvider(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).CognitoIDPConn
 
 	input := &cognitoidentityprovider.ListUserPoolsInput{
@@ -2535,7 +2535,7 @@ func testAccPreCheckAWSCognitoIdentityProvider(t *testing.T) {
 	}
 }
 
-func testAccCheckAWSELBDestroy(s *terraform.State) error {
+func testAccCheckELBDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ELBConn
 
 	for _, rs := range s.RootModule().Resources {
