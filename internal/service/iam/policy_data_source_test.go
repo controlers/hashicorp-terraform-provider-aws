@@ -80,7 +80,7 @@ func TestPolicySearchDetails(t *testing.T) {
 	}
 }
 
-func TestAccAWSDataSourceIAMPolicy_Arn(t *testing.T) {
+func TestAccIAMPolicyDataSource_arn(t *testing.T) {
 	datasourceName := "data.aws_iam_policy.test"
 	resourceName := "aws_iam_policy.test"
 	policyName := fmt.Sprintf("test-policy-%s", sdkacctest.RandString(10))
@@ -91,7 +91,7 @@ func TestAccAWSDataSourceIAMPolicy_Arn(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDataSourceIamPolicyConfig_Arn(policyName, "/"),
+				Config: testAccPolicyDataSourceConfig_ARN(policyName, "/"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(datasourceName, "description", resourceName, "description"),
@@ -106,7 +106,7 @@ func TestAccAWSDataSourceIAMPolicy_Arn(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSourceIAMPolicy_Name(t *testing.T) {
+func TestAccIAMPolicyDataSource_name(t *testing.T) {
 	datasourceName := "data.aws_iam_policy.test"
 	resourceName := "aws_iam_policy.test"
 	policyName := fmt.Sprintf("test-policy-%s", sdkacctest.RandString(10))
@@ -117,7 +117,7 @@ func TestAccAWSDataSourceIAMPolicy_Name(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDataSourceIamPolicyConfig_Name(policyName, "/"),
+				Config: testAccPolicyDataSourceConfig_Name(policyName, "/"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(datasourceName, "description", resourceName, "description"),
@@ -132,7 +132,7 @@ func TestAccAWSDataSourceIAMPolicy_Name(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSourceIAMPolicy_NameAndPathPrefix(t *testing.T) {
+func TestAccIAMPolicyDataSource_nameAndPathPrefix(t *testing.T) {
 	datasourceName := "data.aws_iam_policy.test"
 	resourceName := "aws_iam_policy.test"
 
@@ -145,7 +145,7 @@ func TestAccAWSDataSourceIAMPolicy_NameAndPathPrefix(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDataSourceIamPolicyConfig_PathPrefix(policyName, policyPath),
+				Config: testAccPolicyDataSourceConfig_PathPrefix(policyName, policyPath),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(datasourceName, "description", resourceName, "description"),
@@ -160,7 +160,7 @@ func TestAccAWSDataSourceIAMPolicy_NameAndPathPrefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSourceIAMPolicy_NonExistent(t *testing.T) {
+func TestAccIAMPolicyDataSource_nonExistent(t *testing.T) {
 	policyName := fmt.Sprintf("test-policy-%s", sdkacctest.RandString(10))
 	policyPath := "/test-path/"
 
@@ -170,14 +170,14 @@ func TestAccAWSDataSourceIAMPolicy_NonExistent(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAwsDataSourceIamPolicyConfig_NonExistent(policyName, policyPath),
+				Config:      testAccPolicyDataSourceConfig_NonExistent(policyName, policyPath),
 				ExpectError: regexp.MustCompile(`no IAM policy found matching criteria`),
 			},
 		},
 	})
 }
 
-func testAccAwsDataSourceIamPolicyBaseConfig(policyName, policyPath string) string {
+func testAccPolicyBaseDataSourceConfig(policyName, policyPath string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_policy" "test" {
   name        = %q
@@ -201,9 +201,9 @@ EOF
 }`, policyName, policyPath)
 }
 
-func testAccAwsDataSourceIamPolicyConfig_Arn(policyName, policyPath string) string {
+func testAccPolicyDataSourceConfig_ARN(policyName, policyPath string) string {
 	return acctest.ConfigCompose(
-		testAccAwsDataSourceIamPolicyBaseConfig(policyName, policyPath),
+		testAccPolicyBaseDataSourceConfig(policyName, policyPath),
 		`
 data "aws_iam_policy" "test" {
   arn = aws_iam_policy.test.arn
@@ -211,9 +211,9 @@ data "aws_iam_policy" "test" {
 `)
 }
 
-func testAccAwsDataSourceIamPolicyConfig_Name(policyName, policyPath string) string {
+func testAccPolicyDataSourceConfig_Name(policyName, policyPath string) string {
 	return acctest.ConfigCompose(
-		testAccAwsDataSourceIamPolicyBaseConfig(policyName, policyPath),
+		testAccPolicyBaseDataSourceConfig(policyName, policyPath),
 		`
 data "aws_iam_policy" "test" {
   name = aws_iam_policy.test.name
@@ -221,9 +221,9 @@ data "aws_iam_policy" "test" {
 `)
 }
 
-func testAccAwsDataSourceIamPolicyConfig_PathPrefix(policyName, policyPath string) string {
+func testAccPolicyDataSourceConfig_PathPrefix(policyName, policyPath string) string {
 	return acctest.ConfigCompose(
-		testAccAwsDataSourceIamPolicyBaseConfig(policyName, policyPath),
+		testAccPolicyBaseDataSourceConfig(policyName, policyPath),
 		fmt.Sprintf(`
 data "aws_iam_policy" "test" {
   name        = aws_iam_policy.test.name
@@ -232,9 +232,9 @@ data "aws_iam_policy" "test" {
 `, policyPath))
 }
 
-func testAccAwsDataSourceIamPolicyConfig_NonExistent(policyName, policyPath string) string {
+func testAccPolicyDataSourceConfig_NonExistent(policyName, policyPath string) string {
 	return acctest.ConfigCompose(
-		testAccAwsDataSourceIamPolicyBaseConfig(policyName, policyPath),
+		testAccPolicyBaseDataSourceConfig(policyName, policyPath),
 		fmt.Sprintf(`
 data "aws_iam_policy" "test" {
   name        = "non-existent"

@@ -16,7 +16,7 @@ import (
 	tfiam "github.com/hashicorp/terraform-provider-aws/internal/service/iam"
 )
 
-func TestAccAWSIAMGroupPolicy_basic(t *testing.T) {
+func TestAccIAMGroupPolicy_basic(t *testing.T) {
 	var groupPolicy1, groupPolicy2 iam.GetGroupPolicyOutput
 	rInt := sdkacctest.RandInt()
 	resource.ParallelTest(t, resource.TestCase{
@@ -48,7 +48,7 @@ func TestAccAWSIAMGroupPolicy_basic(t *testing.T) {
 						"aws_iam_group_policy.bar",
 						&groupPolicy2,
 					),
-					testAccCheckAWSIAMGroupPolicyNameChanged(&groupPolicy1, &groupPolicy2),
+					testAccCheckGroupPolicyNameChanged(&groupPolicy1, &groupPolicy2),
 				),
 			},
 			{
@@ -60,7 +60,7 @@ func TestAccAWSIAMGroupPolicy_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSIAMGroupPolicy_disappears(t *testing.T) {
+func TestAccIAMGroupPolicy_disappears(t *testing.T) {
 	var out iam.GetGroupPolicyOutput
 	rInt := sdkacctest.RandInt()
 
@@ -86,7 +86,7 @@ func TestAccAWSIAMGroupPolicy_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSIAMGroupPolicy_namePrefix(t *testing.T) {
+func TestAccIAMGroupPolicy_namePrefix(t *testing.T) {
 	var groupPolicy1, groupPolicy2 iam.GetGroupPolicyOutput
 	rInt := sdkacctest.RandInt()
 	resource.ParallelTest(t, resource.TestCase{
@@ -113,7 +113,7 @@ func TestAccAWSIAMGroupPolicy_namePrefix(t *testing.T) {
 						"aws_iam_group_policy.test",
 						&groupPolicy2,
 					),
-					testAccCheckAWSIAMGroupPolicyNameMatches(&groupPolicy1, &groupPolicy2),
+					testAccCheckGroupPolicyNameMatches(&groupPolicy1, &groupPolicy2),
 				),
 			},
 			{
@@ -126,7 +126,7 @@ func TestAccAWSIAMGroupPolicy_namePrefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSIAMGroupPolicy_generatedName(t *testing.T) {
+func TestAccIAMGroupPolicy_generatedName(t *testing.T) {
 	var groupPolicy1, groupPolicy2 iam.GetGroupPolicyOutput
 	rInt := sdkacctest.RandInt()
 	resource.ParallelTest(t, resource.TestCase{
@@ -153,7 +153,7 @@ func TestAccAWSIAMGroupPolicy_generatedName(t *testing.T) {
 						"aws_iam_group_policy.test",
 						&groupPolicy2,
 					),
-					testAccCheckAWSIAMGroupPolicyNameMatches(&groupPolicy1, &groupPolicy2),
+					testAccCheckGroupPolicyNameMatches(&groupPolicy1, &groupPolicy2),
 				),
 			},
 			{
@@ -254,7 +254,7 @@ func testAccCheckIAMGroupPolicyExists(
 	}
 }
 
-func testAccCheckAWSIAMGroupPolicyNameChanged(i, j *iam.GetGroupPolicyOutput) resource.TestCheckFunc {
+func testAccCheckGroupPolicyNameChanged(i, j *iam.GetGroupPolicyOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(i.PolicyName) == aws.StringValue(j.PolicyName) {
 			return errors.New("IAM Group Policy name did not change")
@@ -264,7 +264,7 @@ func testAccCheckAWSIAMGroupPolicyNameChanged(i, j *iam.GetGroupPolicyOutput) re
 	}
 }
 
-func testAccCheckAWSIAMGroupPolicyNameMatches(i, j *iam.GetGroupPolicyOutput) resource.TestCheckFunc {
+func testAccCheckGroupPolicyNameMatches(i, j *iam.GetGroupPolicyOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(i.PolicyName) != aws.StringValue(j.PolicyName) {
 			return errors.New("IAM Group Policy name did not match")

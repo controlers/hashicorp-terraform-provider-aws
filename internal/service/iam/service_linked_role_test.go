@@ -36,8 +36,8 @@ func testSweepIamServiceLinkedRoles(region string) error {
 	}
 
 	// include generic service role names created by:
-	// TestAccAWSIAMServiceLinkedRole_basic
-	// TestAccAWSIAMServiceLinkedRole_CustomSuffix_DiffSuppressFunc
+	// TestAccIAMServiceLinkedRole_basic
+	// TestAccIAMServiceLinkedRole_CustomSuffix_diffSuppressFunc
 	customSuffixRegex := regexp.MustCompile(`_?(tf-acc-test-\d+|ServiceRoleFor(ApplicationAutoScaling_CustomResource|ElasticBeanstalk))$`)
 	err = conn.ListRolesPages(input, func(page *iam.ListRolesOutput, lastPage bool) bool {
 		if len(page.Roles) == 0 {
@@ -140,7 +140,7 @@ func TestDecodeIamServiceLinkedRoleID(t *testing.T) {
 	}
 }
 
-func TestAccAWSIAMServiceLinkedRole_basic(t *testing.T) {
+func TestAccIAMServiceLinkedRole_basic(t *testing.T) {
 	resourceName := "aws_iam_service_linked_role.test"
 	awsServiceName := "elasticbeanstalk.amazonaws.com"
 	name := "AWSServiceRoleForElasticBeanstalk"
@@ -150,7 +150,7 @@ func TestAccAWSIAMServiceLinkedRole_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSIAMServiceLinkedRoleDestroy,
+		CheckDestroy: testAccCheckServiceLinkedRoleDestroy,
 		Steps: []resource.TestStep{
 			{
 				PreConfig: func() {
@@ -169,9 +169,9 @@ func TestAccAWSIAMServiceLinkedRole_basic(t *testing.T) {
 						t.Fatalf("Error waiting for role (%s) to be deleted: %s", name, err)
 					}
 				},
-				Config: testAccAWSIAMServiceLinkedRoleConfig(awsServiceName),
+				Config: testAccServiceLinkedRoleConfig(awsServiceName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSIAMServiceLinkedRoleExists(resourceName),
+					testAccCheckServiceLinkedRoleExists(resourceName),
 					acctest.CheckResourceAttrGlobalARN(resourceName, "arn", "iam", fmt.Sprintf("role%s%s", path, name)),
 					resource.TestCheckResourceAttr(resourceName, "aws_service_name", awsServiceName),
 					acctest.CheckResourceAttrRFC3339(resourceName, "create_date"),
@@ -190,7 +190,7 @@ func TestAccAWSIAMServiceLinkedRole_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSIAMServiceLinkedRole_CustomSuffix(t *testing.T) {
+func TestAccIAMServiceLinkedRole_customSuffix(t *testing.T) {
 	resourceName := "aws_iam_service_linked_role.test"
 	awsServiceName := "autoscaling.amazonaws.com"
 	customSuffix := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -201,12 +201,12 @@ func TestAccAWSIAMServiceLinkedRole_CustomSuffix(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSIAMServiceLinkedRoleDestroy,
+		CheckDestroy: testAccCheckServiceLinkedRoleDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSIAMServiceLinkedRoleConfig_CustomSuffix(awsServiceName, customSuffix),
+				Config: testAccServiceLinkedRoleConfig_CustomSuffix(awsServiceName, customSuffix),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSIAMServiceLinkedRoleExists(resourceName),
+					testAccCheckServiceLinkedRoleExists(resourceName),
 					acctest.CheckResourceAttrGlobalARN(resourceName, "arn", "iam", fmt.Sprintf("role%s%s", path, name)),
 					resource.TestCheckResourceAttr(resourceName, "name", name),
 				),
@@ -221,7 +221,7 @@ func TestAccAWSIAMServiceLinkedRole_CustomSuffix(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/4439
-func TestAccAWSIAMServiceLinkedRole_CustomSuffix_DiffSuppressFunc(t *testing.T) {
+func TestAccIAMServiceLinkedRole_CustomSuffix_diffSuppressFunc(t *testing.T) {
 	resourceName := "aws_iam_service_linked_role.test"
 	awsServiceName := "custom-resource.application-autoscaling.amazonaws.com"
 	name := "AWSServiceRoleForApplicationAutoScaling_CustomResource"
@@ -230,12 +230,12 @@ func TestAccAWSIAMServiceLinkedRole_CustomSuffix_DiffSuppressFunc(t *testing.T) 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSIAMServiceLinkedRoleDestroy,
+		CheckDestroy: testAccCheckServiceLinkedRoleDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSIAMServiceLinkedRoleConfig(awsServiceName),
+				Config: testAccServiceLinkedRoleConfig(awsServiceName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSIAMServiceLinkedRoleExists(resourceName),
+					testAccCheckServiceLinkedRoleExists(resourceName),
 					acctest.CheckResourceAttrGlobalARN(resourceName, "arn", "iam", fmt.Sprintf("role/aws-service-role/%s/%s", awsServiceName, name)),
 					resource.TestCheckResourceAttr(resourceName, "custom_suffix", "CustomResource"),
 					resource.TestCheckResourceAttr(resourceName, "name", name),
@@ -250,7 +250,7 @@ func TestAccAWSIAMServiceLinkedRole_CustomSuffix_DiffSuppressFunc(t *testing.T) 
 	})
 }
 
-func TestAccAWSIAMServiceLinkedRole_Description(t *testing.T) {
+func TestAccIAMServiceLinkedRole_description(t *testing.T) {
 	resourceName := "aws_iam_service_linked_role.test"
 	awsServiceName := "autoscaling.amazonaws.com"
 	customSuffix := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -259,19 +259,19 @@ func TestAccAWSIAMServiceLinkedRole_Description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSIAMServiceLinkedRoleDestroy,
+		CheckDestroy: testAccCheckServiceLinkedRoleDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSIAMServiceLinkedRoleConfig_Description(awsServiceName, customSuffix, "description1"),
+				Config: testAccServiceLinkedRoleConfig_Description(awsServiceName, customSuffix, "description1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSIAMServiceLinkedRoleExists(resourceName),
+					testAccCheckServiceLinkedRoleExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "description", "description1"),
 				),
 			},
 			{
-				Config: testAccAWSIAMServiceLinkedRoleConfig_Description(awsServiceName, customSuffix, "description2"),
+				Config: testAccServiceLinkedRoleConfig_Description(awsServiceName, customSuffix, "description2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSIAMServiceLinkedRoleExists(resourceName),
+					testAccCheckServiceLinkedRoleExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "description", "description2"),
 				),
 			},
@@ -284,7 +284,7 @@ func TestAccAWSIAMServiceLinkedRole_Description(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSIAMServiceLinkedRoleDestroy(s *terraform.State) error {
+func testAccCheckServiceLinkedRoleDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).IAMConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -316,7 +316,7 @@ func testAccCheckAWSIAMServiceLinkedRoleDestroy(s *terraform.State) error {
 
 }
 
-func testAccCheckAWSIAMServiceLinkedRoleExists(n string) resource.TestCheckFunc {
+func testAccCheckServiceLinkedRoleExists(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -346,7 +346,7 @@ func testAccCheckAWSIAMServiceLinkedRoleExists(n string) resource.TestCheckFunc 
 	}
 }
 
-func testAccAWSIAMServiceLinkedRoleConfig(awsServiceName string) string {
+func testAccServiceLinkedRoleConfig(awsServiceName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_service_linked_role" "test" {
   aws_service_name = "%s"
@@ -354,7 +354,7 @@ resource "aws_iam_service_linked_role" "test" {
 `, awsServiceName)
 }
 
-func testAccAWSIAMServiceLinkedRoleConfig_CustomSuffix(awsServiceName, customSuffix string) string {
+func testAccServiceLinkedRoleConfig_CustomSuffix(awsServiceName, customSuffix string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_service_linked_role" "test" {
   aws_service_name = "%s"
@@ -363,7 +363,7 @@ resource "aws_iam_service_linked_role" "test" {
 `, awsServiceName, customSuffix)
 }
 
-func testAccAWSIAMServiceLinkedRoleConfig_Description(awsServiceName, customSuffix, description string) string {
+func testAccServiceLinkedRoleConfig_Description(awsServiceName, customSuffix, description string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_service_linked_role" "test" {
   aws_service_name = "%s"

@@ -198,7 +198,7 @@ func testSweepIamUsers(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSUser_basic(t *testing.T) {
+func TestAccIAMUser_basic(t *testing.T) {
 	var conf iam.GetUserOutput
 
 	name1 := fmt.Sprintf("test-user-%d", sdkacctest.RandInt())
@@ -211,13 +211,13 @@ func TestAccAWSUser_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfig(name1, path1),
+				Config: testAccUserConfig(name1, path1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists("aws_iam_user.user", &conf),
-					testAccCheckAWSUserAttributes(&conf, name1, "/"),
+					testAccCheckUserExists("aws_iam_user.user", &conf),
+					testAccCheckUserAttributes(&conf, name1, "/"),
 				),
 			},
 			{
@@ -228,17 +228,17 @@ func TestAccAWSUser_basic(t *testing.T) {
 					"force_destroy"},
 			},
 			{
-				Config: testAccAWSUserConfig(name2, path2),
+				Config: testAccUserConfig(name2, path2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists("aws_iam_user.user", &conf),
-					testAccCheckAWSUserAttributes(&conf, name2, "/path2/"),
+					testAccCheckUserExists("aws_iam_user.user", &conf),
+					testAccCheckUserAttributes(&conf, name2, "/path2/"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSUser_disappears(t *testing.T) {
+func TestAccIAMUser_disappears(t *testing.T) {
 	var user iam.GetUserOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -248,13 +248,13 @@ func TestAccAWSUser_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfig(rName, "/"),
+				Config: testAccUserConfig(rName, "/"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
-					testAccCheckAWSUserDisappears(&user),
+					testAccCheckUserExists(resourceName, &user),
+					testAccCheckUserDisappears(&user),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -262,7 +262,7 @@ func TestAccAWSUser_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSUser_ForceDestroy_AccessKey(t *testing.T) {
+func TestAccIAMUser_ForceDestroy_accessKey(t *testing.T) {
 	var user iam.GetUserOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -272,13 +272,13 @@ func TestAccAWSUser_ForceDestroy_AccessKey(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfigForceDestroy(rName),
+				Config: testAccUserForceDestroyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
-					testAccCheckAWSUserCreatesAccessKey(&user),
+					testAccCheckUserExists(resourceName, &user),
+					testAccCheckUserCreatesAccessKey(&user),
 				),
 			},
 			{
@@ -292,7 +292,7 @@ func TestAccAWSUser_ForceDestroy_AccessKey(t *testing.T) {
 	})
 }
 
-func TestAccAWSUser_ForceDestroy_LoginProfile(t *testing.T) {
+func TestAccIAMUser_ForceDestroy_loginProfile(t *testing.T) {
 	var user iam.GetUserOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -302,13 +302,13 @@ func TestAccAWSUser_ForceDestroy_LoginProfile(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfigForceDestroy(rName),
+				Config: testAccUserForceDestroyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
-					testAccCheckAWSUserCreatesLoginProfile(&user),
+					testAccCheckUserExists(resourceName, &user),
+					testAccCheckUserCreatesLoginProfile(&user),
 				),
 			},
 			{
@@ -322,7 +322,7 @@ func TestAccAWSUser_ForceDestroy_LoginProfile(t *testing.T) {
 	})
 }
 
-func TestAccAWSUser_ForceDestroy_MFADevice(t *testing.T) {
+func TestAccIAMUser_ForceDestroy_mfaDevice(t *testing.T) {
 	var user iam.GetUserOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -332,13 +332,13 @@ func TestAccAWSUser_ForceDestroy_MFADevice(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfigForceDestroy(rName),
+				Config: testAccUserForceDestroyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
-					testAccCheckAWSUserCreatesMFADevice(&user),
+					testAccCheckUserExists(resourceName, &user),
+					testAccCheckUserCreatesMFADevice(&user),
 				),
 			},
 			{
@@ -352,7 +352,7 @@ func TestAccAWSUser_ForceDestroy_MFADevice(t *testing.T) {
 	})
 }
 
-func TestAccAWSUser_ForceDestroy_SSHKey(t *testing.T) {
+func TestAccIAMUser_ForceDestroy_sshKey(t *testing.T) {
 	var user iam.GetUserOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -362,13 +362,13 @@ func TestAccAWSUser_ForceDestroy_SSHKey(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfigForceDestroy(rName),
+				Config: testAccUserForceDestroyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
-					testAccCheckAWSUserUploadsSSHKey(&user),
+					testAccCheckUserExists(resourceName, &user),
+					testAccCheckUserUploadsSSHKey(&user),
 				),
 			},
 			{
@@ -381,7 +381,7 @@ func TestAccAWSUser_ForceDestroy_SSHKey(t *testing.T) {
 	})
 }
 
-func TestAccAWSUser_ForceDestroy_SigningCertificate(t *testing.T) {
+func TestAccIAMUser_ForceDestroy_signingCertificate(t *testing.T) {
 	var user iam.GetUserOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -391,13 +391,13 @@ func TestAccAWSUser_ForceDestroy_SigningCertificate(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfigForceDestroy(rName),
+				Config: testAccUserForceDestroyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
-					testAccCheckAWSUserUploadSigningCertificate(&user),
+					testAccCheckUserExists(resourceName, &user),
+					testAccCheckUserUploadSigningCertificate(&user),
 				),
 			},
 			{
@@ -411,7 +411,7 @@ func TestAccAWSUser_ForceDestroy_SigningCertificate(t *testing.T) {
 	})
 }
 
-func TestAccAWSUser_nameChange(t *testing.T) {
+func TestAccIAMUser_nameChange(t *testing.T) {
 	var conf iam.GetUserOutput
 
 	name1 := fmt.Sprintf("test-user-%d", sdkacctest.RandInt())
@@ -423,12 +423,12 @@ func TestAccAWSUser_nameChange(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfig(name1, path),
+				Config: testAccUserConfig(name1, path),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists("aws_iam_user.user", &conf),
+					testAccCheckUserExists("aws_iam_user.user", &conf),
 				),
 			},
 			{
@@ -439,16 +439,16 @@ func TestAccAWSUser_nameChange(t *testing.T) {
 					"force_destroy"},
 			},
 			{
-				Config: testAccAWSUserConfig(name2, path),
+				Config: testAccUserConfig(name2, path),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists("aws_iam_user.user", &conf),
+					testAccCheckUserExists("aws_iam_user.user", &conf),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSUser_pathChange(t *testing.T) {
+func TestAccIAMUser_pathChange(t *testing.T) {
 	var conf iam.GetUserOutput
 
 	name := fmt.Sprintf("test-user-%d", sdkacctest.RandInt())
@@ -460,12 +460,12 @@ func TestAccAWSUser_pathChange(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfig(name, path1),
+				Config: testAccUserConfig(name, path1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists("aws_iam_user.user", &conf),
+					testAccCheckUserExists("aws_iam_user.user", &conf),
 				),
 			},
 			{
@@ -476,16 +476,16 @@ func TestAccAWSUser_pathChange(t *testing.T) {
 					"force_destroy"},
 			},
 			{
-				Config: testAccAWSUserConfig(name, path2),
+				Config: testAccUserConfig(name, path2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists("aws_iam_user.user", &conf),
+					testAccCheckUserExists("aws_iam_user.user", &conf),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSUser_permissionsBoundary(t *testing.T) {
+func TestAccIAMUser_permissionsBoundary(t *testing.T) {
 	var user iam.GetUserOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -498,15 +498,15 @@ func TestAccAWSUser_permissionsBoundary(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			// Test creation
 			{
-				Config: testAccAWSUserConfig_permissionsBoundary(rName, permissionsBoundary1),
+				Config: testAccUserConfig_permissionsBoundary(rName, permissionsBoundary1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
+					testAccCheckUserExists(resourceName, &user),
 					resource.TestCheckResourceAttr(resourceName, "permissions_boundary", permissionsBoundary1),
-					testAccCheckAWSUserPermissionsBoundary(&user, permissionsBoundary1),
+					testAccCheckUserPermissionsBoundary(&user, permissionsBoundary1),
 				),
 			},
 			{
@@ -518,11 +518,11 @@ func TestAccAWSUser_permissionsBoundary(t *testing.T) {
 			},
 			// Test update
 			{
-				Config: testAccAWSUserConfig_permissionsBoundary(rName, permissionsBoundary2),
+				Config: testAccUserConfig_permissionsBoundary(rName, permissionsBoundary2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
+					testAccCheckUserExists(resourceName, &user),
 					resource.TestCheckResourceAttr(resourceName, "permissions_boundary", permissionsBoundary2),
-					testAccCheckAWSUserPermissionsBoundary(&user, permissionsBoundary2),
+					testAccCheckUserPermissionsBoundary(&user, permissionsBoundary2),
 				),
 			},
 			// Test import
@@ -534,36 +534,36 @@ func TestAccAWSUser_permissionsBoundary(t *testing.T) {
 			},
 			// Test removal
 			{
-				Config: testAccAWSUserConfig(rName, "/"),
+				Config: testAccUserConfig(rName, "/"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
+					testAccCheckUserExists(resourceName, &user),
 					resource.TestCheckResourceAttr(resourceName, "permissions_boundary", ""),
-					testAccCheckAWSUserPermissionsBoundary(&user, ""),
+					testAccCheckUserPermissionsBoundary(&user, ""),
 				),
 			},
 			// Test addition
 			{
-				Config: testAccAWSUserConfig_permissionsBoundary(rName, permissionsBoundary1),
+				Config: testAccUserConfig_permissionsBoundary(rName, permissionsBoundary1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
+					testAccCheckUserExists(resourceName, &user),
 					resource.TestCheckResourceAttr(resourceName, "permissions_boundary", permissionsBoundary1),
-					testAccCheckAWSUserPermissionsBoundary(&user, permissionsBoundary1),
+					testAccCheckUserPermissionsBoundary(&user, permissionsBoundary1),
 				),
 			},
 			// Test empty value
 			{
-				Config: testAccAWSUserConfig_permissionsBoundary(rName, ""),
+				Config: testAccUserConfig_permissionsBoundary(rName, ""),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
+					testAccCheckUserExists(resourceName, &user),
 					resource.TestCheckResourceAttr(resourceName, "permissions_boundary", ""),
-					testAccCheckAWSUserPermissionsBoundary(&user, ""),
+					testAccCheckUserPermissionsBoundary(&user, ""),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSUser_tags(t *testing.T) {
+func TestAccIAMUser_tags(t *testing.T) {
 	var user iam.GetUserOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -573,12 +573,12 @@ func TestAccAWSUser_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSUserDestroy,
+		CheckDestroy: testAccCheckUserDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSUserConfig_tags(rName),
+				Config: testAccUserConfig_tags(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
+					testAccCheckUserExists(resourceName, &user),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Name", "test-Name"),
 					resource.TestCheckResourceAttr(resourceName, "tags.tag2", "test-tag2"),
@@ -592,9 +592,9 @@ func TestAccAWSUser_tags(t *testing.T) {
 					"force_destroy"},
 			},
 			{
-				Config: testAccAWSUserConfig_tagsUpdate(rName),
+				Config: testAccUserConfig_tagsUpdate(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSUserExists(resourceName, &user),
+					testAccCheckUserExists(resourceName, &user),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.tag2", "test-tagUpdate"),
 				),
@@ -603,7 +603,7 @@ func TestAccAWSUser_tags(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSUserDestroy(s *terraform.State) error {
+func testAccCheckUserDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).IAMConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -628,7 +628,7 @@ func testAccCheckAWSUserDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSUserExists(n string, res *iam.GetUserOutput) resource.TestCheckFunc {
+func testAccCheckUserExists(n string, res *iam.GetUserOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -654,7 +654,7 @@ func testAccCheckAWSUserExists(n string, res *iam.GetUserOutput) resource.TestCh
 	}
 }
 
-func testAccCheckAWSUserAttributes(user *iam.GetUserOutput, name string, path string) resource.TestCheckFunc {
+func testAccCheckUserAttributes(user *iam.GetUserOutput, name string, path string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if *user.User.UserName != name {
 			return fmt.Errorf("Bad name: %s", *user.User.UserName)
@@ -668,7 +668,7 @@ func testAccCheckAWSUserAttributes(user *iam.GetUserOutput, name string, path st
 	}
 }
 
-func testAccCheckAWSUserDisappears(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
+func testAccCheckUserDisappears(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).IAMConn
 
@@ -685,7 +685,7 @@ func testAccCheckAWSUserDisappears(getUserOutput *iam.GetUserOutput) resource.Te
 	}
 }
 
-func testAccCheckAWSUserPermissionsBoundary(getUserOutput *iam.GetUserOutput, expectedPermissionsBoundaryArn string) resource.TestCheckFunc {
+func testAccCheckUserPermissionsBoundary(getUserOutput *iam.GetUserOutput, expectedPermissionsBoundaryArn string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		actualPermissionsBoundaryArn := ""
 
@@ -701,7 +701,7 @@ func testAccCheckAWSUserPermissionsBoundary(getUserOutput *iam.GetUserOutput, ex
 	}
 }
 
-func testAccCheckAWSUserCreatesAccessKey(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
+func testAccCheckUserCreatesAccessKey(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).IAMConn
 
@@ -717,7 +717,7 @@ func testAccCheckAWSUserCreatesAccessKey(getUserOutput *iam.GetUserOutput) resou
 	}
 }
 
-func testAccCheckAWSUserCreatesLoginProfile(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
+func testAccCheckUserCreatesLoginProfile(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).IAMConn
 		password, err := tfiam.GeneratePassword(32)
@@ -737,7 +737,7 @@ func testAccCheckAWSUserCreatesLoginProfile(getUserOutput *iam.GetUserOutput) re
 	}
 }
 
-func testAccCheckAWSUserCreatesMFADevice(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
+func testAccCheckUserCreatesMFADevice(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).IAMConn
 
@@ -777,7 +777,7 @@ func testAccCheckAWSUserCreatesMFADevice(getUserOutput *iam.GetUserOutput) resou
 }
 
 // Creates an IAM User SSH Key outside of Terraform to verify that it is deleted when `force_destroy` is set
-func testAccCheckAWSUserUploadsSSHKey(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
+func testAccCheckUserUploadsSSHKey(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
 		publicKey, _, err := RandSSHKeyPairSize(2048, acctest.DefaultEmailAddress)
@@ -801,7 +801,7 @@ func testAccCheckAWSUserUploadsSSHKey(getUserOutput *iam.GetUserOutput) resource
 	}
 }
 
-func testAccCheckAWSUserUploadSigningCertificate(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
+func testAccCheckUserUploadSigningCertificate(getUserOutput *iam.GetUserOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).IAMConn
 
@@ -822,7 +822,7 @@ func testAccCheckAWSUserUploadSigningCertificate(getUserOutput *iam.GetUserOutpu
 	}
 }
 
-func testAccAWSUserConfig(rName, path string) string {
+func testAccUserConfig(rName, path string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_user" "user" {
   name = %q
@@ -831,7 +831,7 @@ resource "aws_iam_user" "user" {
 `, rName, path)
 }
 
-func testAccAWSUserConfig_permissionsBoundary(rName, permissionsBoundary string) string {
+func testAccUserConfig_permissionsBoundary(rName, permissionsBoundary string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_user" "user" {
   name                 = %q
@@ -840,7 +840,7 @@ resource "aws_iam_user" "user" {
 `, rName, permissionsBoundary)
 }
 
-func testAccAWSUserConfigForceDestroy(rName string) string {
+func testAccUserForceDestroyConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_user" "test" {
   force_destroy = true
@@ -849,7 +849,7 @@ resource "aws_iam_user" "test" {
 `, rName)
 }
 
-func testAccAWSUserConfig_tags(rName string) string {
+func testAccUserConfig_tags(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_user" "test" {
   name = %q
@@ -862,7 +862,7 @@ resource "aws_iam_user" "test" {
 `, rName)
 }
 
-func testAccAWSUserConfig_tagsUpdate(rName string) string {
+func testAccUserConfig_tagsUpdate(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_user" "test" {
   name = %q

@@ -63,7 +63,7 @@ func testSweepIamOpenIDConnectProvider(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSIAMOpenIDConnectProvider_basic(t *testing.T) {
+func TestAccIAMOpenidConnectProvider_OpenID_basic(t *testing.T) {
 	rString := sdkacctest.RandString(5)
 	url := "accounts.testle.com/" + rString
 	resourceName := "aws_iam_openid_connect_provider.test"
@@ -110,7 +110,7 @@ func TestAccAWSIAMOpenIDConnectProvider_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSIAMOpenIDConnectProvider_tags(t *testing.T) {
+func TestAccIAMOpenidConnectProvider_OpenID_tags(t *testing.T) {
 	rString := sdkacctest.RandString(5)
 	resourceName := "aws_iam_openid_connect_provider.test"
 
@@ -118,7 +118,7 @@ func TestAccAWSIAMOpenIDConnectProvider_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSInstanceProfileDestroy,
+		CheckDestroy: testAccCheckInstanceProfileDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccIAMOpenIDConnectProviderConfigTags1(rString, "key1", "value1"),
@@ -155,7 +155,7 @@ func TestAccAWSIAMOpenIDConnectProvider_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSIAMOpenIDConnectProvider_disappears(t *testing.T) {
+func TestAccIAMOpenidConnectProvider_OpenID_disappears(t *testing.T) {
 	rString := sdkacctest.RandString(5)
 	resourceName := "aws_iam_openid_connect_provider.test"
 

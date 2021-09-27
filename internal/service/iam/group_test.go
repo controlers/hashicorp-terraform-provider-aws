@@ -144,7 +144,7 @@ func testSweepIamGroups(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSIAMGroup_basic(t *testing.T) {
+func TestAccIAMGroup_basic(t *testing.T) {
 	var conf iam.GetGroupOutput
 	resourceName := "aws_iam_group.test"
 	resourceName2 := "aws_iam_group.test2"
@@ -156,13 +156,13 @@ func TestAccAWSIAMGroup_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGroupConfig(groupName),
+				Config: testAccGroupConfig(groupName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGroupExists(resourceName, &conf),
-					testAccCheckAWSGroupAttributes(&conf, groupName, "/"),
+					testAccCheckGroupExists(resourceName, &conf),
+					testAccCheckGroupAttributes(&conf, groupName, "/"),
 				),
 			},
 			{
@@ -171,17 +171,17 @@ func TestAccAWSIAMGroup_basic(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSGroupConfig2(groupName2),
+				Config: testAccGroup2Config(groupName2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGroupExists(resourceName2, &conf),
-					testAccCheckAWSGroupAttributes(&conf, groupName2, "/funnypath/"),
+					testAccCheckGroupExists(resourceName2, &conf),
+					testAccCheckGroupAttributes(&conf, groupName2, "/funnypath/"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSIAMGroup_nameChange(t *testing.T) {
+func TestAccIAMGroup_nameChange(t *testing.T) {
 	var conf iam.GetGroupOutput
 	resourceName := "aws_iam_group.test"
 	rString := sdkacctest.RandString(8)
@@ -192,27 +192,27 @@ func TestAccAWSIAMGroup_nameChange(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSGroupDestroy,
+		CheckDestroy: testAccCheckGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSGroupConfig(groupName),
+				Config: testAccGroupConfig(groupName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGroupExists(resourceName, &conf),
-					testAccCheckAWSGroupAttributes(&conf, groupName, "/"),
+					testAccCheckGroupExists(resourceName, &conf),
+					testAccCheckGroupAttributes(&conf, groupName, "/"),
 				),
 			},
 			{
-				Config: testAccAWSGroupConfig(groupName2),
+				Config: testAccGroupConfig(groupName2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSGroupExists(resourceName, &conf),
-					testAccCheckAWSGroupAttributes(&conf, groupName2, "/"),
+					testAccCheckGroupExists(resourceName, &conf),
+					testAccCheckGroupAttributes(&conf, groupName2, "/"),
 				),
 			},
 		},
 	})
 }
 
-func testAccCheckAWSGroupDestroy(s *terraform.State) error {
+func testAccCheckGroupDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).IAMConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -241,7 +241,7 @@ func testAccCheckAWSGroupDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSGroupExists(n string, res *iam.GetGroupOutput) resource.TestCheckFunc {
+func testAccCheckGroupExists(n string, res *iam.GetGroupOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -267,7 +267,7 @@ func testAccCheckAWSGroupExists(n string, res *iam.GetGroupOutput) resource.Test
 	}
 }
 
-func testAccCheckAWSGroupAttributes(group *iam.GetGroupOutput, name string, path string) resource.TestCheckFunc {
+func testAccCheckGroupAttributes(group *iam.GetGroupOutput, name string, path string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if *group.Group.GroupName != name {
 			return fmt.Errorf("Bad name: %s when %s was expected", *group.Group.GroupName, name)
@@ -281,7 +281,7 @@ func testAccCheckAWSGroupAttributes(group *iam.GetGroupOutput, name string, path
 	}
 }
 
-func testAccAWSGroupConfig(groupName string) string {
+func testAccGroupConfig(groupName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_group" "test" {
   name = "%s"
@@ -290,7 +290,7 @@ resource "aws_iam_group" "test" {
 `, groupName)
 }
 
-func testAccAWSGroupConfig2(groupName string) string {
+func testAccGroup2Config(groupName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_group" "test2" {
   name = "%s"

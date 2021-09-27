@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDataSourceIAMRole_basic(t *testing.T) {
+func TestAccIAMRoleDataSource_basic(t *testing.T) {
 	roleName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_iam_role.test"
 	resourceName := "aws_iam_role.test"
@@ -21,7 +21,7 @@ func TestAccAWSDataSourceIAMRole_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsIAMRoleDataSourceConfig(roleName),
+				Config: testAccRoleDataSourceConfig(roleName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "assume_role_policy", resourceName, "assume_role_policy"),
@@ -38,7 +38,7 @@ func TestAccAWSDataSourceIAMRole_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSourceIAMRole_tags(t *testing.T) {
+func TestAccIAMRoleDataSource_tags(t *testing.T) {
 	roleName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_iam_role.test"
 	resourceName := "aws_iam_role.test"
@@ -49,7 +49,7 @@ func TestAccAWSDataSourceIAMRole_tags(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsIAMRoleDataSourceConfig_tags(roleName),
+				Config: testAccRoleDataSourceConfig_tags(roleName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "assume_role_policy", resourceName, "assume_role_policy"),
@@ -68,7 +68,7 @@ func TestAccAWSDataSourceIAMRole_tags(t *testing.T) {
 	})
 }
 
-func testAccAwsIAMRoleDataSourceConfig(roleName string) string {
+func testAccRoleDataSourceConfig(roleName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "test" {
   name = %[1]q
@@ -98,7 +98,7 @@ data "aws_iam_role" "test" {
 `, roleName)
 }
 
-func testAccAwsIAMRoleDataSourceConfig_tags(roleName string) string {
+func testAccRoleDataSourceConfig_tags(roleName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "test" {
   name = %q

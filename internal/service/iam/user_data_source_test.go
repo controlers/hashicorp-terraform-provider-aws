@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDataSourceIAMUser_basic(t *testing.T) {
+func TestAccIAMUserDataSource_basic(t *testing.T) {
 	resourceName := "aws_iam_user.test"
 	dataSourceName := "data.aws_iam_user.test"
 
@@ -22,7 +22,7 @@ func TestAccAWSDataSourceIAMUser_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDataSourceIAMUserConfig(userName),
+				Config: testAccUserDataSourceConfig(userName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "user_id", resourceName, "unique_id"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "path", resourceName, "path"),
@@ -36,7 +36,7 @@ func TestAccAWSDataSourceIAMUser_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDataSourceIAMUser_tags(t *testing.T) {
+func TestAccIAMUserDataSource_tags(t *testing.T) {
 	resourceName := "aws_iam_user.test"
 	dataSourceName := "data.aws_iam_user.test"
 
@@ -48,7 +48,7 @@ func TestAccAWSDataSourceIAMUser_tags(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsDataSourceIAMUserConfig_tags(userName),
+				Config: testAccUserDataSourceConfig_tags(userName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "tags", resourceName, "tags"),
 				),
@@ -57,7 +57,7 @@ func TestAccAWSDataSourceIAMUser_tags(t *testing.T) {
 	})
 }
 
-func testAccAwsDataSourceIAMUserConfig(name string) string {
+func testAccUserDataSourceConfig(name string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_user" "test" {
   name = "%s"
@@ -70,7 +70,7 @@ data "aws_iam_user" "test" {
 `, name)
 }
 
-func testAccAwsDataSourceIAMUserConfig_tags(name string) string {
+func testAccUserDataSourceConfig_tags(name string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_user" "test" {
   name = "%s"
