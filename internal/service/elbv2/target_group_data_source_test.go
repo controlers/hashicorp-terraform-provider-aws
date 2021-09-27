@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAWSLBTargetGroup_basic(t *testing.T) {
+func TestAccELBV2TargetGroupDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceNameArn := "data.aws_lb_target_group.alb_tg_test_with_arn"
 	resourceName := "data.aws_lb_target_group.alb_tg_test_with_name"
@@ -21,7 +21,7 @@ func TestAccDataSourceAWSLBTargetGroup_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLBTargetGroupConfigBasic(rName),
+				Config: testAcclbTargetGroupBasicDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceNameArn, "name", rName),
 					resource.TestCheckResourceAttrSet(resourceNameArn, "arn"),
@@ -71,7 +71,7 @@ func TestAccDataSourceAWSLBTargetGroup_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLBTargetGroup_appCookie(t *testing.T) {
+func TestAccELBV2TargetGroupDataSource_appCookie(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceNameArn := "data.aws_lb_target_group.alb_tg_test_with_arn"
 
@@ -81,7 +81,7 @@ func TestAccDataSourceAWSLBTargetGroup_appCookie(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLBTargetGroupConfigAppCookie(rName),
+				Config: testAcclbTargetGroupAppCookieDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceNameArn, "name", rName),
 					resource.TestCheckResourceAttrSet(resourceNameArn, "arn"),
@@ -112,7 +112,7 @@ func TestAccDataSourceAWSLBTargetGroup_appCookie(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLBTargetGroup_BackwardsCompatibility(t *testing.T) {
+func TestAccELBV2TargetGroupDataSource_backwardsCompatibility(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceNameArn := "data.aws_alb_target_group.alb_tg_test_with_arn"
 	resourceName := "data.aws_alb_target_group.alb_tg_test_with_name"
@@ -123,7 +123,7 @@ func TestAccDataSourceAWSLBTargetGroup_BackwardsCompatibility(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLBTargetGroupConfigBackwardsCompatibility(rName),
+				Config: testAcclbTargetGroupBackwardsCompatibilityDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceNameArn, "name", rName),
 					resource.TestCheckResourceAttrSet(resourceNameArn, "arn"),
@@ -171,7 +171,7 @@ func TestAccDataSourceAWSLBTargetGroup_BackwardsCompatibility(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAWSLBTargetGroupConfigBasic(rName string) string {
+func testAcclbTargetGroupBasicDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.alb_test.id
@@ -288,7 +288,7 @@ data "aws_lb_target_group" "alb_tg_test_with_name" {
 `, rName)
 }
 
-func testAccDataSourceAWSLBTargetGroupConfigAppCookie(rName string) string {
+func testAcclbTargetGroupAppCookieDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.alb_test.id
@@ -407,7 +407,7 @@ data "aws_lb_target_group" "alb_tg_test_with_arn" {
 `, rName)
 }
 
-func testAccDataSourceAWSLBTargetGroupConfigBackwardsCompatibility(rName string) string {
+func testAcclbTargetGroupBackwardsCompatibilityDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_alb_listener" "front_end" {
   load_balancer_arn = aws_alb.alb_test.id

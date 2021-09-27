@@ -110,21 +110,21 @@ func TestLBCloudwatchSuffixFromARN(t *testing.T) {
 	}
 }
 
-func TestAccAWSLB_ALB_basic(t *testing.T) {
+func TestAccELBV2LoadBalancer_ALB_basic(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_basic(lbName),
+				Config: testAccLoadBalancerConfig_basic(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "elasticloadbalancing", regexp.MustCompile(fmt.Sprintf("loadbalancer/app/%s/.+", lbName))),
@@ -147,21 +147,21 @@ func TestAccAWSLB_ALB_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_NLB_basic(t *testing.T) {
+func TestAccELBV2LoadBalancer_NLB_basic(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_networkLoadbalancer(lbName, false),
+				Config: testAccLoadBalancerConfig_networkLoadbalancer(lbName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "elasticloadbalancing", regexp.MustCompile(fmt.Sprintf("loadbalancer/net/%s/.+", lbName))),
@@ -180,7 +180,7 @@ func TestAccAWSLB_NLB_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_LoadBalancerType_Gateway(t *testing.T) {
+func TestAccELBV2LoadBalancer_LoadBalancerType_gateway(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_lb.test"
@@ -189,12 +189,12 @@ func TestAccAWSLB_LoadBalancerType_Gateway(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckElbv2GatewayLoadBalancer(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSLBDestroy,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_LoadBalancerType_Gateway(rName),
+				Config: testAccLoadBalancerConfig_LoadBalancerType_Gateway(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "elasticloadbalancing", regexp.MustCompile(fmt.Sprintf("loadbalancer/gwy/%s/.+", rName))),
 					resource.TestCheckResourceAttr(resourceName, "load_balancer_type", elbv2.LoadBalancerTypeEnumGateway),
 				),
@@ -213,7 +213,7 @@ func TestAccAWSLB_LoadBalancerType_Gateway(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_IPv6SubnetMapping(t *testing.T) {
+func TestAccELBV2LoadBalancer_ipv6SubnetMapping(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_lb.test"
@@ -222,12 +222,12 @@ func TestAccAWSLB_IPv6SubnetMapping(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSLBDestroy,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_IPv6(rName),
+				Config: testAccLoadBalancerConfig_IPv6(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestMatchTypeSetElemNestedAttrs(resourceName, "subnet_mapping.*", map[string]*regexp.Regexp{
 						"ipv6_address": regexp.MustCompile("[a-f0-6]+:[a-f0-6:]+"),
 					}),
@@ -247,7 +247,7 @@ func TestAccAWSLB_IPv6SubnetMapping(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(t *testing.T) {
+func TestAccELBV2LoadBalancer_LoadBalancerTypeGateway_enableCrossZoneLoadBalancing(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_lb.test"
@@ -256,12 +256,12 @@ func TestAccAWSLB_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(t *testi
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckElbv2GatewayLoadBalancer(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, elbv2.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSLBDestroy,
+		CheckDestroy:      testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(rName, true),
+				Config: testAccLoadBalancerConfig_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(rName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "elasticloadbalancing", regexp.MustCompile(fmt.Sprintf("loadbalancer/gwy/%s/.+", rName))),
 					resource.TestCheckResourceAttr(resourceName, "load_balancer_type", elbv2.LoadBalancerTypeEnumGateway),
 					resource.TestCheckResourceAttr(resourceName, "enable_cross_zone_load_balancing", "true"),
@@ -278,9 +278,9 @@ func TestAccAWSLB_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(t *testi
 				},
 			},
 			{
-				Config: testAccAWSLBConfig_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(rName, false),
+				Config: testAccLoadBalancerConfig_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(rName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "elasticloadbalancing", regexp.MustCompile(fmt.Sprintf("loadbalancer/gwy/%s/.+", rName))),
 					resource.TestCheckResourceAttr(resourceName, "load_balancer_type", elbv2.LoadBalancerTypeEnumGateway),
 					resource.TestCheckResourceAttr(resourceName, "enable_cross_zone_load_balancing", "false"),
@@ -290,21 +290,21 @@ func TestAccAWSLB_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(t *testi
 	})
 }
 
-func TestAccAWSLB_ALB_outpost(t *testing.T) {
+func TestAccELBV2LoadBalancer_ALB_outpost(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-outpost-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-outpost-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_outpost(lbName),
+				Config: testAccLoadBalancerConfig_outpost(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "elasticloadbalancing", regexp.MustCompile(fmt.Sprintf("loadbalancer/app/%s/.+", lbName))),
@@ -329,21 +329,21 @@ func TestAccAWSLB_ALB_outpost(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_networkLoadbalancerEIP(t *testing.T) {
+func TestAccELBV2LoadBalancer_networkLoadBalancerEIP(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	resourceName := "aws_lb.lb_test"
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_networkLoadBalancerEIP(lbName),
+				Config: testAccLoadBalancerConfig_networkLoadBalancerEIP(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "name", lbName),
 					resource.TestCheckResourceAttr(resourceName, "internal", "false"),
 					resource.TestCheckResourceAttr(resourceName, "ip_address_type", "ipv4"),
@@ -359,21 +359,21 @@ func TestAccAWSLB_networkLoadbalancerEIP(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_NLB_privateipv4address(t *testing.T) {
+func TestAccELBV2LoadBalancer_NLB_privateIPv4Address(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-pipv4a-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-pipv4a-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_networkLoadBalancerPrivateIPV4Address(lbName),
+				Config: testAccLoadBalancerConfig_networkLoadBalancerPrivateIPV4Address(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "internal", "true"),
 					resource.TestCheckResourceAttr(resourceName, "load_balancer_type", "network"),
 					resource.TestCheckResourceAttr(resourceName, "subnet_mapping.#", "1"),
@@ -388,21 +388,21 @@ func TestAccAWSLB_NLB_privateipv4address(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_BackwardsCompatibility(t *testing.T) {
+func TestAccELBV2LoadBalancer_backwardsCompatibility(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_alb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfigBackwardsCompatibility(lbName),
+				Config: testAccLoadBalancerBackwardsCompatibilityConfig(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "name", lbName),
 					resource.TestCheckResourceAttr(resourceName, "internal", "true"),
 					resource.TestCheckResourceAttr(resourceName, "subnets.#", "2"),
@@ -423,7 +423,7 @@ func TestAccAWSLB_BackwardsCompatibility(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_generatedName(t *testing.T) {
+func TestAccELBV2LoadBalancer_generatedName(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	resourceName := "aws_lb.lb_test"
 
@@ -431,12 +431,12 @@ func TestAccAWSLB_generatedName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_generatedName(),
+				Config: testAccLoadBalancerConfig_generatedName(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttrSet(resourceName, "name"),
 				),
 			},
@@ -444,7 +444,7 @@ func TestAccAWSLB_generatedName(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_generatesNameForZeroValue(t *testing.T) {
+func TestAccELBV2LoadBalancer_generatesNameForZeroValue(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	resourceName := "aws_lb.lb_test"
 
@@ -452,12 +452,12 @@ func TestAccAWSLB_generatesNameForZeroValue(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_zeroValueName(),
+				Config: testAccLoadBalancerConfig_zeroValueName(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttrSet(resourceName, "name"),
 				),
 			},
@@ -465,7 +465,7 @@ func TestAccAWSLB_generatesNameForZeroValue(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_namePrefix(t *testing.T) {
+func TestAccELBV2LoadBalancer_namePrefix(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	resourceName := "aws_lb.lb_test"
 
@@ -473,12 +473,12 @@ func TestAccAWSLB_namePrefix(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_namePrefix(),
+				Config: testAccLoadBalancerConfig_namePrefix(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttrSet(resourceName, "name"),
 					resource.TestMatchResourceAttr(resourceName, "name",
 						regexp.MustCompile("^tf-lb-")),
@@ -488,38 +488,38 @@ func TestAccAWSLB_namePrefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_tags(t *testing.T) {
+func TestAccELBV2LoadBalancer_tags(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_basic(lbName),
+				Config: testAccLoadBalancerConfig_basic(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Name", "TestAccAWSALB_basic"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_updatedTags(lbName),
+				Config: testAccLoadBalancerConfig_updatedTags(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Type", "Sample Type Tag"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Environment", "Production"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_basic(lbName),
+				Config: testAccLoadBalancerConfig_basic(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Name", "TestAccAWSALB_basic"),
 				),
@@ -528,251 +528,251 @@ func TestAccAWSLB_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_networkLoadbalancer_updateCrossZone(t *testing.T) {
+func TestAccELBV2LoadBalancer_NetworkLoadBalancer_updateCrossZone(t *testing.T) {
 	var pre, mid, post elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-nlbcz-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-nlbcz-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_networkLoadbalancer(lbName, true),
+				Config: testAccLoadBalancerConfig_networkLoadbalancer(lbName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &pre),
-					testAccCheckAWSLBAttribute(resourceName, "load_balancing.cross_zone.enabled", "true"),
+					testAccCheckLoadBalancerExists(resourceName, &pre),
+					testAccCheckLoadBalancerAttribute(resourceName, "load_balancing.cross_zone.enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "enable_cross_zone_load_balancing", "true"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_networkLoadbalancer(lbName, false),
+				Config: testAccLoadBalancerConfig_networkLoadbalancer(lbName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &mid),
-					testAccCheckAWSLBAttribute(resourceName, "load_balancing.cross_zone.enabled", "false"),
+					testAccCheckLoadBalancerExists(resourceName, &mid),
+					testAccCheckLoadBalancerAttribute(resourceName, "load_balancing.cross_zone.enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "enable_cross_zone_load_balancing", "false"),
-					testAccCheckAWSlbARNs(&pre, &mid),
+					testAccChecklbARNs(&pre, &mid),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_networkLoadbalancer(lbName, true),
+				Config: testAccLoadBalancerConfig_networkLoadbalancer(lbName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &post),
-					testAccCheckAWSLBAttribute(resourceName, "load_balancing.cross_zone.enabled", "true"),
+					testAccCheckLoadBalancerExists(resourceName, &post),
+					testAccCheckLoadBalancerAttribute(resourceName, "load_balancing.cross_zone.enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "enable_cross_zone_load_balancing", "true"),
-					testAccCheckAWSlbARNs(&mid, &post),
+					testAccChecklbARNs(&mid, &post),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLB_applicationLoadBalancer_updateHttp2(t *testing.T) {
+func TestAccELBV2LoadBalancer_ApplicationLoadBalancer_updateHTTP2(t *testing.T) {
 	var pre, mid, post elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawsalb-http2-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSalb-http2-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_enableHttp2(lbName, false),
+				Config: testAccLoadBalancerConfig_enableHTTP2(lbName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &pre),
-					testAccCheckAWSLBAttribute(resourceName, "routing.http2.enabled", "false"),
+					testAccCheckLoadBalancerExists(resourceName, &pre),
+					testAccCheckLoadBalancerAttribute(resourceName, "routing.http2.enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "enable_http2", "false"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_enableHttp2(lbName, true),
+				Config: testAccLoadBalancerConfig_enableHTTP2(lbName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &mid),
-					testAccCheckAWSLBAttribute(resourceName, "routing.http2.enabled", "true"),
+					testAccCheckLoadBalancerExists(resourceName, &mid),
+					testAccCheckLoadBalancerAttribute(resourceName, "routing.http2.enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "enable_http2", "true"),
-					testAccCheckAWSlbARNs(&pre, &mid),
+					testAccChecklbARNs(&pre, &mid),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_enableHttp2(lbName, false),
+				Config: testAccLoadBalancerConfig_enableHTTP2(lbName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &post),
-					testAccCheckAWSLBAttribute(resourceName, "routing.http2.enabled", "false"),
+					testAccCheckLoadBalancerExists(resourceName, &post),
+					testAccCheckLoadBalancerAttribute(resourceName, "routing.http2.enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "enable_http2", "false"),
-					testAccCheckAWSlbARNs(&mid, &post),
+					testAccChecklbARNs(&mid, &post),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLB_applicationLoadBalancer_updateDropInvalidHeaderFields(t *testing.T) {
+func TestAccELBV2LoadBalancer_ApplicationLoadBalancer_updateDropInvalidHeaderFields(t *testing.T) {
 	var pre, mid, post elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawsalb-headers-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSalb-headers-%s", sdkacctest.RandString(10))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_enableDropInvalidHeaderFields(lbName, false),
+				Config: testAccLoadBalancerConfig_enableDropInvalidHeaderFields(lbName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists("aws_lb.lb_test", &pre),
-					testAccCheckAWSLBAttribute("aws_lb.lb_test", "routing.http.drop_invalid_header_fields.enabled", "false"),
+					testAccCheckLoadBalancerExists("aws_lb.lb_test", &pre),
+					testAccCheckLoadBalancerAttribute("aws_lb.lb_test", "routing.http.drop_invalid_header_fields.enabled", "false"),
 					resource.TestCheckResourceAttr("aws_lb.lb_test", "drop_invalid_header_fields", "false"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_enableDropInvalidHeaderFields(lbName, true),
+				Config: testAccLoadBalancerConfig_enableDropInvalidHeaderFields(lbName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists("aws_lb.lb_test", &mid),
-					testAccCheckAWSLBAttribute("aws_lb.lb_test", "routing.http.drop_invalid_header_fields.enabled", "true"),
+					testAccCheckLoadBalancerExists("aws_lb.lb_test", &mid),
+					testAccCheckLoadBalancerAttribute("aws_lb.lb_test", "routing.http.drop_invalid_header_fields.enabled", "true"),
 					resource.TestCheckResourceAttr("aws_lb.lb_test", "drop_invalid_header_fields", "true"),
-					testAccCheckAWSlbARNs(&pre, &mid),
+					testAccChecklbARNs(&pre, &mid),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_enableDropInvalidHeaderFields(lbName, false),
+				Config: testAccLoadBalancerConfig_enableDropInvalidHeaderFields(lbName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists("aws_lb.lb_test", &post),
-					testAccCheckAWSLBAttribute("aws_lb.lb_test", "routing.http.drop_invalid_header_fields.enabled", "false"),
+					testAccCheckLoadBalancerExists("aws_lb.lb_test", &post),
+					testAccCheckLoadBalancerAttribute("aws_lb.lb_test", "routing.http.drop_invalid_header_fields.enabled", "false"),
 					resource.TestCheckResourceAttr("aws_lb.lb_test", "drop_invalid_header_fields", "false"),
-					testAccCheckAWSlbARNs(&mid, &post),
+					testAccChecklbARNs(&mid, &post),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLB_applicationLoadBalancer_updateDeletionProtection(t *testing.T) {
+func TestAccELBV2LoadBalancer_ApplicationLoadBalancer_updateDeletionProtection(t *testing.T) {
 	var pre, mid, post elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawsalb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSalb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_enableDeletionProtection(lbName, false),
+				Config: testAccLoadBalancerConfig_enableDeletionProtection(lbName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &pre),
-					testAccCheckAWSLBAttribute(resourceName, "deletion_protection.enabled", "false"),
+					testAccCheckLoadBalancerExists(resourceName, &pre),
+					testAccCheckLoadBalancerAttribute(resourceName, "deletion_protection.enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "enable_deletion_protection", "false"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_enableDeletionProtection(lbName, true),
+				Config: testAccLoadBalancerConfig_enableDeletionProtection(lbName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &mid),
-					testAccCheckAWSLBAttribute(resourceName, "deletion_protection.enabled", "true"),
+					testAccCheckLoadBalancerExists(resourceName, &mid),
+					testAccCheckLoadBalancerAttribute(resourceName, "deletion_protection.enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "enable_deletion_protection", "true"),
-					testAccCheckAWSlbARNs(&pre, &mid),
+					testAccChecklbARNs(&pre, &mid),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_enableDeletionProtection(lbName, false),
+				Config: testAccLoadBalancerConfig_enableDeletionProtection(lbName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &post),
-					testAccCheckAWSLBAttribute(resourceName, "deletion_protection.enabled", "false"),
+					testAccCheckLoadBalancerExists(resourceName, &post),
+					testAccCheckLoadBalancerAttribute(resourceName, "deletion_protection.enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "enable_deletion_protection", "false"),
-					testAccCheckAWSlbARNs(&mid, &post),
+					testAccChecklbARNs(&mid, &post),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLB_updatedSecurityGroups(t *testing.T) {
+func TestAccELBV2LoadBalancer_updatedSecurityGroups(t *testing.T) {
 	var pre, post elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_basic(lbName),
+				Config: testAccLoadBalancerConfig_basic(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &pre),
+					testAccCheckLoadBalancerExists(resourceName, &pre),
 					resource.TestCheckResourceAttr(resourceName, "security_groups.#", "1"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_updateSecurityGroups(lbName),
+				Config: testAccLoadBalancerConfig_updateSecurityGroups(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &post),
+					testAccCheckLoadBalancerExists(resourceName, &post),
 					resource.TestCheckResourceAttr(resourceName, "security_groups.#", "2"),
-					testAccCheckAWSlbARNs(&pre, &post),
+					testAccChecklbARNs(&pre, &post),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLB_updatedSubnets(t *testing.T) {
+func TestAccELBV2LoadBalancer_updatedSubnets(t *testing.T) {
 	var pre, post elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_basic(lbName),
+				Config: testAccLoadBalancerConfig_basic(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &pre),
+					testAccCheckLoadBalancerExists(resourceName, &pre),
 					resource.TestCheckResourceAttr(resourceName, "subnets.#", "2"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfig_updateSubnets(lbName),
+				Config: testAccLoadBalancerConfig_updateSubnets(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &post),
+					testAccCheckLoadBalancerExists(resourceName, &post),
 					resource.TestCheckResourceAttr(resourceName, "subnets.#", "3"),
-					testAccCheckAWSlbARNs(&pre, &post),
+					testAccChecklbARNs(&pre, &post),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLB_updatedIpAddressType(t *testing.T) {
+func TestAccELBV2LoadBalancer_updatedIPAddressType(t *testing.T) {
 	var pre, post elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfigWithIpAddressType(lbName),
+				Config: testAccLoadBalancerWithIPAddressTypeConfig(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &pre),
+					testAccCheckLoadBalancerExists(resourceName, &pre),
 					resource.TestCheckResourceAttr(resourceName, "ip_address_type", "ipv4"),
 				),
 			},
 			{
-				Config: testAccAWSLBConfigWithIpAddressTypeUpdated(lbName),
+				Config: testAccLoadBalancerWithIPAddressTypeUpdatedConfig(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &post),
+					testAccCheckLoadBalancerExists(resourceName, &post),
 					resource.TestCheckResourceAttr(resourceName, "ip_address_type", "dualstack"),
 				),
 			},
@@ -783,21 +783,21 @@ func TestAccAWSLB_updatedIpAddressType(t *testing.T) {
 // TestAccAWSALB_noSecurityGroup regression tests the issue in #8264,
 // where if an ALB is created without a security group, a default one
 // is assigned.
-func TestAccAWSLB_noSecurityGroup(t *testing.T) {
+func TestAccELBV2LoadBalancer_noSecurityGroup(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-nosg-%s", sdkacctest.RandString(10))
+	lbName := fmt.Sprintf("testAccAWSlb-nosg-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_nosg(lbName),
+				Config: testAccLoadBalancerConfig_nosg(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "name", lbName),
 					resource.TestCheckResourceAttr(resourceName, "internal", "true"),
 					resource.TestCheckResourceAttr(resourceName, "subnets.#", "2"),
@@ -815,25 +815,25 @@ func TestAccAWSLB_noSecurityGroup(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_ALB_AccessLogs(t *testing.T) {
+func TestAccELBV2LoadBalancer_ALB_accessLogs(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	bucketName := fmt.Sprintf("tf-test-access-logs-%s", sdkacctest.RandString(6))
-	lbName := fmt.Sprintf("testaccawslbaccesslog-%s", sdkacctest.RandString(4))
+	lbName := fmt.Sprintf("testAccAWSlbaccesslog-%s", sdkacctest.RandString(4))
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfigALBAccessLogs(true, lbName, bucketName, ""),
+				Config: testAccLoadBalancerALBAccessLogsConfig(true, lbName, bucketName, ""),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
@@ -846,12 +846,12 @@ func TestAccAWSLB_ALB_AccessLogs(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLBConfigALBAccessLogs(false, lbName, bucketName, ""),
+				Config: testAccLoadBalancerALBAccessLogsConfig(false, lbName, bucketName, ""),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "false"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "false"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
@@ -864,12 +864,12 @@ func TestAccAWSLB_ALB_AccessLogs(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLBConfigALBAccessLogs(true, lbName, bucketName, ""),
+				Config: testAccLoadBalancerALBAccessLogsConfig(true, lbName, bucketName, ""),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
@@ -882,170 +882,12 @@ func TestAccAWSLB_ALB_AccessLogs(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLBConfigALBAccessLogsNoBlocks(lbName, bucketName),
+				Config: testAccLoadBalancerALBAccessLogsNoBlocksConfig(lbName, bucketName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "false"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
-				),
-			},
-			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
-		},
-	})
-}
-
-func TestAccAWSLB_ALB_AccessLogs_Prefix(t *testing.T) {
-	var conf elbv2.LoadBalancer
-	bucketName := fmt.Sprintf("tf-test-access-logs-%s", sdkacctest.RandString(6))
-	lbName := fmt.Sprintf("testaccawslbaccesslog-%s", sdkacctest.RandString(4))
-	resourceName := "aws_lb.test"
-
-	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccAWSLBConfigALBAccessLogs(true, lbName, bucketName, "prefix1"),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", "prefix1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", "prefix1"),
-				),
-			},
-			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
-			{
-				Config: testAccAWSLBConfigALBAccessLogs(true, lbName, bucketName, ""),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
-				),
-			},
-			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
-			{
-				Config: testAccAWSLBConfigALBAccessLogs(true, lbName, bucketName, "prefix1"),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", "prefix1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", "prefix1"),
-				),
-			},
-			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
-		},
-	})
-}
-
-func TestAccAWSLB_NLB_AccessLogs(t *testing.T) {
-	var conf elbv2.LoadBalancer
-	bucketName := fmt.Sprintf("tf-test-access-logs-%s", sdkacctest.RandString(6))
-	lbName := fmt.Sprintf("testaccawslbaccesslog-%s", sdkacctest.RandString(4))
-	resourceName := "aws_lb.test"
-
-	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t) },
-		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
-		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccAWSLBConfigNLBAccessLogs(true, lbName, bucketName, ""),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
-				),
-			},
-			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
-			{
-				Config: testAccAWSLBConfigNLBAccessLogs(false, lbName, bucketName, ""),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "false"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
-				),
-			},
-			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
-			{
-				Config: testAccAWSLBConfigNLBAccessLogs(true, lbName, bucketName, ""),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
-					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
-				),
-			},
-			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
-			{
-				Config: testAccAWSLBConfigNLBAccessLogsNoBlocks(lbName, bucketName),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "false"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "false"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
@@ -1061,25 +903,25 @@ func TestAccAWSLB_NLB_AccessLogs(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_NLB_AccessLogs_Prefix(t *testing.T) {
+func TestAccELBV2LoadBalancer_ALBAccessLogs_prefix(t *testing.T) {
 	var conf elbv2.LoadBalancer
 	bucketName := fmt.Sprintf("tf-test-access-logs-%s", sdkacctest.RandString(6))
-	lbName := fmt.Sprintf("testaccawslbaccesslog-%s", sdkacctest.RandString(4))
+	lbName := fmt.Sprintf("testAccAWSlbaccesslog-%s", sdkacctest.RandString(4))
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfigNLBAccessLogs(true, lbName, bucketName, "prefix1"),
+				Config: testAccLoadBalancerALBAccessLogsConfig(true, lbName, bucketName, "prefix1"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", "prefix1"),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", "prefix1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
@@ -1092,12 +934,12 @@ func TestAccAWSLB_NLB_AccessLogs_Prefix(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLBConfigNLBAccessLogs(true, lbName, bucketName, ""),
+				Config: testAccLoadBalancerALBAccessLogsConfig(true, lbName, bucketName, ""),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", ""),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
@@ -1110,12 +952,12 @@ func TestAccAWSLB_NLB_AccessLogs_Prefix(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLBConfigNLBAccessLogs(true, lbName, bucketName, "prefix1"),
+				Config: testAccLoadBalancerALBAccessLogsConfig(true, lbName, bucketName, "prefix1"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.bucket", bucketName),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.enabled", "true"),
-					testAccCheckAWSLBAttribute(resourceName, "access_logs.s3.prefix", "prefix1"),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", "prefix1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
 					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
@@ -1131,25 +973,183 @@ func TestAccAWSLB_NLB_AccessLogs_Prefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSLB_networkLoadbalancer_subnet_change(t *testing.T) {
+func TestAccELBV2LoadBalancer_NLB_accessLogs(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	lbName := fmt.Sprintf("testaccawslb-basic-%s", sdkacctest.RandString(10))
+	bucketName := fmt.Sprintf("tf-test-access-logs-%s", sdkacctest.RandString(6))
+	lbName := fmt.Sprintf("testAccAWSlbaccesslog-%s", sdkacctest.RandString(4))
+	resourceName := "aws_lb.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { acctest.PreCheck(t) },
+		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
+		Providers:    acctest.Providers,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccLoadBalancerNLBAccessLogsConfig(true, lbName, bucketName, ""),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: testAccLoadBalancerNLBAccessLogsConfig(false, lbName, bucketName, ""),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "false"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: testAccLoadBalancerNLBAccessLogsConfig(true, lbName, bucketName, ""),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: testAccLoadBalancerNLBAccessLogsNoBlocksConfig(lbName, bucketName),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "false"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "false"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+		},
+	})
+}
+
+func TestAccELBV2LoadBalancer_NLBAccessLogs_prefix(t *testing.T) {
+	var conf elbv2.LoadBalancer
+	bucketName := fmt.Sprintf("tf-test-access-logs-%s", sdkacctest.RandString(6))
+	lbName := fmt.Sprintf("testAccAWSlbaccesslog-%s", sdkacctest.RandString(4))
+	resourceName := "aws_lb.test"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { acctest.PreCheck(t) },
+		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
+		Providers:    acctest.Providers,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccLoadBalancerNLBAccessLogsConfig(true, lbName, bucketName, "prefix1"),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", "prefix1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", "prefix1"),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: testAccLoadBalancerNLBAccessLogsConfig(true, lbName, bucketName, ""),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", ""),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", ""),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: testAccLoadBalancerNLBAccessLogsConfig(true, lbName, bucketName, "prefix1"),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					testAccCheckLoadBalancerExists(resourceName, &conf),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.bucket", bucketName),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.enabled", "true"),
+					testAccCheckLoadBalancerAttribute(resourceName, "access_logs.s3.prefix", "prefix1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.#", "1"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.bucket", bucketName),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.enabled", "true"),
+					resource.TestCheckResourceAttr(resourceName, "access_logs.0.prefix", "prefix1"),
+				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+		},
+	})
+}
+
+func TestAccELBV2LoadBalancer_NetworkLoadBalancerSubnet_change(t *testing.T) {
+	var conf elbv2.LoadBalancer
+	lbName := fmt.Sprintf("testAccAWSlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_lb.lb_test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBDestroy,
+		CheckDestroy: testAccCheckLoadBalancerDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBConfig_networkLoadbalancer_subnets(lbName),
+				Config: testAccLoadBalancerConfig_networkLoadbalancer_subnets(lbName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBExists(resourceName, &conf),
+					testAccCheckLoadBalancerExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "name", lbName),
 					resource.TestCheckResourceAttr(resourceName, "internal", "true"),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
-					resource.TestCheckResourceAttr(resourceName, "tags.Name", "testAccAWSLBConfig_networkLoadbalancer_subnets"),
+					resource.TestCheckResourceAttr(resourceName, "tags.Name", "testAccLoadBalancerConfig_networkLoadbalancer_subnets"),
 					resource.TestCheckResourceAttr(resourceName, "load_balancer_type", "network"),
 				),
 			},
@@ -1157,7 +1157,7 @@ func TestAccAWSLB_networkLoadbalancer_subnet_change(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSlbARNs(pre, post *elbv2.LoadBalancer) resource.TestCheckFunc {
+func testAccChecklbARNs(pre, post *elbv2.LoadBalancer) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(pre.LoadBalancerArn) != aws.StringValue(post.LoadBalancerArn) {
 			return errors.New("LB has been recreated. ARNs are different")
@@ -1167,7 +1167,7 @@ func testAccCheckAWSlbARNs(pre, post *elbv2.LoadBalancer) resource.TestCheckFunc
 	}
 }
 
-func testAccCheckAWSLBExists(n string, res *elbv2.LoadBalancer) resource.TestCheckFunc {
+func testAccCheckLoadBalancerExists(n string, res *elbv2.LoadBalancer) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -1195,7 +1195,7 @@ func testAccCheckAWSLBExists(n string, res *elbv2.LoadBalancer) resource.TestChe
 	}
 }
 
-func testAccCheckAWSLBAttribute(n, key, value string) resource.TestCheckFunc {
+func testAccCheckLoadBalancerAttribute(n, key, value string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -1226,7 +1226,7 @@ func testAccCheckAWSLBAttribute(n, key, value string) resource.TestCheckFunc {
 	}
 }
 
-func testAccCheckAWSLBDestroy(s *terraform.State) error {
+func testAccCheckLoadBalancerDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ELBV2Conn
 
 	for _, rs := range s.RootModule().Resources {
@@ -1284,7 +1284,7 @@ func testAccPreCheckElbv2GatewayLoadBalancer(t *testing.T) {
 	t.Skip("skipping acceptance testing: region does not support ELBv2 Gateway Load Balancers")
 }
 
-func testAccAWSLBConfigWithIpAddressTypeUpdated(lbName string) string {
+func testAccLoadBalancerWithIPAddressTypeUpdatedConfig(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"
@@ -1397,7 +1397,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName, lbName))
 }
 
-func testAccAWSLBConfigWithIpAddressType(lbName string) string {
+func testAccLoadBalancerWithIPAddressTypeConfig(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"
@@ -1510,7 +1510,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName, lbName))
 }
 
-func testAccAWSLBConfig_basic(lbName string) string {
+func testAccLoadBalancerConfig_basic(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"
@@ -1577,7 +1577,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName))
 }
 
-func testAccAWSLBConfig_outpost(lbName string) string {
+func testAccLoadBalancerConfig_outpost(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 data "aws_outposts_outposts" "test" {}
 
@@ -1664,7 +1664,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName))
 }
 
-func testAccAWSLBConfig_enableHttp2(lbName string, http2 bool) string {
+func testAccLoadBalancerConfig_enableHTTP2(lbName string, http2 bool) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"
@@ -1733,7 +1733,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName, http2))
 }
 
-func testAccAWSLBConfig_enableDropInvalidHeaderFields(lbName string, dropInvalid bool) string {
+func testAccLoadBalancerConfig_enableDropInvalidHeaderFields(lbName string, dropInvalid bool) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"
@@ -1802,7 +1802,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName, dropInvalid))
 }
 
-func testAccAWSLBConfig_enableDeletionProtection(lbName string, deletion_protection bool) string {
+func testAccLoadBalancerConfig_enableDeletionProtection(lbName string, deletion_protection bool) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"
@@ -1869,7 +1869,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName, deletion_protection))
 }
 
-func testAccAWSLBConfig_networkLoadbalancer_subnets(lbName string) string {
+func testAccLoadBalancerConfig_networkLoadbalancer_subnets(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "alb_test" {
   cidr_block = "10.0.0.0/16"
@@ -1895,7 +1895,7 @@ resource "aws_lb" "lb_test" {
   enable_cross_zone_load_balancing = false
 
   tags = {
-    Name = "testAccAWSLBConfig_networkLoadbalancer_subnets"
+    Name = "testAccLoadBalancerConfig_networkLoadbalancer_subnets"
   }
 }
 
@@ -1931,7 +1931,7 @@ resource "aws_subnet" "alb_test_3" {
 `, lbName))
 }
 
-func testAccAWSLBConfig_networkLoadbalancer(lbName string, cz bool) string {
+func testAccLoadBalancerConfig_networkLoadbalancer(lbName string, cz bool) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name               = "%s"
@@ -1971,7 +1971,7 @@ resource "aws_subnet" "alb_test" {
 `, lbName, cz))
 }
 
-func testAccAWSLBConfig_LoadBalancerType_Gateway(rName string) string {
+func testAccLoadBalancerConfig_LoadBalancerType_Gateway(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
@@ -2004,7 +2004,7 @@ resource "aws_lb" "test" {
 `, rName))
 }
 
-func testAccAWSLBConfig_IPv6(rName string) string {
+func testAccLoadBalancerConfig_IPv6(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
@@ -2055,7 +2055,7 @@ resource "aws_lb" "test" {
 `, rName))
 }
 
-func testAccAWSLBConfig_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(rName string, enableCrossZoneLoadBalancing bool) string {
+func testAccLoadBalancerConfig_LoadBalancerType_Gateway_EnableCrossZoneLoadBalancing(rName string, enableCrossZoneLoadBalancing bool) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
@@ -2089,7 +2089,7 @@ resource "aws_lb" "test" {
 `, rName, enableCrossZoneLoadBalancing))
 }
 
-func testAccAWSLBConfig_networkLoadBalancerEIP(lbName string) string {
+func testAccLoadBalancerConfig_networkLoadBalancerEIP(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "main" {
   cidr_block = "10.10.0.0/16"
@@ -2152,7 +2152,7 @@ resource "aws_eip" "lb" {
 `, lbName))
 }
 
-func testAccAWSLBConfig_networkLoadBalancerPrivateIPV4Address(lbName string) string {
+func testAccLoadBalancerConfig_networkLoadBalancerPrivateIPV4Address(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "test" {
   name                       = "%s"
@@ -2191,7 +2191,7 @@ resource "aws_subnet" "test" {
 `, lbName))
 }
 
-func testAccAWSLBConfigBackwardsCompatibility(lbName string) string {
+func testAccLoadBalancerBackwardsCompatibilityConfig(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_alb" "lb_test" {
   name            = "%s"
@@ -2258,7 +2258,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName))
 }
 
-func testAccAWSLBConfig_updateSubnets(lbName string) string {
+func testAccLoadBalancerConfig_updateSubnets(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"
@@ -2325,7 +2325,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName))
 }
 
-func testAccAWSLBConfig_generatedName() string {
+func testAccLoadBalancerConfig_generatedName() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), `
 resource "aws_lb" "lb_test" {
   internal        = true
@@ -2399,7 +2399,7 @@ resource "aws_security_group" "alb_test" {
 `)
 }
 
-func testAccAWSLBConfig_zeroValueName() string {
+func testAccLoadBalancerConfig_zeroValueName() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), `
 resource "aws_lb" "lb_test" {
   name            = ""
@@ -2479,7 +2479,7 @@ resource "aws_security_group" "alb_test" {
 `)
 }
 
-func testAccAWSLBConfig_namePrefix() string {
+func testAccLoadBalancerConfig_namePrefix() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), `
 resource "aws_lb" "lb_test" {
   name_prefix     = "tf-lb-"
@@ -2546,7 +2546,7 @@ resource "aws_security_group" "alb_test" {
 `)
 }
 
-func testAccAWSLBConfig_updatedTags(lbName string) string {
+func testAccLoadBalancerConfig_updatedTags(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"
@@ -2614,7 +2614,7 @@ resource "aws_security_group" "alb_test" {
 `, lbName))
 }
 
-func testAccAWSLBConfigALBAccessLogsBase(bucketName string) string {
+func testAccLoadBalancerALBAccessLogsBaseConfig(bucketName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 data "aws_elb_service_account" "current" {}
 
@@ -2663,8 +2663,8 @@ resource "aws_s3_bucket_policy" "test" {
 `, bucketName))
 }
 
-func testAccAWSLBConfigALBAccessLogs(enabled bool, lbName, bucketName, bucketPrefix string) string {
-	return acctest.ConfigCompose(testAccAWSLBConfigALBAccessLogsBase(bucketName), fmt.Sprintf(`
+func testAccLoadBalancerALBAccessLogsConfig(enabled bool, lbName, bucketName, bucketPrefix string) string {
+	return acctest.ConfigCompose(testAccLoadBalancerALBAccessLogsBaseConfig(bucketName), fmt.Sprintf(`
 resource "aws_lb" "test" {
   internal = true
   name     = %[1]q
@@ -2679,8 +2679,8 @@ resource "aws_lb" "test" {
 `, lbName, enabled, bucketPrefix))
 }
 
-func testAccAWSLBConfigALBAccessLogsNoBlocks(lbName, bucketName string) string {
-	return acctest.ConfigCompose(testAccAWSLBConfigALBAccessLogsBase(bucketName), fmt.Sprintf(`
+func testAccLoadBalancerALBAccessLogsNoBlocksConfig(lbName, bucketName string) string {
+	return acctest.ConfigCompose(testAccLoadBalancerALBAccessLogsBaseConfig(bucketName), fmt.Sprintf(`
 resource "aws_lb" "test" {
   internal = true
   name     = %[1]q
@@ -2689,7 +2689,7 @@ resource "aws_lb" "test" {
 `, lbName))
 }
 
-func testAccAWSLBConfigNLBAccessLogsBase(bucketName string) string {
+func testAccLoadBalancerNLBAccessLogsBaseConfig(bucketName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 data "aws_elb_service_account" "current" {}
 
@@ -2749,8 +2749,8 @@ resource "aws_s3_bucket_policy" "test" {
 `, bucketName))
 }
 
-func testAccAWSLBConfigNLBAccessLogs(enabled bool, lbName, bucketName, bucketPrefix string) string {
-	return acctest.ConfigCompose(testAccAWSLBConfigNLBAccessLogsBase(bucketName), fmt.Sprintf(`
+func testAccLoadBalancerNLBAccessLogsConfig(enabled bool, lbName, bucketName, bucketPrefix string) string {
+	return acctest.ConfigCompose(testAccLoadBalancerNLBAccessLogsBaseConfig(bucketName), fmt.Sprintf(`
 resource "aws_lb" "test" {
   internal           = true
   load_balancer_type = "network"
@@ -2766,8 +2766,8 @@ resource "aws_lb" "test" {
 `, lbName, enabled, bucketPrefix))
 }
 
-func testAccAWSLBConfigNLBAccessLogsNoBlocks(lbName, bucketName string) string {
-	return acctest.ConfigCompose(testAccAWSLBConfigNLBAccessLogsBase(bucketName), fmt.Sprintf(`
+func testAccLoadBalancerNLBAccessLogsNoBlocksConfig(lbName, bucketName string) string {
+	return acctest.ConfigCompose(testAccLoadBalancerNLBAccessLogsBaseConfig(bucketName), fmt.Sprintf(`
 resource "aws_lb" "test" {
   internal           = true
   load_balancer_type = "network"
@@ -2777,7 +2777,7 @@ resource "aws_lb" "test" {
 `, lbName))
 }
 
-func testAccAWSLBConfig_nosg(lbName string) string {
+func testAccLoadBalancerConfig_nosg(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name     = "%s"
@@ -2819,7 +2819,7 @@ resource "aws_subnet" "alb_test" {
 `, lbName))
 }
 
-func testAccAWSLBConfig_updateSecurityGroups(lbName string) string {
+func testAccLoadBalancerConfig_updateSecurityGroups(lbName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "lb_test" {
   name            = "%s"

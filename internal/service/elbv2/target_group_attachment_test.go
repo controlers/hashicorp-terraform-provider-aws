@@ -16,38 +16,38 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSLBTargetGroupAttachment_basic(t *testing.T) {
+func TestAccELBV2TargetGroupAttachment_basic(t *testing.T) {
 	targetGroupName := fmt.Sprintf("test-target-group-%s", sdkacctest.RandString(10))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBTargetGroupAttachmentDestroy,
+		CheckDestroy: testAccCheckTargetGroupAttachmentDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBTargetGroupAttachmentConfigTargetIdInstance(targetGroupName),
+				Config: testAccTargetGroupAttachmentTargetIdInstanceConfig(targetGroupName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
+					testAccCheckTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLBTargetGroupAttachment_disappears(t *testing.T) {
+func TestAccELBV2TargetGroupAttachment_disappears(t *testing.T) {
 	targetGroupName := fmt.Sprintf("test-target-group-%s", sdkacctest.RandString(10))
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBTargetGroupAttachmentDestroy,
+		CheckDestroy: testAccCheckTargetGroupAttachmentDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBTargetGroupAttachmentConfigTargetIdInstance(targetGroupName),
+				Config: testAccTargetGroupAttachmentTargetIdInstanceConfig(targetGroupName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLBTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
-					testAccCheckAWSLBTargetGroupAttachmentDisappears("aws_lb_target_group_attachment.test"),
+					testAccCheckTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
+					testAccCheckTargetGroupAttachmentDisappears("aws_lb_target_group_attachment.test"),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -55,83 +55,83 @@ func TestAccAWSLBTargetGroupAttachment_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSLBTargetGroupAttachment_BackwardsCompatibility(t *testing.T) {
+func TestAccELBV2TargetGroupAttachment_backwardsCompatibility(t *testing.T) {
 	targetGroupName := fmt.Sprintf("test-target-group-%s", sdkacctest.RandString(10))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBTargetGroupAttachmentDestroy,
+		CheckDestroy: testAccCheckTargetGroupAttachmentDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBTargetGroupAttachmentConfigBackwardsCompatibility(targetGroupName),
+				Config: testAccTargetGroupAttachmentBackwardsCompatibilityConfig(targetGroupName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBTargetGroupAttachmentExists("aws_alb_target_group_attachment.test"),
+					testAccCheckTargetGroupAttachmentExists("aws_alb_target_group_attachment.test"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLBTargetGroupAttachment_Port(t *testing.T) {
+func TestAccELBV2TargetGroupAttachment_port(t *testing.T) {
 	targetGroupName := fmt.Sprintf("test-target-group-%s", sdkacctest.RandString(10))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBTargetGroupAttachmentDestroy,
+		CheckDestroy: testAccCheckTargetGroupAttachmentDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBTargetGroupAttachmentConfigPort(targetGroupName),
+				Config: testAccTargetGroupAttachmentPortConfig(targetGroupName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
+					testAccCheckTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLBTargetGroupAttachment_ipAddress(t *testing.T) {
+func TestAccELBV2TargetGroupAttachment_ipAddress(t *testing.T) {
 	targetGroupName := fmt.Sprintf("test-target-group-%s", sdkacctest.RandString(10))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBTargetGroupAttachmentDestroy,
+		CheckDestroy: testAccCheckTargetGroupAttachmentDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBTargetGroupAttachmentConfigTargetIdIpAddress(targetGroupName),
+				Config: testAccTargetGroupAttachmentTargetIdIPAddressConfig(targetGroupName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
+					testAccCheckTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLBTargetGroupAttachment_lambda(t *testing.T) {
+func TestAccELBV2TargetGroupAttachment_lambda(t *testing.T) {
 	targetGroupName := fmt.Sprintf("test-target-group-%s", sdkacctest.RandString(10))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLBTargetGroupAttachmentDestroy,
+		CheckDestroy: testAccCheckTargetGroupAttachmentDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLBTargetGroupAttachmentConfigTargetIdLambda(targetGroupName),
+				Config: testAccTargetGroupAttachmentTargetIdLambdaConfig(targetGroupName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSLBTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
+					testAccCheckTargetGroupAttachmentExists("aws_lb_target_group_attachment.test"),
 				),
 			},
 		},
 	})
 }
 
-func testAccCheckAWSLBTargetGroupAttachmentDisappears(n string) resource.TestCheckFunc {
+func testAccCheckTargetGroupAttachmentDisappears(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -165,7 +165,7 @@ func testAccCheckAWSLBTargetGroupAttachmentDisappears(n string) resource.TestChe
 	}
 }
 
-func testAccCheckAWSLBTargetGroupAttachmentExists(n string) resource.TestCheckFunc {
+func testAccCheckTargetGroupAttachmentExists(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -206,7 +206,7 @@ func testAccCheckAWSLBTargetGroupAttachmentExists(n string) resource.TestCheckFu
 	}
 }
 
-func testAccCheckAWSLBTargetGroupAttachmentDestroy(s *terraform.State) error {
+func testAccCheckTargetGroupAttachmentDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ELBV2Conn
 
 	for _, rs := range s.RootModule().Resources {
@@ -246,7 +246,7 @@ func testAccCheckAWSLBTargetGroupAttachmentDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSLBTargetGroupAttachmentConfigInstanceBase() string {
+func testAccTargetGroupAttachmentInstanceBaseConfig() string {
 	return `
 data "aws_availability_zones" "available" {
   # t2.micro instance type is not available in these Availability Zones
@@ -300,8 +300,8 @@ resource "aws_vpc" "test" {
 `
 }
 
-func testAccAWSLBTargetGroupAttachmentConfigTargetIdInstance(rName string) string {
-	return testAccAWSLBTargetGroupAttachmentConfigInstanceBase() + fmt.Sprintf(`
+func testAccTargetGroupAttachmentTargetIdInstanceConfig(rName string) string {
+	return testAccTargetGroupAttachmentInstanceBaseConfig() + fmt.Sprintf(`
 resource "aws_lb_target_group" "test" {
   name     = %[1]q
   port     = 443
@@ -316,8 +316,8 @@ resource "aws_lb_target_group_attachment" "test" {
 `, rName)
 }
 
-func testAccAWSLBTargetGroupAttachmentConfigPort(rName string) string {
-	return testAccAWSLBTargetGroupAttachmentConfigInstanceBase() + fmt.Sprintf(`
+func testAccTargetGroupAttachmentPortConfig(rName string) string {
+	return testAccTargetGroupAttachmentInstanceBaseConfig() + fmt.Sprintf(`
 resource "aws_lb_target_group" "test" {
   name     = %[1]q
   port     = 443
@@ -333,8 +333,8 @@ resource "aws_lb_target_group_attachment" "test" {
 `, rName)
 }
 
-func testAccAWSLBTargetGroupAttachmentConfigBackwardsCompatibility(rName string) string {
-	return testAccAWSLBTargetGroupAttachmentConfigInstanceBase() + fmt.Sprintf(`
+func testAccTargetGroupAttachmentBackwardsCompatibilityConfig(rName string) string {
+	return testAccTargetGroupAttachmentInstanceBaseConfig() + fmt.Sprintf(`
 resource "aws_lb_target_group" "test" {
   name     = %[1]q
   port     = 443
@@ -350,8 +350,8 @@ resource "aws_alb_target_group_attachment" "test" {
 `, rName)
 }
 
-func testAccAWSLBTargetGroupAttachmentConfigTargetIdIpAddress(rName string) string {
-	return testAccAWSLBTargetGroupAttachmentConfigInstanceBase() + fmt.Sprintf(`
+func testAccTargetGroupAttachmentTargetIdIPAddressConfig(rName string) string {
+	return testAccTargetGroupAttachmentInstanceBaseConfig() + fmt.Sprintf(`
 resource "aws_lb_target_group" "test" {
   name        = %[1]q
   port        = 443
@@ -368,7 +368,7 @@ resource "aws_lb_target_group_attachment" "test" {
 `, rName)
 }
 
-func testAccAWSLBTargetGroupAttachmentConfigTargetIdLambda(rName string) string {
+func testAccTargetGroupAttachmentTargetIdLambdaConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 

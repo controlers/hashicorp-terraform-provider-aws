@@ -16,7 +16,7 @@ import (
 	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
 )
 
-func TestAccAwsLbListenerCertificate_basic(t *testing.T) {
+func TestAccELBV2ListenerCertificate_basic(t *testing.T) {
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
 	iamServerCertificateResourceName := "aws_iam_server_certificate.test"
@@ -28,12 +28,12 @@ func TestAccAwsLbListenerCertificate_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLbListenerCertificateDestroy,
+		CheckDestroy: testAccCheckListenerCertificateDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLbListenerCertificateConfig(rName, key, certificate),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLbListenerCertificateExists(resourceName),
+					testAccCheckListenerCertificateExists(resourceName),
 					resource.TestCheckResourceAttrPair(resourceName, "certificate_arn", iamServerCertificateResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "listener_arn", lbListenerResourceName, "arn"),
 				),
@@ -48,7 +48,7 @@ func TestAccAwsLbListenerCertificate_basic(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/17639
-func TestAccAwsLbListenerCertificate_CertificateArn_Underscores(t *testing.T) {
+func TestAccELBV2ListenerCertificate_CertificateARN_underscores(t *testing.T) {
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
 	iamServerCertificateResourceName := "aws_iam_server_certificate.test"
@@ -60,12 +60,12 @@ func TestAccAwsLbListenerCertificate_CertificateArn_Underscores(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLbListenerCertificateDestroy,
+		CheckDestroy: testAccCheckListenerCertificateDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLbListenerCertificateConfigCertificateArnUnderscores(rName, key, certificate),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLbListenerCertificateExists(resourceName),
+					testAccCheckListenerCertificateExists(resourceName),
 					resource.TestCheckResourceAttrPair(resourceName, "certificate_arn", iamServerCertificateResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "listener_arn", lbListenerResourceName, "arn"),
 				),
@@ -79,7 +79,7 @@ func TestAccAwsLbListenerCertificate_CertificateArn_Underscores(t *testing.T) {
 	})
 }
 
-func TestAccAwsLbListenerCertificate_multiple(t *testing.T) {
+func TestAccELBV2ListenerCertificate_multiple(t *testing.T) {
 	keys := make([]string, 4)
 	certificates := make([]string, 4)
 	for i := 0; i < 4; i++ {
@@ -94,14 +94,14 @@ func TestAccAwsLbListenerCertificate_multiple(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLbListenerCertificateDestroy,
+		CheckDestroy: testAccCheckListenerCertificateDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLbListenerCertificateConfigMultiple(rName, keys, certificates),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.default"),
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.additional_1"),
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.additional_2"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.default"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.additional_1"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.additional_2"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.default", "listener_arn"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.default", "certificate_arn"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.additional_1", "listener_arn"),
@@ -118,10 +118,10 @@ func TestAccAwsLbListenerCertificate_multiple(t *testing.T) {
 			{
 				Config: testAccLbListenerCertificateConfigMultipleAddNew(rName, keys, certificates),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.default"),
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.additional_1"),
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.additional_2"),
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.additional_3"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.default"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.additional_1"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.additional_2"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.additional_3"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.default", "listener_arn"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.default", "certificate_arn"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.additional_1", "listener_arn"),
@@ -135,10 +135,10 @@ func TestAccAwsLbListenerCertificate_multiple(t *testing.T) {
 			{
 				Config: testAccLbListenerCertificateConfigMultiple(rName, keys, certificates),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.default"),
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.additional_1"),
-					testAccCheckAwsLbListenerCertificateExists("aws_lb_listener_certificate.additional_2"),
-					testAccCheckAwsLbListenerCertificateNotExists("aws_lb_listener_certificate.additional_3"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.default"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.additional_1"),
+					testAccCheckListenerCertificateExists("aws_lb_listener_certificate.additional_2"),
+					testAccCheckListenerCertificateNotExists("aws_lb_listener_certificate.additional_3"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.default", "listener_arn"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.default", "certificate_arn"),
 					resource.TestCheckResourceAttrSet("aws_lb_listener_certificate.additional_1", "listener_arn"),
@@ -151,7 +151,7 @@ func TestAccAwsLbListenerCertificate_multiple(t *testing.T) {
 	})
 }
 
-func TestAccAwsLbListenerCertificate_disappears(t *testing.T) {
+func TestAccELBV2ListenerCertificate_disappears(t *testing.T) {
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
 	resourceName := "aws_lb_listener_certificate.test"
@@ -161,12 +161,12 @@ func TestAccAwsLbListenerCertificate_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elbv2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsLbListenerCertificateDestroy,
+		CheckDestroy: testAccCheckListenerCertificateDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccLbListenerCertificateConfig(rName, key, certificate),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsLbListenerCertificateExists(resourceName),
+					testAccCheckListenerCertificateExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfelbv2.ResourceListenerCertificate(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -175,7 +175,7 @@ func TestAccAwsLbListenerCertificate_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsLbListenerCertificateDestroy(s *terraform.State) error {
+func testAccCheckListenerCertificateDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ELBV2Conn
 
 	for _, rs := range s.RootModule().Resources {
@@ -211,7 +211,7 @@ func testAccCheckAwsLbListenerCertificateDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsLbListenerCertificateExists(name string) resource.TestCheckFunc {
+func testAccCheckListenerCertificateExists(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		_, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -222,7 +222,7 @@ func testAccCheckAwsLbListenerCertificateExists(name string) resource.TestCheckF
 	}
 }
 
-func testAccCheckAwsLbListenerCertificateNotExists(name string) resource.TestCheckFunc {
+func testAccCheckListenerCertificateNotExists(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		_, ok := s.RootModule().Resources[name]
 		if !ok {

@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAWSLB_basic(t *testing.T) {
+func TestAccELBV2LoadBalancerDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lb.alb_test_with_arn"
 	dataSourceName2 := "data.aws_lb.alb_test_with_name"
@@ -23,7 +23,7 @@ func TestAccDataSourceAWSLB_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLBConfigBasic(rName),
+				Config: testAcclbBasicDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "internal", resourceName, "internal"),
@@ -76,7 +76,7 @@ func TestAccDataSourceAWSLB_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLB_outpost(t *testing.T) {
+func TestAccELBV2LoadBalancerDataSource_outpost(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lb.alb_test_with_arn"
 	resourceName := "aws_lb.test"
@@ -87,7 +87,7 @@ func TestAccDataSourceAWSLB_outpost(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLBConfigOutpost(rName),
+				Config: testAcclbOutpostDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "internal", resourceName, "internal"),
@@ -111,7 +111,7 @@ func TestAccDataSourceAWSLB_outpost(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLB_BackwardsCompatibility(t *testing.T) {
+func TestAccELBV2LoadBalancerDataSource_backwardsCompatibility(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName1 := "data.aws_alb.alb_test_with_arn"
 	dataSourceName2 := "data.aws_alb.alb_test_with_name"
@@ -124,7 +124,7 @@ func TestAccDataSourceAWSLB_BackwardsCompatibility(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLBConfigBackwardsCompatibility(rName),
+				Config: testAcclbBackwardsCompatibilityDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName1, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(dataSourceName1, "internal", resourceName, "internal"),
@@ -186,7 +186,7 @@ func TestAccDataSourceAWSLB_BackwardsCompatibility(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAWSLBConfigBasic(rName string) string {
+func testAcclbBasicDataSourceConfig(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_lb" "test" {
   name            = %[1]q
@@ -266,7 +266,7 @@ data "aws_lb" "alb_test_with_tags" {
 `, rName))
 }
 
-func testAccDataSourceAWSLBConfigOutpost(rName string) string {
+func testAcclbOutpostDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_outposts_outposts" "test" {}
 
@@ -338,7 +338,7 @@ data "aws_lb" "alb_test_with_arn" {
 `, rName)
 }
 
-func testAccDataSourceAWSLBConfigBackwardsCompatibility(rName string) string {
+func testAcclbBackwardsCompatibilityDataSourceConfig(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_alb" "test" {
   name            = %[1]q
