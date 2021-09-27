@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSEcsDataSource_ecsContainerDefinition(t *testing.T) {
+func TestAccECSContainerDefinitionDataSource_ecsContainerDefinition(t *testing.T) {
 	rString := sdkacctest.RandString(8)
 	clusterName := fmt.Sprintf("tf_acc_td_ds_cluster_ecs_containter_definition_%s", rString)
 	svcName := fmt.Sprintf("tf_acc_svc_td_ds_ecs_containter_definition_%s", rString)
@@ -22,7 +22,7 @@ func TestAccAWSEcsDataSource_ecsContainerDefinition(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsEcsContainerDefinitionDataSourceConfig(clusterName, tdName, svcName),
+				Config: testAccCheckContainerDefinitionDataSourceConfig(clusterName, tdName, svcName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("data.aws_ecs_container_definition.mongo", "image", "mongo:latest"),
 					resource.TestCheckResourceAttr("data.aws_ecs_container_definition.mongo", "image_digest", "latest"),
@@ -36,7 +36,7 @@ func TestAccAWSEcsDataSource_ecsContainerDefinition(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsEcsContainerDefinitionDataSourceConfig(clusterName, tdName, svcName string) string {
+func testAccCheckContainerDefinitionDataSourceConfig(clusterName, tdName, svcName string) string {
 	return fmt.Sprintf(`
 resource "aws_ecs_cluster" "default" {
   name = "%s"

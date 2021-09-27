@@ -13,7 +13,7 @@ import (
 	tfecs "github.com/hashicorp/terraform-provider-aws/internal/service/ecs"
 )
 
-func TestAccAWSEcsTag_basic(t *testing.T) {
+func TestAccECSTag_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecs_tag.test"
 
@@ -40,7 +40,7 @@ func TestAccAWSEcsTag_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcsTag_disappears(t *testing.T) {
+func TestAccECSTag_disappears(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecs_tag.test"
 
@@ -63,12 +63,12 @@ func TestAccAWSEcsTag_disappears(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11951
-func TestAccAWSEcsTag_ResourceArn_BatchComputeEnvironment(t *testing.T) {
+func TestAccECSTag_ResourceARN_batchComputeEnvironment(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecs_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSBatch(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckBatch(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ecs.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckTagDestroy,
@@ -88,7 +88,7 @@ func TestAccAWSEcsTag_ResourceArn_BatchComputeEnvironment(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcsTag_Value(t *testing.T) {
+func TestAccECSTag_value(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecs_tag.test"
 
@@ -181,7 +181,7 @@ resource "aws_ecs_tag" "test" {
 `, rName)
 }
 
-func testAccPreCheckAWSBatch(t *testing.T) {
+func testAccPreCheckBatch(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).BatchConn
 
 	input := &batch.DescribeComputeEnvironmentsInput{}
