@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAWSLambdaLayerVersion_basic(t *testing.T) {
+func TestAccLambdaLayerVersionDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_layer_version.test"
 	resourceName := "aws_lambda_layer_version.test"
@@ -21,7 +21,7 @@ func TestAccDataSourceAWSLambdaLayerVersion_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaLayerVersionConfigBasic(rName),
+				Config: testAccLayerVersionBasicDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "layer_name", resourceName, "layer_name"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "version", resourceName, "version"),
@@ -41,7 +41,7 @@ func TestAccDataSourceAWSLambdaLayerVersion_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaLayerVersion_version(t *testing.T) {
+func TestAccLambdaLayerVersionDataSource_version(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_layer_version.test"
 	resourceName := "aws_lambda_layer_version.test"
@@ -52,7 +52,7 @@ func TestAccDataSourceAWSLambdaLayerVersion_version(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaLayerVersionConfigVersion(rName),
+				Config: testAccLayerVersionVersionDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "layer_name", resourceName, "layer_name"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "version", resourceName, "version"),
@@ -62,7 +62,7 @@ func TestAccDataSourceAWSLambdaLayerVersion_version(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaLayerVersion_runtime(t *testing.T) {
+func TestAccLambdaLayerVersionDataSource_runtime(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_layer_version.test"
 	resourceName := "aws_lambda_layer_version.test"
@@ -73,7 +73,7 @@ func TestAccDataSourceAWSLambdaLayerVersion_runtime(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaLayerVersionConfigRuntimes(rName),
+				Config: testAccLayerVersionRuntimesDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "layer_name", resourceName, "layer_name"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "version", resourceName, "version"),
@@ -83,7 +83,7 @@ func TestAccDataSourceAWSLambdaLayerVersion_runtime(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAWSLambdaLayerVersionConfigBasic(rName string) string {
+func testAccLayerVersionBasicDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lambda_layer_version" "test" {
   filename            = "test-fixtures/lambdatest.zip"
@@ -97,7 +97,7 @@ data "aws_lambda_layer_version" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaLayerVersionConfigVersion(rName string) string {
+func testAccLayerVersionVersionDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lambda_layer_version" "test" {
   filename            = "test-fixtures/lambdatest.zip"
@@ -118,7 +118,7 @@ data "aws_lambda_layer_version" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaLayerVersionConfigRuntimes(rName string) string {
+func testAccLayerVersionRuntimesDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_lambda_layer_version" "test" {
   filename            = "test-fixtures/lambdatest.zip"

@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAWSLambdaFunction_basic(t *testing.T) {
+func TestAccLambdaFunctionDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
@@ -22,7 +22,7 @@ func TestAccDataSourceAWSLambdaFunction_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaFunctionConfigBasic(rName),
+				Config: testAccFunctionBasicDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "dead_letter_config.#", resourceName, "dead_letter_config.#"),
@@ -52,7 +52,7 @@ func TestAccDataSourceAWSLambdaFunction_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaFunction_version(t *testing.T) {
+func TestAccLambdaFunctionDataSource_version(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
@@ -63,7 +63,7 @@ func TestAccDataSourceAWSLambdaFunction_version(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaFunctionConfigVersion(rName),
+				Config: testAccFunctionVersionDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "qualified_arn", resourceName, "qualified_arn"),
@@ -75,7 +75,7 @@ func TestAccDataSourceAWSLambdaFunction_version(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaFunction_alias(t *testing.T) {
+func TestAccLambdaFunctionDataSource_alias(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_function.test"
 	lambdaAliasResourceName := "aws_lambda_alias.test"
@@ -87,7 +87,7 @@ func TestAccDataSourceAWSLambdaFunction_alias(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaFunctionConfigAlias(rName),
+				Config: testAccFunctionAliasDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "qualified_arn", lambdaAliasResourceName, "arn"),
@@ -99,7 +99,7 @@ func TestAccDataSourceAWSLambdaFunction_alias(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaFunction_layers(t *testing.T) {
+func TestAccLambdaFunctionDataSource_layers(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
@@ -110,7 +110,7 @@ func TestAccDataSourceAWSLambdaFunction_layers(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaFunctionConfigLayers(rName),
+				Config: testAccFunctionLayersDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "layers.#", resourceName, "layers.#"),
@@ -120,7 +120,7 @@ func TestAccDataSourceAWSLambdaFunction_layers(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaFunction_vpc(t *testing.T) {
+func TestAccLambdaFunctionDataSource_vpc(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
@@ -131,7 +131,7 @@ func TestAccDataSourceAWSLambdaFunction_vpc(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaFunctionConfigVPC(rName),
+				Config: testAccFunctionVPCDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "vpc_config.#", resourceName, "vpc_config.#"),
@@ -143,7 +143,7 @@ func TestAccDataSourceAWSLambdaFunction_vpc(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaFunction_environment(t *testing.T) {
+func TestAccLambdaFunctionDataSource_environment(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
@@ -154,7 +154,7 @@ func TestAccDataSourceAWSLambdaFunction_environment(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaFunctionConfigEnvironment(rName),
+				Config: testAccFunctionEnvironmentDataSourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "environment.#", resourceName, "environment.#"),
@@ -167,7 +167,7 @@ func TestAccDataSourceAWSLambdaFunction_environment(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaFunction_fileSystemConfig(t *testing.T) {
+func TestAccLambdaFunctionDataSource_fileSystem(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
@@ -178,7 +178,7 @@ func TestAccDataSourceAWSLambdaFunction_fileSystemConfig(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaFunctionConfigFileSystemConfigs(rName),
+				Config: testAccFunctionFileSystemsDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "file_system_config.#", resourceName, "file_system_config.#"),
@@ -190,7 +190,7 @@ func TestAccDataSourceAWSLambdaFunction_fileSystemConfig(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSLambdaFunction_imageConfig(t *testing.T) {
+func TestAccLambdaFunctionDataSource_image(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
@@ -203,7 +203,7 @@ func TestAccDataSourceAWSLambdaFunction_imageConfig(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAWSLambdaFunctionConfigImageConfig(rName, imageLatestID),
+				Config: testAccFunctionImageDataSourceConfig(rName, imageLatestID),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "code_signing_config_arn", resourceName, "code_signing_config_arn"),
 				),
@@ -212,7 +212,7 @@ func TestAccDataSourceAWSLambdaFunction_imageConfig(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigBase(rName string) string {
+func testAccFunctionBaseDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "lambda" {
   name = %[1]q
@@ -271,8 +271,8 @@ EOF
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigBasic(rName string) string {
-	return testAccDataSourceAWSLambdaFunctionConfigBase(rName) + fmt.Sprintf(`
+func testAccFunctionBasicDataSourceConfig(rName string) string {
+	return testAccFunctionBaseDataSourceConfig(rName) + fmt.Sprintf(`
 resource "aws_lambda_function" "test" {
   filename      = "test-fixtures/lambdatest.zip"
   function_name = %[1]q
@@ -287,8 +287,8 @@ data "aws_lambda_function" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigVersion(rName string) string {
-	return testAccDataSourceAWSLambdaFunctionConfigBase(rName) + fmt.Sprintf(`
+func testAccFunctionVersionDataSourceConfig(rName string) string {
+	return testAccFunctionBaseDataSourceConfig(rName) + fmt.Sprintf(`
 resource "aws_lambda_function" "test" {
   filename      = "test-fixtures/lambdatest.zip"
   function_name = %[1]q
@@ -305,8 +305,8 @@ data "aws_lambda_function" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigAlias(rName string) string {
-	return testAccDataSourceAWSLambdaFunctionConfigBase(rName) + fmt.Sprintf(`
+func testAccFunctionAliasDataSourceConfig(rName string) string {
+	return testAccFunctionBaseDataSourceConfig(rName) + fmt.Sprintf(`
 resource "aws_lambda_function" "test" {
   filename      = "test-fixtures/lambdatest.zip"
   function_name = %[1]q
@@ -329,8 +329,8 @@ data "aws_lambda_function" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigLayers(rName string) string {
-	return testAccDataSourceAWSLambdaFunctionConfigBase(rName) + fmt.Sprintf(`
+func testAccFunctionLayersDataSourceConfig(rName string) string {
+	return testAccFunctionBaseDataSourceConfig(rName) + fmt.Sprintf(`
 resource "aws_lambda_layer_version" "test" {
   filename            = "test-fixtures/lambdatest.zip"
   layer_name          = %[1]q
@@ -352,8 +352,8 @@ data "aws_lambda_function" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigVPC(rName string) string {
-	return testAccDataSourceAWSLambdaFunctionConfigBase(rName) + fmt.Sprintf(`
+func testAccFunctionVPCDataSourceConfig(rName string) string {
+	return testAccFunctionBaseDataSourceConfig(rName) + fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
 
@@ -410,8 +410,8 @@ data "aws_lambda_function" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigEnvironment(rName string) string {
-	return testAccDataSourceAWSLambdaFunctionConfigBase(rName) + fmt.Sprintf(`
+func testAccFunctionEnvironmentDataSourceConfig(rName string) string {
+	return testAccFunctionBaseDataSourceConfig(rName) + fmt.Sprintf(`
 resource "aws_lambda_function" "test" {
   filename      = "test-fixtures/lambdatest.zip"
   function_name = %[1]q
@@ -433,8 +433,8 @@ data "aws_lambda_function" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigFileSystemConfigs(rName string) string {
-	return testAccDataSourceAWSLambdaFunctionConfigBase(rName) + fmt.Sprintf(`
+func testAccFunctionFileSystemsDataSourceConfig(rName string) string {
+	return testAccFunctionBaseDataSourceConfig(rName) + fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
 
@@ -528,9 +528,9 @@ data "aws_lambda_function" "test" {
 `, rName)
 }
 
-func testAccDataSourceAWSLambdaFunctionConfigImageConfig(rName, imageID string) string {
+func testAccFunctionImageDataSourceConfig(rName, imageID string) string {
 	return acctest.ConfigCompose(
-		testAccDataSourceAWSLambdaFunctionConfigBase(rName),
+		testAccFunctionBaseDataSourceConfig(rName),
 		fmt.Sprintf(`
 resource "aws_lambda_function" "test" {
   image_uri     = %q
