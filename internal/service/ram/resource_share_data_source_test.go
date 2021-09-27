@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsRamResourceShare_basic(t *testing.T) {
+func TestAccRAMResourceShareDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ram_resource_share.test"
 	datasourceName := "data.aws_ram_resource_share.test"
@@ -22,11 +22,11 @@ func TestAccDataSourceAwsRamResourceShare_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccDataSourceAwsRamResourceShareConfig_NonExistent,
+				Config:      testAccResourceShareDataSourceConfig_NonExistent,
 				ExpectError: regexp.MustCompile(`No matching resource found`),
 			},
 			{
-				Config: testAccDataSourceAwsRamResourceShareConfig_Name(rName),
+				Config: testAccResourceShareDataSourceConfig_Name(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(datasourceName, "id", resourceName, "id"),
@@ -37,7 +37,7 @@ func TestAccDataSourceAwsRamResourceShare_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsRamResourceShare_Tags(t *testing.T) {
+func TestAccRAMResourceShareDataSource_tags(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ram_resource_share.test"
 	datasourceName := "data.aws_ram_resource_share.test"
@@ -48,7 +48,7 @@ func TestAccDataSourceAwsRamResourceShare_Tags(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsRamResourceShareConfig_Tags(rName),
+				Config: testAccResourceShareDataSourceConfig_Tags(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(datasourceName, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(datasourceName, "id", resourceName, "id"),
@@ -59,7 +59,7 @@ func TestAccDataSourceAwsRamResourceShare_Tags(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsRamResourceShareConfig_Name(rName string) string {
+func testAccResourceShareDataSourceConfig_Name(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_ram_resource_share" "wrong" {
   name = "%s-wrong"
@@ -76,7 +76,7 @@ data "aws_ram_resource_share" "test" {
 `, rName, rName)
 }
 
-func testAccDataSourceAwsRamResourceShareConfig_Tags(rName string) string {
+func testAccResourceShareDataSourceConfig_Tags(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_ram_resource_share" "test" {
   name = "%s"
@@ -98,7 +98,7 @@ data "aws_ram_resource_share" "test" {
 `, rName, rName, rName)
 }
 
-const testAccDataSourceAwsRamResourceShareConfig_NonExistent = `
+const testAccResourceShareDataSourceConfig_NonExistent = `
 data "aws_ram_resource_share" "test" {
   name           = "tf-acc-test-does-not-exist"
   resource_owner = "SELF"
