@@ -42,7 +42,7 @@ func testSweepEc2Hosts(region string) error {
 		}
 
 		for _, host := range page.Hosts {
-			r := ResourceHost()
+			r := tfec2.ResourceHost()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(host.HostId))
 
@@ -116,7 +116,7 @@ func TestAccAWSEc2Host_disappears(t *testing.T) {
 				Config: testAccAWSEc2HostConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEc2HostExists(resourceName, &host),
-					acctest.CheckResourceDisappears(acctest.Provider, ResourceHost(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, tfec2.ResourceHost(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
