@@ -9,8 +9,8 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
-// StackByName Retrieve a appstream stack by name
-func StackByName(ctx context.Context, conn *appstream.AppStream, name string) (*appstream.Stack, error) {
+// findStackByName Retrieve a appstream stack by name
+func findStackByName(ctx context.Context, conn *appstream.AppStream, name string) (*appstream.Stack, error) {
 	input := &appstream.DescribeStacksInput{
 		Names: []*string{aws.String(name)},
 	}
@@ -33,8 +33,8 @@ func StackByName(ctx context.Context, conn *appstream.AppStream, name string) (*
 	return stack, nil
 }
 
-// FleetByName Retrieve a appstream fleet by name
-func FleetByName(ctx context.Context, conn *appstream.AppStream, name string) (*appstream.Fleet, error) {
+// findFleetByName Retrieve a appstream fleet by name
+func findFleetByName(ctx context.Context, conn *appstream.AppStream, name string) (*appstream.Fleet, error) {
 	input := &appstream.DescribeFleetsInput{
 		Names: []*string{aws.String(name)},
 	}

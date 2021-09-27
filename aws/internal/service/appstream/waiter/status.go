@@ -10,10 +10,10 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
-//StackState fetches the fleet and its state
-func StackState(ctx context.Context, conn *appstream.AppStream, name string) resource.StateRefreshFunc {
+//statusStackState fetches the fleet and its state
+func statusStackState(ctx context.Context, conn *appstream.AppStream, name string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		stack, err := finder.StackByName(ctx, conn, name)
+		stack, err := finder.findStackByName(ctx, conn, name)
 		if err != nil {
 			return nil, "Unknown", err
 		}
@@ -26,10 +26,10 @@ func StackState(ctx context.Context, conn *appstream.AppStream, name string) res
 	}
 }
 
-//FleetState fetches the fleet and its state
-func FleetState(ctx context.Context, conn *appstream.AppStream, name string) resource.StateRefreshFunc {
+//statusFleetState fetches the fleet and its state
+func statusFleetState(ctx context.Context, conn *appstream.AppStream, name string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		fleet, err := finder.FleetByName(ctx, conn, name)
+		fleet, err := finder.findFleetByName(ctx, conn, name)
 
 		if err != nil {
 			return nil, "Unknown", err

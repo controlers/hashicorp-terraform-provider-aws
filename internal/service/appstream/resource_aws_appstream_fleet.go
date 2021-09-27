@@ -247,7 +247,7 @@ func resourceFleetCreate(ctx context.Context, d *schema.ResourceData, meta inter
 
 	var err error
 	var output *appstream.CreateFleetOutput
-	err = resource.RetryContext(ctx, waiter.FleetOperationTimeout, func() *resource.RetryError {
+	err = resource.RetryContext(ctx, waiter.fleetOperationTimeout, func() *resource.RetryError {
 		output, err = conn.CreateFleetWithContext(ctx, input)
 		if err != nil {
 			if tfawserr.ErrCodeEquals(err, appstream.ErrCodeResourceNotFoundException) {
@@ -275,7 +275,7 @@ func resourceFleetCreate(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.FromErr(fmt.Errorf("error starting Appstream Fleet (%s): %w", d.Id(), err))
 	}
 
-	if _, err = waiter.FleetStateRunning(ctx, conn, aws.StringValue(output.Fleet.Name)); err != nil {
+	if _, err = waiter.waitFleetStateRunning(ctx, conn, aws.StringValue(output.Fleet.Name)); err != nil {
 		return diag.FromErr(fmt.Errorf("error waiting for Appstream Fleet (%s) to be running: %w", d.Id(), err))
 	}
 
@@ -388,7 +388,7 @@ func resourceFleetUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 		if err != nil {
 			return diag.FromErr(fmt.Errorf("error stopping Appstream Fleet (%s): %w", d.Id(), err))
 		}
-		if _, err = waiter.FleetStateStopped(ctx, conn, d.Id()); err != nil {
+		if _, err = waiter.waitFleetStateStopped(ctx, conn, d.Id()); err != nil {
 			return diag.FromErr(fmt.Errorf("error waiting for Appstream Fleet (%s) to be stopped: %w", d.Id(), err))
 		}
 	}
@@ -472,7 +472,7 @@ func resourceFleetUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 			return diag.FromErr(fmt.Errorf("error starting Appstream Fleet (%s): %w", d.Id(), err))
 		}
 
-		if _, err = waiter.FleetStateRunning(ctx, conn, d.Id()); err != nil {
+		if _, err = waiter.waitFleetStateRunning(ctx, conn, d.Id()); err != nil {
 			return diag.FromErr(fmt.Errorf("error waiting for Appstream Fleet (%s) to be running: %w", d.Id(), err))
 		}
 	}
@@ -491,7 +491,7 @@ func resourceFleetDelete(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.FromErr(fmt.Errorf("error stopping Appstream Fleet (%s): %w", d.Id(), err))
 	}
 
-	if _, err = waiter.FleetStateStopped(ctx, conn, d.Id()); err != nil {
+	if _, err = waiter.waitFleetStateStopped(ctx, conn, d.Id()); err != nil {
 		return diag.FromErr(fmt.Errorf("error waiting for Appstream Fleet (%s) to be stopped: %w", d.Id(), err))
 	}
 
