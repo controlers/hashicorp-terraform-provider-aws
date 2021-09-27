@@ -14,7 +14,7 @@ import (
 	tfses "github.com/hashicorp/terraform-provider-aws/internal/service/ses"
 )
 
-func TestAccAWSSESEventDestination_basic(t *testing.T) {
+func TestAccSESEventDestination_basic(t *testing.T) {
 	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test-kinesis")
 	rName3 := sdkacctest.RandomWithPrefix("tf-acc-test-sns")
@@ -26,18 +26,18 @@ func TestAccAWSSESEventDestination_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			testAccPreCheckAWSSES(t)
+			testAccPreCheck(t)
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, ses.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckSESEventDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSESEventDestinationConfig(rName1, rName2, rName3),
+				Config: testAccEventDestinationConfig(rName1, rName2, rName3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsSESEventDestinationExists(cloudwatchDestinationResourceName, &v1),
-					testAccCheckAwsSESEventDestinationExists(kinesisDestinationResourceName, &v2),
-					testAccCheckAwsSESEventDestinationExists(snsDestinationResourceName, &v3),
+					testAccCheckEventDestinationExists(cloudwatchDestinationResourceName, &v1),
+					testAccCheckEventDestinationExists(kinesisDestinationResourceName, &v2),
+					testAccCheckEventDestinationExists(snsDestinationResourceName, &v3),
 					acctest.CheckResourceAttrRegionalARN(cloudwatchDestinationResourceName, "arn", "ses", fmt.Sprintf("configuration-set/%s:event-destination/%s", rName1, rName1)),
 					acctest.CheckResourceAttrRegionalARN(kinesisDestinationResourceName, "arn", "ses", fmt.Sprintf("configuration-set/%s:event-destination/%s", rName1, rName2)),
 					acctest.CheckResourceAttrRegionalARN(snsDestinationResourceName, "arn", "ses", fmt.Sprintf("configuration-set/%s:event-destination/%s", rName1, rName3)),
@@ -68,7 +68,7 @@ func TestAccAWSSESEventDestination_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSSESEventDestination_disappears(t *testing.T) {
+func TestAccSESEventDestination_disappears(t *testing.T) {
 	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test-kinesis")
 	rName3 := sdkacctest.RandomWithPrefix("tf-acc-test-sns")
@@ -80,18 +80,18 @@ func TestAccAWSSESEventDestination_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
 			acctest.PreCheck(t)
-			testAccPreCheckAWSSES(t)
+			testAccPreCheck(t)
 		},
 		ErrorCheck:   acctest.ErrorCheck(t, ses.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckSESEventDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSSESEventDestinationConfig(rName1, rName2, rName3),
+				Config: testAccEventDestinationConfig(rName1, rName2, rName3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsSESEventDestinationExists(cloudwatchDestinationResourceName, &v1),
-					testAccCheckAwsSESEventDestinationExists(kinesisDestinationResourceName, &v2),
-					testAccCheckAwsSESEventDestinationExists(snsDestinationResourceName, &v3),
+					testAccCheckEventDestinationExists(cloudwatchDestinationResourceName, &v1),
+					testAccCheckEventDestinationExists(kinesisDestinationResourceName, &v2),
+					testAccCheckEventDestinationExists(snsDestinationResourceName, &v3),
 					acctest.CheckResourceDisappears(acctest.Provider, tfses.ResourceEventDestination(), cloudwatchDestinationResourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfses.ResourceEventDestination(), kinesisDestinationResourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfses.ResourceEventDestination(), snsDestinationResourceName),
@@ -132,7 +132,7 @@ func testAccCheckSESEventDestinationDestroy(s *terraform.State) error {
 
 }
 
-func testAccCheckAwsSESEventDestinationExists(n string, v *ses.EventDestination) resource.TestCheckFunc {
+func testAccCheckEventDestinationExists(n string, v *ses.EventDestination) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -164,7 +164,7 @@ func testAccCheckAwsSESEventDestinationExists(n string, v *ses.EventDestination)
 	}
 }
 
-func testAccAWSSESEventDestinationConfig(rName1, rName2, rName3 string) string {
+func testAccEventDestinationConfig(rName1, rName2, rName3 string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket = %[2]q

@@ -68,40 +68,40 @@ func testSweepSesIdentities(region, identityType string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSSESDomainIdentity_basic(t *testing.T) {
+func TestAccSESDomainIdentity_basic(t *testing.T) {
 	domain := acctest.RandomDomainName()
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSSES(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ses.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsSESDomainIdentityDestroy,
+		CheckDestroy: testAccCheckDomainIdentityDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsSESDomainIdentityConfig(domain),
+				Config: testAccDomainIdentityConfig(domain),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsSESDomainIdentityExists("aws_ses_domain_identity.test"),
-					testAccCheckAwsSESDomainIdentityArn("aws_ses_domain_identity.test", domain),
+					testAccCheckDomainIdentityExists("aws_ses_domain_identity.test"),
+					testAccCheckDomainIdentityARN("aws_ses_domain_identity.test", domain),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSSESDomainIdentity_disappears(t *testing.T) {
+func TestAccSESDomainIdentity_disappears(t *testing.T) {
 	domain := acctest.RandomDomainName()
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSSES(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ses.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsSESDomainIdentityDestroy,
+		CheckDestroy: testAccCheckDomainIdentityDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsSESDomainIdentityConfig(domain),
+				Config: testAccDomainIdentityConfig(domain),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsSESDomainIdentityExists("aws_ses_domain_identity.test"),
-					testAccCheckAwsSESDomainIdentityDisappears(domain),
+					testAccCheckDomainIdentityExists("aws_ses_domain_identity.test"),
+					testAccCheckDomainIdentityDisappears(domain),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -109,26 +109,26 @@ func TestAccAWSSESDomainIdentity_disappears(t *testing.T) {
 	})
 }
 
-// TestAccAWSSESDomainIdentity_trailingPeriod updated in 3.0 to account for domain plan-time validation
+// TestAccSESDomainIdentity_trailingPeriod updated in 3.0 to account for domain plan-time validation
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/13510
-func TestAccAWSSESDomainIdentity_trailingPeriod(t *testing.T) {
+func TestAccSESDomainIdentity_trailingPeriod(t *testing.T) {
 	domain := acctest.RandomFQDomainName()
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSSES(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ses.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsSESDomainIdentityDestroy,
+		CheckDestroy: testAccCheckDomainIdentityDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAwsSESDomainIdentityConfig(domain),
+				Config:      testAccDomainIdentityConfig(domain),
 				ExpectError: regexp.MustCompile(`invalid value for domain \(cannot end with a period\)`),
 			},
 		},
 	})
 }
 
-func testAccCheckAwsSESDomainIdentityDestroy(s *terraform.State) error {
+func testAccCheckDomainIdentityDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SESConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -156,7 +156,7 @@ func testAccCheckAwsSESDomainIdentityDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsSESDomainIdentityExists(n string) resource.TestCheckFunc {
+func testAccCheckDomainIdentityExists(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -189,7 +189,7 @@ func testAccCheckAwsSESDomainIdentityExists(n string) resource.TestCheckFunc {
 	}
 }
 
-func testAccCheckAwsSESDomainIdentityDisappears(identity string) resource.TestCheckFunc {
+func testAccCheckDomainIdentityDisappears(identity string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SESConn
 
@@ -203,7 +203,7 @@ func testAccCheckAwsSESDomainIdentityDisappears(identity string) resource.TestCh
 	}
 }
 
-func testAccCheckAwsSESDomainIdentityArn(n string, domain string) resource.TestCheckFunc {
+func testAccCheckDomainIdentityARN(n string, domain string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs := s.RootModule().Resources[n]
 		awsClient := acctest.Provider.Meta().(*conns.AWSClient)
@@ -224,7 +224,7 @@ func testAccCheckAwsSESDomainIdentityArn(n string, domain string) resource.TestC
 	}
 }
 
-func testAccPreCheckAWSSES(t *testing.T) {
+func testAccPreCheck(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).SESConn
 
 	input := &ses.ListIdentitiesInput{}
@@ -240,7 +240,7 @@ func testAccPreCheckAWSSES(t *testing.T) {
 	}
 }
 
-func testAccAwsSESDomainIdentityConfig(domain string) string {
+func testAccDomainIdentityConfig(domain string) string {
 	return fmt.Sprintf(`
 resource "aws_ses_domain_identity" "test" {
   domain = "%s"
