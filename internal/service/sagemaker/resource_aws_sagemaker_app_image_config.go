@@ -138,7 +138,7 @@ func resourceAppImageConfigRead(d *schema.ResourceData, meta interface{}) error 
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	image, err := finder.AppImageConfigByName(conn, d.Id())
+	image, err := finder.FindAppImageConfigByName(conn, d.Id())
 	if err != nil {
 		if tfawserr.ErrMessageContains(err, sagemaker.ErrCodeResourceNotFound, "does not exist") {
 			d.SetId("")

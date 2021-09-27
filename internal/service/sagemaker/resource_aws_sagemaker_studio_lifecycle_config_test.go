@@ -175,7 +175,7 @@ func testAccCheckAWSSagemakerStudioLifecycleConfigDestroy(s *terraform.State) er
 			continue
 		}
 
-		_, err := finder.StudioLifecycleConfigByName(conn, rs.Primary.ID)
+		_, err := finder.FindStudioLifecycleConfigByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -204,7 +204,7 @@ func testAccCheckAWSSagemakerStudioLifecycleConfigExists(n string, config *sagem
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
-		output, err := finder.StudioLifecycleConfigByName(conn, rs.Primary.ID)
+		output, err := finder.FindStudioLifecycleConfigByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err

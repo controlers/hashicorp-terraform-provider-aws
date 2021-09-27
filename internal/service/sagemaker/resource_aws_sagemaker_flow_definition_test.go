@@ -247,7 +247,7 @@ func testAccCheckAWSSagemakerFlowDefinitionDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FlowDefinitionByName(conn, rs.Primary.ID)
+		_, err := finder.FindFlowDefinitionByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -276,7 +276,7 @@ func testAccCheckAWSSagemakerFlowDefinitionExists(n string, flowDefinition *sage
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
-		output, err := finder.FlowDefinitionByName(conn, rs.Primary.ID)
+		output, err := finder.FindFlowDefinitionByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err

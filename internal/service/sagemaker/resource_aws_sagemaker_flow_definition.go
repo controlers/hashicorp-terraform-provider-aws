@@ -282,7 +282,7 @@ func resourceFlowDefinitionCreate(d *schema.ResourceData, meta interface{}) erro
 
 	d.SetId(name)
 
-	if _, err := waiter.FlowDefinitionActive(conn, d.Id()); err != nil {
+	if _, err := waiter.WaitFlowDefinitionActive(conn, d.Id()); err != nil {
 		return fmt.Errorf("error waiting for SageMaker Flow Definition (%s) to become active: %w", d.Id(), err)
 	}
 
@@ -294,7 +294,7 @@ func resourceFlowDefinitionRead(d *schema.ResourceData, meta interface{}) error 
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	flowDefinition, err := finder.FlowDefinitionByName(conn, d.Id())
+	flowDefinition, err := finder.FindFlowDefinitionByName(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] SageMaker Flow Definition (%s) not found, removing from state", d.Id())
@@ -377,7 +377,7 @@ func resourceFlowDefinitionDelete(d *schema.ResourceData, meta interface{}) erro
 		return fmt.Errorf("error deleting SageMaker Flow Definition (%s): %w", d.Id(), err)
 	}
 
-	if _, err := waiter.FlowDefinitionDeleted(conn, d.Id()); err != nil {
+	if _, err := waiter.WaitFlowDefinitionDeleted(conn, d.Id()); err != nil {
 		return fmt.Errorf("error waiting for SageMaker Flow Definition (%s) to delete: %w", d.Id(), err)
 	}
 

@@ -95,7 +95,7 @@ func resourceStudioLifecycleConfigRead(d *schema.ResourceData, meta interface{})
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	image, err := finder.StudioLifecycleConfigByName(conn, d.Id())
+	image, err := finder.FindStudioLifecycleConfigByName(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] SageMaker Studio Lifecycle Config (%s) not found, removing from state", d.Id())

@@ -279,7 +279,7 @@ func resourceUserProfileCreate(d *schema.ResourceData, meta interface{}) error {
 
 	d.SetId(userProfileArn)
 
-	if _, err := waiter.UserProfileInService(conn, domainID, userProfileName); err != nil {
+	if _, err := waiter.WaitUserProfileInService(conn, domainID, userProfileName); err != nil {
 		return fmt.Errorf("error waiting for SageMaker User Profile (%s) to create: %w", d.Id(), err)
 	}
 
@@ -296,7 +296,7 @@ func resourceUserProfileRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	UserProfile, err := finder.UserProfileByName(conn, domainID, userProfileName)
+	UserProfile, err := finder.FindUserProfileByName(conn, domainID, userProfileName)
 	if err != nil {
 		if tfawserr.ErrMessageContains(err, sagemaker.ErrCodeResourceNotFound, "") {
 			d.SetId("")
@@ -357,7 +357,7 @@ func resourceUserProfileUpdate(d *schema.ResourceData, meta interface{}) error {
 			return fmt.Errorf("error updating SageMaker User Profile: %w", err)
 		}
 
-		if _, err := waiter.UserProfileInService(conn, domainID, userProfileName); err != nil {
+		if _, err := waiter.WaitUserProfileInService(conn, domainID, userProfileName); err != nil {
 			return fmt.Errorf("error waiting for SageMaker User Profile (%s) to update: %w", d.Id(), err)
 		}
 	}
@@ -390,7 +390,7 @@ func resourceUserProfileDelete(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 
-	if _, err := waiter.UserProfileDeleted(conn, domainID, userProfileName); err != nil {
+	if _, err := waiter.WaitUserProfileDeleted(conn, domainID, userProfileName); err != nil {
 		if !tfawserr.ErrMessageContains(err, sagemaker.ErrCodeResourceNotFound, "") {
 			return fmt.Errorf("error waiting for SageMaker User Profile (%s) to delete: %w", d.Id(), err)
 		}
