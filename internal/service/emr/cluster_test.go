@@ -81,7 +81,7 @@ func testSweepEmrClusters(region string) error {
 	return nil
 }
 
-func TestAccAWSEMRCluster_basic(t *testing.T) {
+func TestAccEMRCluster_basic(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -90,12 +90,12 @@ func TestAccAWSEMRCluster_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig(rName),
+				Config: testAccClusterConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "scale_down_behavior", "TERMINATE_AT_TASK_COMPLETION"),
 					resource.TestCheckResourceAttr(resourceName, "step.#", "0"),
 					resource.TestCheckResourceAttrSet(resourceName, "arn"),
@@ -117,7 +117,7 @@ func TestAccAWSEMRCluster_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_additionalInfo(t *testing.T) {
+func TestAccEMRCluster_additionalInfo(t *testing.T) {
 	var cluster emr.Cluster
 	expectedJSON := `
 {
@@ -133,12 +133,12 @@ func TestAccAWSEMRCluster_additionalInfo(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigAdditionalInfo(rName),
+				Config: testAccClusterAdditionalInfoConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "scale_down_behavior", "TERMINATE_AT_TASK_COMPLETION"),
 					resource.TestCheckResourceAttr(resourceName, "step.#", "0"),
 					acctest.CheckResourceAttrEquivalentJSON(resourceName, "additional_info", expectedJSON),
@@ -159,7 +159,7 @@ func TestAccAWSEMRCluster_additionalInfo(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_disappears(t *testing.T) {
+func TestAccEMRCluster_disappears(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -168,13 +168,13 @@ func TestAccAWSEMRCluster_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig(rName),
+				Config: testAccClusterConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
-					testAccCheckAWSEmrClusterDisappears(&cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
+					testAccCheckClusterDisappears(&cluster),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -182,7 +182,7 @@ func TestAccAWSEMRCluster_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_configurationsJson(t *testing.T) {
+func TestAccEMRCluster_sJSON(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -191,12 +191,12 @@ func TestAccAWSEMRCluster_configurationsJson(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigConfigurationsJson(rName),
+				Config: testAccClusterConfigurationsJSONConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestMatchResourceAttr(resourceName, "configurations_json",
 						regexp.MustCompile("{\"JAVA_HOME\":\"/usr/lib/jvm/java-1.8.0\".+")),
 				),
@@ -215,7 +215,7 @@ func TestAccAWSEMRCluster_configurationsJson(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_CoreInstanceGroup_AutoscalingPolicy(t *testing.T) {
+func TestAccEMRCluster_CoreInstanceGroup_autoScalingPolicy(t *testing.T) {
 	var cluster1, cluster2, cluster3 emr.Cluster
 	autoscalingPolicy1 := `
 {
@@ -290,12 +290,12 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_AutoscalingPolicy(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupAutoscalingPolicy(rName, autoscalingPolicy1),
+				Config: testAccClusterCoreInstanceGroupAutoScalingPolicyConfig(rName, autoscalingPolicy1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					acctest.CheckResourceAttrEquivalentJSON(resourceName, "core_instance_group.0.autoscaling_policy", autoscalingPolicy1),
 				),
@@ -311,19 +311,19 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_AutoscalingPolicy(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupAutoscalingPolicy(rName, autoscalingPolicy2),
+				Config: testAccClusterCoreInstanceGroupAutoScalingPolicyConfig(rName, autoscalingPolicy2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterNotRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterNotRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					acctest.CheckResourceAttrEquivalentJSON(resourceName, "core_instance_group.0.autoscaling_policy", autoscalingPolicy2),
 				),
 			},
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupAutoscalingPolicyRemoved(rName),
+				Config: testAccClusterCoreInstanceGroupAutoScalingPolicyRemovedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster3),
-					testAccCheckAWSEmrClusterNotRecreated(&cluster2, &cluster3),
+					testAccCheckClusterExists(resourceName, &cluster3),
+					testAccCheckClusterNotRecreated(&cluster2, &cluster3),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.autoscaling_policy", ""),
 				),
@@ -332,7 +332,7 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_AutoscalingPolicy(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_CoreInstanceGroup_BidPrice(t *testing.T) {
+func TestAccEMRCluster_CoreInstanceGroup_bidPrice(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.test"
@@ -341,12 +341,12 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_BidPrice(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupBidPrice(rName, "0.50"),
+				Config: testAccClusterCoreInstanceGroupBidPriceConfig(rName, "0.50"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.bid_price", "0.50"),
 				),
@@ -362,10 +362,10 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_BidPrice(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupBidPrice(rName, "0.51"),
+				Config: testAccClusterCoreInstanceGroupBidPriceConfig(rName, "0.51"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.bid_price", "0.51"),
 				),
@@ -374,7 +374,7 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_BidPrice(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_CoreInstanceGroup_InstanceCount(t *testing.T) {
+func TestAccEMRCluster_CoreInstanceGroup_instanceCount(t *testing.T) {
 	var cluster1, cluster2, cluster3 emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.test"
@@ -383,12 +383,12 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_InstanceCount(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupInstanceCount(rName, 2),
+				Config: testAccClusterCoreInstanceGroupInstanceCountConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.instance_count", "2"),
 				),
@@ -404,19 +404,19 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_InstanceCount(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupInstanceCount(rName, 1),
+				Config: testAccClusterCoreInstanceGroupInstanceCountConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterNotRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterNotRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.instance_count", "1"),
 				),
 			},
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupInstanceCount(rName, 2),
+				Config: testAccClusterCoreInstanceGroupInstanceCountConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster3),
-					testAccCheckAWSEmrClusterNotRecreated(&cluster2, &cluster3),
+					testAccCheckClusterExists(resourceName, &cluster3),
+					testAccCheckClusterNotRecreated(&cluster2, &cluster3),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.instance_count", "2"),
 				),
@@ -425,7 +425,7 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_InstanceCount(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_CoreInstanceGroup_InstanceType(t *testing.T) {
+func TestAccEMRCluster_CoreInstanceGroup_instanceType(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.test"
@@ -434,12 +434,12 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_InstanceType(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupInstanceType(rName, "m4.large"),
+				Config: testAccClusterCoreInstanceGroupInstanceTypeConfig(rName, "m4.large"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.instance_type", "m4.large"),
 				),
@@ -455,10 +455,10 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_InstanceType(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupInstanceType(rName, "m4.xlarge"),
+				Config: testAccClusterCoreInstanceGroupInstanceTypeConfig(rName, "m4.xlarge"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.instance_type", "m4.xlarge"),
 				),
@@ -467,7 +467,7 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_InstanceType(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_CoreInstanceGroup_Name(t *testing.T) {
+func TestAccEMRCluster_CoreInstanceGroup_name(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.test"
@@ -476,12 +476,12 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_Name(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupName(rName, "name1"),
+				Config: testAccClusterCoreInstanceGroupNameConfig(rName, "name1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.name", "name1"),
 				),
@@ -497,10 +497,10 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_Name(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigCoreInstanceGroupName(rName, "name2"),
+				Config: testAccClusterCoreInstanceGroupNameConfig(rName, "name2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.name", "name2"),
 				),
@@ -509,7 +509,7 @@ func TestAccAWSEMRCluster_CoreInstanceGroup_Name(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_Ec2Attributes_DefaultManagedSecurityGroups(t *testing.T) {
+func TestAccEMRCluster_EC2Attributes_defaultManagedSecurityGroups(t *testing.T) {
 	var cluster emr.Cluster
 	var vpc ec2.Vpc
 
@@ -521,17 +521,17 @@ func TestAccAWSEMRCluster_Ec2Attributes_DefaultManagedSecurityGroups(t *testing.
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigEc2AttributesDefaultManagedSecurityGroups(rName),
+				Config: testAccClusterEC2AttributesDefaultManagedSecurityGroupsConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					acctest.CheckVPCExists(vpcResourceName, &vpc),
 				),
 			},
 			{
-				Config:      testAccAWSEmrClusterConfigEc2AttributesDefaultManagedSecurityGroups(rName),
+				Config:      testAccClusterEC2AttributesDefaultManagedSecurityGroupsConfig(rName),
 				Destroy:     true,
 				ExpectError: regexp.MustCompile(`DependencyViolation`),
 			},
@@ -545,14 +545,14 @@ func TestAccAWSEMRCluster_Ec2Attributes_DefaultManagedSecurityGroups(t *testing.
 						t.Fatal(err)
 					}
 				},
-				Config:  testAccAWSEmrClusterConfigEc2AttributesDefaultManagedSecurityGroups(rName),
+				Config:  testAccClusterEC2AttributesDefaultManagedSecurityGroupsConfig(rName),
 				Destroy: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSEMRCluster_Kerberos_ClusterDedicatedKdc(t *testing.T) {
+func TestAccEMRCluster_Kerberos_clusterDedicatedKdc(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -562,12 +562,12 @@ func TestAccAWSEMRCluster_Kerberos_ClusterDedicatedKdc(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig_Kerberos_ClusterDedicatedKdc(rName, password),
+				Config: testAccClusterConfig_Kerberos_ClusterDedicatedKdc(rName, password),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "kerberos_attributes.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "kerberos_attributes.0.kdc_admin_password", password),
 					resource.TestCheckResourceAttr(resourceName, "kerberos_attributes.0.realm", "EC2.INTERNAL"),
@@ -588,7 +588,7 @@ func TestAccAWSEMRCluster_Kerberos_ClusterDedicatedKdc(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_MasterInstanceGroup_BidPrice(t *testing.T) {
+func TestAccEMRCluster_MasterInstanceGroup_bidPrice(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.test"
@@ -597,12 +597,12 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_BidPrice(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigMasterInstanceGroupBidPrice(rName, "0.50"),
+				Config: testAccClusterMasterInstanceGroupBidPriceConfig(rName, "0.50"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.bid_price", "0.50"),
 				),
@@ -618,10 +618,10 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_BidPrice(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigMasterInstanceGroupBidPrice(rName, "0.51"),
+				Config: testAccClusterMasterInstanceGroupBidPriceConfig(rName, "0.51"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.bid_price", "0.51"),
 				),
@@ -630,7 +630,7 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_BidPrice(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_MasterInstanceGroup_InstanceCount(t *testing.T) {
+func TestAccEMRCluster_MasterInstanceGroup_instanceCount(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.test"
@@ -639,12 +639,12 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_InstanceCount(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigMasterInstanceGroupInstanceCount(rName, 3),
+				Config: testAccClusterMasterInstanceGroupInstanceCountConfig(rName, 3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.instance_count", "3"),
 				),
@@ -660,10 +660,10 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_InstanceCount(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigMasterInstanceGroupInstanceCount(rName, 1),
+				Config: testAccClusterMasterInstanceGroupInstanceCountConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.instance_count", "1"),
 				),
@@ -672,7 +672,7 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_InstanceCount(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_MasterInstanceGroup_InstanceType(t *testing.T) {
+func TestAccEMRCluster_MasterInstanceGroup_instanceType(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.test"
@@ -681,12 +681,12 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_InstanceType(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigMasterInstanceGroupInstanceType(rName, "m4.large"),
+				Config: testAccClusterMasterInstanceGroupInstanceTypeConfig(rName, "m4.large"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.instance_type", "m4.large"),
 				),
@@ -702,10 +702,10 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_InstanceType(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigMasterInstanceGroupInstanceType(rName, "m4.xlarge"),
+				Config: testAccClusterMasterInstanceGroupInstanceTypeConfig(rName, "m4.xlarge"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.instance_type", "m4.xlarge"),
 				),
@@ -714,7 +714,7 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_InstanceType(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_MasterInstanceGroup_Name(t *testing.T) {
+func TestAccEMRCluster_MasterInstanceGroup_name(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.test"
@@ -723,12 +723,12 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_Name(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigMasterInstanceGroupName(rName, "name1"),
+				Config: testAccClusterMasterInstanceGroupNameConfig(rName, "name1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.name", "name1"),
 				),
@@ -744,10 +744,10 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_Name(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigMasterInstanceGroupName(rName, "name2"),
+				Config: testAccClusterMasterInstanceGroupNameConfig(rName, "name2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.name", "name2"),
 				),
@@ -756,7 +756,7 @@ func TestAccAWSEMRCluster_MasterInstanceGroup_Name(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_security_config(t *testing.T) {
+func TestAccEMRCluster_security(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -765,12 +765,12 @@ func TestAccAWSEMRCluster_security_config(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig_SecurityConfiguration(rName),
+				Config: testAccClusterConfig_SecurityConfiguration(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttrPair(resourceName, "security_configuration", "aws_emr_security_configuration.foo", "name"),
 				),
 			},
@@ -788,7 +788,7 @@ func TestAccAWSEMRCluster_security_config(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_Step_Basic(t *testing.T) {
+func TestAccEMRCluster_Step_basic(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -797,12 +797,12 @@ func TestAccAWSEMRCluster_Step_Basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig_Step_Single(rName),
+				Config: testAccClusterConfig_Step_Single(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "step.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "step.0.action_on_failure", "TERMINATE_CLUSTER"),
 					resource.TestCheckResourceAttr(resourceName, "step.0.hadoop_jar_step.0.args.0", "state-pusher-script"),
@@ -826,7 +826,7 @@ func TestAccAWSEMRCluster_Step_Basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_Step_ConfigMode(t *testing.T) {
+func TestAccEMRCluster_Step_mode(t *testing.T) {
 	var cluster1, cluster2, cluster3 emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -835,12 +835,12 @@ func TestAccAWSEMRCluster_Step_ConfigMode(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig_Step_Single(rName),
+				Config: testAccClusterConfig_Step_Single(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "step.#", "1"),
 				),
 			},
@@ -855,9 +855,9 @@ func TestAccAWSEMRCluster_Step_ConfigMode(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfig_Step_NoBlocks(rName),
+				Config: testAccClusterConfig_Step_NoBlocks(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "step.#", "1"),
 				),
 			},
@@ -872,9 +872,9 @@ func TestAccAWSEMRCluster_Step_ConfigMode(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfig_Step_Zeroed(rName),
+				Config: testAccClusterConfig_Step_Zeroed(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster3),
+					testAccCheckClusterExists(resourceName, &cluster3),
 					resource.TestCheckResourceAttr(resourceName, "step.#", "0"),
 				),
 			},
@@ -892,7 +892,7 @@ func TestAccAWSEMRCluster_Step_ConfigMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_Step_Multiple(t *testing.T) {
+func TestAccEMRCluster_Step_multiple(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -901,12 +901,12 @@ func TestAccAWSEMRCluster_Step_Multiple(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig_Step_Multiple(rName),
+				Config: testAccClusterConfig_Step_Multiple(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "step.#", "2"),
 					resource.TestCheckResourceAttr(resourceName, "step.0.action_on_failure", "TERMINATE_CLUSTER"),
 					resource.TestCheckResourceAttr(resourceName, "step.0.hadoop_jar_step.0.args.0", "state-pusher-script"),
@@ -934,7 +934,7 @@ func TestAccAWSEMRCluster_Step_Multiple(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_bootstrap_ordering(t *testing.T) {
+func TestAccEMRCluster_Bootstrap_ordering(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
@@ -943,12 +943,12 @@ func TestAccAWSEMRCluster_bootstrap_ordering(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig_bootstrap(rName),
+				Config: testAccClusterConfig_bootstrap(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.#", "2"),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.0.name", "runif"),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.0.path", "s3://elasticmapreduce/bootstrap-actions/run-if"),
@@ -971,9 +971,9 @@ func TestAccAWSEMRCluster_bootstrap_ordering(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfig_bootstrapAdd(rName),
+				Config: testAccClusterConfig_bootstrapAdd(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.#", "3"),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.0.name", "runif"),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.0.path", "s3://elasticmapreduce/bootstrap-actions/run-if"),
@@ -1001,9 +1001,9 @@ func TestAccAWSEMRCluster_bootstrap_ordering(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfig_bootstrapReorder(rName),
+				Config: testAccClusterConfig_bootstrapReorder(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.#", "3"),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.0.name", "runif"),
 					resource.TestCheckResourceAttr(resourceName, "bootstrap_action.0.path", "s3://elasticmapreduce/bootstrap-actions/run-if"),
@@ -1034,7 +1034,7 @@ func TestAccAWSEMRCluster_bootstrap_ordering(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_terminationProtected(t *testing.T) {
+func TestAccEMRCluster_terminationProtected(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1043,19 +1043,19 @@ func TestAccAWSEMRCluster_terminationProtected(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigTerminationPolicy(rName, "false"),
+				Config: testAccClusterTerminationPolicyConfig(rName, "false"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "termination_protection", "false"),
 				),
 			},
 			{
-				Config: testAccAWSEmrClusterConfigTerminationPolicy(rName, "true"),
+				Config: testAccClusterTerminationPolicyConfig(rName, "true"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "termination_protection", "true"),
 				),
 			},
@@ -1071,9 +1071,9 @@ func TestAccAWSEMRCluster_terminationProtected(t *testing.T) {
 			},
 			{
 				//Need to turn off termination_protection to allow the job to be deleted
-				Config: testAccAWSEmrClusterConfigTerminationPolicy(rName, "false"),
+				Config: testAccClusterTerminationPolicyConfig(rName, "false"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "termination_protection", "false"),
 				),
 			},
@@ -1091,7 +1091,7 @@ func TestAccAWSEMRCluster_terminationProtected(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_keepJob(t *testing.T) {
+func TestAccEMRCluster_keepJob(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1100,12 +1100,12 @@ func TestAccAWSEMRCluster_keepJob(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig_keepJob(rName, "false"),
+				Config: testAccClusterConfig_keepJob(rName, "false"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "keep_job_flow_alive_when_no_steps", "false"),
 				),
 			},
@@ -1123,7 +1123,7 @@ func TestAccAWSEMRCluster_keepJob(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_visibleToAllUsers(t *testing.T) {
+func TestAccEMRCluster_visibleToAllUsers(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1132,12 +1132,12 @@ func TestAccAWSEMRCluster_visibleToAllUsers(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig(rName),
+				Config: testAccClusterConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "visible_to_all_users", "true"),
 				),
 			},
@@ -1152,9 +1152,9 @@ func TestAccAWSEMRCluster_visibleToAllUsers(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfigVisibleToAllUsersUpdated(rName),
+				Config: testAccClusterVisibleToAllUsersUpdatedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "visible_to_all_users", "false"),
 				),
 			},
@@ -1172,7 +1172,7 @@ func TestAccAWSEMRCluster_visibleToAllUsers(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_s3Logging(t *testing.T) {
+func TestAccEMRCluster_s3Logging(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1182,12 +1182,12 @@ func TestAccAWSEMRCluster_s3Logging(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigS3Logging(rName),
+				Config: testAccClusterS3LoggingConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "log_uri", bucketName),
 				),
 			},
@@ -1205,7 +1205,7 @@ func TestAccAWSEMRCluster_s3Logging(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_tags(t *testing.T) {
+func TestAccEMRCluster_tags(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1214,12 +1214,12 @@ func TestAccAWSEMRCluster_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig(rName),
+				Config: testAccClusterConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "4"),
 					resource.TestCheckResourceAttr(resourceName, "tags.role", "rolename"),
 					resource.TestCheckResourceAttr(resourceName, "tags.dns_zone", "env_zone"),
@@ -1227,9 +1227,9 @@ func TestAccAWSEMRCluster_tags(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "tags.name", "name-env")),
 			},
 			{
-				Config: testAccAWSEmrClusterConfigUpdatedTags(rName),
+				Config: testAccClusterUpdatedTagsConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "3"),
 					resource.TestCheckResourceAttr(resourceName, "tags.dns_zone", "new_zone"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Env", "production"),
@@ -1250,7 +1250,7 @@ func TestAccAWSEMRCluster_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_root_volume_size(t *testing.T) {
+func TestAccEMRCluster_RootVolume_size(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1259,19 +1259,19 @@ func TestAccAWSEMRCluster_root_volume_size(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig(rName),
+				Config: testAccClusterConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "ebs_root_volume_size", "21"),
 				),
 			},
 			{
-				Config: testAccAWSEmrClusterConfigUpdatedRootVolumeSize(rName),
+				Config: testAccClusterUpdatedRootVolumeSizeConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "ebs_root_volume_size", "48"),
 				),
 			},
@@ -1289,7 +1289,7 @@ func TestAccAWSEMRCluster_root_volume_size(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_step_concurrency_level(t *testing.T) {
+func TestAccEMRCluster_StepConcurrency_level(t *testing.T) {
 	var cluster emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1297,19 +1297,19 @@ func TestAccAWSEMRCluster_step_concurrency_level(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigStepConcurrencyLevel(rName, 2),
+				Config: testAccClusterStepConcurrencyLevelConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "step_concurrency_level", "2"),
 				),
 			},
 			{
-				Config: testAccAWSEmrClusterConfigStepConcurrencyLevel(rName, 1),
+				Config: testAccClusterStepConcurrencyLevelConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "step_concurrency_level", "1"),
 				),
 			},
@@ -1327,7 +1327,7 @@ func TestAccAWSEMRCluster_step_concurrency_level(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_ebs_config(t *testing.T) {
+func TestAccEMRCluster_ebs(t *testing.T) {
 	var cluster emr.Cluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1335,12 +1335,12 @@ func TestAccAWSEMRCluster_ebs_config(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrEbsConfig(rName, 2),
+				Config: testAccEBSConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_group.0.ebs_config.0.volumes_per_instance", "2"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_group.0.ebs_config.0.volumes_per_instance", "2"),
 				),
@@ -1359,7 +1359,7 @@ func TestAccAWSEMRCluster_ebs_config(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_custom_ami_id(t *testing.T) {
+func TestAccEMRCluster_CustomAMI_id(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1368,12 +1368,12 @@ func TestAccAWSEMRCluster_custom_ami_id(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigCustomAmiID(rName),
+				Config: testAccClusterCustomAMIIDConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttrSet(resourceName, "custom_ami_id"),
 				),
 			},
@@ -1391,7 +1391,7 @@ func TestAccAWSEMRCluster_custom_ami_id(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_InstanceFleet_basic(t *testing.T) {
+func TestAccEMRCluster_InstanceFleet_basic(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1403,12 +1403,12 @@ func TestAccAWSEMRCluster_InstanceFleet_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfig_InstanceFleets(rName),
+				Config: testAccClusterConfig_InstanceFleets(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster1),
+					testAccCheckClusterExists(resourceName, &cluster1),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_fleet.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_fleet.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "ec2_attributes.#", "1"),
@@ -1430,10 +1430,10 @@ func TestAccAWSEMRCluster_InstanceFleet_basic(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSEmrClusterConfig_InstanceFleet_MultipleSubnets(rName),
+				Config: testAccClusterConfig_InstanceFleet_MultipleSubnets(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster2),
-					testAccCheckAWSEmrClusterRecreated(&cluster1, &cluster2),
+					testAccCheckClusterExists(resourceName, &cluster2),
+					testAccCheckClusterRecreated(&cluster1, &cluster2),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_fleet.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_fleet.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "ec2_attributes.#", "1"),
@@ -1458,7 +1458,7 @@ func TestAccAWSEMRCluster_InstanceFleet_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEMRCluster_InstanceFleet_master_only(t *testing.T) {
+func TestAccEMRCluster_InstanceFleetMaster_only(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.tf-test-cluster"
@@ -1467,12 +1467,12 @@ func TestAccAWSEMRCluster_InstanceFleet_master_only(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEmrDestroy,
+		CheckDestroy: testAccCheckDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEmrClusterConfigInstanceFleetsMasterOnly(rName),
+				Config: testAccClusterInstanceFleetsMasterOnlyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSEmrClusterExists(resourceName, &cluster),
+					testAccCheckClusterExists(resourceName, &cluster),
 					resource.TestCheckResourceAttr(resourceName, "master_instance_fleet.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "core_instance_fleet.#", "0"),
 				),
@@ -1491,7 +1491,7 @@ func TestAccAWSEMRCluster_InstanceFleet_master_only(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSEmrDestroy(s *terraform.State) error {
+func testAccCheckDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).EMRConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -1522,7 +1522,7 @@ func testAccCheckAWSEmrDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSEmrClusterExists(n string, v *emr.Cluster) resource.TestCheckFunc {
+func testAccCheckClusterExists(n string, v *emr.Cluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -1556,7 +1556,7 @@ func testAccCheckAWSEmrClusterExists(n string, v *emr.Cluster) resource.TestChec
 	}
 }
 
-func testAccCheckAWSEmrClusterDisappears(cluster *emr.Cluster) resource.TestCheckFunc {
+func testAccCheckClusterDisappears(cluster *emr.Cluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EMRConn
 		id := aws.StringValue(cluster.Id)
@@ -1614,7 +1614,7 @@ func testAccCheckAWSEmrClusterDisappears(cluster *emr.Cluster) resource.TestChec
 	}
 }
 
-func testAccCheckAWSEmrClusterNotRecreated(i, j *emr.Cluster) resource.TestCheckFunc {
+func testAccCheckClusterNotRecreated(i, j *emr.Cluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(i.Id) != aws.StringValue(j.Id) {
 			return fmt.Errorf("EMR Cluster recreated: %s -> %s", aws.StringValue(i.Id), aws.StringValue(j.Id))
@@ -1624,7 +1624,7 @@ func testAccCheckAWSEmrClusterNotRecreated(i, j *emr.Cluster) resource.TestCheck
 	}
 }
 
-func testAccCheckAWSEmrClusterRecreated(i, j *emr.Cluster) resource.TestCheckFunc {
+func testAccCheckClusterRecreated(i, j *emr.Cluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if aws.StringValue(i.Id) == aws.StringValue(j.Id) {
 			return fmt.Errorf("EMR Cluster not recreated: %s", aws.StringValue(i.Id))
@@ -1701,22 +1701,22 @@ func testAccEmrDeleteManagedSecurityGroup(conn *ec2.EC2, securityGroup *ec2.Secu
 	return err
 }
 
-func testAccAWSEmrComposeConfig(mapPublicIPOnLaunch bool, config ...string) string {
-	return acctest.ConfigCompose(append(config, testAccAWSEmrClusterConfigBaseVpc(mapPublicIPOnLaunch))...)
+func testAccComposeConfig(mapPublicIPOnLaunch bool, config ...string) string {
+	return acctest.ConfigCompose(append(config, testAccClusterBaseVPCConfig(mapPublicIPOnLaunch))...)
 }
 
-func testAccAWSEmrClusterConfigCurrentPartition() string {
+func testAccClusterCurrentPartitionConfig() string {
 	return `
 data "aws_partition" "current" {}
 `
 }
 
-func testAccAWSEmrClusterConfig_bootstrap(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigBootstrapActionBucket(r),
+func testAccClusterConfig_bootstrap(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterBootstrapActionBucketConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   name          = "%[1]s"
@@ -1774,12 +1774,12 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfig_bootstrapAdd(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigBootstrapActionBucket(r),
+func testAccClusterConfig_bootstrapAdd(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterBootstrapActionBucketConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   name          = "%[1]s"
@@ -1843,12 +1843,12 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfig_bootstrapReorder(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigBootstrapActionBucket(r),
+func testAccClusterConfig_bootstrapReorder(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterBootstrapActionBucketConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   name          = "%[1]s"
@@ -1912,12 +1912,12 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfig(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -1969,12 +1969,12 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfigAdditionalInfo(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterAdditionalInfoConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -2035,11 +2035,11 @@ EOF
 	)
 }
 
-func testAccAWSEmrClusterConfigConfigurationsJson(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
+func testAccClusterConfigurationsJSONConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -2107,8 +2107,8 @@ EOF
 	)
 }
 
-func testAccAWSEmrClusterConfig_Kerberos_ClusterDedicatedKdc(r string, password string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterConfig_Kerberos_ClusterDedicatedKdc(r string, password string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_security_configuration" "foo" {
   configuration = <<EOF
 {
@@ -2159,12 +2159,12 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 `, r, password))
 }
 
-func testAccAWSEmrClusterConfig_SecurityConfiguration(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterConfig_SecurityConfiguration(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -2257,7 +2257,7 @@ POLICY
 `, r))
 }
 
-const testAccAWSEmrClusterConfig_Step_DebugLoggingStep = `
+const testAccClusterConfig_Step_DebugLoggingStep = `
   # Example from: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-debugging.html
   step {
     action_on_failure = "TERMINATE_CLUSTER"
@@ -2270,7 +2270,7 @@ const testAccAWSEmrClusterConfig_Step_DebugLoggingStep = `
   }
 `
 
-const testAccAWSEmrClusterConfig_Step_SparkStep = `
+const testAccClusterConfig_Step_SparkStep = `
   # Example from: https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-submit-step.html
   step {
     action_on_failure = "CONTINUE"
@@ -2283,25 +2283,25 @@ const testAccAWSEmrClusterConfig_Step_SparkStep = `
   }
 `
 
-func testAccAWSEmrClusterConfig_Step_Multiple(r string) string {
-	stepConfig := testAccAWSEmrClusterConfig_Step_DebugLoggingStep + testAccAWSEmrClusterConfig_Step_SparkStep
-	return testAccAWSEmrClusterConfig_Step(r, stepConfig)
+func testAccClusterConfig_Step_Multiple(r string) string {
+	stepConfig := testAccClusterConfig_Step_DebugLoggingStep + testAccClusterConfig_Step_SparkStep
+	return testAccClusterConfig_Step(r, stepConfig)
 }
 
-func testAccAWSEmrClusterConfig_Step_NoBlocks(r string) string {
-	return testAccAWSEmrClusterConfig_Step(r, "")
+func testAccClusterConfig_Step_NoBlocks(r string) string {
+	return testAccClusterConfig_Step(r, "")
 }
 
-func testAccAWSEmrClusterConfig_Step_Single(r string) string {
-	return testAccAWSEmrClusterConfig_Step(r, testAccAWSEmrClusterConfig_Step_DebugLoggingStep)
+func testAccClusterConfig_Step_Single(r string) string {
+	return testAccClusterConfig_Step(r, testAccClusterConfig_Step_DebugLoggingStep)
 }
 
-func testAccAWSEmrClusterConfig_Step_Zeroed(r string) string {
-	return testAccAWSEmrClusterConfig_Step(r, "step = []")
+func testAccClusterConfig_Step_Zeroed(r string) string {
+	return testAccClusterConfig_Step(r, "step = []")
 }
 
-func testAccAWSEmrClusterConfig_Step(r string, stepConfig string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterConfig_Step(r string, stepConfig string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2339,9 +2339,9 @@ resource "aws_s3_bucket" "test" {
 `, r, stepConfig))
 }
 
-func testAccAWSEmrClusterConfigCoreInstanceGroupAutoscalingPolicy(rName, autoscalingPolicy string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
+func testAccClusterCoreInstanceGroupAutoScalingPolicyConfig(rName, autoscalingPolicy string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
 		fmt.Sprintf(`
 data "aws_iam_policy_document" "test" {
   statement {
@@ -2403,9 +2403,9 @@ POLICY
 	)
 }
 
-func testAccAWSEmrClusterConfigCoreInstanceGroupAutoscalingPolicyRemoved(rName string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
+func testAccClusterCoreInstanceGroupAutoScalingPolicyRemovedConfig(rName string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
 		fmt.Sprintf(`
 data "aws_iam_policy_document" "test" {
   statement {
@@ -2464,8 +2464,8 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigCoreInstanceGroupBidPrice(rName, bidPrice string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterCoreInstanceGroupBidPriceConfig(rName, bidPrice string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2495,8 +2495,8 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigCoreInstanceGroupInstanceCount(rName string, instanceCount int) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterCoreInstanceGroupInstanceCountConfig(rName string, instanceCount int) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2526,8 +2526,8 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigCoreInstanceGroupInstanceType(rName, instanceType string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterCoreInstanceGroupInstanceTypeConfig(rName, instanceType string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2556,8 +2556,8 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigCoreInstanceGroupName(rName, instanceGroupName string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterCoreInstanceGroupNameConfig(rName, instanceGroupName string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2587,8 +2587,8 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigEc2AttributesDefaultManagedSecurityGroups(rName string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterEC2AttributesDefaultManagedSecurityGroupsConfig(rName string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2611,8 +2611,8 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfigMasterInstanceGroupBidPrice(rName, bidPrice string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterMasterInstanceGroupBidPriceConfig(rName, bidPrice string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2638,8 +2638,8 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigMasterInstanceGroupInstanceCount(rName string, instanceCount int) string {
-	return testAccAWSEmrComposeConfig(true, fmt.Sprintf(`
+func testAccClusterMasterInstanceGroupInstanceCountConfig(rName string, instanceCount int) string {
+	return testAccComposeConfig(true, fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2673,8 +2673,8 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigMasterInstanceGroupInstanceType(rName, instanceType string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterMasterInstanceGroupInstanceTypeConfig(rName, instanceType string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2699,8 +2699,8 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigMasterInstanceGroupName(rName, instanceGroupName string) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterMasterInstanceGroupNameConfig(rName, instanceGroupName string) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "test" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -2726,12 +2726,12 @@ resource "aws_emr_cluster" "test" {
 	)
 }
 
-func testAccAWSEmrClusterConfigTerminationPolicy(r string, term string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterTerminationPolicyConfig(r string, term string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -2780,12 +2780,12 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfig_keepJob(r string, keepJob string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterConfig_keepJob(r string, keepJob string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -2844,12 +2844,12 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfigVisibleToAllUsersUpdated(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterVisibleToAllUsersUpdatedConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -2898,12 +2898,12 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfigUpdatedTags(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterUpdatedTagsConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -2951,12 +2951,12 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfigUpdatedRootVolumeSize(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterUpdatedRootVolumeSizeConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -3006,9 +3006,9 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfigS3Logging(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
+func testAccClusterS3LoggingConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
 		fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket        = "%[1]s"
@@ -3049,12 +3049,12 @@ data "aws_caller_identity" "current" {}
 	)
 }
 
-func testAccAWSEmrClusterConfigCustomAmiID(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleCustomAmiID(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigIAMAutoscalingRole(r),
+func testAccClusterCustomAMIIDConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleCustomAMIIDConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterIAMAutoScalingRoleConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -3130,8 +3130,8 @@ data "aws_ami" "emr-custom-ami" {
 	)
 }
 
-func testAccAWSEmrClusterConfigStepConcurrencyLevel(rName string, stepConcurrencyLevel int) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccClusterStepConcurrencyLevelConfig(rName string, stepConcurrencyLevel int) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -3158,7 +3158,7 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfigBaseVpc(mapPublicIPOnLaunch bool) string {
+func testAccClusterBaseVPCConfig(mapPublicIPOnLaunch bool) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   # Many instance types are not available in this availability zone
@@ -3241,7 +3241,7 @@ resource "aws_route_table_association" "test" {
 `, mapPublicIPOnLaunch)
 }
 
-func testAccAWSEmrClusterConfigIAMServiceRoleBase(r string) string {
+func testAccClusterIAMServiceRoleBaseConfig(r string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "emr_service" {
   name = "%[1]s_default_role"
@@ -3271,7 +3271,7 @@ resource "aws_iam_role_policy_attachment" "emr_service" {
 `, r)
 }
 
-func testAccAWSEmrClusterConfigIAMServiceRoleCustomAmiID(r string) string {
+func testAccClusterIAMServiceRoleCustomAMIIDConfig(r string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "emr_service" {
   name = "%[1]s_default_role"
@@ -3370,7 +3370,7 @@ EOT
 `, r)
 }
 
-func testAccAWSEmrClusterConfigIAMInstanceProfileBase(r string) string {
+func testAccClusterIAMInstanceProfileBaseConfig(r string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_instance_profile" "emr_instance_profile" {
   name = "%[1]s_profile"
@@ -3442,7 +3442,7 @@ EOT
 `, r)
 }
 
-func testAccAWSEmrClusterConfigIAMAutoscalingRole(r string) string {
+func testAccClusterIAMAutoScalingRoleConfig(r string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "emr_autoscaling_role" {
   name               = "%[1]s_autoscaling_role"
@@ -3468,7 +3468,7 @@ resource "aws_iam_role_policy_attachment" "emr_autoscaling_role" {
 `, r)
 }
 
-func testAccAWSEmrClusterConfigBootstrapActionBucket(r string) string {
+func testAccClusterBootstrapActionBucketConfig(r string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "tester" {
   bucket = "%[1]s"
@@ -3489,8 +3489,8 @@ EOF
 `, r)
 }
 
-func testAccAWSEmrEbsConfig(rName string, volumesPerInstance int) string {
-	return testAccAWSEmrComposeConfig(false, fmt.Sprintf(`
+func testAccEBSConfig(rName string, volumesPerInstance int) string {
+	return testAccComposeConfig(false, fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   applications                      = ["Spark"]
   keep_job_flow_alive_when_no_steps = true
@@ -3534,12 +3534,12 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfig_InstanceFleets(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigBootstrapActionBucket(r),
+func testAccClusterConfig_InstanceFleets(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterBootstrapActionBucketConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -3621,12 +3621,12 @@ resource "aws_emr_cluster" "tf-test-cluster" {
 	)
 }
 
-func testAccAWSEmrClusterConfig_InstanceFleet_MultipleSubnets(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigBootstrapActionBucket(r),
+func testAccClusterConfig_InstanceFleet_MultipleSubnets(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterBootstrapActionBucketConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
@@ -3720,12 +3720,12 @@ resource "aws_route_table_association" "test2" {
 	)
 }
 
-func testAccAWSEmrClusterConfigInstanceFleetsMasterOnly(r string) string {
-	return testAccAWSEmrComposeConfig(false,
-		testAccAWSEmrClusterConfigCurrentPartition(),
-		testAccAWSEmrClusterConfigIAMServiceRoleBase(r),
-		testAccAWSEmrClusterConfigIAMInstanceProfileBase(r),
-		testAccAWSEmrClusterConfigBootstrapActionBucket(r),
+func testAccClusterInstanceFleetsMasterOnlyConfig(r string) string {
+	return testAccComposeConfig(false,
+		testAccClusterCurrentPartitionConfig(),
+		testAccClusterIAMServiceRoleBaseConfig(r),
+		testAccClusterIAMInstanceProfileBaseConfig(r),
+		testAccClusterBootstrapActionBucketConfig(r),
 		fmt.Sprintf(`
 resource "aws_emr_cluster" "tf-test-cluster" {
   name          = "%[1]s"
