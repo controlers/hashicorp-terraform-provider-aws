@@ -15,7 +15,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSNeptuneClusterSnapshot_basic(t *testing.T) {
+func TestAccNeptuneClusterSnapshot_basic(t *testing.T) {
 	var dbClusterSnapshot neptune.DBClusterSnapshot
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_neptune_cluster_snapshot.test"
@@ -27,7 +27,7 @@ func TestAccAWSNeptuneClusterSnapshot_basic(t *testing.T) {
 		CheckDestroy: testAccCheckNeptuneClusterSnapshotDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsNeptuneClusterSnapshotConfig(rName),
+				Config: testAccClusterSnapshotConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckNeptuneClusterSnapshotExists(resourceName, &dbClusterSnapshot),
 					resource.TestCheckResourceAttrSet(resourceName, "allocated_storage"),
@@ -114,7 +114,7 @@ func testAccCheckNeptuneClusterSnapshotExists(resourceName string, dbClusterSnap
 	}
 }
 
-func testAccAwsNeptuneClusterSnapshotConfig(rName string) string {
+func testAccClusterSnapshotConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_neptune_cluster" "test" {
   cluster_identifier  = %[1]q

@@ -8,7 +8,7 @@ import (
 )
 
 func FindEndpointByID(conn *neptune.Neptune, id string) (*neptune.DBClusterEndpoint, error) {
-	clusterId, endpointId, err := readAwsClusterEndpointID(id)
+	clusterId, endpointId, err := readClusterEndpointID(id)
 	if err != nil {
 		return nil, err
 	}
