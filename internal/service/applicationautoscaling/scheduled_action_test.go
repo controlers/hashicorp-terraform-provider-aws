@@ -16,7 +16,7 @@ import (
 	tfapplicationautoscaling "github.com/hashicorp/terraform-provider-aws/internal/service/applicationautoscaling"
 )
 
-func TestAccAWSAppautoscalingScheduledAction_DynamoDB(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_dynamoDB(t *testing.T) {
 	var sa1, sa2 applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	schedule1 := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
@@ -29,12 +29,12 @@ func TestAccAWSAppautoscalingScheduledAction_DynamoDB(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_DynamoDB(rName, schedule1),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa1),
+					testAccCheckScheduledActionExists(resourceName, &sa1),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -52,7 +52,7 @@ func TestAccAWSAppautoscalingScheduledAction_DynamoDB(t *testing.T) {
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_DynamoDB_Updated(rName, schedule2, updatedTimezone),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa2),
+					testAccCheckScheduledActionExists(resourceName, &sa2),
 					testAccCheckAppautoscalingScheduledActionNotRecreated(&sa1, &sa2),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
@@ -72,7 +72,7 @@ func TestAccAWSAppautoscalingScheduledAction_DynamoDB(t *testing.T) {
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_ECS(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_ecs(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	ts := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
@@ -83,12 +83,12 @@ func TestAccAWSAppautoscalingScheduledAction_ECS(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_ECS(rName, ts),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -105,7 +105,7 @@ func TestAccAWSAppautoscalingScheduledAction_ECS(t *testing.T) {
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_EMR(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_emr(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	ts := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
@@ -116,12 +116,12 @@ func TestAccAWSAppautoscalingScheduledAction_EMR(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_EMR(rName, ts),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -138,7 +138,7 @@ func TestAccAWSAppautoscalingScheduledAction_EMR(t *testing.T) {
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_Name_Duplicate(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_Name_duplicate(t *testing.T) {
 	var sa1, sa2 applicationautoscaling.ScheduledAction
 	resourceName := "aws_appautoscaling_scheduled_action.test"
 	resourceName2 := "aws_appautoscaling_scheduled_action.test2"
@@ -148,20 +148,20 @@ func TestAccAWSAppautoscalingScheduledAction_Name_Duplicate(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_Name_Duplicate(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa1),
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName2, &sa2),
+					testAccCheckScheduledActionExists(resourceName, &sa1),
+					testAccCheckScheduledActionExists(resourceName2, &sa2),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_SpotFleet(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_spotFleet(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	ts := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
@@ -173,12 +173,12 @@ func TestAccAWSAppautoscalingScheduledAction_SpotFleet(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_SpotFleet(rName, ts, validUntil),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -195,7 +195,7 @@ func TestAccAWSAppautoscalingScheduledAction_SpotFleet(t *testing.T) {
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_Schedule_AtExpression_Timezone(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_ScheduleAtExpression_timezone(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	ts := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
@@ -210,12 +210,12 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_AtExpression_Timezone(t *t
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_ScheduleWithTimezone(rName, at, timezone, startTime, endTime),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -234,7 +234,7 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_AtExpression_Timezone(t *t
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_basic(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_basic(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	cron := "cron(0 17 * * ? *)"
@@ -245,12 +245,12 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_basic(t *te
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_Schedule(rName, cron),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -269,7 +269,7 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_basic(t *te
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_Timezone(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_timezone(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	cron := "cron(0 17 * * ? *)"
@@ -283,12 +283,12 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_Timezone(t 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_ScheduleWithTimezone(rName, cron, timezone, startTime, endTime),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -307,7 +307,7 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_Timezone(t 
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_StartEndTimeTimezone(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_startEndTimeTimezone(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	cron := "cron(0 17 * * ? *)"
@@ -325,12 +325,12 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_StartEndTim
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_ScheduleWithTimezone(rName, cron, scheduleTimezone, startTime.Format(time.RFC3339), endTime.Format(time.RFC3339)),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -348,7 +348,7 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_StartEndTim
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_Schedule(rName, cron),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -367,7 +367,7 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_CronExpression_StartEndTim
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_Schedule_RateExpression_basic(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_ScheduleRateExpression_basic(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rate := "rate(1 day)"
@@ -378,12 +378,12 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_RateExpression_basic(t *te
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_Schedule(rName, rate),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -402,7 +402,7 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_RateExpression_basic(t *te
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_Schedule_RateExpression_Timezone(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_ScheduleRateExpression_timezone(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	rate := "rate(1 day)"
@@ -416,12 +416,12 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_RateExpression_Timezone(t 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_ScheduleWithTimezone(rName, rate, timezone, startTime, endTime),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa),
+					testAccCheckScheduledActionExists(resourceName, &sa),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -440,7 +440,7 @@ func TestAccAWSAppautoscalingScheduledAction_Schedule_RateExpression_Timezone(t 
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_MinCapacity(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_minCapacity(t *testing.T) {
 	var sa1, sa2 applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	schedule := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
@@ -451,12 +451,12 @@ func TestAccAWSAppautoscalingScheduledAction_MinCapacity(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_MinCapacity(rName, schedule, 1),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa1),
+					testAccCheckScheduledActionExists(resourceName, &sa1),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -474,7 +474,7 @@ func TestAccAWSAppautoscalingScheduledAction_MinCapacity(t *testing.T) {
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_MinCapacity(rName, schedule, 2),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa2),
+					testAccCheckScheduledActionExists(resourceName, &sa2),
 					testAccCheckAppautoscalingScheduledActionNotRecreated(&sa1, &sa2),
 					resource.TestCheckResourceAttr(resourceName, "scalable_target_action.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "scalable_target_action.0.min_capacity", "2"),
@@ -484,7 +484,7 @@ func TestAccAWSAppautoscalingScheduledAction_MinCapacity(t *testing.T) {
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_MaxCapacity(rName, schedule, 10),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa2),
+					testAccCheckScheduledActionExists(resourceName, &sa2),
 					testAccCheckAppautoscalingScheduledActionNotRecreated(&sa1, &sa2),
 					resource.TestCheckResourceAttr(resourceName, "scalable_target_action.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "scalable_target_action.0.min_capacity", ""),
@@ -495,7 +495,7 @@ func TestAccAWSAppautoscalingScheduledAction_MinCapacity(t *testing.T) {
 	})
 }
 
-func TestAccAWSAppautoscalingScheduledAction_MaxCapacity(t *testing.T) {
+func TestAccApplicationAutoScalingScheduledAction_maxCapacity(t *testing.T) {
 	var sa1, sa2 applicationautoscaling.ScheduledAction
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	schedule := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
@@ -506,12 +506,12 @@ func TestAccAWSAppautoscalingScheduledAction_MaxCapacity(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, applicationautoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsAppautoscalingScheduledActionDestroy,
+		CheckDestroy: testAccCheckScheduledActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_MaxCapacity(rName, schedule, 10),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa1),
+					testAccCheckScheduledActionExists(resourceName, &sa1),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttrPair(resourceName, "service_namespace", autoscalingTargetResourceName, "service_namespace"),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", autoscalingTargetResourceName, "resource_id"),
@@ -529,7 +529,7 @@ func TestAccAWSAppautoscalingScheduledAction_MaxCapacity(t *testing.T) {
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_MaxCapacity(rName, schedule, 8),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa2),
+					testAccCheckScheduledActionExists(resourceName, &sa2),
 					testAccCheckAppautoscalingScheduledActionNotRecreated(&sa1, &sa2),
 					resource.TestCheckResourceAttr(resourceName, "scalable_target_action.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "scalable_target_action.0.min_capacity", ""),
@@ -539,7 +539,7 @@ func TestAccAWSAppautoscalingScheduledAction_MaxCapacity(t *testing.T) {
 			{
 				Config: testAccAppautoscalingScheduledActionConfig_MinCapacity(rName, schedule, 1),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAwsAppautoscalingScheduledActionExists(resourceName, &sa2),
+					testAccCheckScheduledActionExists(resourceName, &sa2),
 					testAccCheckAppautoscalingScheduledActionNotRecreated(&sa1, &sa2),
 					resource.TestCheckResourceAttr(resourceName, "scalable_target_action.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "scalable_target_action.0.min_capacity", "1"),
@@ -550,7 +550,7 @@ func TestAccAWSAppautoscalingScheduledAction_MaxCapacity(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsAppautoscalingScheduledActionDestroy(s *terraform.State) error {
+func testAccCheckScheduledActionDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ApplicationAutoScalingConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -574,7 +574,7 @@ func testAccCheckAwsAppautoscalingScheduledActionDestroy(s *terraform.State) err
 	return nil
 }
 
-func testAccCheckAwsAppautoscalingScheduledActionExists(name string, obj *applicationautoscaling.ScheduledAction) resource.TestCheckFunc {
+func testAccCheckScheduledActionExists(name string, obj *applicationautoscaling.ScheduledAction) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
