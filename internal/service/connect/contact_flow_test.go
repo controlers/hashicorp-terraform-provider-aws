@@ -168,7 +168,7 @@ func testAccCheckContactFlowExists(resourceName string, function *connect.Descri
 		if rs.Primary.ID == "" {
 			return fmt.Errorf("Connect Contact Flow ID not set")
 		}
-		instanceID, contactFlowID, err := resourceContactFlowParseID(rs.Primary.ID)
+		instanceID, contactFlowID, err := tfconnect.ResourceContactFlowParseID(rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -200,7 +200,7 @@ func testAccCheckContactFlowDestroy(s *terraform.State) error {
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).ConnectConn
 
-		instanceID, contactFlowID, err := resourceContactFlowParseID(rs.Primary.ID)
+		instanceID, contactFlowID, err := tfconnect.ResourceContactFlowParseID(rs.Primary.ID)
 
 		if err != nil {
 			return err

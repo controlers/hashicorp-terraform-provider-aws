@@ -148,7 +148,7 @@ func resourceContactFlowRead(ctx context.Context, d *schema.ResourceData, meta i
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	instanceID, contactFlowID, err := resourceContactFlowParseID(d.Id())
+	instanceID, contactFlowID, err := ResourceContactFlowParseID(d.Id())
 
 	if err != nil {
 		return diag.FromErr(err)
@@ -198,7 +198,7 @@ func resourceContactFlowRead(ctx context.Context, d *schema.ResourceData, meta i
 func resourceContactFlowUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	conn := meta.(*conns.AWSClient).ConnectConn
 
-	instanceID, contactFlowID, err := resourceContactFlowParseID(d.Id())
+	instanceID, contactFlowID, err := ResourceContactFlowParseID(d.Id())
 
 	if err != nil {
 		return diag.FromErr(err)
@@ -262,7 +262,7 @@ func resourceContactFlowUpdate(ctx context.Context, d *schema.ResourceData, meta
 // func resourceContactFlowDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 // 	conn := meta.(*conns.AWSClient).ConnectConn
 
-// 	instanceID, contactFlowID, err := resourceContactFlowParseID(d.Id())
+// 	instanceID, contactFlowID, err := ResourceContactFlowParseID(d.Id())
 
 // 	if err != nil {
 // 		return diag.FromErr(err)
@@ -284,7 +284,7 @@ func resourceContactFlowUpdate(ctx context.Context, d *schema.ResourceData, meta
 // 	return nil
 // }
 
-func resourceContactFlowParseID(id string) (string, string, error) {
+func ResourceContactFlowParseID(id string) (string, string, error) {
 	parts := strings.SplitN(id, ":", 2)
 
 	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
