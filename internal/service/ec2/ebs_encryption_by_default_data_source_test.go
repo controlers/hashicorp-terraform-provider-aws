@@ -13,14 +13,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccDataSourceAwsEBSEncryptionByDefault_basic(t *testing.T) {
+func TestAccEC2EBSEncryptionByDefaultDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEBSEncryptionByDefaultConfig,
+				Config: testAccEBSEncryptionByDefaultDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDataSourceAwsEBSEncryptionByDefault("data.aws_ebs_encryption_by_default.current"),
 				),
@@ -57,6 +57,6 @@ func testAccCheckDataSourceAwsEBSEncryptionByDefault(n string) resource.TestChec
 	}
 }
 
-const testAccDataSourceAwsEBSEncryptionByDefaultConfig = `
+const testAccEBSEncryptionByDefaultDataSourceConfig = `
 data "aws_ebs_encryption_by_default" "current" {}
 `

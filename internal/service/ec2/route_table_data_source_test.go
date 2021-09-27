@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsRouteTable_basic(t *testing.T) {
+func TestAccEC2RouteTableDataSource_basic(t *testing.T) {
 	rtResourceName := "aws_route_table.test"
 	snResourceName := "aws_subnet.test"
 	vpcResourceName := "aws_vpc.test"
@@ -29,7 +29,7 @@ func TestAccDataSourceAwsRouteTable_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsRouteTableConfigBasic(rName),
+				Config: testAccRouteTableBasicDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					// By tags.
 					acctest.MatchResourceAttrRegionalARN(datasource1Name, "arn", "ec2", regexp.MustCompile(`route-table/.+$`)),
@@ -97,7 +97,7 @@ func TestAccDataSourceAwsRouteTable_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsRouteTable_main(t *testing.T) {
+func TestAccEC2RouteTableDataSource_main(t *testing.T) {
 	datasourceName := "data.aws_route_table.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -107,7 +107,7 @@ func TestAccDataSourceAwsRouteTable_main(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsRouteTableConfigMain(rName),
+				Config: testAccRouteTableMainDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(datasourceName, "id"),
 					resource.TestCheckResourceAttrSet(datasourceName, "vpc_id"),
@@ -118,7 +118,7 @@ func TestAccDataSourceAwsRouteTable_main(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsRouteTableConfigBasic(rName string) string {
+func testAccRouteTableBasicDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "172.16.0.0/16"
@@ -200,7 +200,7 @@ data "aws_route_table" "by_id" {
 `, rName)
 }
 
-func testAccDataSourceAwsRouteTableConfigMain(rName string) string {
+func testAccRouteTableMainDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "172.16.0.0/16"

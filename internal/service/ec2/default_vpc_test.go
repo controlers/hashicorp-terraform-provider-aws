@@ -9,17 +9,17 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDefaultVpc_basic(t *testing.T) {
+func TestAccEC2DefaultVPC_basic(t *testing.T) {
 	var vpc ec2.Vpc
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDefaultVpcDestroy,
+		CheckDestroy: testAccCheckDefaultVPCDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDefaultVpcConfigBasic,
+				Config: testAccDefaultVPCBasicConfig,
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists("aws_default_vpc.foo", &vpc),
 					testAccCheckVpcCidr(&vpc, "172.31.0.0/16"),
@@ -44,12 +44,12 @@ func TestAccAWSDefaultVpc_basic(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSDefaultVpcDestroy(s *terraform.State) error {
+func testAccCheckDefaultVPCDestroy(s *terraform.State) error {
 	// We expect VPC to still exist
 	return nil
 }
 
-const testAccAWSDefaultVpcConfigBasic = `
+const testAccDefaultVPCBasicConfig = `
 resource "aws_default_vpc" "foo" {
   tags = {
     Name = "Default VPC"

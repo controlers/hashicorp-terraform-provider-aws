@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Filter(t *testing.T) {
+func TestAccEC2LocalGatewayVirtualInterfaceDataSource_filter(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway_virtual_interface.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -20,7 +20,7 @@ func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Filter(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayVirtualInterfaceConfigFilter(),
+				Config: testAccLocalGatewayVirtualInterfaceFilterDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "id", regexp.MustCompile(`^lgw-vif-`)),
 					resource.TestMatchResourceAttr(dataSourceName, "local_address", regexp.MustCompile(`^\d+\.\d+\.\d+\.\d+/\d+$`)),
@@ -35,7 +35,7 @@ func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Filter(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Id(t *testing.T) {
+func TestAccEC2LocalGatewayVirtualInterfaceDataSource_id(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway_virtual_interface.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -44,7 +44,7 @@ func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Id(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayVirtualInterfaceConfigId(),
+				Config: testAccLocalGatewayVirtualInterfaceIDDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "id", regexp.MustCompile(`^lgw-vif-`)),
 					resource.TestMatchResourceAttr(dataSourceName, "local_address", regexp.MustCompile(`^\d+\.\d+\.\d+\.\d+/\d+$`)),
@@ -59,7 +59,7 @@ func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Id(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Tags(t *testing.T) {
+func TestAccEC2LocalGatewayVirtualInterfaceDataSource_tags(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	sourceDataSourceName := "data.aws_ec2_local_gateway_virtual_interface.source"
 	dataSourceName := "data.aws_ec2_local_gateway_virtual_interface.test"
@@ -70,7 +70,7 @@ func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Tags(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayVirtualInterfaceConfigTags(rName),
+				Config: testAccLocalGatewayVirtualInterfaceTagsDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "id", sourceDataSourceName, "id"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "local_address", sourceDataSourceName, "local_address"),
@@ -85,7 +85,7 @@ func TestAccDataSourceAwsEc2LocalGatewayVirtualInterface_Tags(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsEc2LocalGatewayVirtualInterfaceConfigFilter() string {
+func testAccLocalGatewayVirtualInterfaceFilterDataSourceConfig() string {
 	return `
 data "aws_ec2_local_gateways" "test" {}
 
@@ -102,7 +102,7 @@ data "aws_ec2_local_gateway_virtual_interface" "test" {
 `
 }
 
-func testAccDataSourceAwsEc2LocalGatewayVirtualInterfaceConfigId() string {
+func testAccLocalGatewayVirtualInterfaceIDDataSourceConfig() string {
 	return `
 data "aws_ec2_local_gateways" "test" {}
 
@@ -116,7 +116,7 @@ data "aws_ec2_local_gateway_virtual_interface" "test" {
 `
 }
 
-func testAccDataSourceAwsEc2LocalGatewayVirtualInterfaceConfigTags(rName string) string {
+func testAccLocalGatewayVirtualInterfaceTagsDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_ec2_local_gateways" "test" {}
 

@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDefaultSubnet_basic(t *testing.T) {
+func TestAccEC2DefaultSubnet_basic(t *testing.T) {
 	var v ec2.Subnet
 
 	resourceName := "aws_default_subnet.foo"
@@ -22,10 +22,10 @@ func TestAccAWSDefaultSubnet_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDefaultSubnetDestroy,
+		CheckDestroy: testAccCheckDefaultSubnetDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDefaultSubnetConfigBasic(rInt),
+				Config: testAccDefaultSubnetBasicConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckSubnetExists(resourceName, &v),
 					resource.TestCheckResourceAttrPair(
@@ -45,7 +45,7 @@ func TestAccAWSDefaultSubnet_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDefaultSubnet_publicIp(t *testing.T) {
+func TestAccEC2DefaultSubnet_publicIP(t *testing.T) {
 	var v ec2.Subnet
 
 	resourceName := "aws_default_subnet.foo"
@@ -56,10 +56,10 @@ func TestAccAWSDefaultSubnet_publicIp(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDefaultSubnetDestroy,
+		CheckDestroy: testAccCheckDefaultSubnetDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDefaultSubnetConfigPublicIp(rInt),
+				Config: testAccDefaultSubnetPublicIPConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckSubnetExists(resourceName, &v),
 					resource.TestCheckResourceAttrPair(
@@ -75,7 +75,7 @@ func TestAccAWSDefaultSubnet_publicIp(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSDefaultSubnetConfigNoPublicIp(rInt),
+				Config: testAccDefaultSubnetNoPublicIPConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckSubnetExists(resourceName, &v),
 					resource.TestCheckResourceAttrPair(
@@ -94,12 +94,12 @@ func TestAccAWSDefaultSubnet_publicIp(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSDefaultSubnetDestroy(s *terraform.State) error {
+func testAccCheckDefaultSubnetDestroy(s *terraform.State) error {
 	// We expect subnet to still exist
 	return nil
 }
 
-func testAccAWSDefaultSubnetConfigBasic(rInt int) string {
+func testAccDefaultSubnetBasicConfig(rInt int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_default_subnet" "foo" {
   availability_zone = data.aws_availability_zones.available.names[0]
@@ -111,7 +111,7 @@ resource "aws_default_subnet" "foo" {
 `, rInt))
 }
 
-func testAccAWSDefaultSubnetConfigPublicIp(rInt int) string {
+func testAccDefaultSubnetPublicIPConfig(rInt int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_default_subnet" "foo" {
   availability_zone       = data.aws_availability_zones.available.names[1]
@@ -124,7 +124,7 @@ resource "aws_default_subnet" "foo" {
 `, rInt))
 }
 
-func testAccAWSDefaultSubnetConfigNoPublicIp(rInt int) string {
+func testAccDefaultSubnetNoPublicIPConfig(rInt int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_default_subnet" "foo" {
   availability_zone       = data.aws_availability_zones.available.names[1]

@@ -15,55 +15,55 @@ import (
 	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
 )
 
-func TestAccDataSourceAwsPrefixList_basic(t *testing.T) {
+func TestAccEC2PrefixListDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsPrefixListConfig,
+				Config: testAccPrefixListDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccDataSourceAwsPrefixListCheck("data.aws_prefix_list.s3_by_id"),
-					testAccDataSourceAwsPrefixListCheck("data.aws_prefix_list.s3_by_name"),
+					testAccPrefixListCheckDataSource("data.aws_prefix_list.s3_by_id"),
+					testAccPrefixListCheckDataSource("data.aws_prefix_list.s3_by_name"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccDataSourceAwsPrefixList_filter(t *testing.T) {
+func TestAccEC2PrefixListDataSource_filter(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsPrefixListConfigFilter,
+				Config: testAccPrefixListFilterDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccDataSourceAwsPrefixListCheck("data.aws_prefix_list.s3_by_id"),
-					testAccDataSourceAwsPrefixListCheck("data.aws_prefix_list.s3_by_name"),
+					testAccPrefixListCheckDataSource("data.aws_prefix_list.s3_by_id"),
+					testAccPrefixListCheckDataSource("data.aws_prefix_list.s3_by_name"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccDataSourceAwsPrefixList_nameDoesNotOverrideFilter(t *testing.T) {
+func TestAccEC2PrefixListDataSource_nameDoesNotOverrideFilter(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccDataSourceAwsPrefixListConfig_nameDoesNotOverrideFilter,
+				Config:      testAccPrefixListDataSourceConfig_nameDoesNotOverrideFilter,
 				ExpectError: regexp.MustCompile(`no matching prefix list found`),
 			},
 		},
 	})
 }
 
-func testAccDataSourceAwsPrefixListCheck(name string) resource.TestCheckFunc {
+func testAccPrefixListCheckDataSource(name string) resource.TestCheckFunc {
 	getPrefixListId := func(name string) (string, error) {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
 
@@ -120,7 +120,7 @@ func testAccDataSourceAwsPrefixListCheck(name string) resource.TestCheckFunc {
 	}
 }
 
-const testAccDataSourceAwsPrefixListConfig = `
+const testAccPrefixListDataSourceConfig = `
 data "aws_region" "current" {}
 
 data "aws_prefix_list" "s3_by_id" {
@@ -132,7 +132,7 @@ data "aws_prefix_list" "s3_by_name" {
 }
 `
 
-const testAccDataSourceAwsPrefixListConfigFilter = `
+const testAccPrefixListFilterDataSourceConfig = `
 data "aws_region" "current" {}
 
 data "aws_prefix_list" "s3_by_name" {
@@ -150,7 +150,7 @@ data "aws_prefix_list" "s3_by_id" {
 }
 `
 
-const testAccDataSourceAwsPrefixListConfig_nameDoesNotOverrideFilter = `
+const testAccPrefixListDataSourceConfig_nameDoesNotOverrideFilter = `
 data "aws_region" "current" {}
 
 data "aws_prefix_list" "test" {

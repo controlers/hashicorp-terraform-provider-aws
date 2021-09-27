@@ -14,7 +14,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-func TestAccAWSVpcEndpointRouteTableAssociation_basic(t *testing.T) {
+func TestAccEC2VPCEndpointRouteTableAssociation_basic(t *testing.T) {
 	resourceName := "aws_vpc_endpoint_route_table_association.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -33,14 +33,14 @@ func TestAccAWSVpcEndpointRouteTableAssociation_basic(t *testing.T) {
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSVpcEndpointRouteTableAssociationImportStateIdFunc(resourceName),
+				ImportStateIdFunc: testAccVPCEndpointRouteTableAssociationImportStateIdFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSVpcEndpointRouteTableAssociation_disappears(t *testing.T) {
+func TestAccEC2VPCEndpointRouteTableAssociation_disappears(t *testing.T) {
 	resourceName := "aws_vpc_endpoint_route_table_association.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -103,7 +103,7 @@ func testAccCheckVpcEndpointRouteTableAssociationExists(n string) resource.TestC
 	}
 }
 
-func testAccAWSVpcEndpointRouteTableAssociationImportStateIdFunc(n string) resource.ImportStateIdFunc {
+func testAccVPCEndpointRouteTableAssociationImportStateIdFunc(n string) resource.ImportStateIdFunc {
 	return func(s *terraform.State) (string, error) {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {

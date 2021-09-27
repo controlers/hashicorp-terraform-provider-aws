@@ -8,14 +8,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsVpcPeeringConnections_basic(t *testing.T) {
+func TestAccEC2VPCPeeringConnectionsDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsVpcPeeringConnectionsConfig,
+				Config: testAccVPCPeeringConnectionsDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("data.aws_vpc_peering_connections.test_by_filters", "ids.#", "2"),
 				),
@@ -24,7 +24,7 @@ func TestAccDataSourceAwsVpcPeeringConnections_basic(t *testing.T) {
 	})
 }
 
-const testAccDataSourceAwsVpcPeeringConnectionsConfig = `
+const testAccVPCPeeringConnectionsDataSourceConfig = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 

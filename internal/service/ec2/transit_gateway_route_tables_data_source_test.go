@@ -8,16 +8,16 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsEc2TransitGatewayRouteTables_basic(t *testing.T) {
+func TestAccEC2TransitGatewayRouteTablesDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_ec2_transit_gateway_route_tables.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:   func() { acctest.PreCheck(t); testAccPreCheckAWSEc2TransitGateway(t) },
+		PreCheck:   func() { acctest.PreCheck(t); testAccPreCheckTransitGateway(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2TransitGatewayRouteTablesConfig,
+				Config: testAccTransitGatewayRouteTablesDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testCheckResourceAttrGreaterThanValue(dataSourceName, "ids.#", "0"),
 				),
@@ -26,16 +26,16 @@ func TestAccDataSourceAwsEc2TransitGatewayRouteTables_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsEc2TransitGatewayRouteTables_Filter(t *testing.T) {
+func TestAccEC2TransitGatewayRouteTablesDataSource_filter(t *testing.T) {
 	dataSourceName := "data.aws_ec2_transit_gateway_route_tables.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:   func() { acctest.PreCheck(t); testAccPreCheckAWSEc2TransitGateway(t) },
+		PreCheck:   func() { acctest.PreCheck(t); testAccPreCheckTransitGateway(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2TransitGatewayRouteTablesTransitGatewayFilter,
+				Config: testAccTransitGatewayRouteTablesTransitGatewayFilterDataSource,
 				Check: resource.ComposeTestCheckFunc(
 					testCheckResourceAttrGreaterThanValue(dataSourceName, "ids.#", "0"),
 				),
@@ -44,7 +44,7 @@ func TestAccDataSourceAwsEc2TransitGatewayRouteTables_Filter(t *testing.T) {
 	})
 }
 
-const testAccDataSourceAwsEc2TransitGatewayRouteTablesConfig = `
+const testAccTransitGatewayRouteTablesDataSourceConfig = `
 resource "aws_ec2_transit_gateway" "test" {}
 
 resource "aws_ec2_transit_gateway_route_table" "test" {
@@ -56,7 +56,7 @@ data "aws_ec2_transit_gateway_route_tables" "test" {
 }
 `
 
-const testAccDataSourceAwsEc2TransitGatewayRouteTablesTransitGatewayFilter = `
+const testAccTransitGatewayRouteTablesTransitGatewayFilterDataSource = `
 resource "aws_ec2_transit_gateway" "test" {}
 
 resource "aws_ec2_transit_gateway_route_table" "test" {

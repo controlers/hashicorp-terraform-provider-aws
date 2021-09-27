@@ -69,7 +69,7 @@ func testSweepFlowLogs(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSFlowLog_VPCID(t *testing.T) {
+func TestAccEC2FlowLog_vpcID(t *testing.T) {
 	var flowLog ec2.FlowLog
 	cloudwatchLogGroupResourceName := "aws_cloudwatch_log_group.test"
 	iamRoleResourceName := "aws_iam_role.test"
@@ -88,7 +88,7 @@ func TestAccAWSFlowLog_VPCID(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "ec2", regexp.MustCompile(`vpc-flow-log/fl-.+`)),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttrPair(resourceName, "iam_role_arn", iamRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "log_destination", ""),
 					resource.TestCheckResourceAttr(resourceName, "log_destination_type", "cloud-watch-logs"),
@@ -111,7 +111,7 @@ func TestAccAWSFlowLog_VPCID(t *testing.T) {
 	})
 }
 
-func TestAccAWSFlowLog_LogFormat(t *testing.T) {
+func TestAccEC2FlowLog_logFormat(t *testing.T) {
 	var flowLog ec2.FlowLog
 	resourceName := "aws_flow_log.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -127,7 +127,7 @@ func TestAccAWSFlowLog_LogFormat(t *testing.T) {
 				Config: testAccFlowLogConfig_LogFormat(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "log_format", logFormat),
 				),
 			},
@@ -144,7 +144,7 @@ func TestAccAWSFlowLog_LogFormat(t *testing.T) {
 	})
 }
 
-func TestAccAWSFlowLog_SubnetID(t *testing.T) {
+func TestAccEC2FlowLog_subnetID(t *testing.T) {
 	var flowLog ec2.FlowLog
 	cloudwatchLogGroupResourceName := "aws_cloudwatch_log_group.test"
 	iamRoleResourceName := "aws_iam_role.test"
@@ -162,7 +162,7 @@ func TestAccAWSFlowLog_SubnetID(t *testing.T) {
 				Config: testAccFlowLogConfig_SubnetID(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttrPair(resourceName, "iam_role_arn", iamRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "log_destination", ""),
 					resource.TestCheckResourceAttr(resourceName, "log_destination_type", "cloud-watch-logs"),
@@ -181,7 +181,7 @@ func TestAccAWSFlowLog_SubnetID(t *testing.T) {
 	})
 }
 
-func TestAccAWSFlowLog_LogDestinationType_CloudWatchLogs(t *testing.T) {
+func TestAccEC2FlowLog_LogDestinationType_cloudWatchLogs(t *testing.T) {
 	var flowLog ec2.FlowLog
 	cloudwatchLogGroupResourceName := "aws_cloudwatch_log_group.test"
 	resourceName := "aws_flow_log.test"
@@ -197,7 +197,7 @@ func TestAccAWSFlowLog_LogDestinationType_CloudWatchLogs(t *testing.T) {
 				Config: testAccFlowLogConfig_LogDestinationType_CloudWatchLogs(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					// We automatically trim :* from ARNs if present
 					acctest.CheckResourceAttrRegionalARN(resourceName, "log_destination", "logs", fmt.Sprintf("log-group:%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "log_destination_type", "cloud-watch-logs"),
@@ -213,7 +213,7 @@ func TestAccAWSFlowLog_LogDestinationType_CloudWatchLogs(t *testing.T) {
 	})
 }
 
-func TestAccAWSFlowLog_LogDestinationType_S3(t *testing.T) {
+func TestAccEC2FlowLog_LogDestinationType_s3(t *testing.T) {
 	var flowLog ec2.FlowLog
 	s3ResourceName := "aws_s3_bucket.test"
 	resourceName := "aws_flow_log.test"
@@ -229,7 +229,7 @@ func TestAccAWSFlowLog_LogDestinationType_S3(t *testing.T) {
 				Config: testAccFlowLogConfig_LogDestinationType_S3(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttrPair(resourceName, "log_destination", s3ResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "log_destination_type", "s3"),
 					resource.TestCheckResourceAttr(resourceName, "log_group_name", ""),
@@ -244,7 +244,7 @@ func TestAccAWSFlowLog_LogDestinationType_S3(t *testing.T) {
 	})
 }
 
-func TestAccAWSFlowLog_LogDestinationType_S3_Invalid(t *testing.T) {
+func TestAccEC2FlowLog_LogDestinationTypeS3_invalid(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test-flow-log-s3-invalid")
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -261,7 +261,7 @@ func TestAccAWSFlowLog_LogDestinationType_S3_Invalid(t *testing.T) {
 	})
 }
 
-func TestAccAWSFlowLog_LogDestinationType_MaxAggregationInterval(t *testing.T) {
+func TestAccEC2FlowLog_LogDestinationType_maxAggregationInterval(t *testing.T) {
 	var flowLog ec2.FlowLog
 	resourceName := "aws_flow_log.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -276,7 +276,7 @@ func TestAccAWSFlowLog_LogDestinationType_MaxAggregationInterval(t *testing.T) {
 				Config: testAccFlowLogConfig_MaxAggregationInterval(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "max_aggregation_interval", "60"),
 				),
 			},
@@ -289,7 +289,7 @@ func TestAccAWSFlowLog_LogDestinationType_MaxAggregationInterval(t *testing.T) {
 	})
 }
 
-func TestAccAWSFlowLog_tags(t *testing.T) {
+func TestAccEC2FlowLog_tags(t *testing.T) {
 	var flowLog ec2.FlowLog
 	resourceName := "aws_flow_log.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -304,7 +304,7 @@ func TestAccAWSFlowLog_tags(t *testing.T) {
 				Config: testAccFlowLogConfigTags1(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -318,7 +318,7 @@ func TestAccAWSFlowLog_tags(t *testing.T) {
 				Config: testAccFlowLogConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
@@ -328,7 +328,7 @@ func TestAccAWSFlowLog_tags(t *testing.T) {
 				Config: testAccFlowLogConfigTags1(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -337,7 +337,7 @@ func TestAccAWSFlowLog_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSFlowLog_disappears(t *testing.T) {
+func TestAccEC2FlowLog_disappears(t *testing.T) {
 	var flowLog ec2.FlowLog
 	resourceName := "aws_flow_log.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -388,7 +388,7 @@ func testAccCheckFlowLogExists(n string, flowLog *ec2.FlowLog) resource.TestChec
 	}
 }
 
-func testAccCheckAWSFlowLogAttributes(flowLog *ec2.FlowLog) resource.TestCheckFunc {
+func testAccCheckFlowLogAttributes(flowLog *ec2.FlowLog) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if flowLog.FlowLogStatus != nil && *flowLog.FlowLogStatus == "ACTIVE" {
 			return nil

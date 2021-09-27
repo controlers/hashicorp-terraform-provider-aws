@@ -16,7 +16,7 @@ import (
 	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
 )
 
-func TestAccAWSVolumeAttachment_basic(t *testing.T) {
+func TestAccEC2VolumeAttachment_basic(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
@@ -40,14 +40,14 @@ func TestAccAWSVolumeAttachment_basic(t *testing.T) {
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSVolumeAttachmentImportStateIDFunc(resourceName),
+				ImportStateIdFunc: testAccVolumeAttachmentImportStateIDFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSVolumeAttachment_skipDestroy(t *testing.T) {
+func TestAccEC2VolumeAttachment_skipDestroy(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
@@ -71,7 +71,7 @@ func TestAccAWSVolumeAttachment_skipDestroy(t *testing.T) {
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSVolumeAttachmentImportStateIDFunc(resourceName),
+				ImportStateIdFunc: testAccVolumeAttachmentImportStateIDFunc(resourceName),
 				ImportStateVerify: true,
 				ImportStateVerifyIgnore: []string{
 					"skip_destroy", // attribute only used on resource deletion
@@ -81,7 +81,7 @@ func TestAccAWSVolumeAttachment_skipDestroy(t *testing.T) {
 	})
 }
 
-func TestAccAWSVolumeAttachment_attachStopped(t *testing.T) {
+func TestAccEC2VolumeAttachment_attachStopped(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
@@ -137,14 +137,14 @@ func TestAccAWSVolumeAttachment_attachStopped(t *testing.T) {
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSVolumeAttachmentImportStateIDFunc(resourceName),
+				ImportStateIdFunc: testAccVolumeAttachmentImportStateIDFunc(resourceName),
 				ImportStateVerify: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSVolumeAttachment_update(t *testing.T) {
+func TestAccEC2VolumeAttachment_update(t *testing.T) {
 	resourceName := "aws_volume_attachment.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -164,7 +164,7 @@ func TestAccAWSVolumeAttachment_update(t *testing.T) {
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSVolumeAttachmentImportStateIDFunc(resourceName),
+				ImportStateIdFunc: testAccVolumeAttachmentImportStateIDFunc(resourceName),
 				ImportStateVerify: true,
 				ImportStateVerifyIgnore: []string{
 					"force_detach", // attribute only used on resource deletion
@@ -181,7 +181,7 @@ func TestAccAWSVolumeAttachment_update(t *testing.T) {
 			{
 				ResourceName:      resourceName,
 				ImportState:       true,
-				ImportStateIdFunc: testAccAWSVolumeAttachmentImportStateIDFunc(resourceName),
+				ImportStateIdFunc: testAccVolumeAttachmentImportStateIDFunc(resourceName),
 				ImportStateVerify: true,
 				ImportStateVerifyIgnore: []string{
 					"force_detach", // attribute only used on resource deletion
@@ -192,7 +192,7 @@ func TestAccAWSVolumeAttachment_update(t *testing.T) {
 	})
 }
 
-func TestAccAWSVolumeAttachment_disappears(t *testing.T) {
+func TestAccEC2VolumeAttachment_disappears(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
@@ -366,7 +366,7 @@ resource "aws_volume_attachment" "test" {
 `, detach)
 }
 
-func testAccAWSVolumeAttachmentImportStateIDFunc(resourceName string) resource.ImportStateIdFunc {
+func testAccVolumeAttachmentImportStateIDFunc(resourceName string) resource.ImportStateIdFunc {
 	return func(s *terraform.State) (string, error) {
 		rs, ok := s.RootModule().Resources[resourceName]
 		if !ok {

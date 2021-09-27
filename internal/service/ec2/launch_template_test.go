@@ -79,7 +79,7 @@ func testSweepLaunchTemplates(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSLaunchTemplate_basic(t *testing.T) {
+func TestAccEC2LaunchTemplate_basic(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -88,12 +88,12 @@ func TestAccAWSLaunchTemplate_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigName(rName),
+				Config: testAccLaunchTemplateNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "ec2", regexp.MustCompile(`launch-template/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "default_version", "1"),
 					resource.TestCheckResourceAttr(resourceName, "ebs_optimized", ""),
@@ -112,7 +112,7 @@ func TestAccAWSLaunchTemplate_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_Name_Generated(t *testing.T) {
+func TestAccEC2LaunchTemplate_Name_generated(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 
@@ -120,12 +120,12 @@ func TestAccAWSLaunchTemplate_Name_Generated(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigNameGenerated(),
+				Config: testAccLaunchTemplateNameGeneratedConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					create.TestCheckResourceAttrNameGenerated(resourceName, "name"),
 					resource.TestCheckResourceAttr(resourceName, "name_prefix", "terraform-"),
 				),
@@ -139,7 +139,7 @@ func TestAccAWSLaunchTemplate_Name_Generated(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_Name_Prefix(t *testing.T) {
+func TestAccEC2LaunchTemplate_Name_prefix(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 
@@ -147,12 +147,12 @@ func TestAccAWSLaunchTemplate_Name_Prefix(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigNamePrefix("tf-acc-test-prefix-"),
+				Config: testAccLaunchTemplateNamePrefixConfig("tf-acc-test-prefix-"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					create.TestCheckResourceAttrNameFromPrefix(resourceName, "name", "tf-acc-test-prefix-"),
 					resource.TestCheckResourceAttr(resourceName, "name_prefix", "tf-acc-test-prefix-"),
 				),
@@ -166,7 +166,7 @@ func TestAccAWSLaunchTemplate_Name_Prefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_disappears(t *testing.T) {
+func TestAccEC2LaunchTemplate_disappears(t *testing.T) {
 	var launchTemplate ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -175,12 +175,12 @@ func TestAccAWSLaunchTemplate_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigName(rName),
+				Config: testAccLaunchTemplateNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &launchTemplate),
+					testAccCheckLaunchTemplateExists(resourceName, &launchTemplate),
 					acctest.CheckResourceDisappears(acctest.Provider, tfec2.ResourceLaunchTemplate(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -189,7 +189,7 @@ func TestAccAWSLaunchTemplate_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS(t *testing.T) {
+func TestAccEC2LaunchTemplate_BlockDeviceMappings_ebs(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -198,12 +198,12 @@ func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_BlockDeviceMappings_EBS(rName),
+				Config: testAccLaunchTemplateConfig_BlockDeviceMappings_EBS(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.0.device_name", "/dev/xvda"),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.0.ebs.#", "1"),
@@ -220,7 +220,7 @@ func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS_DeleteOnTermination(t *testing.T) {
+func TestAccEC2LaunchTemplate_BlockDeviceMappingsEBS_deleteOnTermination(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -229,12 +229,12 @@ func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS_DeleteOnTermination(t *tes
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_BlockDeviceMappings_EBS_DeleteOnTermination(rName, true),
+				Config: testAccLaunchTemplateConfig_BlockDeviceMappings_EBS_DeleteOnTermination(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.0.device_name", "/dev/xvda"),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.0.ebs.#", "1"),
@@ -243,9 +243,9 @@ func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS_DeleteOnTermination(t *tes
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_BlockDeviceMappings_EBS_DeleteOnTermination(rName, false),
+				Config: testAccLaunchTemplateConfig_BlockDeviceMappings_EBS_DeleteOnTermination(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.0.device_name", "/dev/xvda"),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.0.ebs.#", "1"),
@@ -262,7 +262,7 @@ func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS_DeleteOnTermination(t *tes
 	})
 }
 
-func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS_Gp3(t *testing.T) {
+func TestAccEC2LaunchTemplate_BlockDeviceMappingsEBS_gp3(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -271,12 +271,12 @@ func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS_Gp3(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_BlockDeviceMappings_EBS_Gp3(rName),
+				Config: testAccLaunchTemplateConfig_BlockDeviceMappings_EBS_GP3(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.0.device_name", "/dev/xvda"),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.0.ebs.#", "1"),
@@ -295,7 +295,7 @@ func TestAccAWSLaunchTemplate_BlockDeviceMappings_EBS_Gp3(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_EbsOptimized(t *testing.T) {
+func TestAccEC2LaunchTemplate_ebsOptimized(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -304,12 +304,12 @@ func TestAccAWSLaunchTemplate_EbsOptimized(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_EbsOptimized(rName, "true"),
+				Config: testAccLaunchTemplateConfig_EBSOptimized(rName, "true"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "ebs_optimized", "true"),
 				),
 			},
@@ -319,30 +319,30 @@ func TestAccAWSLaunchTemplate_EbsOptimized(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_EbsOptimized(rName, "false"),
+				Config: testAccLaunchTemplateConfig_EBSOptimized(rName, "false"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "ebs_optimized", "false"),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_EbsOptimized(rName, "\"true\""),
+				Config: testAccLaunchTemplateConfig_EBSOptimized(rName, "\"true\""),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "ebs_optimized", "true"),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_EbsOptimized(rName, "\"false\""),
+				Config: testAccLaunchTemplateConfig_EBSOptimized(rName, "\"false\""),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "ebs_optimized", "false"),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_EbsOptimized(rName, "\"\""),
+				Config: testAccLaunchTemplateConfig_EBSOptimized(rName, "\"\""),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "ebs_optimized", ""),
 				),
 			},
@@ -350,7 +350,7 @@ func TestAccAWSLaunchTemplate_EbsOptimized(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_ElasticInferenceAccelerator(t *testing.T) {
+func TestAccEC2LaunchTemplate_elasticInferenceAccelerator(t *testing.T) {
 	var template1 ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -359,12 +359,12 @@ func TestAccAWSLaunchTemplate_ElasticInferenceAccelerator(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigElasticInferenceAccelerator(rName, "eia1.medium"),
+				Config: testAccLaunchTemplateElasticInferenceAcceleratorConfig(rName, "eia1.medium"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template1),
+					testAccCheckLaunchTemplateExists(resourceName, &template1),
 					resource.TestCheckResourceAttr(resourceName, "elastic_inference_accelerator.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "elastic_inference_accelerator.0.type", "eia1.medium"),
 				),
@@ -375,9 +375,9 @@ func TestAccAWSLaunchTemplate_ElasticInferenceAccelerator(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfigElasticInferenceAccelerator(rName, "eia1.large"),
+				Config: testAccLaunchTemplateElasticInferenceAcceleratorConfig(rName, "eia1.large"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template1),
+					testAccCheckLaunchTemplateExists(resourceName, &template1),
 					resource.TestCheckResourceAttr(resourceName, "elastic_inference_accelerator.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "elastic_inference_accelerator.0.type", "eia1.large"),
 				),
@@ -386,7 +386,7 @@ func TestAccAWSLaunchTemplate_ElasticInferenceAccelerator(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_NetworkInterfaces_DeleteOnTermination(t *testing.T) {
+func TestAccEC2LaunchTemplate_NetworkInterfaces_deleteOnTermination(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -395,39 +395,39 @@ func TestAccAWSLaunchTemplate_NetworkInterfaces_DeleteOnTermination(t *testing.T
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName, "true"),
+				Config: testAccLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName, "true"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.security_groups.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.delete_on_termination", "true"),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName, "false"),
+				Config: testAccLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName, "false"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.security_groups.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.delete_on_termination", "false"),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName, "\"\""),
+				Config: testAccLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName, "\"\""),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.security_groups.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.delete_on_termination", ""),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName, "null"),
+				Config: testAccLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName, "null"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.security_groups.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.delete_on_termination", ""),
@@ -442,7 +442,7 @@ func TestAccAWSLaunchTemplate_NetworkInterfaces_DeleteOnTermination(t *testing.T
 	})
 }
 
-func TestAccAWSLaunchTemplate_data(t *testing.T) {
+func TestAccEC2LaunchTemplate_data(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -451,12 +451,12 @@ func TestAccAWSLaunchTemplate_data(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_data(rName),
+				Config: testAccLaunchTemplateConfig_data(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "block_device_mappings.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "disable_api_termination"),
 					resource.TestCheckResourceAttr(resourceName, "ebs_optimized", "false"),
@@ -487,7 +487,7 @@ func TestAccAWSLaunchTemplate_data(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_description(t *testing.T) {
+func TestAccEC2LaunchTemplate_description(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -496,12 +496,12 @@ func TestAccAWSLaunchTemplate_description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_description(rName, "Test Description 1"),
+				Config: testAccLaunchTemplateConfig_description(rName, "Test Description 1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "description", "Test Description 1"),
 				),
 			},
@@ -511,9 +511,9 @@ func TestAccAWSLaunchTemplate_description(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_description(rName, "Test Description 2"),
+				Config: testAccLaunchTemplateConfig_description(rName, "Test Description 2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "description", "Test Description 2"),
 				),
 			},
@@ -521,7 +521,7 @@ func TestAccAWSLaunchTemplate_description(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_update(t *testing.T) {
+func TestAccEC2LaunchTemplate_update(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 
@@ -529,12 +529,12 @@ func TestAccAWSLaunchTemplate_update(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_asg_basic,
+				Config: testAccLaunchTemplateConfig_asg_basic,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "default_version", "1"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "1"),
 					resource.TestCheckResourceAttr(
@@ -548,9 +548,9 @@ func TestAccAWSLaunchTemplate_update(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"name_prefix"},
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_asg_update,
+				Config: testAccLaunchTemplateConfig_asg_update,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "default_version", "1"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "2"),
 					resource.TestCheckResourceAttrSet(resourceName, "instance_type"),
@@ -562,7 +562,7 @@ func TestAccAWSLaunchTemplate_update(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_Tags(t *testing.T) {
+func TestAccEC2LaunchTemplate_tags(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -571,12 +571,12 @@ func TestAccAWSLaunchTemplate_Tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigTags1(rName, "key1", "value1"),
+				Config: testAccLaunchTemplateTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -587,18 +587,18 @@ func TestAccAWSLaunchTemplate_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccLaunchTemplateTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfigTags1(rName, "key2", "value2"),
+				Config: testAccLaunchTemplateTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -607,7 +607,7 @@ func TestAccAWSLaunchTemplate_Tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_capacityReservation_preference(t *testing.T) {
+func TestAccEC2LaunchTemplate_CapacityReservation_preference(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -616,12 +616,12 @@ func TestAccAWSLaunchTemplate_capacityReservation_preference(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_capacityReservation_preference(rName, "open"),
+				Config: testAccLaunchTemplateConfig_capacityReservation_preference(rName, "open"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 				),
 			},
 			{
@@ -633,7 +633,7 @@ func TestAccAWSLaunchTemplate_capacityReservation_preference(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_capacityReservation_target(t *testing.T) {
+func TestAccEC2LaunchTemplate_CapacityReservation_target(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -642,12 +642,12 @@ func TestAccAWSLaunchTemplate_capacityReservation_target(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_capacityReservation_target(rName),
+				Config: testAccLaunchTemplateConfig_capacityReservation_target(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 				),
 			},
 			{
@@ -659,7 +659,7 @@ func TestAccAWSLaunchTemplate_capacityReservation_target(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_cpuOptions(t *testing.T) {
+func TestAccEC2LaunchTemplate_cpuOptions(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -668,19 +668,19 @@ func TestAccAWSLaunchTemplate_cpuOptions(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_cpuOptions(rName, 4, 2),
+				Config: testAccLaunchTemplateConfig_cpuOptions(rName, 4, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resName, &template),
+					testAccCheckLaunchTemplateExists(resName, &template),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSLaunchTemplate_creditSpecification_nonBurstable(t *testing.T) {
+func TestAccEC2LaunchTemplate_CreditSpecification_nonBurstable(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -689,12 +689,12 @@ func TestAccAWSLaunchTemplate_creditSpecification_nonBurstable(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_creditSpecification(rName, "m1.small", "standard"),
+				Config: testAccLaunchTemplateConfig_creditSpecification(rName, "m1.small", "standard"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 				),
 			},
 			{
@@ -707,7 +707,7 @@ func TestAccAWSLaunchTemplate_creditSpecification_nonBurstable(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_creditSpecification_t2(t *testing.T) {
+func TestAccEC2LaunchTemplate_CreditSpecification_t2(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -716,12 +716,12 @@ func TestAccAWSLaunchTemplate_creditSpecification_t2(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_creditSpecification(rName, "t2.micro", "unlimited"),
+				Config: testAccLaunchTemplateConfig_creditSpecification(rName, "t2.micro", "unlimited"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "credit_specification.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "credit_specification.0.cpu_credits", "unlimited"),
 				),
@@ -735,7 +735,7 @@ func TestAccAWSLaunchTemplate_creditSpecification_t2(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_creditSpecification_t3(t *testing.T) {
+func TestAccEC2LaunchTemplate_CreditSpecification_t3(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -744,12 +744,12 @@ func TestAccAWSLaunchTemplate_creditSpecification_t3(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_creditSpecification(rName, "t3.micro", "unlimited"),
+				Config: testAccLaunchTemplateConfig_creditSpecification(rName, "t3.micro", "unlimited"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "credit_specification.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "credit_specification.0.cpu_credits", "unlimited"),
 				),
@@ -764,7 +764,7 @@ func TestAccAWSLaunchTemplate_creditSpecification_t3(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/6757
-func TestAccAWSLaunchTemplate_IamInstanceProfile_EmptyConfigurationBlock(t *testing.T) {
+func TestAccEC2LaunchTemplate_IAMInstanceProfile_emptyBlock(t *testing.T) {
 	var template1 ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -773,12 +773,12 @@ func TestAccAWSLaunchTemplate_IamInstanceProfile_EmptyConfigurationBlock(t *test
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigIamInstanceProfileEmptyConfigurationBlock(rName),
+				Config: testAccLaunchTemplateIAMInstanceProfileEmptyConfigurationBlockConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template1),
+					testAccCheckLaunchTemplateExists(resourceName, &template1),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -786,7 +786,7 @@ func TestAccAWSLaunchTemplate_IamInstanceProfile_EmptyConfigurationBlock(t *test
 	})
 }
 
-func TestAccAWSLaunchTemplate_networkInterface(t *testing.T) {
+func TestAccEC2LaunchTemplate_networkInterface(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -795,12 +795,12 @@ func TestAccAWSLaunchTemplate_networkInterface(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_networkInterface(rName),
+				Config: testAccLaunchTemplateConfig_networkInterface(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "network_interfaces.0.network_interface_id"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.associate_public_ip_address", ""),
@@ -817,7 +817,7 @@ func TestAccAWSLaunchTemplate_networkInterface(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_networkInterfaceAddresses(t *testing.T) {
+func TestAccEC2LaunchTemplate_networkInterfaceAddresses(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -826,12 +826,12 @@ func TestAccAWSLaunchTemplate_networkInterfaceAddresses(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_networkInterfaceAddresses(rName),
+				Config: testAccLaunchTemplateConfig_networkInterfaceAddresses(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "network_interfaces.0.network_interface_id"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.associate_public_ip_address", ""),
@@ -847,7 +847,7 @@ func TestAccAWSLaunchTemplate_networkInterfaceAddresses(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_networkInterfaceType(t *testing.T) {
+func TestAccEC2LaunchTemplate_networkInterfaceType(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -856,12 +856,12 @@ func TestAccAWSLaunchTemplate_networkInterfaceType(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_networkInterfaceType_efa(rName),
+				Config: testAccLaunchTemplateConfig_networkInterfaceType_efa(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.interface_type", "efa"),
 				),
@@ -875,7 +875,7 @@ func TestAccAWSLaunchTemplate_networkInterfaceType(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_associatePublicIPAddress(t *testing.T) {
+func TestAccEC2LaunchTemplate_associatePublicIPAddress(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -884,12 +884,12 @@ func TestAccAWSLaunchTemplate_associatePublicIPAddress(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_associatePublicIpAddress(rName, "true"),
+				Config: testAccLaunchTemplateConfig_associatePublicIPAddress(rName, "true"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "network_interfaces.0.network_interface_id"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.associate_public_ip_address", "true"),
@@ -902,9 +902,9 @@ func TestAccAWSLaunchTemplate_associatePublicIPAddress(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_associatePublicIpAddress(rName, "false"),
+				Config: testAccLaunchTemplateConfig_associatePublicIPAddress(rName, "false"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "network_interfaces.0.network_interface_id"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.associate_public_ip_address", "false"),
@@ -912,9 +912,9 @@ func TestAccAWSLaunchTemplate_associatePublicIPAddress(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_associatePublicIpAddress(rName, "null"),
+				Config: testAccLaunchTemplateConfig_associatePublicIPAddress(rName, "null"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "network_interfaces.0.network_interface_id"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.associate_public_ip_address", ""),
@@ -925,7 +925,7 @@ func TestAccAWSLaunchTemplate_associatePublicIPAddress(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_associateCarrierIPAddress(t *testing.T) {
+func TestAccEC2LaunchTemplate_associateCarrierIPAddress(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -934,12 +934,12 @@ func TestAccAWSLaunchTemplate_associateCarrierIPAddress(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_associateCarrierIpAddress(rName, "true"),
+				Config: testAccLaunchTemplateConfig_associateCarrierIPAddress(rName, "true"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "network_interfaces.0.network_interface_id"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.associate_carrier_ip_address", "true"),
@@ -952,9 +952,9 @@ func TestAccAWSLaunchTemplate_associateCarrierIPAddress(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_associateCarrierIpAddress(rName, "false"),
+				Config: testAccLaunchTemplateConfig_associateCarrierIPAddress(rName, "false"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "network_interfaces.0.network_interface_id"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.associate_carrier_ip_address", "false"),
@@ -962,9 +962,9 @@ func TestAccAWSLaunchTemplate_associateCarrierIPAddress(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_associateCarrierIpAddress(rName, "null"),
+				Config: testAccLaunchTemplateConfig_associateCarrierIPAddress(rName, "null"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttrSet(resourceName, "network_interfaces.0.network_interface_id"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.associate_carrier_ip_address", ""),
@@ -975,7 +975,7 @@ func TestAccAWSLaunchTemplate_associateCarrierIPAddress(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_Placement_HostResourceGroupArn(t *testing.T) {
+func TestAccEC2LaunchTemplate_Placement_hostResourceGroupARN(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -984,12 +984,12 @@ func TestAccAWSLaunchTemplate_Placement_HostResourceGroupArn(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigPlacementHostResourceGroupArn(rName),
+				Config: testAccLaunchTemplatePlacementHostResourceGroupARNConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttrPair(resourceName, "placement.0.host_resource_group_arn", "aws_resourcegroups_group.test", "arn"),
 				),
 			},
@@ -1002,7 +1002,7 @@ func TestAccAWSLaunchTemplate_Placement_HostResourceGroupArn(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_placement_partitionNum(t *testing.T) {
+func TestAccEC2LaunchTemplate_Placement_partitionNum(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1011,12 +1011,12 @@ func TestAccAWSLaunchTemplate_placement_partitionNum(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigPartition(rName, 1),
+				Config: testAccLaunchTemplatePartitionConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "placement.0.partition_number", "1"),
 				),
 			},
@@ -1026,9 +1026,9 @@ func TestAccAWSLaunchTemplate_placement_partitionNum(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfigPartition(rName, 2),
+				Config: testAccLaunchTemplatePartitionConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "placement.0.partition_number", "2"),
 				),
 			},
@@ -1036,7 +1036,7 @@ func TestAccAWSLaunchTemplate_placement_partitionNum(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_networkInterface_ipv6Addresses(t *testing.T) {
+func TestAccEC2LaunchTemplate_NetworkInterface_ipv6Addresses(t *testing.T) {
 	var template ec2.LaunchTemplate
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_launch_template.test"
@@ -1045,12 +1045,12 @@ func TestAccAWSLaunchTemplate_networkInterface_ipv6Addresses(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_networkInterface_ipv6Addresses(rName),
+				Config: testAccLaunchTemplateConfig_networkInterface_ipv6Addresses(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.ipv6_addresses.#", "2"),
 				),
@@ -1064,7 +1064,7 @@ func TestAccAWSLaunchTemplate_networkInterface_ipv6Addresses(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_networkInterface_ipv6AddressCount(t *testing.T) {
+func TestAccEC2LaunchTemplate_NetworkInterface_ipv6AddressCount(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1073,12 +1073,12 @@ func TestAccAWSLaunchTemplate_networkInterface_ipv6AddressCount(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_ipv6_count(rName),
+				Config: testAccLaunchTemplateConfig_ipv6_count(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "network_interfaces.0.ipv6_address_count", "1"),
 				),
@@ -1092,7 +1092,7 @@ func TestAccAWSLaunchTemplate_networkInterface_ipv6AddressCount(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_instanceMarketOptions(t *testing.T) {
+func TestAccEC2LaunchTemplate_instanceMarketOptions(t *testing.T) {
 	var template ec2.LaunchTemplate
 	var group autoscaling.Group
 	groupName := "aws_autoscaling_group.test"
@@ -1102,13 +1102,13 @@ func TestAccAWSLaunchTemplate_instanceMarketOptions(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_instanceMarketOptions_basic,
+				Config: testAccLaunchTemplateConfig_instanceMarketOptions_basic,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
-					testAccCheckAWSAutoScalingGroupExists(groupName, &group),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
+					testAccCheckAutoScalingGroupExists(groupName, &group),
 					resource.TestCheckResourceAttr(resourceName, "instance_market_options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "instance_market_options.0.spot_options.#", "1"),
 					resource.TestCheckResourceAttr(groupName, "launch_template.#", "1"),
@@ -1122,10 +1122,10 @@ func TestAccAWSLaunchTemplate_instanceMarketOptions(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"name_prefix", "instance_market_options"},
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_instanceMarketOptions_update,
+				Config: testAccLaunchTemplateConfig_instanceMarketOptions_update,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
-					testAccCheckAWSAutoScalingGroupExists(groupName, &group),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
+					testAccCheckAutoScalingGroupExists(groupName, &group),
 					resource.TestCheckResourceAttr(resourceName, "instance_market_options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "instance_market_options.0.spot_options.#", "1"),
 					resource.TestCheckResourceAttr(groupName, "launch_template.#", "1"),
@@ -1136,7 +1136,7 @@ func TestAccAWSLaunchTemplate_instanceMarketOptions(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_licenseSpecification(t *testing.T) {
+func TestAccEC2LaunchTemplate_licenseSpecification(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1145,12 +1145,12 @@ func TestAccAWSLaunchTemplate_licenseSpecification(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_licenseSpecification(rName),
+				Config: testAccLaunchTemplateConfig_licenseSpecification(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "license_specification.#", "1"),
 				),
 			},
@@ -1163,7 +1163,7 @@ func TestAccAWSLaunchTemplate_licenseSpecification(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_metadataOptions(t *testing.T) {
+func TestAccEC2LaunchTemplate_metadataOptions(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1172,12 +1172,12 @@ func TestAccAWSLaunchTemplate_metadataOptions(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_metadataOptions(rName),
+				Config: testAccLaunchTemplateConfig_metadataOptions(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "metadata_options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "metadata_options.0.http_endpoint", "enabled"),
 					resource.TestCheckResourceAttr(resourceName, "metadata_options.0.http_tokens", "required"),
@@ -1191,9 +1191,9 @@ func TestAccAWSLaunchTemplate_metadataOptions(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_metadataOptionsIpv6(rName),
+				Config: testAccLaunchTemplateConfig_metadataOptionsIPv6(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "metadata_options.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "metadata_options.0.http_endpoint", "enabled"),
 					resource.TestCheckResourceAttr(resourceName, "metadata_options.0.http_tokens", "required"),
@@ -1205,7 +1205,7 @@ func TestAccAWSLaunchTemplate_metadataOptions(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_enclaveOptions(t *testing.T) {
+func TestAccEC2LaunchTemplate_enclaveOptions(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1214,12 +1214,12 @@ func TestAccAWSLaunchTemplate_enclaveOptions(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_enclaveOptions(rName, true),
+				Config: testAccLaunchTemplateConfig_enclaveOptions(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "enclave_options.0.enabled", "true"),
 				),
 			},
@@ -1229,16 +1229,16 @@ func TestAccAWSLaunchTemplate_enclaveOptions(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_enclaveOptions(rName, false),
+				Config: testAccLaunchTemplateConfig_enclaveOptions(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "enclave_options.0.enabled", "false"),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfig_enclaveOptions(rName, true),
+				Config: testAccLaunchTemplateConfig_enclaveOptions(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "enclave_options.0.enabled", "true"),
 				),
 			},
@@ -1246,7 +1246,7 @@ func TestAccAWSLaunchTemplate_enclaveOptions(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_hibernation(t *testing.T) {
+func TestAccEC2LaunchTemplate_hibernation(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1255,12 +1255,12 @@ func TestAccAWSLaunchTemplate_hibernation(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfigHibernation(rName, true),
+				Config: testAccLaunchTemplateHibernationConfig(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "hibernation_options.0.configured", "true"),
 				),
 			},
@@ -1270,16 +1270,16 @@ func TestAccAWSLaunchTemplate_hibernation(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfigHibernation(rName, false),
+				Config: testAccLaunchTemplateHibernationConfig(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "hibernation_options.0.configured", "false"),
 				),
 			},
 			{
-				Config: testAccAWSLaunchTemplateConfigHibernation(rName, true),
+				Config: testAccLaunchTemplateHibernationConfig(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSLaunchTemplateExists(resourceName, &template),
+					testAccCheckLaunchTemplateExists(resourceName, &template),
 					resource.TestCheckResourceAttr(resourceName, "hibernation_options.0.configured", "true"),
 				),
 			},
@@ -1287,7 +1287,7 @@ func TestAccAWSLaunchTemplate_hibernation(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_defaultVersion(t *testing.T) {
+func TestAccEC2LaunchTemplate_defaultVersion(t *testing.T) {
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	description := "Test Description 1"
@@ -1297,10 +1297,10 @@ func TestAccAWSLaunchTemplate_defaultVersion(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_description(rName, description),
+				Config: testAccLaunchTemplateConfig_description(rName, description),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "default_version", "1"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "1"),
@@ -1309,7 +1309,7 @@ func TestAccAWSLaunchTemplate_defaultVersion(t *testing.T) {
 			// An updated config should cause a new version to be created
 			// but keep the default_version unchanged if unset
 			{
-				Config: testAccAWSLaunchTemplateConfig_description(rName, descriptionNew),
+				Config: testAccLaunchTemplateConfig_description(rName, descriptionNew),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "default_version", "1"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "2"),
@@ -1318,7 +1318,7 @@ func TestAccAWSLaunchTemplate_defaultVersion(t *testing.T) {
 			// An updated config to set the default_version to an existing version
 			// should not cause a new version to be created
 			{
-				Config: testAccAWSLaunchTemplateConfig_descriptionDefaultVersion(rName, descriptionNew, 2),
+				Config: testAccLaunchTemplateConfig_descriptionDefaultVersion(rName, descriptionNew, 2),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "default_version", "2"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "2"),
@@ -1333,7 +1333,7 @@ func TestAccAWSLaunchTemplate_defaultVersion(t *testing.T) {
 	})
 }
 
-func TestAccAWSLaunchTemplate_updateDefaultVersion(t *testing.T) {
+func TestAccEC2LaunchTemplate_updateDefaultVersion(t *testing.T) {
 	resourceName := "aws_launch_template.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	description := "Test Description 1"
@@ -1343,10 +1343,10 @@ func TestAccAWSLaunchTemplate_updateDefaultVersion(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, autoscaling.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSLaunchTemplateDestroy,
+		CheckDestroy: testAccCheckLaunchTemplateDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLaunchTemplateConfig_description(rName, description),
+				Config: testAccLaunchTemplateConfig_description(rName, description),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "default_version", "1"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "1"),
@@ -1355,7 +1355,7 @@ func TestAccAWSLaunchTemplate_updateDefaultVersion(t *testing.T) {
 			// Updating a field should create a new version but not update the default_version
 			// if update_default_version is set to false
 			{
-				Config: testAccAWSLaunchTemplateconfig_descriptionUpdateDefaultVersion(rName, descriptionNew, false),
+				Config: testAccLaunchTemplateconfig_descriptionUpdateDefaultVersion(rName, descriptionNew, false),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "default_version", "1"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "2"),
@@ -1364,7 +1364,7 @@ func TestAccAWSLaunchTemplate_updateDefaultVersion(t *testing.T) {
 			// Only updating the update_default_version to true should not create a new version
 			// but update the template version to the latest available
 			{
-				Config: testAccAWSLaunchTemplateconfig_descriptionUpdateDefaultVersion(rName, descriptionNew, true),
+				Config: testAccLaunchTemplateconfig_descriptionUpdateDefaultVersion(rName, descriptionNew, true),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "default_version", "2"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "2"),
@@ -1373,7 +1373,7 @@ func TestAccAWSLaunchTemplate_updateDefaultVersion(t *testing.T) {
 			// Updating a field should create a new version and update the default_version
 			// if update_default_version is set to true
 			{
-				Config: testAccAWSLaunchTemplateconfig_descriptionUpdateDefaultVersion(rName, description, true),
+				Config: testAccLaunchTemplateconfig_descriptionUpdateDefaultVersion(rName, description, true),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "default_version", "3"),
 					resource.TestCheckResourceAttr(resourceName, "latest_version", "3"),
@@ -1391,7 +1391,7 @@ func TestAccAWSLaunchTemplate_updateDefaultVersion(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSLaunchTemplateExists(n string, t *ec2.LaunchTemplate) resource.TestCheckFunc {
+func testAccCheckLaunchTemplateExists(n string, t *ec2.LaunchTemplate) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -1421,7 +1421,7 @@ func testAccCheckAWSLaunchTemplateExists(n string, t *ec2.LaunchTemplate) resour
 	}
 }
 
-func testAccCheckAWSLaunchTemplateDestroy(s *terraform.State) error {
+func testAccCheckLaunchTemplateDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
 
 	for _, rs := range s.RootModule().Resources {
@@ -1449,7 +1449,7 @@ func testAccCheckAWSLaunchTemplateDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSLaunchTemplateConfigName(rName string) string {
+func testAccLaunchTemplateNameConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1457,13 +1457,13 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfigNameGenerated() string {
+func testAccLaunchTemplateNameGeneratedConfig() string {
 	return `
 resource "aws_launch_template" "test" {}
 `
 }
 
-func testAccAWSLaunchTemplateConfigNamePrefix(namePrefix string) string {
+func testAccLaunchTemplateNamePrefixConfig(namePrefix string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name_prefix = %[1]q
@@ -1471,7 +1471,7 @@ resource "aws_launch_template" "test" {
 `, namePrefix)
 }
 
-func testAccAWSLaunchTemplateConfig_ipv6_count(rName string) string {
+func testAccLaunchTemplateConfig_ipv6_count(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1483,7 +1483,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfig_BlockDeviceMappings_EBS(rName string) string {
+func testAccLaunchTemplateConfig_BlockDeviceMappings_EBS(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
 		acctest.ConfigAvailableAZsNoOptIn(),
@@ -1520,7 +1520,7 @@ resource "aws_autoscaling_group" "test" {
 `, rName))
 }
 
-func testAccAWSLaunchTemplateConfig_BlockDeviceMappings_EBS_DeleteOnTermination(rName string, deleteOnTermination bool) string {
+func testAccLaunchTemplateConfig_BlockDeviceMappings_EBS_DeleteOnTermination(rName string, deleteOnTermination bool) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
 		acctest.ConfigAvailableAZsNoOptIn(),
@@ -1558,7 +1558,7 @@ resource "aws_autoscaling_group" "test" {
 `, rName, deleteOnTermination))
 }
 
-func testAccAWSLaunchTemplateConfig_BlockDeviceMappings_EBS_Gp3(rName string) string {
+func testAccLaunchTemplateConfig_BlockDeviceMappings_EBS_GP3(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
 		acctest.ConfigAvailableAZsNoOptIn(),
@@ -1598,7 +1598,7 @@ resource "aws_autoscaling_group" "test" {
 `, rName))
 }
 
-func testAccAWSLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName string, deleteOnTermination string) string {
+func testAccLaunchTemplateConfig_NetworkInterfaces_DeleteOnTermination(rName string, deleteOnTermination string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1612,7 +1612,7 @@ resource "aws_launch_template" "test" {
 `, rName, deleteOnTermination)
 }
 
-func testAccAWSLaunchTemplateConfig_EbsOptimized(rName, ebsOptimized string) string {
+func testAccLaunchTemplateConfig_EBSOptimized(rName, ebsOptimized string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   ebs_optimized = %[1]s
@@ -1621,7 +1621,7 @@ resource "aws_launch_template" "test" {
 `, ebsOptimized, rName)
 }
 
-func testAccAWSLaunchTemplateConfigElasticInferenceAccelerator(rName, elasticInferenceAcceleratorType string) string {
+func testAccLaunchTemplateElasticInferenceAcceleratorConfig(rName, elasticInferenceAcceleratorType string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1633,7 +1633,7 @@ resource "aws_launch_template" "test" {
 `, rName, elasticInferenceAcceleratorType)
 }
 
-func testAccAWSLaunchTemplateConfig_data(rName string) string {
+func testAccLaunchTemplateConfig_data(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %q
@@ -1723,7 +1723,7 @@ resource "aws_launch_template" "test" {
 `, rName)) //lintignore:AWSAT002
 }
 
-func testAccAWSLaunchTemplateConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccLaunchTemplateTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1735,7 +1735,7 @@ resource "aws_launch_template" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSLaunchTemplateConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccLaunchTemplateTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1748,7 +1748,7 @@ resource "aws_launch_template" "test" {
 `, rName, tagKey1, tagValue1, tagKey2, tagValue2)
 }
 
-func testAccAWSLaunchTemplateConfig_capacityReservation_preference(rName string, preference string) string {
+func testAccLaunchTemplateConfig_capacityReservation_preference(rName string, preference string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1760,7 +1760,7 @@ resource "aws_launch_template" "test" {
 `, rName, preference)
 }
 
-func testAccAWSLaunchTemplateConfig_capacityReservation_target(rName string) string {
+func testAccLaunchTemplateConfig_capacityReservation_target(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -1790,7 +1790,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfig_cpuOptions(rName string, coreCount, threadsPerCore int) string {
+func testAccLaunchTemplateConfig_cpuOptions(rName string, coreCount, threadsPerCore int) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1803,7 +1803,7 @@ resource "aws_launch_template" "test" {
 `, rName, coreCount, threadsPerCore)
 }
 
-func testAccAWSLaunchTemplateConfig_creditSpecification(rName, instanceType, cpuCredits string) string {
+func testAccLaunchTemplateConfig_creditSpecification(rName, instanceType, cpuCredits string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   instance_type = %[1]q
@@ -1816,7 +1816,7 @@ resource "aws_launch_template" "test" {
 `, instanceType, rName, cpuCredits)
 }
 
-func testAccAWSLaunchTemplateConfigIamInstanceProfileEmptyConfigurationBlock(rName string) string {
+func testAccLaunchTemplateIAMInstanceProfileEmptyConfigurationBlockConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -1826,7 +1826,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfig_licenseSpecification(rName string) string {
+func testAccLaunchTemplateConfig_licenseSpecification(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_licensemanager_license_configuration" "test" {
   name                  = "Test"
@@ -1843,7 +1843,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfig_description(rName, description string) string {
+func testAccLaunchTemplateConfig_description(rName, description string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name        = %[1]q
@@ -1852,7 +1852,7 @@ resource "aws_launch_template" "test" {
 `, rName, description)
 }
 
-func testAccAWSLaunchTemplateConfig_networkInterface(rName string) string {
+func testAccLaunchTemplateConfig_networkInterface(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -1890,7 +1890,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfigPartition(rName string, partNum int) string {
+func testAccLaunchTemplatePartitionConfig(rName string, partNum int) string {
 	return fmt.Sprintf(`
 resource "aws_placement_group" "test" {
   name     = %[1]q
@@ -1912,7 +1912,7 @@ resource "aws_launch_template" "test" {
 `, rName, partNum)
 }
 
-func testAccAWSLaunchTemplateConfigPlacementHostResourceGroupArn(rName string) string {
+func testAccLaunchTemplatePlacementHostResourceGroupARNConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_resourcegroups_group" "test" {
   name = %[1]q
@@ -1940,7 +1940,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfig_networkInterfaceAddresses(rName string) string {
+func testAccLaunchTemplateConfig_networkInterfaceAddresses(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -1979,7 +1979,7 @@ resource "aws_launch_template" "test" {
 
 }
 
-func testAccAWSLaunchTemplateConfig_associatePublicIpAddress(rName, associatePublicIPAddress string) string {
+func testAccLaunchTemplateConfig_associatePublicIPAddress(rName, associatePublicIPAddress string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -2018,7 +2018,7 @@ resource "aws_launch_template" "test" {
 `, rName, associatePublicIPAddress)
 }
 
-func testAccAWSLaunchTemplateConfig_associateCarrierIpAddress(rName, associateCarrierIPAddress string) string {
+func testAccLaunchTemplateConfig_associateCarrierIPAddress(rName, associateCarrierIPAddress string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -2057,7 +2057,7 @@ resource "aws_launch_template" "test" {
 `, rName, associateCarrierIPAddress)
 }
 
-func testAccAWSLaunchTemplateConfig_networkInterface_ipv6Addresses(rName string) string {
+func testAccLaunchTemplateConfig_networkInterface_ipv6Addresses(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -2072,7 +2072,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfig_networkInterfaceType_efa(rName string) string {
+func testAccLaunchTemplateConfig_networkInterfaceType_efa(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -2084,7 +2084,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-const testAccAWSLaunchTemplateConfig_asg_basic = `
+const testAccLaunchTemplateConfig_asg_basic = `
 data "aws_ami" "test_ami" {
   most_recent = true
   owners      = ["amazon"]
@@ -2123,7 +2123,7 @@ resource "aws_autoscaling_group" "bar" {
 }
 `
 
-const testAccAWSLaunchTemplateConfig_asg_update = `
+const testAccLaunchTemplateConfig_asg_update = `
 data "aws_ami" "test_ami" {
   most_recent = true
   owners      = ["amazon"]
@@ -2162,7 +2162,7 @@ resource "aws_autoscaling_group" "bar" {
 }
 `
 
-const testAccAWSLaunchTemplateConfig_instanceMarketOptions_basic = `
+const testAccLaunchTemplateConfig_instanceMarketOptions_basic = `
 data "aws_ami" "test" {
   most_recent = true
   owners      = ["amazon"]
@@ -2209,7 +2209,7 @@ resource "aws_autoscaling_group" "test" {
 }
 `
 
-const testAccAWSLaunchTemplateConfig_instanceMarketOptions_update = `
+const testAccLaunchTemplateConfig_instanceMarketOptions_update = `
 data "aws_ami" "test" {
   most_recent = true
   owners      = ["amazon"]
@@ -2257,7 +2257,7 @@ resource "aws_autoscaling_group" "test" {
 }
 `
 
-func testAccAWSLaunchTemplateConfig_metadataOptions(rName string) string {
+func testAccLaunchTemplateConfig_metadataOptions(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -2271,7 +2271,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfig_metadataOptionsIpv6(rName string) string {
+func testAccLaunchTemplateConfig_metadataOptionsIPv6(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -2286,7 +2286,7 @@ resource "aws_launch_template" "test" {
 `, rName)
 }
 
-func testAccAWSLaunchTemplateConfig_enclaveOptions(rName string, enabled bool) string {
+func testAccLaunchTemplateConfig_enclaveOptions(rName string, enabled bool) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -2298,7 +2298,7 @@ resource "aws_launch_template" "test" {
 `, rName, enabled)
 }
 
-func testAccAWSLaunchTemplateConfigHibernation(rName string, enabled bool) string {
+func testAccLaunchTemplateHibernationConfig(rName string, enabled bool) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name = %[1]q
@@ -2310,7 +2310,7 @@ resource "aws_launch_template" "test" {
 `, rName, enabled)
 }
 
-func testAccAWSLaunchTemplateConfig_descriptionDefaultVersion(rName, description string, version int) string {
+func testAccLaunchTemplateConfig_descriptionDefaultVersion(rName, description string, version int) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name            = %[1]q
@@ -2320,7 +2320,7 @@ resource "aws_launch_template" "test" {
 `, rName, description, version)
 }
 
-func testAccAWSLaunchTemplateconfig_descriptionUpdateDefaultVersion(rName, description string, update bool) string {
+func testAccLaunchTemplateconfig_descriptionUpdateDefaultVersion(rName, description string, update bool) string {
 	return fmt.Sprintf(`
 resource "aws_launch_template" "test" {
   name                   = %[1]q
@@ -2330,7 +2330,7 @@ resource "aws_launch_template" "test" {
 `, rName, description, update)
 }
 
-func testAccCheckAWSAutoScalingGroupExists(n string, group *autoscaling.Group) resource.TestCheckFunc {
+func testAccCheckAutoScalingGroupExists(n string, group *autoscaling.Group) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {

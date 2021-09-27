@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsEc2LocalGatewayRouteTables_basic(t *testing.T) {
+func TestAccEC2LocalGatewayRouteTablesDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway_route_tables.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -17,7 +17,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTables_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayRouteTablesConfig(),
+				Config: testAccLocalGatewayRouteTablesDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					testCheckResourceAttrGreaterThanValue(dataSourceName, "ids.#", "0"),
 				),
@@ -26,7 +26,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTables_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsEc2LocalGatewayRouteTables_Filter(t *testing.T) {
+func TestAccEC2LocalGatewayRouteTablesDataSource_filter(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway_route_tables.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -35,7 +35,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTables_Filter(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayRouteTablesConfigFilter(),
+				Config: testAccLocalGatewayRouteTablesFilterDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "ids.#", "1"),
 				),
@@ -44,13 +44,13 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTables_Filter(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsEc2LocalGatewayRouteTablesConfig() string {
+func testAccLocalGatewayRouteTablesDataSourceConfig() string {
 	return `
 data "aws_ec2_local_gateway_route_tables" "test" {}
 `
 }
 
-func testAccDataSourceAwsEc2LocalGatewayRouteTablesConfigFilter() string {
+func testAccLocalGatewayRouteTablesFilterDataSourceConfig() string {
 	return `
 data "aws_ec2_local_gateway_route_tables" "all" {}
 

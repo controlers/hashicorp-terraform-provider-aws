@@ -12,14 +12,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccDataSourceAwsEBSDefaultKmsKey_basic(t *testing.T) {
+func TestAccEC2EBSDefaultKMSKeyDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEBSDefaultKmsKeyConfig,
+				Config: testAccEBSDefaultKMSKeyDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDataSourceAwsEBSDefaultKmsKey("data.aws_ebs_default_kms_key.current"),
 				),
@@ -56,6 +56,6 @@ func testAccCheckDataSourceAwsEBSDefaultKmsKey(n string) resource.TestCheckFunc 
 	}
 }
 
-const testAccDataSourceAwsEBSDefaultKmsKeyConfig = `
+const testAccEBSDefaultKMSKeyDataSourceConfig = `
 data "aws_ebs_default_kms_key" "current" {}
 `

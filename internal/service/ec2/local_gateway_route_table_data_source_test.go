@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsEc2LocalGatewayRouteTable_basic(t *testing.T) {
+func TestAccEC2LocalGatewayRouteTableDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway_route_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -18,7 +18,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTable_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayRouteTableConfigLocalGatewayRouteTableId(),
+				Config: testAccLocalGatewayRouteTableLocalGatewayRouteTableIDDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_id", regexp.MustCompile(`^lgw-`)),
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_route_table_id", regexp.MustCompile(`^lgw-rtb-`)),
@@ -30,7 +30,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTable_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsEc2LocalGatewayRouteTable_Filter(t *testing.T) {
+func TestAccEC2LocalGatewayRouteTableDataSource_filter(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway_route_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -39,7 +39,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTable_Filter(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayRouteTableConfigFilter(),
+				Config: testAccLocalGatewayRouteTableFilterDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_id", regexp.MustCompile(`^lgw-`)),
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_route_table_id", regexp.MustCompile(`^lgw-rtb-`)),
@@ -51,7 +51,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTable_Filter(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsEc2LocalGatewayRouteTable_LocalGatewayId(t *testing.T) {
+func TestAccEC2LocalGatewayRouteTableDataSource_localGatewayID(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway_route_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -60,7 +60,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTable_LocalGatewayId(t *testing.T) 
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayRouteTableConfigLocalGatewayId(),
+				Config: testAccLocalGatewayRouteTableLocalGatewayIDDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_id", regexp.MustCompile(`^lgw-`)),
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_route_table_id", regexp.MustCompile(`^lgw-rtb-`)),
@@ -72,7 +72,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTable_LocalGatewayId(t *testing.T) 
 	})
 }
 
-func TestAccDataSourceAwsEc2LocalGatewayRouteTable_OutpostArn(t *testing.T) {
+func TestAccEC2LocalGatewayRouteTableDataSource_outpostARN(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway_route_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -81,7 +81,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTable_OutpostArn(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayRouteTableConfigOutpostArn(),
+				Config: testAccLocalGatewayRouteTableOutpostARNDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_id", regexp.MustCompile(`^lgw-`)),
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_route_table_id", regexp.MustCompile(`^lgw-rtb-`)),
@@ -93,7 +93,7 @@ func TestAccDataSourceAwsEc2LocalGatewayRouteTable_OutpostArn(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsEc2LocalGatewayRouteTableConfigFilter() string {
+func testAccLocalGatewayRouteTableFilterDataSourceConfig() string {
 	return `
 data "aws_outposts_outposts" "test" {}
 
@@ -106,7 +106,7 @@ data "aws_ec2_local_gateway_route_table" "test" {
 `
 }
 
-func testAccDataSourceAwsEc2LocalGatewayRouteTableConfigLocalGatewayId() string {
+func testAccLocalGatewayRouteTableLocalGatewayIDDataSourceConfig() string {
 	return `
 data "aws_ec2_local_gateways" "test" {}
 
@@ -116,7 +116,7 @@ data "aws_ec2_local_gateway_route_table" "test" {
 `
 }
 
-func testAccDataSourceAwsEc2LocalGatewayRouteTableConfigLocalGatewayRouteTableId() string {
+func testAccLocalGatewayRouteTableLocalGatewayRouteTableIDDataSourceConfig() string {
 	return `
 data "aws_ec2_local_gateway_route_tables" "test" {}
 
@@ -126,7 +126,7 @@ data "aws_ec2_local_gateway_route_table" "test" {
 `
 }
 
-func testAccDataSourceAwsEc2LocalGatewayRouteTableConfigOutpostArn() string {
+func testAccLocalGatewayRouteTableOutpostARNDataSourceConfig() string {
 	return `
 data "aws_outposts_outposts" "test" {}
 

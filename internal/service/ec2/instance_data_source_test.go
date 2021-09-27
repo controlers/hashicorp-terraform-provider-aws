@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSInstanceDataSource_basic(t *testing.T) {
+func TestAccEC2InstanceDataSource_basic(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 
@@ -34,7 +34,7 @@ func TestAccAWSInstanceDataSource_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_tags(t *testing.T) {
+func TestAccEC2InstanceDataSource_tags(t *testing.T) {
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
@@ -56,7 +56,7 @@ func TestAccAWSInstanceDataSource_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_AzUserData(t *testing.T) {
+func TestAccEC2InstanceDataSource_azUserData(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 
@@ -79,7 +79,7 @@ func TestAccAWSInstanceDataSource_AzUserData(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_gp2IopsDevice(t *testing.T) {
+func TestAccEC2InstanceDataSource_gp2IopsDevice(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 
@@ -104,7 +104,7 @@ func TestAccAWSInstanceDataSource_gp2IopsDevice(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_gp3ThroughputDevice(t *testing.T) {
+func TestAccEC2InstanceDataSource_gp3ThroughputDevice(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 
@@ -129,7 +129,7 @@ func TestAccAWSInstanceDataSource_gp3ThroughputDevice(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_blockDevices(t *testing.T) {
+func TestAccEC2InstanceDataSource_blockDevices(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 
@@ -157,7 +157,7 @@ func TestAccAWSInstanceDataSource_blockDevices(t *testing.T) {
 }
 
 // Test to verify that ebs_block_device kms_key_id does not elicit a panic
-func TestAccAWSInstanceDataSource_EbsBlockDevice_KmsKeyId(t *testing.T) {
+func TestAccEC2InstanceDataSource_EBSBlockDevice_kmsKeyID(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
@@ -171,7 +171,7 @@ func TestAccAWSInstanceDataSource_EbsBlockDevice_KmsKeyId(t *testing.T) {
 }
 
 // Test to verify that root_block_device kms_key_id does not elicit a panic
-func TestAccAWSInstanceDataSource_RootBlockDevice_KmsKeyId(t *testing.T) {
+func TestAccEC2InstanceDataSource_RootBlockDevice_kmsKeyID(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, ec2.EndpointsID),
@@ -184,7 +184,7 @@ func TestAccAWSInstanceDataSource_RootBlockDevice_KmsKeyId(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_rootInstanceStore(t *testing.T) {
+func TestAccEC2InstanceDataSource_rootInstanceStore(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 
@@ -207,7 +207,7 @@ func TestAccAWSInstanceDataSource_rootInstanceStore(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_privateIP(t *testing.T) {
+func TestAccEC2InstanceDataSource_privateIP(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -229,7 +229,7 @@ func TestAccAWSInstanceDataSource_privateIP(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_secondaryPrivateIPs(t *testing.T) {
+func TestAccEC2InstanceDataSource_secondaryPrivateIPs(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -251,7 +251,7 @@ func TestAccAWSInstanceDataSource_secondaryPrivateIPs(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_ipv6Addresses(t *testing.T) {
+func TestAccEC2InstanceDataSource_ipv6Addresses(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -273,7 +273,7 @@ func TestAccAWSInstanceDataSource_ipv6Addresses(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_keyPair(t *testing.T) {
+func TestAccEC2InstanceDataSource_keyPair(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-test-key-%d", sdkacctest.RandInt())
@@ -301,7 +301,7 @@ func TestAccAWSInstanceDataSource_keyPair(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_VPC(t *testing.T) {
+func TestAccEC2InstanceDataSource_vpc(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -325,7 +325,7 @@ func TestAccAWSInstanceDataSource_VPC(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_PlacementGroup(t *testing.T) {
+func TestAccEC2InstanceDataSource_placementGroup(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -345,7 +345,7 @@ func TestAccAWSInstanceDataSource_PlacementGroup(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_SecurityGroups(t *testing.T) {
+func TestAccEC2InstanceDataSource_securityGroups(t *testing.T) {
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
@@ -369,7 +369,7 @@ func TestAccAWSInstanceDataSource_SecurityGroups(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_VPCSecurityGroups(t *testing.T) {
+func TestAccEC2InstanceDataSource_vpcSecurityGroups(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -392,7 +392,7 @@ func TestAccAWSInstanceDataSource_VPCSecurityGroups(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_getPasswordData_trueToFalse(t *testing.T) {
+func TestAccEC2InstanceDataSource_GetPasswordData_trueToFalse(t *testing.T) {
 	datasourceName := "data.aws_instance.test"
 
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -424,7 +424,7 @@ func TestAccAWSInstanceDataSource_getPasswordData_trueToFalse(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_getPasswordData_falseToTrue(t *testing.T) {
+func TestAccEC2InstanceDataSource_GetPasswordData_falseToTrue(t *testing.T) {
 	datasourceName := "data.aws_instance.test"
 
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -456,7 +456,7 @@ func TestAccAWSInstanceDataSource_getPasswordData_falseToTrue(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_GetUserData(t *testing.T) {
+func TestAccEC2InstanceDataSource_getUserData(t *testing.T) {
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
 
@@ -490,7 +490,7 @@ func TestAccAWSInstanceDataSource_GetUserData(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_GetUserData_NoUserData(t *testing.T) {
+func TestAccEC2InstanceDataSource_GetUserData_noUserData(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -528,7 +528,7 @@ func TestAccAWSInstanceDataSource_GetUserData_NoUserData(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_creditSpecification(t *testing.T) {
+func TestAccEC2InstanceDataSource_creditSpecification(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := fmt.Sprintf("tf-testacc-instance-%s", sdkacctest.RandString(12))
@@ -551,7 +551,7 @@ func TestAccAWSInstanceDataSource_creditSpecification(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_metadataOptions(t *testing.T) {
+func TestAccEC2InstanceDataSource_metadataOptions(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -574,7 +574,7 @@ func TestAccAWSInstanceDataSource_metadataOptions(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_enclaveOptions(t *testing.T) {
+func TestAccEC2InstanceDataSource_enclaveOptions(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -595,7 +595,7 @@ func TestAccAWSInstanceDataSource_enclaveOptions(t *testing.T) {
 	})
 }
 
-func TestAccAWSInstanceDataSource_blockDeviceTags(t *testing.T) {
+func TestAccEC2InstanceDataSource_blockDeviceTags(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
@@ -820,7 +820,7 @@ data "aws_instance" "test" {
 `
 
 func testAccInstanceDataSourceConfig_privateIP(rName string) string {
-	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(), testAccAwsInstanceVpcConfigBasic(rName), `
+	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(), testAccInstanceVPCBasicConfig(rName), `
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
   instance_type = "t2.micro"
@@ -835,7 +835,7 @@ data "aws_instance" "test" {
 }
 
 func testAccInstanceDataSourceConfig_secondaryPrivateIPs(rName string) string {
-	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(), testAccAwsInstanceVpcConfigBasic(rName), `
+	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(), testAccInstanceVPCBasicConfig(rName), `
 resource "aws_instance" "test" {
   ami                   = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
   instance_type         = "t2.micro"
@@ -850,7 +850,7 @@ data "aws_instance" "test" {
 }
 
 func testAccInstanceDataSourceConfig_ipv6Addresses(rName string) string {
-	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(), testAccAwsInstanceVpcIpv6Config(rName), fmt.Sprintf(`
+	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(), testAccInstanceVPCIPv6Config(rName), fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
   instance_type      = "t2.micro"
@@ -900,7 +900,7 @@ data "aws_instance" "test" {
 }
 
 func testAccInstanceDataSourceConfig_VPC(rName string) string {
-	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(), testAccAwsInstanceVpcConfigBasic(rName), `
+	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(), testAccInstanceVPCBasicConfig(rName), `
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
   instance_type               = "t2.small"
@@ -918,7 +918,7 @@ data "aws_instance" "test" {
 }
 
 func testAccInstanceDataSourceConfig_PlacementGroup(rName string) string {
-	return acctest.ConfigLatestAmazonLinuxHVMEBSAMI() + testAccAwsInstanceVpcConfigBasic(rName) + fmt.Sprintf(`
+	return acctest.ConfigLatestAmazonLinuxHVMEBSAMI() + testAccInstanceVPCBasicConfig(rName) + fmt.Sprintf(`
 resource "aws_placement_group" "test" {
   name     = %[1]q
   strategy = "cluster"
@@ -971,8 +971,8 @@ data "aws_instance" "test" {
 
 func testAccInstanceDataSourceConfig_VPCSecurityGroups(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfigBasic(rName),
-		testAccAwsInstanceVpcSecurityGroupConfig(rName),
+		testAccInstanceVPCBasicConfig(rName),
+		testAccInstanceVPCSecurityGroupConfig(rName),
 		`
 resource "aws_instance" "test" {
   ami                    = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -1012,7 +1012,7 @@ data "aws_instance" "test" {
 }
 
 func testAccInstanceDataSourceConfigGetUserData(rName string, getUserData bool) string {
-	return acctest.ConfigLatestAmazonLinuxHVMEBSAMI() + testAccAwsInstanceVpcConfigBasic(rName) + fmt.Sprintf(`
+	return acctest.ConfigLatestAmazonLinuxHVMEBSAMI() + testAccInstanceVPCBasicConfig(rName) + fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
   instance_type = "t2.micro"
@@ -1033,7 +1033,7 @@ data "aws_instance" "test" {
 }
 
 func testAccInstanceDataSourceConfigGetUserDataNoUserData(rName string, getUserData bool) string {
-	return acctest.ConfigLatestAmazonLinuxHVMEBSAMI() + testAccAwsInstanceVpcConfigBasic(rName) + fmt.Sprintf(`
+	return acctest.ConfigLatestAmazonLinuxHVMEBSAMI() + testAccInstanceVPCBasicConfig(rName) + fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
   instance_type = "t2.micro"
@@ -1049,7 +1049,7 @@ data "aws_instance" "test" {
 
 func testAccInstanceDataSourceConfig_creditSpecification(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfigBasic(rName), `
+		testAccInstanceVPCBasicConfig(rName), `
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
   instance_type = "t2.micro"
@@ -1069,7 +1069,7 @@ data "aws_instance" "test" {
 func testAccInstanceDataSourceConfig_metadataOptions(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		acctest.AvailableEC2InstanceTypeForRegion("t3.micro", "t2.micro"),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
@@ -1097,7 +1097,7 @@ data "aws_instance" "test" {
 func testAccInstanceDataSourceConfig_enclaveOptions(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		acctest.AvailableEC2InstanceTypeForRegion("c5a.xlarge", "c5.xlarge"),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {

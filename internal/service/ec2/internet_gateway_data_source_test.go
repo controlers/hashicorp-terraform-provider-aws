@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsInternetGateway_typical(t *testing.T) {
+func TestAccEC2InternetGatewayDataSource_typical(t *testing.T) {
 	igwResourceName := "aws_internet_gateway.test"
 	vpcResourceName := "aws_vpc.test"
 	ds1ResourceName := "data.aws_internet_gateway.by_id"
@@ -21,7 +21,7 @@ func TestAccDataSourceAwsInternetGateway_typical(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsInternetGatewayConfig,
+				Config: testAccInternetGatewayDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(ds1ResourceName, "internet_gateway_id", igwResourceName, "id"),
 					resource.TestCheckResourceAttrPair(ds1ResourceName, "owner_id", igwResourceName, "owner_id"),
@@ -41,7 +41,7 @@ func TestAccDataSourceAwsInternetGateway_typical(t *testing.T) {
 	})
 }
 
-const testAccDataSourceAwsInternetGatewayConfig = `
+const testAccInternetGatewayDataSourceConfig = `
 resource "aws_vpc" "test" {
   cidr_block = "172.16.0.0/16"
 

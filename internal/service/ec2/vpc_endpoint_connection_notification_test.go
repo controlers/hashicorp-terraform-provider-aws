@@ -14,8 +14,8 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func TestAccAWSVpcEndpointConnectionNotification_basic(t *testing.T) {
-	lbName := fmt.Sprintf("testaccawsnlb-basic-%s", sdkacctest.RandString(10))
+func TestAccEC2VPCEndpointConnectionNotification_basic(t *testing.T) {
+	lbName := fmt.Sprintf("testAccAWSnlb-basic-%s", sdkacctest.RandString(10))
 	resourceName := "aws_vpc_endpoint_connection_notification.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsVpcPeeringConnection_CidrBlock(t *testing.T) {
+func TestAccEC2VPCPeeringConnectionDataSource_cidrBlock(t *testing.T) {
 	dataSourceName := "data.aws_vpc_peering_connection.test"
 	resourceName := "aws_vpc_peering_connection.test"
 	requesterVpcResourceName := "aws_vpc.requester"
@@ -19,7 +19,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_CidrBlock(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsVpcPeeringConnectionConfigCidrBlock(),
+				Config: testAccVPCPeeringConnectionCIDRBlockDataSourceConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "id", resourceName, "id"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "cidr_block", requesterVpcResourceName, "cidr_block"),
@@ -29,7 +29,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_CidrBlock(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsVpcPeeringConnection_Id(t *testing.T) {
+func TestAccEC2VPCPeeringConnectionDataSource_id(t *testing.T) {
 	dataSourceName := "data.aws_vpc_peering_connection.test"
 	resourceName := "aws_vpc_peering_connection.test"
 	accepterVpcResourceName := "aws_vpc.accepter"
@@ -41,7 +41,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_Id(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsVpcPeeringConnectionConfigId(),
+				Config: testAccVPCPeeringConnectionIDDataSourceConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "id", resourceName, "id"),
 					// resource.TestCheckResourceAttrPair(dataSourceName, "cidr_block", resourceName, "cidr_block"), // not in resource
@@ -68,7 +68,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_Id(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsVpcPeeringConnection_PeerCidrBlock(t *testing.T) {
+func TestAccEC2VPCPeeringConnectionDataSource_peerCIDRBlock(t *testing.T) {
 	dataSourceName := "data.aws_vpc_peering_connection.test"
 	resourceName := "aws_vpc_peering_connection.test"
 	accepterVpcResourceName := "aws_vpc.accepter"
@@ -79,7 +79,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_PeerCidrBlock(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsVpcPeeringConnectionConfigPeerCidrBlock(),
+				Config: testAccVPCPeeringConnectionPeerCIDRBlockDataSourceConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "id", resourceName, "id"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "peer_cidr_block", accepterVpcResourceName, "cidr_block"),
@@ -89,7 +89,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_PeerCidrBlock(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsVpcPeeringConnection_PeerVpcId(t *testing.T) {
+func TestAccEC2VPCPeeringConnectionDataSource_peerVPCID(t *testing.T) {
 	dataSourceName := "data.aws_vpc_peering_connection.test"
 	resourceName := "aws_vpc_peering_connection.test"
 
@@ -99,7 +99,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_PeerVpcId(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsVpcPeeringConnectionConfigPeerVpcId(),
+				Config: testAccVPCPeeringConnectionPeerVpcIDDataSourceConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "id", resourceName, "id"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "peer_vpc_id", resourceName, "peer_vpc_id"),
@@ -109,7 +109,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_PeerVpcId(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsVpcPeeringConnection_VpcId(t *testing.T) {
+func TestAccEC2VPCPeeringConnectionDataSource_vpcID(t *testing.T) {
 	dataSourceName := "data.aws_vpc_peering_connection.test"
 	resourceName := "aws_vpc_peering_connection.test"
 
@@ -119,7 +119,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_VpcId(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsVpcPeeringConnectionConfigVpcId(),
+				Config: testAccVPCPeeringConnectionVpcIDDataSourceConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "id", resourceName, "id"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "vpc_id", resourceName, "vpc_id"),
@@ -129,7 +129,7 @@ func TestAccDataSourceAwsVpcPeeringConnection_VpcId(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsVpcPeeringConnectionConfigCidrBlock() string {
+func testAccVPCPeeringConnectionCIDRBlockDataSourceConfig() string {
 	return `
 resource "aws_vpc" "requester" {
   cidr_block = "10.250.0.0/16" # CIDR must be different than other tests
@@ -169,7 +169,7 @@ data "aws_vpc_peering_connection" "test" {
 `
 }
 
-func testAccDataSourceAwsVpcPeeringConnectionConfigId() string {
+func testAccVPCPeeringConnectionIDDataSourceConfig() string {
 	return `
 resource "aws_vpc" "requester" {
   cidr_block = "10.1.0.0/16"
@@ -203,7 +203,7 @@ data "aws_vpc_peering_connection" "test" {
 `
 }
 
-func testAccDataSourceAwsVpcPeeringConnectionConfigPeerCidrBlock() string {
+func testAccVPCPeeringConnectionPeerCIDRBlockDataSourceConfig() string {
 	return `
 resource "aws_vpc" "requester" {
   cidr_block = "10.252.0.0/16" # CIDR must be different than other tests
@@ -243,7 +243,7 @@ data "aws_vpc_peering_connection" "test" {
 `
 }
 
-func testAccDataSourceAwsVpcPeeringConnectionConfigPeerVpcId() string {
+func testAccVPCPeeringConnectionPeerVpcIDDataSourceConfig() string {
 	return `
 resource "aws_vpc" "requester" {
   cidr_block = "10.1.0.0/16"
@@ -277,7 +277,7 @@ data "aws_vpc_peering_connection" "test" {
 `
 }
 
-func testAccDataSourceAwsVpcPeeringConnectionConfigVpcId() string {
+func testAccVPCPeeringConnectionVpcIDDataSourceConfig() string {
 	return `
 resource "aws_vpc" "requester" {
   cidr_block = "10.1.0.0/16"

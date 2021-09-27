@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsEc2LocalGateway_basic(t *testing.T) {
+func TestAccEC2LocalGatewayDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_ec2_local_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -18,7 +18,7 @@ func TestAccDataSourceAwsEc2LocalGateway_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2LocalGatewayConfigId(),
+				Config: testAccLocalGatewayIDDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "id", regexp.MustCompile(`^lgw-`)),
 					acctest.MatchResourceAttrRegionalARN(dataSourceName, "outpost_arn", "outposts", regexp.MustCompile(`outpost/op-.+`)),
@@ -30,7 +30,7 @@ func TestAccDataSourceAwsEc2LocalGateway_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsEc2LocalGatewayConfigId() string {
+func testAccLocalGatewayIDDataSourceConfig() string {
 	return `
 data "aws_ec2_local_gateways" "test" {}
 

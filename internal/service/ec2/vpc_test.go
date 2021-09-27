@@ -95,7 +95,7 @@ func testSweepVPCs(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSVpc_basic(t *testing.T) {
+func TestAccEC2VPC_basic(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -132,7 +132,7 @@ func TestAccAWSVpc_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_disappears(t *testing.T) {
+func TestAccEC2VPC_disappears(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -154,7 +154,7 @@ func TestAccAWSVpc_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_defaultTags_providerOnly(t *testing.T) {
+func TestAccEC2VPC_DefaultTags_providerOnly(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
@@ -211,7 +211,7 @@ func TestAccAWSVpc_defaultTags_providerOnly(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_defaultTags_updateToProviderOnly(t *testing.T) {
+func TestAccEC2VPC_DefaultTags_updateToProviderOnly(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
@@ -223,7 +223,7 @@ func TestAccAWSVpc_defaultTags_updateToProviderOnly(t *testing.T) {
 		CheckDestroy:      testAccCheckVpcDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSVPCConfigTags1("key1", "value1"),
+				Config: testAccVPCTags1Config("key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -253,7 +253,7 @@ func TestAccAWSVpc_defaultTags_updateToProviderOnly(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_defaultTags_updateToResourceOnly(t *testing.T) {
+func TestAccEC2VPC_DefaultTags_updateToResourceOnly(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
@@ -277,7 +277,7 @@ func TestAccAWSVpc_defaultTags_updateToResourceOnly(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSVPCConfigTags1("key1", "value1"),
+				Config: testAccVPCTags1Config("key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -295,7 +295,7 @@ func TestAccAWSVpc_defaultTags_updateToResourceOnly(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_defaultTags_providerAndResource_nonOverlappingTag(t *testing.T) {
+func TestAccEC2VPC_DefaultTagsProviderAndResource_nonOverlappingTag(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
@@ -309,7 +309,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_nonOverlappingTag(t *testing.
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags1("providerkey1", "providervalue1"),
-					testAccAWSVPCConfigTags1("resourcekey1", "resourcevalue1"),
+					testAccVPCTags1Config("resourcekey1", "resourcevalue1"),
 				),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
@@ -328,7 +328,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_nonOverlappingTag(t *testing.
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags1("providerkey1", "providervalue1"),
-					testAccAWSVPCConfigTags2("resourcekey1", "resourcevalue1", "resourcekey2", "resourcevalue2"),
+					testAccVPCTags2Config("resourcekey1", "resourcevalue1", "resourcekey2", "resourcevalue2"),
 				),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
@@ -344,7 +344,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_nonOverlappingTag(t *testing.
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags1("providerkey2", "providervalue2"),
-					testAccAWSVPCConfigTags1("resourcekey3", "resourcevalue3"),
+					testAccVPCTags1Config("resourcekey3", "resourcevalue3"),
 				),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
@@ -359,7 +359,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_nonOverlappingTag(t *testing.
 	})
 }
 
-func TestAccAWSVpc_defaultTags_providerAndResource_overlappingTag(t *testing.T) {
+func TestAccEC2VPC_DefaultTagsProviderAndResource_overlappingTag(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
@@ -373,7 +373,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_overlappingTag(t *testing.T) 
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags1("overlapkey1", "providervalue1"),
-					testAccAWSVPCConfigTags1("overlapkey1", "resourcevalue1"),
+					testAccVPCTags1Config("overlapkey1", "resourcevalue1"),
 				),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
@@ -390,7 +390,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_overlappingTag(t *testing.T) 
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags2("overlapkey1", "providervalue1", "overlapkey2", "providervalue2"),
-					testAccAWSVPCConfigTags2("overlapkey1", "resourcevalue1", "overlapkey2", "resourcevalue2"),
+					testAccVPCTags2Config("overlapkey1", "resourcevalue1", "overlapkey2", "resourcevalue2"),
 				),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
@@ -405,7 +405,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_overlappingTag(t *testing.T) 
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags1("overlapkey1", "providervalue1"),
-					testAccAWSVPCConfigTags1("overlapkey1", "resourcevalue2"),
+					testAccVPCTags1Config("overlapkey1", "resourcevalue2"),
 				),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
@@ -419,7 +419,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_overlappingTag(t *testing.T) 
 	})
 }
 
-func TestAccAWSVpc_defaultTags_providerAndResource_duplicateTag(t *testing.T) {
+func TestAccEC2VPC_DefaultTagsProviderAndResource_duplicateTag(t *testing.T) {
 	var providers []*schema.Provider
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -431,7 +431,7 @@ func TestAccAWSVpc_defaultTags_providerAndResource_duplicateTag(t *testing.T) {
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags1("overlapkey", "overlapvalue"),
-					testAccAWSVPCConfigTags1("overlapkey", "overlapvalue"),
+					testAccVPCTags1Config("overlapkey", "overlapvalue"),
 				),
 				PlanOnly:    true,
 				ExpectError: regexp.MustCompile(`"tags" are identical to those in the "default_tags" configuration block`),
@@ -440,12 +440,12 @@ func TestAccAWSVpc_defaultTags_providerAndResource_duplicateTag(t *testing.T) {
 	})
 }
 
-// TestAccAWSVpc_DynamicResourceTagsMergedWithLocals_IgnoreChanges ensures computed "tags_all"
+// TestAccEC2VPC_DynamicResourceTagsMergedWithLocals_ignoreChanges ensures computed "tags_all"
 // attributes are correctly determined when the provider-level default_tags block
 // is left unused and resource tags (merged with local.tags) are only known at apply time,
 // with additional lifecycle ignore_changes attributes, thereby eliminating "Inconsistent final plan" errors
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/18366
-func TestAccAWSVpc_DynamicResourceTagsMergedWithLocals_IgnoreChanges(t *testing.T) {
+func TestAccEC2VPC_DynamicResourceTagsMergedWithLocals_ignoreChanges(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 
@@ -458,7 +458,7 @@ func TestAccAWSVpc_DynamicResourceTagsMergedWithLocals_IgnoreChanges(t *testing.
 		CheckDestroy:      testAccCheckVpcDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSVPCConfigWithIgnoreChanges_DynamicTagsMergedWithLocals("localkey", "localvalue"),
+				Config: testAccVPCWithIgnoreChangesConfig_DynamicTagsMergedWithLocals("localkey", "localvalue"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "3"),
@@ -476,7 +476,7 @@ func TestAccAWSVpc_DynamicResourceTagsMergedWithLocals_IgnoreChanges(t *testing.
 				ExpectNonEmptyPlan: true,
 			},
 			{
-				Config: testAccAWSVPCConfigWithIgnoreChanges_DynamicTagsMergedWithLocals("localkey", "localvalue"),
+				Config: testAccVPCWithIgnoreChangesConfig_DynamicTagsMergedWithLocals("localkey", "localvalue"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "3"),
@@ -496,12 +496,12 @@ func TestAccAWSVpc_DynamicResourceTagsMergedWithLocals_IgnoreChanges(t *testing.
 	})
 }
 
-// TestAccAWSVpc_DynamicResourceTags_IgnoreChanges ensures computed "tags_all"
+// TestAccEC2VPC_DynamicResourceTags_ignoreChanges ensures computed "tags_all"
 // attributes are correctly determined when the provider-level default_tags block
 // is left unused and resource tags are only known at apply time,
 // with additional lifecycle ignore_changes attributes, thereby eliminating "Inconsistent final plan" errors
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/18366
-func TestAccAWSVpc_DynamicResourceTags_IgnoreChanges(t *testing.T) {
+func TestAccEC2VPC_DynamicResourceTags_ignoreChanges(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 
@@ -514,7 +514,7 @@ func TestAccAWSVpc_DynamicResourceTags_IgnoreChanges(t *testing.T) {
 		CheckDestroy:      testAccCheckVpcDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSVPCConfigWithIgnoreChanges_DynamicTags,
+				Config: testAccVPCWithIgnoreChangesConfig_DynamicTags,
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -530,7 +530,7 @@ func TestAccAWSVpc_DynamicResourceTags_IgnoreChanges(t *testing.T) {
 				ExpectNonEmptyPlan: true,
 			},
 			{
-				Config: testAccAWSVPCConfigWithIgnoreChanges_DynamicTags,
+				Config: testAccVPCWithIgnoreChangesConfig_DynamicTags,
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -548,7 +548,7 @@ func TestAccAWSVpc_DynamicResourceTags_IgnoreChanges(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_defaultAndIgnoreTags(t *testing.T) {
+func TestAccEC2VPC_defaultAndIgnoreTags(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
@@ -560,7 +560,7 @@ func TestAccAWSVpc_defaultAndIgnoreTags(t *testing.T) {
 		CheckDestroy:      testAccCheckVpcDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSVPCConfigTags1("key1", "value1"),
+				Config: testAccVPCTags1Config("key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					testAccCheckVpcUpdateTags(&vpc, nil, map[string]string{"defaultkey1": "defaultvalue1"}),
@@ -570,14 +570,14 @@ func TestAccAWSVpc_defaultAndIgnoreTags(t *testing.T) {
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultAndIgnoreTagsKeyPrefixes1("defaultkey1", "defaultvalue1", "defaultkey"),
-					testAccAWSVPCConfigTags1("key1", "value1"),
+					testAccVPCTags1Config("key1", "value1"),
 				),
 				PlanOnly: true,
 			},
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultAndIgnoreTagsKeys1("defaultkey1", "defaultvalue1"),
-					testAccAWSVPCConfigTags1("key1", "value1"),
+					testAccVPCTags1Config("key1", "value1"),
 				),
 				PlanOnly: true,
 			},
@@ -585,7 +585,7 @@ func TestAccAWSVpc_defaultAndIgnoreTags(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_ignoreTags(t *testing.T) {
+func TestAccEC2VPC_ignoreTags(t *testing.T) {
 	var providers []*schema.Provider
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
@@ -597,7 +597,7 @@ func TestAccAWSVpc_ignoreTags(t *testing.T) {
 		CheckDestroy:      testAccCheckVpcDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSVPCConfigTags1("key1", "value1"),
+				Config: testAccVPCTags1Config("key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					testAccCheckVpcUpdateTags(&vpc, nil, map[string]string{"ignorekey1": "ignorevalue1"}),
@@ -605,18 +605,18 @@ func TestAccAWSVpc_ignoreTags(t *testing.T) {
 				ExpectNonEmptyPlan: true,
 			},
 			{
-				Config:   acctest.ConfigIgnoreTagsKeyPrefixes1("ignorekey") + testAccAWSVPCConfigTags1("key1", "value1"),
+				Config:   acctest.ConfigIgnoreTagsKeyPrefixes1("ignorekey") + testAccVPCTags1Config("key1", "value1"),
 				PlanOnly: true,
 			},
 			{
-				Config:   acctest.ConfigIgnoreTagsKeys("ignorekey1") + testAccAWSVPCConfigTags1("key1", "value1"),
+				Config:   acctest.ConfigIgnoreTagsKeys("ignorekey1") + testAccVPCTags1Config("key1", "value1"),
 				PlanOnly: true,
 			},
 		},
 	})
 }
 
-func TestAccAWSVpc_AssignGeneratedIpv6CidrBlock(t *testing.T) {
+func TestAccEC2VPC_assignGeneratedIPv6CIDRBlock(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -668,7 +668,7 @@ func TestAccAWSVpc_AssignGeneratedIpv6CidrBlock(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_Tenancy(t *testing.T) {
+func TestAccEC2VPC_tenancy(t *testing.T) {
 	var vpcDedicated ec2.Vpc
 	var vpcDefault ec2.Vpc
 	resourceName := "aws_vpc.test"
@@ -711,7 +711,7 @@ func TestAccAWSVpc_Tenancy(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_tags(t *testing.T) {
+func TestAccEC2VPC_tags(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -722,7 +722,7 @@ func TestAccAWSVpc_tags(t *testing.T) {
 		CheckDestroy: testAccCheckVpcDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSVPCConfigTags1("key1", "value1"),
+				Config: testAccVPCTags1Config("key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -735,7 +735,7 @@ func TestAccAWSVpc_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSVPCConfigTags2("key1", "value1updated", "key2", "value2"),
+				Config: testAccVPCTags2Config("key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -744,7 +744,7 @@ func TestAccAWSVpc_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSVPCConfigTags1("key2", "value2"),
+				Config: testAccVPCTags1Config("key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckVPCExists(resourceName, &vpc),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -755,7 +755,7 @@ func TestAccAWSVpc_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_update(t *testing.T) {
+func TestAccEC2VPC_update(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -871,7 +871,7 @@ func testAccCheckVpcDisappears(vpc *ec2.Vpc) resource.TestCheckFunc {
 }
 
 // https://github.com/hashicorp/terraform/issues/1301
-func TestAccAWSVpc_bothDnsOptionsSet(t *testing.T) {
+func TestAccEC2VPC_bothDNSOptionsSet(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -899,7 +899,7 @@ func TestAccAWSVpc_bothDnsOptionsSet(t *testing.T) {
 }
 
 // https://github.com/hashicorp/terraform/issues/10168
-func TestAccAWSVpc_DisabledDnsSupport(t *testing.T) {
+func TestAccEC2VPC_disabledDNSSupport(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -925,7 +925,7 @@ func TestAccAWSVpc_DisabledDnsSupport(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_classiclinkOptionSet(t *testing.T) {
+func TestAccEC2VPC_classicLinkOptionSet(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -951,7 +951,7 @@ func TestAccAWSVpc_classiclinkOptionSet(t *testing.T) {
 	})
 }
 
-func TestAccAWSVpc_classiclinkDnsSupportOptionSet(t *testing.T) {
+func TestAccEC2VPC_classicLinkDNSSupportOptionSet(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_vpc.test"
 
@@ -1007,7 +1007,7 @@ resource "aws_vpc" "test" {
 }
 `
 
-func testAccAWSVPCConfigTags1(tagKey1, tagValue1 string) string {
+func testAccVPCTags1Config(tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -1019,7 +1019,7 @@ resource "aws_vpc" "test" {
 `, tagKey1, tagValue1)
 }
 
-func testAccAWSVPCConfigTags2(tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccVPCTags2Config(tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -1032,7 +1032,7 @@ resource "aws_vpc" "test" {
 `, tagKey1, tagValue1, tagKey2, tagValue2)
 }
 
-func testAccAWSVPCConfigWithIgnoreChanges_DynamicTagsMergedWithLocals(localTagKey1, localTagValue1 string) string {
+func testAccVPCWithIgnoreChangesConfig_DynamicTagsMergedWithLocals(localTagKey1, localTagValue1 string) string {
 	return fmt.Sprintf(`
 locals {
   tags = {
@@ -1057,7 +1057,7 @@ resource "aws_vpc" "test" {
 `, localTagKey1, localTagValue1)
 }
 
-const testAccAWSVPCConfigWithIgnoreChanges_DynamicTags = `
+const testAccVPCWithIgnoreChangesConfig_DynamicTags = `
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
 

@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsEc2CoipPool_Filter(t *testing.T) {
+func TestAccEC2CoIPPoolDataSource_filter(t *testing.T) {
 	dataSourceName := "data.aws_ec2_coip_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -18,7 +18,7 @@ func TestAccDataSourceAwsEc2CoipPool_Filter(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2CoipPoolDataSourceConfigFilter(),
+				Config: testAccCoIPPoolDataSourceFilterDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_route_table_id", regexp.MustCompile(`^lgw-rtb-`)),
 					resource.TestMatchResourceAttr(dataSourceName, "pool_id", regexp.MustCompile(`^ipv4pool-coip-`)),
@@ -29,7 +29,7 @@ func TestAccDataSourceAwsEc2CoipPool_Filter(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsEc2CoipPool_Id(t *testing.T) {
+func TestAccEC2CoIPPoolDataSource_id(t *testing.T) {
 	dataSourceName := "data.aws_ec2_coip_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -38,7 +38,7 @@ func TestAccDataSourceAwsEc2CoipPool_Id(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEc2CoipPoolDataSourceConfigId(),
+				Config: testAccCoIPPoolDataSourceIDDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "local_gateway_route_table_id", regexp.MustCompile(`^lgw-rtb-`)),
 					resource.TestMatchResourceAttr(dataSourceName, "pool_id", regexp.MustCompile(`^ipv4pool-coip-`)),
@@ -50,7 +50,7 @@ func TestAccDataSourceAwsEc2CoipPool_Id(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsEc2CoipPoolDataSourceConfigFilter() string {
+func testAccCoIPPoolDataSourceFilterDataSourceConfig() string {
 	return `
 data "aws_ec2_coip_pools" "test" {}
 
@@ -63,7 +63,7 @@ data "aws_ec2_coip_pool" "test" {
 `
 }
 
-func testAccDataSourceAwsEc2CoipPoolDataSourceConfigId() string {
+func testAccCoIPPoolDataSourceIDDataSourceConfig() string {
 	return `
 data "aws_ec2_coip_pools" "test" {}
 

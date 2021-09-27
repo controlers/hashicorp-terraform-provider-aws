@@ -71,7 +71,7 @@ func testSweepEc2NetworkInterfaces(region string) error {
 	return nil
 }
 
-func TestAccAWSENI_basic(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_basic(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	subnetResourceName := "aws_subnet.test"
@@ -81,12 +81,12 @@ func TestAccAWSENI_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfig(rName),
+				Config: testAccENIConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "attachment.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
 					resource.TestCheckResourceAttr(resourceName, "interface_type", "interface"),
@@ -112,7 +112,7 @@ func TestAccAWSENI_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_IPv6(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_ipv6(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -121,12 +121,12 @@ func TestAccAWSENI_IPv6(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigIPV6(rName),
+				Config: testAccENIIPV6Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_address_count", "1"),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_addresses.#", "1"),
 				),
@@ -137,17 +137,17 @@ func TestAccAWSENI_IPv6(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSENIConfigIPV6Multiple(rName),
+				Config: testAccENIIPV6MultipleConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_address_count", "2"),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_addresses.#", "2"),
 				),
 			},
 			{
-				Config: testAccAWSENIConfigIPV6(rName),
+				Config: testAccENIIPV6Config(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_address_count", "1"),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_addresses.#", "1"),
 				),
@@ -156,7 +156,7 @@ func TestAccAWSENI_IPv6(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_Tags(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_tags(t *testing.T) {
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	var conf ec2.NetworkInterface
@@ -165,12 +165,12 @@ func TestAccAWSENI_Tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigTags1(rName, "key1", "value1"),
+				Config: testAccENITags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -181,18 +181,18 @@ func TestAccAWSENI_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSENIConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccENITags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSENIConfigTags1(rName, "key2", "value2"),
+				Config: testAccENITags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -201,7 +201,7 @@ func TestAccAWSENI_Tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_IPv6Count(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_ipv6Count(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -210,12 +210,12 @@ func TestAccAWSENI_IPv6Count(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigIPV6Count(rName, 1),
+				Config: testAccENIIPV6CountConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_address_count", "1"),
 				),
 			},
@@ -225,23 +225,23 @@ func TestAccAWSENI_IPv6Count(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSENIConfigIPV6Count(rName, 2),
+				Config: testAccENIIPV6CountConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_address_count", "2"),
 				),
 			},
 			{
-				Config: testAccAWSENIConfigIPV6Count(rName, 0),
+				Config: testAccENIIPV6CountConfig(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_address_count", "0"),
 				),
 			},
 			{
-				Config: testAccAWSENIConfigIPV6Count(rName, 1),
+				Config: testAccENIIPV6CountConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "ipv6_address_count", "1"),
 				),
 			},
@@ -249,7 +249,7 @@ func TestAccAWSENI_IPv6Count(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_disappears(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_disappears(t *testing.T) {
 	var networkInterface ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -258,12 +258,12 @@ func TestAccAWSENI_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfig(rName),
+				Config: testAccENIConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &networkInterface),
+					testAccCheckENIExists(resourceName, &networkInterface),
 					acctest.CheckResourceDisappears(acctest.Provider, tfec2.ResourceNetworkInterface(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -272,7 +272,7 @@ func TestAccAWSENI_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_Description(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_description(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	subnetResourceName := "aws_subnet.test"
@@ -283,12 +283,12 @@ func TestAccAWSENI_Description(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigDescription(rName, "description 1"),
+				Config: testAccENIDescriptionConfig(rName, "description 1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "attachment.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", "description 1"),
 					resource.TestCheckResourceAttr(resourceName, "interface_type", "interface"),
@@ -314,9 +314,9 @@ func TestAccAWSENI_Description(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSENIConfigDescription(rName, "description 2"),
+				Config: testAccENIDescriptionConfig(rName, "description 2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "attachment.#", "0"),
 					resource.TestCheckResourceAttr(resourceName, "description", "description 2"),
 					resource.TestCheckResourceAttr(resourceName, "interface_type", "interface"),
@@ -340,7 +340,7 @@ func TestAccAWSENI_Description(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_Attachment(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_attachment(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -349,12 +349,12 @@ func TestAccAWSENI_Attachment(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigAttachment(rName),
+				Config: testAccENIAttachmentConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "attachment.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "attachment.*", map[string]string{
 						"device_index": "1",
@@ -373,7 +373,7 @@ func TestAccAWSENI_Attachment(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_IgnoreExternalAttachment(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_ignoreExternalAttachment(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -382,13 +382,13 @@ func TestAccAWSENI_IgnoreExternalAttachment(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigExternalAttachment(rName),
+				Config: testAccENIExternalAttachmentConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
-					testAccCheckAWSENIMakeExternalAttachment("aws_instance.test", &conf),
+					testAccCheckENIExists(resourceName, &conf),
+					testAccCheckENIMakeExternalAttachment("aws_instance.test", &conf),
 				),
 			},
 			{
@@ -400,7 +400,7 @@ func TestAccAWSENI_IgnoreExternalAttachment(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_SourceDestCheck(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_sourceDestCheck(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -409,12 +409,12 @@ func TestAccAWSENI_SourceDestCheck(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigSourceDestCheck(rName, false),
+				Config: testAccENISourceDestCheckConfig(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "source_dest_check", "false"),
 				),
 			},
@@ -424,16 +424,16 @@ func TestAccAWSENI_SourceDestCheck(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSENIConfigSourceDestCheck(rName, true),
+				Config: testAccENISourceDestCheckConfig(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "source_dest_check", "true"),
 				),
 			},
 			{
-				Config: testAccAWSENIConfigSourceDestCheck(rName, false),
+				Config: testAccENISourceDestCheckConfig(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "source_dest_check", "false"),
 				),
 			},
@@ -441,7 +441,7 @@ func TestAccAWSENI_SourceDestCheck(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_PrivateIpsCount(t *testing.T) {
+func TestAccEC2NetworkInterface_ENI_privateIPsCount(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -450,12 +450,12 @@ func TestAccAWSENI_PrivateIpsCount(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigPrivateIpsCount(rName, 1),
+				Config: testAccENIPrivateIPsCountConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "private_ips_count", "1"),
 				),
 			},
@@ -465,9 +465,9 @@ func TestAccAWSENI_PrivateIpsCount(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSENIConfigPrivateIpsCount(rName, 2),
+				Config: testAccENIPrivateIPsCountConfig(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "private_ips_count", "2"),
 				),
 			},
@@ -477,9 +477,9 @@ func TestAccAWSENI_PrivateIpsCount(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSENIConfigPrivateIpsCount(rName, 0),
+				Config: testAccENIPrivateIPsCountConfig(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "private_ips_count", "0"),
 				),
 			},
@@ -489,9 +489,9 @@ func TestAccAWSENI_PrivateIpsCount(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSENIConfigPrivateIpsCount(rName, 1),
+				Config: testAccENIPrivateIPsCountConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "private_ips_count", "1"),
 				),
 			},
@@ -504,7 +504,7 @@ func TestAccAWSENI_PrivateIpsCount(t *testing.T) {
 	})
 }
 
-func TestAccAWSENI_InterfaceType_efa(t *testing.T) {
+func TestAccEC2NetworkInterface_ENIInterfaceType_efa(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -513,12 +513,12 @@ func TestAccAWSENI_InterfaceType_efa(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSENIDestroy,
+		CheckDestroy: testAccCheckENIDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSENIConfigInterfaceType(rName, "efa"),
+				Config: testAccENIInterfaceTypeConfig(rName, "efa"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSENIExists(resourceName, &conf),
+					testAccCheckENIExists(resourceName, &conf),
 					resource.TestCheckResourceAttr(resourceName, "interface_type", "efa"),
 				),
 			},
@@ -531,7 +531,7 @@ func TestAccAWSENI_InterfaceType_efa(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSENIExists(n string, res *ec2.NetworkInterface) resource.TestCheckFunc {
+func testAccCheckENIExists(n string, res *ec2.NetworkInterface) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -563,7 +563,7 @@ func testAccCheckAWSENIExists(n string, res *ec2.NetworkInterface) resource.Test
 	}
 }
 
-func testAccCheckAWSENIDestroy(s *terraform.State) error {
+func testAccCheckENIDestroy(s *terraform.State) error {
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_network_interface" {
 			continue
@@ -587,7 +587,7 @@ func testAccCheckAWSENIDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSENIMakeExternalAttachment(n string, conf *ec2.NetworkInterface) resource.TestCheckFunc {
+func testAccCheckENIMakeExternalAttachment(n string, conf *ec2.NetworkInterface) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok || rs.Primary.ID == "" {
@@ -609,7 +609,7 @@ func testAccCheckAWSENIMakeExternalAttachment(n string, conf *ec2.NetworkInterfa
 	}
 }
 
-func testAccAWSENIIPV4ConfigBase(rName string) string {
+func testAccENIIPV4BaseConfig(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block           = "172.16.0.0/16"
@@ -648,7 +648,7 @@ resource "aws_security_group" "test" {
 `, rName))
 }
 
-func testAccAWSENIIPV6ConfigBase(rName string) string {
+func testAccENIIPV6BaseConfig(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block                       = "172.16.0.0/16"
@@ -689,16 +689,16 @@ resource "aws_security_group" "test" {
 `, rName))
 }
 
-func testAccAWSENIConfig(rName string) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV4ConfigBase(rName), `
+func testAccENIConfig(rName string) string {
+	return acctest.ConfigCompose(testAccENIIPV4BaseConfig(rName), `
 resource "aws_network_interface" "test" {
   subnet_id = aws_subnet.test.id
 }
 `)
 }
 
-func testAccAWSENIConfigIPV6(rName string) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV6ConfigBase(rName), fmt.Sprintf(`
+func testAccENIIPV6Config(rName string) string {
+	return acctest.ConfigCompose(testAccENIIPV6BaseConfig(rName), fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id       = aws_subnet.test.id
   private_ips     = ["172.16.10.100"]
@@ -712,8 +712,8 @@ resource "aws_network_interface" "test" {
 `, rName))
 }
 
-func testAccAWSENIConfigIPV6Multiple(rName string) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV6ConfigBase(rName), fmt.Sprintf(`
+func testAccENIIPV6MultipleConfig(rName string) string {
+	return acctest.ConfigCompose(testAccENIIPV6BaseConfig(rName), fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id       = aws_subnet.test.id
   private_ips     = ["172.16.10.100"]
@@ -727,8 +727,8 @@ resource "aws_network_interface" "test" {
 `, rName))
 }
 
-func testAccAWSENIConfigIPV6Count(rName string, ipv6Count int) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV6ConfigBase(rName) + fmt.Sprintf(`
+func testAccENIIPV6CountConfig(rName string, ipv6Count int) string {
+	return acctest.ConfigCompose(testAccENIIPV6BaseConfig(rName) + fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id          = aws_subnet.test.id
   private_ips        = ["172.16.10.100"]
@@ -742,8 +742,8 @@ resource "aws_network_interface" "test" {
 `, rName, ipv6Count))
 }
 
-func testAccAWSENIConfigDescription(rName, description string) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV4ConfigBase(rName), fmt.Sprintf(`
+func testAccENIDescriptionConfig(rName, description string) string {
+	return acctest.ConfigCompose(testAccENIIPV4BaseConfig(rName), fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id       = aws_subnet.test.id
   private_ips     = ["172.16.10.100"]
@@ -757,8 +757,8 @@ resource "aws_network_interface" "test" {
 `, rName, description))
 }
 
-func testAccAWSENIConfigSourceDestCheck(rName string, sourceDestCheck bool) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV6ConfigBase(rName) + fmt.Sprintf(`
+func testAccENISourceDestCheckConfig(rName string, sourceDestCheck bool) string {
+	return acctest.ConfigCompose(testAccENIIPV6BaseConfig(rName) + fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id         = aws_subnet.test.id
   source_dest_check = %[2]t
@@ -771,11 +771,11 @@ resource "aws_network_interface" "test" {
 `, rName, sourceDestCheck))
 }
 
-func testAccAWSENIConfigAttachment(rName string) string {
+func testAccENIAttachmentConfig(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
 		acctest.AvailableEC2InstanceTypeForRegion("t3.micro", "t2.micro"),
-		testAccAWSENIIPV4ConfigBase(rName),
+		testAccENIIPV4BaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_subnet" "test2" {
   vpc_id            = aws_vpc.test.id
@@ -816,11 +816,11 @@ resource "aws_network_interface" "test" {
 `, rName))
 }
 
-func testAccAWSENIConfigExternalAttachment(rName string) string {
+func testAccENIExternalAttachmentConfig(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
 		acctest.AvailableEC2InstanceTypeForRegion("t3.micro", "t2.micro"),
-		testAccAWSENIIPV4ConfigBase(rName),
+		testAccENIIPV4BaseConfig(rName),
 		fmt.Sprintf(`
 resource "aws_subnet" "test2" {
   vpc_id            = aws_vpc.test.id
@@ -856,8 +856,8 @@ resource "aws_network_interface" "test" {
 `, rName))
 }
 
-func testAccAWSENIConfigPrivateIpsCount(rName string, privateIpsCount int) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV4ConfigBase(rName), fmt.Sprintf(`
+func testAccENIPrivateIPsCountConfig(rName string, privateIpsCount int) string {
+	return acctest.ConfigCompose(testAccENIIPV4BaseConfig(rName), fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   private_ips_count = %[2]d
   subnet_id         = aws_subnet.test.id
@@ -869,8 +869,8 @@ resource "aws_network_interface" "test" {
 `, rName, privateIpsCount))
 }
 
-func testAccAWSENIConfigTags1(rName, tagKey1, tagValue1 string) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV4ConfigBase(rName), fmt.Sprintf(`
+func testAccENITags1Config(rName, tagKey1, tagValue1 string) string {
+	return acctest.ConfigCompose(testAccENIIPV4BaseConfig(rName), fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id       = aws_subnet.test.id
   private_ips     = ["172.16.10.100"]
@@ -883,8 +883,8 @@ resource "aws_network_interface" "test" {
 `, tagKey1, tagValue1))
 }
 
-func testAccAWSENIConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV4ConfigBase(rName), fmt.Sprintf(`
+func testAccENITags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+	return acctest.ConfigCompose(testAccENIIPV4BaseConfig(rName), fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id       = aws_subnet.test.id
   private_ips     = ["172.16.10.100"]
@@ -898,8 +898,8 @@ resource "aws_network_interface" "test" {
 `, tagKey1, tagValue1, tagKey2, tagValue2))
 }
 
-func testAccAWSENIConfigInterfaceType(rName, interfaceType string) string {
-	return acctest.ConfigCompose(testAccAWSENIIPV4ConfigBase(rName), fmt.Sprintf(`
+func testAccENIInterfaceTypeConfig(rName, interfaceType string) string {
+	return acctest.ConfigCompose(testAccENIIPV4BaseConfig(rName), fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id       = aws_subnet.test.id
   private_ips     = ["172.16.10.100"]

@@ -123,7 +123,7 @@ func testSweepInternetGateways(region string) error {
 	return nil
 }
 
-func TestAccAWSInternetGateway_basic(t *testing.T) {
+func TestAccEC2InternetGateway_basic(t *testing.T) {
 	var v, v2 ec2.InternetGateway
 	resourceName := "aws_internet_gateway.test"
 
@@ -176,7 +176,7 @@ func TestAccAWSInternetGateway_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSInternetGateway_delete(t *testing.T) {
+func TestAccEC2InternetGateway_delete(t *testing.T) {
 	var ig ec2.InternetGateway
 	resourceName := "aws_internet_gateway.test"
 
@@ -209,7 +209,7 @@ func TestAccAWSInternetGateway_delete(t *testing.T) {
 	})
 }
 
-func TestAccAWSInternetGateway_tags(t *testing.T) {
+func TestAccEC2InternetGateway_tags(t *testing.T) {
 	var v ec2.InternetGateway
 	resourceName := "aws_internet_gateway.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -221,7 +221,7 @@ func TestAccAWSInternetGateway_tags(t *testing.T) {
 		CheckDestroy: testAccCheckInternetGatewayDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSInternetGatewayConfigTags1(rName, "key1", "value1"),
+				Config: testAccInternetGatewayTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInternetGatewayExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -234,7 +234,7 @@ func TestAccAWSInternetGateway_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSInternetGatewayConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccInternetGatewayTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInternetGatewayExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -243,7 +243,7 @@ func TestAccAWSInternetGateway_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSInternetGatewayConfigTags1(rName, "key2", "value2"),
+				Config: testAccInternetGatewayTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInternetGatewayExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -254,7 +254,7 @@ func TestAccAWSInternetGateway_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSInternetGateway_disappears(t *testing.T) {
+func TestAccEC2InternetGateway_disappears(t *testing.T) {
 	var v ec2.InternetGateway
 	resourceName := "aws_internet_gateway.test"
 
@@ -383,7 +383,7 @@ resource "aws_internet_gateway" "test" {
 }
 `
 
-func testAccAWSInternetGatewayConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccInternetGatewayTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -403,7 +403,7 @@ resource "aws_internet_gateway" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSInternetGatewayConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccInternetGatewayTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"

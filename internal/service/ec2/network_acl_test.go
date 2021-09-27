@@ -106,7 +106,7 @@ func testSweepNetworkAcls(region string) error {
 	return nil
 }
 
-func TestAccAWSNetworkAcl_basic(t *testing.T) {
+func TestAccEC2NetworkACL_basic(t *testing.T) {
 	resourceName := "aws_network_acl.test"
 	var networkAcl ec2.NetworkAcl
 
@@ -114,12 +114,12 @@ func TestAccAWSNetworkAcl_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclEgressNIngressConfig,
+				Config: testAccNetworkACLEgressNIngressConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "ec2", regexp.MustCompile(`network-acl/acl-.+`)),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),
 				),
@@ -133,7 +133,7 @@ func TestAccAWSNetworkAcl_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_tags(t *testing.T) {
+func TestAccEC2NetworkACL_tags(t *testing.T) {
 	resourceName := "aws_network_acl.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	var networkAcl ec2.NetworkAcl
@@ -142,12 +142,12 @@ func TestAccAWSNetworkAcl_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclConfigTags1(rName, "key1", "value1"),
+				Config: testAccNetworkACLTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -158,18 +158,18 @@ func TestAccAWSNetworkAcl_tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccNetworkACLTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSNetworkAclConfigTags1(rName, "key2", "value2"),
+				Config: testAccNetworkACLTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -178,7 +178,7 @@ func TestAccAWSNetworkAcl_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_disappears(t *testing.T) {
+func TestAccEC2NetworkACL_disappears(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -186,12 +186,12 @@ func TestAccAWSNetworkAcl_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclEgressNIngressConfig,
+				Config: testAccNetworkACLEgressNIngressConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					acctest.CheckResourceDisappears(acctest.Provider, tfec2.ResourceNetworkACL(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -200,7 +200,7 @@ func TestAccAWSNetworkAcl_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_Egress_ConfigMode(t *testing.T) {
+func TestAccEC2NetworkACL_Egress_mode(t *testing.T) {
 	var networkAcl1, networkAcl2, networkAcl3 ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -208,13 +208,13 @@ func TestAccAWSNetworkAcl_Egress_ConfigMode(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclConfigEgressConfigModeBlocks(),
+				Config: testAccNetworkACLEgressModeBlocksConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl1),
-					testAccCheckAWSNetworkAclEgressRuleLength(&networkAcl1, 2),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl1),
+					testAccCheckNetworkACLEgressRuleLength(&networkAcl1, 2),
 					resource.TestCheckResourceAttr(resourceName, "egress.#", "2"),
 				),
 			},
@@ -224,10 +224,10 @@ func TestAccAWSNetworkAcl_Egress_ConfigMode(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclConfigEgressConfigModeNoBlocks(),
+				Config: testAccNetworkACLEgressModeNoBlocksConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl2),
-					testAccCheckAWSNetworkAclEgressRuleLength(&networkAcl2, 2),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl2),
+					testAccCheckNetworkACLEgressRuleLength(&networkAcl2, 2),
 					resource.TestCheckResourceAttr(resourceName, "egress.#", "2"),
 				),
 			},
@@ -237,10 +237,10 @@ func TestAccAWSNetworkAcl_Egress_ConfigMode(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclConfigEgressConfigModeZeroed(),
+				Config: testAccNetworkACLEgressModeZeroedConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl3),
-					testAccCheckAWSNetworkAclEgressRuleLength(&networkAcl3, 0),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl3),
+					testAccCheckNetworkACLEgressRuleLength(&networkAcl3, 0),
 					resource.TestCheckResourceAttr(resourceName, "egress.#", "0"),
 				),
 			},
@@ -253,7 +253,7 @@ func TestAccAWSNetworkAcl_Egress_ConfigMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_Ingress_ConfigMode(t *testing.T) {
+func TestAccEC2NetworkACL_Ingress_mode(t *testing.T) {
 	var networkAcl1, networkAcl2, networkAcl3 ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -261,12 +261,12 @@ func TestAccAWSNetworkAcl_Ingress_ConfigMode(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclConfigIngressConfigModeBlocks(),
+				Config: testAccNetworkACLIngressModeBlocksConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl1),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl1),
 					testIngressRuleLength(&networkAcl1, 2),
 					resource.TestCheckResourceAttr(resourceName, "ingress.#", "2"),
 				),
@@ -277,9 +277,9 @@ func TestAccAWSNetworkAcl_Ingress_ConfigMode(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclConfigIngressConfigModeNoBlocks(),
+				Config: testAccNetworkACLIngressModeNoBlocksConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl2),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl2),
 					testIngressRuleLength(&networkAcl2, 2),
 					resource.TestCheckResourceAttr(resourceName, "ingress.#", "2"),
 				),
@@ -290,9 +290,9 @@ func TestAccAWSNetworkAcl_Ingress_ConfigMode(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclConfigIngressConfigModeZeroed(),
+				Config: testAccNetworkACLIngressModeZeroedConfig(),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl3),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl3),
 					testIngressRuleLength(&networkAcl3, 0),
 					resource.TestCheckResourceAttr(resourceName, "ingress.#", "0"),
 				),
@@ -306,7 +306,7 @@ func TestAccAWSNetworkAcl_Ingress_ConfigMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_EgressAndIngressRules(t *testing.T) {
+func TestAccEC2NetworkACL_egressAndIngressRules(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -314,12 +314,12 @@ func TestAccAWSNetworkAcl_EgressAndIngressRules(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclEgressNIngressConfig,
+				Config: testAccNetworkACLEgressNIngressConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "ingress.*", map[string]string{
 						"protocol":   "6",
 						"rule_no":    "1",
@@ -348,7 +348,7 @@ func TestAccAWSNetworkAcl_EgressAndIngressRules(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_OnlyIngressRules_basic(t *testing.T) {
+func TestAccEC2NetworkACL_OnlyIngressRules_basic(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -356,12 +356,12 @@ func TestAccAWSNetworkAcl_OnlyIngressRules_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclIngressConfig,
+				Config: testAccNetworkACLIngressConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "ingress.*", map[string]string{
 						"protocol":   "6",
 						"rule_no":    "2",
@@ -382,7 +382,7 @@ func TestAccAWSNetworkAcl_OnlyIngressRules_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_OnlyIngressRules_update(t *testing.T) {
+func TestAccEC2NetworkACL_OnlyIngressRules_update(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -390,12 +390,12 @@ func TestAccAWSNetworkAcl_OnlyIngressRules_update(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclIngressConfig,
+				Config: testAccNetworkACLIngressConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					testIngressRuleLength(&networkAcl, 2),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "ingress.*", map[string]string{
 						"protocol":  "6",
@@ -418,9 +418,9 @@ func TestAccAWSNetworkAcl_OnlyIngressRules_update(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclIngressConfigChange,
+				Config: testAccNetworkACLIngressChangeConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					testIngressRuleLength(&networkAcl, 1),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "ingress.*", map[string]string{
 						"protocol":   "6",
@@ -437,7 +437,7 @@ func TestAccAWSNetworkAcl_OnlyIngressRules_update(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_CaseSensitivityNoChanges(t *testing.T) {
+func TestAccEC2NetworkACL_caseSensitivityNoChanges(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -445,12 +445,12 @@ func TestAccAWSNetworkAcl_CaseSensitivityNoChanges(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclCaseSensitiveConfig,
+				Config: testAccNetworkACLCaseSensitiveConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 				),
 			},
 			{
@@ -462,7 +462,7 @@ func TestAccAWSNetworkAcl_CaseSensitivityNoChanges(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_OnlyEgressRules(t *testing.T) {
+func TestAccEC2NetworkACL_onlyEgressRules(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -470,12 +470,12 @@ func TestAccAWSNetworkAcl_OnlyEgressRules(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclEgressConfig,
+				Config: testAccNetworkACLEgressConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.Name", "tf-acc-acl-egress"),
 					resource.TestCheckResourceAttr(resourceName, "tags.foo", "bar"),
@@ -490,7 +490,7 @@ func TestAccAWSNetworkAcl_OnlyEgressRules(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_SubnetChange(t *testing.T) {
+func TestAccEC2NetworkACL_subnetChange(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -498,12 +498,12 @@ func TestAccAWSNetworkAcl_SubnetChange(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclSubnetConfig,
+				Config: testAccNetworkACLSubnetConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.old"),
 				),
 			},
@@ -513,9 +513,9 @@ func TestAccAWSNetworkAcl_SubnetChange(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclSubnetConfigChange,
+				Config: testAccNetworkACLSubnetChangeConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					testAccCheckSubnetIsNotAssociatedWithAcl(resourceName, "aws_subnet.old"),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.new"),
 				),
@@ -525,7 +525,7 @@ func TestAccAWSNetworkAcl_SubnetChange(t *testing.T) {
 
 }
 
-func TestAccAWSNetworkAcl_Subnets(t *testing.T) {
+func TestAccEC2NetworkACL_subnets(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -543,12 +543,12 @@ func TestAccAWSNetworkAcl_Subnets(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclSubnet_SubnetIds,
+				Config: testAccNetworkACLSubnet_SubnetIDs,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.one"),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.two"),
 					checkACLSubnets(&networkAcl, 2),
@@ -560,9 +560,9 @@ func TestAccAWSNetworkAcl_Subnets(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclSubnet_SubnetIdsUpdate,
+				Config: testAccNetworkACLSubnet_SubnetIdsUpdate,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.one"),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.three"),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.four"),
@@ -573,7 +573,7 @@ func TestAccAWSNetworkAcl_Subnets(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_SubnetsDelete(t *testing.T) {
+func TestAccEC2NetworkACL_subnetsDelete(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -591,12 +591,12 @@ func TestAccAWSNetworkAcl_SubnetsDelete(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclSubnet_SubnetIds,
+				Config: testAccNetworkACLSubnet_SubnetIDs,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.one"),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.two"),
 					checkACLSubnets(&networkAcl, 2),
@@ -608,9 +608,9 @@ func TestAccAWSNetworkAcl_SubnetsDelete(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSNetworkAclSubnet_SubnetIdsDeleteOne,
+				Config: testAccNetworkACLSubnet_SubnetIdsDeleteOne,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					testAccCheckSubnetIsAssociatedWithAcl(resourceName, "aws_subnet.one"),
 					checkACLSubnets(&networkAcl, 1),
 				),
@@ -619,7 +619,7 @@ func TestAccAWSNetworkAcl_SubnetsDelete(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_ipv6Rules(t *testing.T) {
+func TestAccEC2NetworkACL_ipv6Rules(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -627,12 +627,12 @@ func TestAccAWSNetworkAcl_ipv6Rules(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclIpv6Config,
+				Config: testAccNetworkACLIPv6Config,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					resource.TestCheckResourceAttr(
 						resourceName, "ingress.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "ingress.*", map[string]string{
@@ -654,7 +654,7 @@ func TestAccAWSNetworkAcl_ipv6Rules(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_ipv6ICMPRules(t *testing.T) {
+func TestAccEC2NetworkACL_ipv6ICMPRules(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_network_acl.test"
@@ -663,19 +663,19 @@ func TestAccAWSNetworkAcl_ipv6ICMPRules(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclConfigIpv6ICMP(rName),
+				Config: testAccNetworkACLIPv6ICMPConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSNetworkAcl_ipv6VpcRules(t *testing.T) {
+func TestAccEC2NetworkACL_ipv6VPCRules(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -683,12 +683,12 @@ func TestAccAWSNetworkAcl_ipv6VpcRules(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclIpv6VpcConfig,
+				Config: testAccNetworkACLIPv6VPCConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 					resource.TestCheckResourceAttr(
 						resourceName, "ingress.#", "1"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "ingress.*", map[string]string{
@@ -705,7 +705,7 @@ func TestAccAWSNetworkAcl_ipv6VpcRules(t *testing.T) {
 	})
 }
 
-func TestAccAWSNetworkAcl_espProtocol(t *testing.T) {
+func TestAccEC2NetworkACL_espProtocol(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
 	resourceName := "aws_network_acl.test"
 
@@ -713,12 +713,12 @@ func TestAccAWSNetworkAcl_espProtocol(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSNetworkAclDestroy,
+		CheckDestroy: testAccCheckNetworkACLDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSNetworkAclEsp,
+				Config: testAccNetworkACLEsp,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSNetworkAclExists(resourceName, &networkAcl),
+					testAccCheckNetworkACLExists(resourceName, &networkAcl),
 				),
 			},
 			{
@@ -730,7 +730,7 @@ func TestAccAWSNetworkAcl_espProtocol(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSNetworkAclDestroy(s *terraform.State) error {
+func testAccCheckNetworkACLDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
 
 	for _, rs := range s.RootModule().Resources {
@@ -763,7 +763,7 @@ func testAccCheckAWSNetworkAclDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSNetworkAclExists(n string, networkAcl *ec2.NetworkAcl) resource.TestCheckFunc {
+func testAccCheckNetworkACLExists(n string, networkAcl *ec2.NetworkAcl) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -791,7 +791,7 @@ func testAccCheckAWSNetworkAclExists(n string, networkAcl *ec2.NetworkAcl) resou
 	}
 }
 
-func testAccCheckAWSNetworkAclEgressRuleLength(networkAcl *ec2.NetworkAcl, length int) resource.TestCheckFunc {
+func testAccCheckNetworkACLEgressRuleLength(networkAcl *ec2.NetworkAcl, length int) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		var entries []*ec2.NetworkAclEntry
 		for _, entry := range networkAcl.Entries {
@@ -877,7 +877,7 @@ func testAccCheckSubnetIsNotAssociatedWithAcl(acl string, subnet string) resourc
 	}
 }
 
-func testAccAWSNetworkAclConfigIpv6ICMP(rName string) string {
+func testAccNetworkACLIPv6ICMPConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -908,7 +908,7 @@ resource "aws_network_acl" "test" {
 `, rName, rName)
 }
 
-const testAccAWSNetworkAclIpv6Config = `
+const testAccNetworkACLIPv6Config = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -947,7 +947,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclIpv6VpcConfig = `
+const testAccNetworkACLIPv6VPCConfig = `
 resource "aws_vpc" "foo" {
   cidr_block                       = "10.1.0.0/16"
   assign_generated_ipv6_cidr_block = true
@@ -975,7 +975,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclIngressConfig = `
+const testAccNetworkACLIngressConfig = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -1023,7 +1023,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclCaseSensitiveConfig = `
+const testAccNetworkACLCaseSensitiveConfig = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -1062,7 +1062,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclIngressConfigChange = `
+const testAccNetworkACLIngressChangeConfig = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -1101,7 +1101,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclEgressConfig = `
+const testAccNetworkACLEgressConfig = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.2.0.0/16"
 
@@ -1166,7 +1166,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclEgressNIngressConfig = `
+const testAccNetworkACLEgressNIngressConfig = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.3.0.0/16"
 
@@ -1208,7 +1208,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclSubnetConfig = `
+const testAccNetworkACLSubnetConfig = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -1256,7 +1256,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclSubnetConfigChange = `
+const testAccNetworkACLSubnetChangeConfig = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -1295,7 +1295,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclSubnet_SubnetIds = `
+const testAccNetworkACLSubnet_SubnetIDs = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -1332,7 +1332,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclSubnet_SubnetIdsUpdate = `
+const testAccNetworkACLSubnet_SubnetIdsUpdate = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -1391,7 +1391,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclSubnet_SubnetIdsDeleteOne = `
+const testAccNetworkACLSubnet_SubnetIdsDeleteOne = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 
@@ -1419,7 +1419,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-const testAccAWSNetworkAclEsp = `
+const testAccNetworkACLEsp = `
 resource "aws_vpc" "testvpc" {
   cidr_block = "10.1.0.0/16"
 
@@ -1446,7 +1446,7 @@ resource "aws_network_acl" "test" {
 }
 `
 
-func testAccAWSNetworkAclConfigEgressConfigModeBlocks() string {
+func testAccNetworkACLEgressModeBlocksConfig() string {
 	return `
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -1484,7 +1484,7 @@ resource "aws_network_acl" "test" {
 `
 }
 
-func testAccAWSNetworkAclConfigEgressConfigModeNoBlocks() string {
+func testAccNetworkACLEgressModeNoBlocksConfig() string {
 	return `
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -1504,7 +1504,7 @@ resource "aws_network_acl" "test" {
 `
 }
 
-func testAccAWSNetworkAclConfigEgressConfigModeZeroed() string {
+func testAccNetworkACLEgressModeZeroedConfig() string {
 	return `
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -1526,7 +1526,7 @@ resource "aws_network_acl" "test" {
 `
 }
 
-func testAccAWSNetworkAclConfigIngressConfigModeBlocks() string {
+func testAccNetworkACLIngressModeBlocksConfig() string {
 	return `
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -1564,7 +1564,7 @@ resource "aws_network_acl" "test" {
 `
 }
 
-func testAccAWSNetworkAclConfigIngressConfigModeNoBlocks() string {
+func testAccNetworkACLIngressModeNoBlocksConfig() string {
 	return `
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -1584,7 +1584,7 @@ resource "aws_network_acl" "test" {
 `
 }
 
-func testAccAWSNetworkAclConfigIngressConfigModeZeroed() string {
+func testAccNetworkACLIngressModeZeroedConfig() string {
 	return `
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -1606,7 +1606,7 @@ resource "aws_network_acl" "test" {
 `
 }
 
-func testAccAWSNetworkAclConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccNetworkACLTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -1627,7 +1627,7 @@ resource "aws_network_acl" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSNetworkAclConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccNetworkACLTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"

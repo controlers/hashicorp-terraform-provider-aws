@@ -67,14 +67,14 @@ func testSweepEc2CarrierGateway(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSEc2CarrierGateway_basic(t *testing.T) {
+func TestAccEC2CarrierGateway_basic(t *testing.T) {
 	var v ec2.CarrierGateway
 	resourceName := "aws_ec2_carrier_gateway.test"
 	vpcResourceName := "aws_vpc.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWavelengthZoneAvailable(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckEc2CarrierGatewayDestroy,
@@ -98,13 +98,13 @@ func TestAccAWSEc2CarrierGateway_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEc2CarrierGateway_disappears(t *testing.T) {
+func TestAccEC2CarrierGateway_disappears(t *testing.T) {
 	var v ec2.CarrierGateway
 	resourceName := "aws_ec2_carrier_gateway.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWavelengthZoneAvailable(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckEc2CarrierGatewayDestroy,
@@ -121,13 +121,13 @@ func TestAccAWSEc2CarrierGateway_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSEc2CarrierGateway_Tags(t *testing.T) {
+func TestAccEC2CarrierGateway_tags(t *testing.T) {
 	var v ec2.CarrierGateway
 	resourceName := "aws_ec2_carrier_gateway.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWavelengthZoneAvailable(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ec2.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckEc2CarrierGatewayDestroy,
@@ -223,7 +223,7 @@ func testAccCheckEc2CarrierGatewayExists(n string, v *ec2.CarrierGateway) resour
 	}
 }
 
-func testAccPreCheckAWSWavelengthZoneAvailable(t *testing.T) {
+func testAccPreCheckWavelengthZoneAvailable(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
 
 	input := &ec2.DescribeAvailabilityZonesInput{

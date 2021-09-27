@@ -70,7 +70,7 @@ func testSweepEc2Hosts(region string) error {
 	return nil
 }
 
-func TestAccAWSEc2Host_basic(t *testing.T) {
+func TestAccEC2Host_basic(t *testing.T) {
 	var host ec2.Host
 	resourceName := "aws_ec2_host.test"
 
@@ -81,7 +81,7 @@ func TestAccAWSEc2Host_basic(t *testing.T) {
 		CheckDestroy: testAccCheckEc2HostDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEc2HostConfig(),
+				Config: testAccHostConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEc2HostExists(resourceName, &host),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "ec2", regexp.MustCompile(`dedicated-host/.+`)),
@@ -102,7 +102,7 @@ func TestAccAWSEc2Host_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEc2Host_disappears(t *testing.T) {
+func TestAccEC2Host_disappears(t *testing.T) {
 	var host ec2.Host
 	resourceName := "aws_ec2_host.test"
 
@@ -113,7 +113,7 @@ func TestAccAWSEc2Host_disappears(t *testing.T) {
 		CheckDestroy: testAccCheckEc2HostDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEc2HostConfig(),
+				Config: testAccHostConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEc2HostExists(resourceName, &host),
 					acctest.CheckResourceDisappears(acctest.Provider, tfec2.ResourceHost(), resourceName),
@@ -124,7 +124,7 @@ func TestAccAWSEc2Host_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSEc2Host_InstanceFamily(t *testing.T) {
+func TestAccEC2Host_instanceFamily(t *testing.T) {
 	var host ec2.Host
 	resourceName := "aws_ec2_host.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -136,7 +136,7 @@ func TestAccAWSEc2Host_InstanceFamily(t *testing.T) {
 		CheckDestroy: testAccCheckEc2HostDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEc2HostConfigInstanceFamily(rName),
+				Config: testAccHostInstanceFamilyConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEc2HostExists(resourceName, &host),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "ec2", regexp.MustCompile(`dedicated-host/.+`)),
@@ -155,7 +155,7 @@ func TestAccAWSEc2Host_InstanceFamily(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSEc2HostConfigInstanceType(rName),
+				Config: testAccHostInstanceTypeConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEc2HostExists(resourceName, &host),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "ec2", regexp.MustCompile(`dedicated-host/.+`)),
@@ -172,7 +172,7 @@ func TestAccAWSEc2Host_InstanceFamily(t *testing.T) {
 	})
 }
 
-func TestAccAWSEc2Host_Tags(t *testing.T) {
+func TestAccEC2Host_tags(t *testing.T) {
 	var host ec2.Host
 	resourceName := "aws_ec2_host.test"
 
@@ -183,7 +183,7 @@ func TestAccAWSEc2Host_Tags(t *testing.T) {
 		CheckDestroy: testAccCheckEc2HostDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEc2HostConfigTags1("key1", "value1"),
+				Config: testAccHostTags1Config("key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEc2HostExists(resourceName, &host),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -196,7 +196,7 @@ func TestAccAWSEc2Host_Tags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSEc2HostConfigTags2("key1", "value1updated", "key2", "value2"),
+				Config: testAccHostTags2Config("key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEc2HostExists(resourceName, &host),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
@@ -205,7 +205,7 @@ func TestAccAWSEc2Host_Tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSEc2HostConfigTags1("key2", "value2"),
+				Config: testAccHostTags1Config("key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckEc2HostExists(resourceName, &host),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
@@ -265,7 +265,7 @@ func testAccCheckEc2HostDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSEc2HostConfig() string {
+func testAccHostConfig() string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), `
 resource "aws_ec2_host" "test" {
   availability_zone = data.aws_availability_zones.available.names[0]
@@ -274,7 +274,7 @@ resource "aws_ec2_host" "test" {
 `)
 }
 
-func testAccAWSEc2HostConfigInstanceFamily(rName string) string {
+func testAccHostInstanceFamilyConfig(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_ec2_host" "test" {
   auto_placement    = "off"
@@ -289,7 +289,7 @@ resource "aws_ec2_host" "test" {
 `, rName))
 }
 
-func testAccAWSEc2HostConfigInstanceType(rName string) string {
+func testAccHostInstanceTypeConfig(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_ec2_host" "test" {
   auto_placement    = "on"
@@ -304,7 +304,7 @@ resource "aws_ec2_host" "test" {
 `, rName))
 }
 
-func testAccAWSEc2HostConfigTags1(tagKey1, tagValue1 string) string {
+func testAccHostTags1Config(tagKey1, tagValue1 string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_ec2_host" "test" {
   availability_zone = data.aws_availability_zones.available.names[0]
@@ -317,7 +317,7 @@ resource "aws_ec2_host" "test" {
 `, tagKey1, tagValue1))
 }
 
-func testAccAWSEc2HostConfigTags2(tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccHostTags2Config(tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_ec2_host" "test" {
   availability_zone = data.aws_availability_zones.available.names[0]

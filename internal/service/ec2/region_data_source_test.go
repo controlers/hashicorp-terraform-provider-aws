@@ -75,7 +75,7 @@ func TestFindRegionByName(t *testing.T) {
 	}
 }
 
-func TestAccDataSourceAwsRegion_basic(t *testing.T) {
+func TestAccEC2RegionDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_region.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -84,7 +84,7 @@ func TestAccDataSourceAwsRegion_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsRegionConfig_empty,
+				Config: testAccRegionDataSourceConfig_empty,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "description", regexp.MustCompile(`^.+$`)),
 					acctest.CheckResourceAttrRegionalHostnameService(dataSourceName, "endpoint", ec2.EndpointsID),
@@ -95,7 +95,7 @@ func TestAccDataSourceAwsRegion_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsRegion_endpoint(t *testing.T) {
+func TestAccEC2RegionDataSource_endpoint(t *testing.T) {
 	dataSourceName := "data.aws_region.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -104,7 +104,7 @@ func TestAccDataSourceAwsRegion_endpoint(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsRegionConfig_endpoint(),
+				Config: testAccRegionDataSourceConfig_endpoint(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "description", regexp.MustCompile(`^.+$`)),
 					resource.TestMatchResourceAttr(dataSourceName, "endpoint", regexp.MustCompile(fmt.Sprintf("^ec2\\.[^.]+\\.%s$", acctest.PartitionDNSSuffix()))),
@@ -115,7 +115,7 @@ func TestAccDataSourceAwsRegion_endpoint(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsRegion_endpointAndName(t *testing.T) {
+func TestAccEC2RegionDataSource_endpointAndName(t *testing.T) {
 	dataSourceName := "data.aws_region.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -124,7 +124,7 @@ func TestAccDataSourceAwsRegion_endpointAndName(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsRegionConfig_endpointAndName(),
+				Config: testAccRegionDataSourceConfig_endpointAndName(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "description", regexp.MustCompile(`^.+$`)),
 					resource.TestMatchResourceAttr(dataSourceName, "endpoint", regexp.MustCompile(fmt.Sprintf("^ec2\\.[^.]+\\.%s$", acctest.PartitionDNSSuffix()))),
@@ -135,7 +135,7 @@ func TestAccDataSourceAwsRegion_endpointAndName(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsRegion_name(t *testing.T) {
+func TestAccEC2RegionDataSource_name(t *testing.T) {
 	dataSourceName := "data.aws_region.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -144,7 +144,7 @@ func TestAccDataSourceAwsRegion_name(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsRegionConfig_name(),
+				Config: testAccRegionDataSourceConfig_name(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestMatchResourceAttr(dataSourceName, "description", regexp.MustCompile(`^.+$`)),
 					resource.TestMatchResourceAttr(dataSourceName, "endpoint", regexp.MustCompile(fmt.Sprintf("^ec2\\.[^.]+\\.%s$", acctest.PartitionDNSSuffix()))),
@@ -155,11 +155,11 @@ func TestAccDataSourceAwsRegion_name(t *testing.T) {
 	})
 }
 
-const testAccDataSourceAwsRegionConfig_empty = `
+const testAccRegionDataSourceConfig_empty = `
 data "aws_region" "test" {}
 `
 
-func testAccDataSourceAwsRegionConfig_endpoint() string {
+func testAccRegionDataSourceConfig_endpoint() string {
 	return `
 data "aws_partition" "test" {}
 
@@ -172,7 +172,7 @@ data "aws_region" "test" {
 `
 }
 
-func testAccDataSourceAwsRegionConfig_endpointAndName() string {
+func testAccRegionDataSourceConfig_endpointAndName() string {
 	return `
 data "aws_partition" "test" {}
 
@@ -186,7 +186,7 @@ data "aws_region" "test" {
 `
 }
 
-func testAccDataSourceAwsRegionConfig_name() string {
+func testAccRegionDataSourceConfig_name() string {
 	return `
 data "aws_regions" "test" {
 }
