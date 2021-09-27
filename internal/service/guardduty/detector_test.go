@@ -70,19 +70,19 @@ func testSweepGuarddutyDetectors(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func testAccAwsGuardDutyDetector_basic(t *testing.T) {
+func testAccDetector_basic(t *testing.T) {
 	resourceName := "aws_guardduty_detector.test"
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, guardduty.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsGuardDutyDetectorDestroy,
+		CheckDestroy: testAccCheckDetectorDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGuardDutyDetectorConfig_basic1,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttrSet(resourceName, "account_id"),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "guardduty", regexp.MustCompile("detector/.+$")),
 					resource.TestCheckResourceAttr(resourceName, "enable", "true"),
@@ -98,21 +98,21 @@ func testAccAwsGuardDutyDetector_basic(t *testing.T) {
 			{
 				Config: testAccGuardDutyDetectorConfig_basic2,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "enable", "false"),
 				),
 			},
 			{
 				Config: testAccGuardDutyDetectorConfig_basic3,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "enable", "true"),
 				),
 			},
 			{
 				Config: testAccGuardDutyDetectorConfig_basic4,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "finding_publishing_frequency", "FIFTEEN_MINUTES"),
 				),
 			},
@@ -120,19 +120,19 @@ func testAccAwsGuardDutyDetector_basic(t *testing.T) {
 	})
 }
 
-func testAccAwsGuardDutyDetector_tags(t *testing.T) {
+func testAccDetector_tags(t *testing.T) {
 	resourceName := "aws_guardduty_detector.test"
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, guardduty.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsGuardDutyDetectorDestroy,
+		CheckDestroy: testAccCheckDetectorDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGuardDutyDetectorConfigTags1("key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -145,7 +145,7 @@ func testAccAwsGuardDutyDetector_tags(t *testing.T) {
 			{
 				Config: testAccGuardDutyDetectorConfigTags2("key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
@@ -154,7 +154,7 @@ func testAccAwsGuardDutyDetector_tags(t *testing.T) {
 			{
 				Config: testAccGuardDutyDetectorConfigTags1("key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -163,19 +163,19 @@ func testAccAwsGuardDutyDetector_tags(t *testing.T) {
 	})
 }
 
-func testAccAwsGuardDutyDetector_datasources_s3logs(t *testing.T) {
+func testAccDetector_datasources_s3logs(t *testing.T) {
 	resourceName := "aws_guardduty_detector.test"
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, guardduty.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsGuardDutyDetectorDestroy,
+		CheckDestroy: testAccCheckDetectorDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGuardDutyDetectorConfigDatasourcesS3Logs(true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "datasources.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "datasources.0.s3_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "datasources.0.s3_logs.0.enable", "true"),
@@ -189,7 +189,7 @@ func testAccAwsGuardDutyDetector_datasources_s3logs(t *testing.T) {
 			{
 				Config: testAccGuardDutyDetectorConfigDatasourcesS3Logs(false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsGuardDutyDetectorExists(resourceName),
+					testAccCheckDetectorExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "datasources.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "datasources.0.s3_logs.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "datasources.0.s3_logs.0.enable", "false"),
@@ -199,7 +199,7 @@ func testAccAwsGuardDutyDetector_datasources_s3logs(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsGuardDutyDetectorDestroy(s *terraform.State) error {
+func testAccCheckDetectorDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).GuardDutyConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -225,7 +225,7 @@ func testAccCheckAwsGuardDutyDetectorDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsGuardDutyDetectorExists(name string) resource.TestCheckFunc {
+func testAccCheckDetectorExists(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		_, ok := s.RootModule().Resources[name]
 		if !ok {
