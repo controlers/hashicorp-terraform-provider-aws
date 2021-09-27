@@ -9,17 +9,17 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSOutpostsSiteDataSource_Id(t *testing.T) {
+func TestAccOutpostsSiteDataSource_id(t *testing.T) {
 	dataSourceName := "data.aws_outposts_site.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSOutpostsSites(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckSites(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, outposts.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSOutpostsSiteDataSourceConfigId(),
+				Config: testAccSiteIDDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckResourceAttrAccountID(dataSourceName, "account_id"),
 					resource.TestCheckResourceAttrSet(dataSourceName, "description"),
@@ -31,18 +31,18 @@ func TestAccAWSOutpostsSiteDataSource_Id(t *testing.T) {
 	})
 }
 
-func TestAccAWSOutpostsSiteDataSource_Name(t *testing.T) {
+func TestAccOutpostsSiteDataSource_name(t *testing.T) {
 	sourceDataSourceName := "data.aws_outposts_site.source"
 	dataSourceName := "data.aws_outposts_site.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSOutpostsSites(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckSites(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, outposts.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: nil,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSOutpostsSiteDataSourceConfigName(),
+				Config: testAccSiteNameDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "account_id", sourceDataSourceName, "account_id"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "description", sourceDataSourceName, "description"),
@@ -54,7 +54,7 @@ func TestAccAWSOutpostsSiteDataSource_Name(t *testing.T) {
 	})
 }
 
-func testAccAWSOutpostsSiteDataSourceConfigId() string {
+func testAccSiteIDDataSourceConfig() string {
 	return `
 data "aws_outposts_sites" "test" {}
 
@@ -64,7 +64,7 @@ data "aws_outposts_site" "test" {
 `
 }
 
-func testAccAWSOutpostsSiteDataSourceConfigName() string {
+func testAccSiteNameDataSourceConfig() string {
 	return `
 data "aws_outposts_sites" "test" {}
 
