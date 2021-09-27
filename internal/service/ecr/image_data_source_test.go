@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSEcrDataSource_ecrImage(t *testing.T) {
+func TestAccECRImageDataSource_ecrImage(t *testing.T) {
 	registry, repo, tag := "137112412989", "amazonlinux", "latest"
 	resourceByTag := "data.aws_ecr_image.by_tag"
 	resourceByDigest := "data.aws_ecr_image.by_digest"
@@ -22,7 +22,7 @@ func TestAccAWSEcrDataSource_ecrImage(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsEcrImageDataSourceConfig(registry, repo, tag),
+				Config: testAccCheckImageDataSourceConfig(registry, repo, tag),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(resourceByTag, "image_digest"),
 					resource.TestCheckResourceAttrSet(resourceByTag, "image_pushed_at"),
@@ -37,7 +37,7 @@ func TestAccAWSEcrDataSource_ecrImage(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsEcrImageDataSourceConfig(reg, repo, tag string) string {
+func testAccCheckImageDataSourceConfig(reg, repo, tag string) string {
 	return fmt.Sprintf(`
 data "aws_ecr_image" "by_tag" {
   registry_id     = "%s"
