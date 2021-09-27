@@ -32,8 +32,8 @@ func ResourceInstance() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Timeouts: &schema.ResourceTimeout{
-			Create: schema.DefaultTimeout(waiter.ConnectInstanceCreatedTimeout),
-			Delete: schema.DefaultTimeout(waiter.ConnectInstanceDeletedTimeout),
+			Create: schema.DefaultTimeout(waiter.connectInstanceCreatedTimeout),
+			Delete: schema.DefaultTimeout(waiter.connectInstanceDeletedTimeout),
 		},
 		Schema: map[string]*schema.Schema{
 			"arn": {
@@ -140,7 +140,7 @@ func resourceInstanceCreate(ctx context.Context, d *schema.ResourceData, meta in
 
 	d.SetId(aws.StringValue(output.Id))
 
-	if _, err := waiter.InstanceCreated(ctx, conn, d.Id()); err != nil {
+	if _, err := waiter.waitInstanceCreated(ctx, conn, d.Id()); err != nil {
 		return diag.FromErr(fmt.Errorf("error waiting for Connect instance creation (%s): %w", d.Id(), err))
 	}
 
@@ -242,7 +242,7 @@ func resourceInstanceDelete(ctx context.Context, d *schema.ResourceData, meta in
 		return diag.FromErr(fmt.Errorf("error deleting Connect Instance (%s): %s", d.Id(), err))
 	}
 
-	if _, err := waiter.InstanceDeleted(ctx, conn, d.Id()); err != nil {
+	if _, err := waiter.waitInstanceDeleted(ctx, conn, d.Id()); err != nil {
 		return diag.FromErr(fmt.Errorf("error waiting for Connect Instance deletion (%s): %s", d.Id(), err))
 	}
 	return nil

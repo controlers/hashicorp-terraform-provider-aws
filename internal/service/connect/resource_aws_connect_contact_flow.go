@@ -33,8 +33,8 @@ func ResourceContactFlow() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Timeouts: &schema.ResourceTimeout{
-			Create: schema.DefaultTimeout(waiter.ConnectContactFlowCreateTimeout),
-			Update: schema.DefaultTimeout(waiter.ConnectContactFlowUpdateTimeout),
+			Create: schema.DefaultTimeout(waiter.connectContactFlowCreateTimeout),
+			Update: schema.DefaultTimeout(waiter.connectContactFlowUpdateTimeout),
 		},
 		CustomizeDiff: verify.SetTagsDiff,
 		Schema: map[string]*schema.Schema{
