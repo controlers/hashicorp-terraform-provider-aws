@@ -1,4 +1,4 @@
-package aws
+package fsx
 
 import (
 	"context"
@@ -14,10 +14,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	tftags "github.com/hashicorp/terraform-provider-aws/aws/internal/tags"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/fsx/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/fsx/waiter"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
@@ -342,7 +340,7 @@ func resourceLustreFileSystemCreate(d *schema.ResourceData, meta interface{}) er
 		d.SetId(aws.StringValue(result.FileSystem.FileSystemId))
 	}
 
-	if _, err := waiter.waitFileSystemCreated(conn, d.Id(), d.Timeout(schema.TimeoutCreate)); err != nil {
+	if _, err := waitFileSystemCreated(conn, d.Id(), d.Timeout(schema.TimeoutCreate)); err != nil {
 		return fmt.Errorf("error waiting for FSx Lustre File System (%s) create: %w", d.Id(), err)
 	}
 
@@ -396,7 +394,7 @@ func resourceLustreFileSystemUpdate(d *schema.ResourceData, meta interface{}) er
 			return fmt.Errorf("error updating FSX Lustre File System (%s): %w", d.Id(), err)
 		}
 
-		if _, err := waiter.waitFileSystemUpdated(conn, d.Id(), d.Timeout(schema.TimeoutUpdate)); err != nil {
+		if _, err := waitFileSystemUpdated(conn, d.Id(), d.Timeout(schema.TimeoutUpdate)); err != nil {
 			return fmt.Errorf("error waiting for FSx Lustre File System (%s) update: %w", d.Id(), err)
 		}
 	}
@@ -409,7 +407,7 @@ func resourceLustreFileSystemRead(d *schema.ResourceData, meta interface{}) erro
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	filesystem, err := finder.FindFileSystemByID(conn, d.Id())
+	filesystem, err := FindFileSystemByID(conn, d.Id())
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] FSx Lustre File System (%s) not found, removing from state", d.Id())
 		d.SetId("")
@@ -505,7 +503,7 @@ func resourceLustreFileSystemDelete(d *schema.ResourceData, meta interface{}) er
 		return fmt.Errorf("error deleting FSx Lustre File System (%s): %w", d.Id(), err)
 	}
 
-	if _, err := waiter.waitFileSystemDeleted(conn, d.Id(), d.Timeout(schema.TimeoutDelete)); err != nil {
+	if _, err := waitFileSystemDeleted(conn, d.Id(), d.Timeout(schema.TimeoutDelete)); err != nil {
 		return fmt.Errorf("error waiting for FSx Lustre File System (%s) to deleted: %w", d.Id(), err)
 	}
 
