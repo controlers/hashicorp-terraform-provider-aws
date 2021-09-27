@@ -187,7 +187,7 @@ func testAccCheckAWSEc2ManagedPrefixListEntryDestroy(s *terraform.State) error {
 			return err
 		}
 
-		_, err = finder.ManagedPrefixListEntryByIDAndCIDR(conn, plID, cidr)
+		_, err = finder.FindManagedPrefixListEntryByIDAndCIDR(conn, plID, cidr)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -222,7 +222,7 @@ func testAccCheckAWSEc2ManagedPrefixListEntryExists(n string, v *ec2.PrefixListE
 			return err
 		}
 
-		output, err := finder.ManagedPrefixListEntryByIDAndCIDR(conn, plID, cidr)
+		output, err := finder.FindManagedPrefixListEntryByIDAndCIDR(conn, plID, cidr)
 
 		if err != nil {
 			return err

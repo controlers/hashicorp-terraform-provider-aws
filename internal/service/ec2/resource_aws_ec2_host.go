@@ -108,7 +108,7 @@ func resourceHostCreate(d *schema.ResourceData, meta interface{}) error {
 
 	d.SetId(aws.StringValue(output.HostIds[0]))
 
-	if _, err := waiter.HostCreated(conn, d.Id()); err != nil {
+	if _, err := waiter.WaitHostCreated(conn, d.Id()); err != nil {
 		return fmt.Errorf("error waiting for EC2 Host (%s) create: %w", d.Id(), err)
 	}
 
@@ -120,7 +120,7 @@ func resourceHostRead(d *schema.ResourceData, meta interface{}) error {
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	host, err := finder.HostByID(conn, d.Id())
+	host, err := finder.FindHostByID(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] EC2 Host %s not found, removing from state", d.Id())
@@ -195,7 +195,7 @@ func resourceHostUpdate(d *schema.ResourceData, meta interface{}) error {
 			return fmt.Errorf("error modifying EC2 Host (%s): %w", d.Id(), err)
 		}
 
-		if _, err := waiter.HostUpdated(conn, d.Id()); err != nil {
+		if _, err := waiter.WaitHostUpdated(conn, d.Id()); err != nil {
 			return fmt.Errorf("error waiting for EC2 Host (%s) update: %w", d.Id(), err)
 		}
 	}
@@ -230,7 +230,7 @@ func resourceHostDelete(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error releasing EC2 Host (%s): %w", d.Id(), err)
 	}
 
-	if _, err := waiter.HostDeleted(conn, d.Id()); err != nil {
+	if _, err := waiter.WaitHostDeleted(conn, d.Id()); err != nil {
 		return fmt.Errorf("error waiting for EC2 Host (%s) delete: %w", d.Id(), err)
 	}
 

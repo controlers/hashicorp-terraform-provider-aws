@@ -131,7 +131,7 @@ func resourceManagedPrefixListCreate(d *schema.ResourceData, meta interface{}) e
 
 	d.SetId(aws.StringValue(output.PrefixList.PrefixListId))
 
-	if _, err := waiter.ManagedPrefixListCreated(conn, d.Id()); err != nil {
+	if _, err := waiter.WaitManagedPrefixListCreated(conn, d.Id()); err != nil {
 		return fmt.Errorf("error waiting for EC2 Managed Prefix List (%s) create: %w", d.Id(), err)
 	}
 
@@ -143,7 +143,7 @@ func resourceManagedPrefixListRead(d *schema.ResourceData, meta interface{}) err
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	pl, err := finder.ManagedPrefixListByID(conn, d.Id())
+	pl, err := finder.FindManagedPrefixListByID(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] EC2 Managed Prefix List %s not found, removing from state", d.Id())
@@ -155,7 +155,7 @@ func resourceManagedPrefixListRead(d *schema.ResourceData, meta interface{}) err
 		return fmt.Errorf("error reading EC2 Managed Prefix List (%s): %w", d.Id(), err)
 	}
 
-	prefixListEntries, err := finder.ManagedPrefixListEntriesByID(conn, d.Id())
+	prefixListEntries, err := finder.FindManagedPrefixListEntriesByID(conn, d.Id())
 
 	if err != nil {
 		return fmt.Errorf("error reading EC2 Managed Prefix List (%s) Entries: %w", d.Id(), err)
@@ -255,7 +255,7 @@ func resourceManagedPrefixListUpdate(d *schema.ResourceData, meta interface{}) e
 					return fmt.Errorf("error updating EC2 Managed Prefix List (%s): %w", d.Id(), err)
 				}
 
-				managedPrefixList, err := waiter.ManagedPrefixListModified(conn, d.Id())
+				managedPrefixList, err := waiter.WaitManagedPrefixListModified(conn, d.Id())
 
 				if err != nil {
 					return fmt.Errorf("error waiting for EC2 Managed Prefix List (%s) update: %w", d.Id(), err)
@@ -289,7 +289,7 @@ func resourceManagedPrefixListUpdate(d *schema.ResourceData, meta interface{}) e
 		}
 
 		if wait {
-			if _, err := waiter.ManagedPrefixListModified(conn, d.Id()); err != nil {
+			if _, err := waiter.WaitManagedPrefixListModified(conn, d.Id()); err != nil {
 				return fmt.Errorf("error waiting for EC2 Managed Prefix List (%s) update: %w", d.Id(), err)
 			}
 		}
@@ -321,7 +321,7 @@ func resourceManagedPrefixListDelete(d *schema.ResourceData, meta interface{}) e
 		return fmt.Errorf("error deleting EC2 Managed Prefix List (%s): %w", d.Id(), err)
 	}
 
-	if _, err := waiter.ManagedPrefixListDeleted(conn, d.Id()); err != nil {
+	if _, err := waiter.WaitManagedPrefixListDeleted(conn, d.Id()); err != nil {
 		return fmt.Errorf("error waiting for EC2 Managed Prefix List (%s) delete: %w", d.Id(), err)
 	}
 

@@ -75,7 +75,7 @@ func dataSourceAwsAwsEc2HostRead(d *schema.ResourceData, meta interface{}) error
 	conn := meta.(*conns.AWSClient).EC2Conn
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	host, err := finder.HostByIDAndFilters(conn, d.Get("host_id").(string), buildAwsDataSourceFilters(d.Get("filter").(*schema.Set)))
+	host, err := finder.FindHostByIDAndFilters(conn, d.Get("host_id").(string), buildAwsDataSourceFilters(d.Get("filter").(*schema.Set)))
 
 	if err != nil {
 		return tfresource.SingularDataSourceFindError("EC2 Host", err)

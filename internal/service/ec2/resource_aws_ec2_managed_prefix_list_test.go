@@ -313,7 +313,7 @@ func testAccCheckAwsEc2ManagedPrefixListDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.ManagedPrefixListByID(conn, rs.Primary.ID)
+		_, err := finder.FindManagedPrefixListByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -342,7 +342,7 @@ func testAccAwsEc2ManagedPrefixListExists(resourceName string) resource.TestChec
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
 
-		_, err := finder.ManagedPrefixListByID(conn, rs.Primary.ID)
+		_, err := finder.FindManagedPrefixListByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err

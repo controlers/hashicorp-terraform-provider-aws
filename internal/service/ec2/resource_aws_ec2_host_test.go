@@ -232,7 +232,7 @@ func testAccCheckEc2HostExists(n string, v *ec2.Host) resource.TestCheckFunc {
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
 
-		output, err := finder.HostByID(conn, rs.Primary.ID)
+		output, err := finder.FindHostByID(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -252,7 +252,7 @@ func testAccCheckEc2HostDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.HostByID(conn, rs.Primary.ID)
+		_, err := finder.FindHostByID(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue

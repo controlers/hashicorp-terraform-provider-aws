@@ -56,7 +56,7 @@ func resourceManagedPrefixListEntryCreate(d *schema.ResourceData, meta interface
 	plID := d.Get("prefix_list_id").(string)
 	id := tfec2.ManagedPrefixListEntryCreateID(plID, cidr)
 
-	pl, err := finder.ManagedPrefixListByID(conn, plID)
+	pl, err := finder.FindManagedPrefixListByID(conn, plID)
 
 	if err != nil {
 		return fmt.Errorf("error reading EC2 Managed Prefix List (%s): %w", plID, err)
@@ -82,7 +82,7 @@ func resourceManagedPrefixListEntryCreate(d *schema.ResourceData, meta interface
 
 	d.SetId(id)
 
-	if _, err := waiter.ManagedPrefixListModified(conn, plID); err != nil {
+	if _, err := waiter.WaitManagedPrefixListModified(conn, plID); err != nil {
 		return fmt.Errorf("error waiting for EC2 Managed Prefix List Entry (%s) create: %w", d.Id(), err)
 	}
 
@@ -99,7 +99,7 @@ func resourceManagedPrefixListEntryRead(d *schema.ResourceData, meta interface{}
 	}
 
 	outputRaw, err := tfresource.RetryWhenNewResourceNotFound(waiter.ManagedPrefixListEntryCreateTimeout, func() (interface{}, error) {
-		return finder.ManagedPrefixListEntryByIDAndCIDR(conn, plID, cidr)
+		return finder.FindManagedPrefixListEntryByIDAndCIDR(conn, plID, cidr)
 	}, d.IsNewResource())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
@@ -129,7 +129,7 @@ func resourceManagedPrefixListEntryDelete(d *schema.ResourceData, meta interface
 		return err
 	}
 
-	pl, err := finder.ManagedPrefixListByID(conn, plID)
+	pl, err := finder.FindManagedPrefixListByID(conn, plID)
 
 	if err != nil {
 		return fmt.Errorf("error reading EC2 Managed Prefix List (%s): %w", plID, err)
@@ -147,7 +147,7 @@ func resourceManagedPrefixListEntryDelete(d *schema.ResourceData, meta interface
 		return fmt.Errorf("error deleting EC2 Managed Prefix List Entry (%s): %w", d.Id(), err)
 	}
 
-	_, err = waiter.ManagedPrefixListModified(conn, plID)
+	_, err = waiter.WaitManagedPrefixListModified(conn, plID)
 
 	if err != nil {
 		return fmt.Errorf("error waiting for EC2 Managed Prefix List Entry (%s) delete: %w", d.Id(), err)
