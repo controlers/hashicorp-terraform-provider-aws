@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSLakeFormationResourceDataSource_basic(t *testing.T) {
+func TestAccLakeFormationResourceDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_lakeformation_resource.test"
 	resourceName := "aws_lakeformation_resource.test"
@@ -19,10 +19,10 @@ func TestAccAWSLakeFormationResourceDataSource_basic(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(lakeformation.EndpointsID, t) },
 		ErrorCheck:        acctest.ErrorCheck(t, lakeformation.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSLakeFormationResourceDestroy,
+		CheckDestroy:      testAccCheckResourceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSLakeFormationResourceDataSourceConfig_basic(rName),
+				Config: testAccResourceDataSourceConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "role_arn", resourceName, "role_arn"),
@@ -32,7 +32,7 @@ func TestAccAWSLakeFormationResourceDataSource_basic(t *testing.T) {
 	})
 }
 
-func testAccAWSLakeFormationResourceDataSourceConfig_basic(rName string) string {
+func testAccResourceDataSourceConfig_basic(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket = %[1]q
