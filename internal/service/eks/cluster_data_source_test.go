@@ -12,19 +12,19 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSEksClusterDataSource_basic(t *testing.T) {
+func TestAccEKSClusterDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceResourceName := "data.aws_eks_cluster.test"
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, eks.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEksClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEksClusterDataSourceConfig_Basic(rName),
+				Config: testAccClusterDataSourceConfig_Basic(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(resourceName, "arn", dataSourceResourceName, "arn"),
 					resource.TestCheckResourceAttr(dataSourceResourceName, "certificate_authority.#", "1"),
@@ -58,8 +58,8 @@ func TestAccAWSEksClusterDataSource_basic(t *testing.T) {
 	})
 }
 
-func testAccAWSEksClusterDataSourceConfig_Basic(rName string) string {
-	return acctest.ConfigCompose(testAccAWSEksClusterConfig_Logging(rName, []string{"api", "audit"}), `
+func testAccClusterDataSourceConfig_Basic(rName string) string {
+	return acctest.ConfigCompose(testAccClusterConfig_Logging(rName, []string{"api", "audit"}), `
 data "aws_eks_cluster" "test" {
   name = aws_eks_cluster.test.name
 }

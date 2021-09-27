@@ -9,18 +9,18 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSEksClustersDataSource_basic(t *testing.T) {
+func TestAccEKSClustersDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceResourceName := "data.aws_eks_clusters.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, eks.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSEksClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSEksClustersDataSourceConfig_Basic(rName),
+				Config: testAccClustersDataSourceConfig_Basic(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testCheckResourceAttrGreaterThanValue(dataSourceResourceName, "names.#", "0"),
 				),
@@ -29,9 +29,9 @@ func TestAccAWSEksClustersDataSource_basic(t *testing.T) {
 	})
 }
 
-func testAccAWSEksClustersDataSourceConfig_Basic(rName string) string {
+func testAccClustersDataSourceConfig_Basic(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSEksClusterConfig_Required(rName), `
+		testAccClusterConfig_Required(rName), `
 data "aws_eks_clusters" "test" {
   depends_on = [aws_eks_cluster.test]
 }
