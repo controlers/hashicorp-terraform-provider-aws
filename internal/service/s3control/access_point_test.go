@@ -83,7 +83,7 @@ func testSweepS3AccessPoints(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAWSS3AccessPoint_basic(t *testing.T) {
+func TestAccS3ControlAccessPoint_basic(t *testing.T) {
 	var v s3control.GetAccessPointOutput
 	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	accessPointName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -93,12 +93,12 @@ func TestAccAWSS3AccessPoint_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3control.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3AccessPointDestroy,
+		CheckDestroy: testAccCheckAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3AccessPointConfig_basic(bucketName, accessPointName),
+				Config: testAccAccessPointConfig_basic(bucketName, accessPointName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
+					testAccCheckAccessPointExists(resourceName, &v),
 					acctest.CheckResourceAttrAccountID(resourceName, "account_id"),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "s3", fmt.Sprintf("accesspoint/%s", accessPointName)),
 					resource.TestCheckResourceAttr(resourceName, "bucket", bucketName),
@@ -124,7 +124,7 @@ func TestAccAWSS3AccessPoint_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3AccessPoint_disappears(t *testing.T) {
+func TestAccS3ControlAccessPoint_disappears(t *testing.T) {
 	var v s3control.GetAccessPointOutput
 	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	accessPointName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -134,13 +134,13 @@ func TestAccAWSS3AccessPoint_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3control.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3AccessPointDestroy,
+		CheckDestroy: testAccCheckAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3AccessPointConfig_basic(bucketName, accessPointName),
+				Config: testAccAccessPointConfig_basic(bucketName, accessPointName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
-					testAccCheckAWSS3AccessPointDisappears(resourceName),
+					testAccCheckAccessPointExists(resourceName, &v),
+					testAccCheckAccessPointDisappears(resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -148,7 +148,7 @@ func TestAccAWSS3AccessPoint_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3AccessPoint_disappears_Bucket(t *testing.T) {
+func TestAccS3ControlAccessPoint_Disappears_bucket(t *testing.T) {
 	var v s3control.GetAccessPointOutput
 	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	accessPointName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -159,13 +159,13 @@ func TestAccAWSS3AccessPoint_disappears_Bucket(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3control.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3AccessPointDestroy,
+		CheckDestroy: testAccCheckAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3AccessPointConfig_basic(bucketName, accessPointName),
+				Config: testAccAccessPointConfig_basic(bucketName, accessPointName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
-					testAccCheckAWSS3DestroyBucket(bucketResourceName),
+					testAccCheckAccessPointExists(resourceName, &v),
+					testAccCheckDestroyBucket(bucketResourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -173,7 +173,7 @@ func TestAccAWSS3AccessPoint_disappears_Bucket(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3AccessPoint_Bucket_Arn(t *testing.T) {
+func TestAccS3ControlAccessPoint_Bucket_arn(t *testing.T) {
 	var v s3control.GetAccessPointOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_access_point.test"
@@ -182,12 +182,12 @@ func TestAccAWSS3AccessPoint_Bucket_Arn(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3control.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3AccessPointDestroy,
+		CheckDestroy: testAccCheckAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3AccessPointConfig_Bucket_Arn(rName),
+				Config: testAccAccessPointConfig_Bucket_ARN(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
+					testAccCheckAccessPointExists(resourceName, &v),
 					acctest.CheckResourceAttrAccountID(resourceName, "account_id"),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "s3-outposts", fmt.Sprintf("outpost/[^/]+/accesspoint/%s", rName)),
 					resource.TestCheckResourceAttrPair(resourceName, "bucket", "aws_s3control_bucket.test", "arn"),
@@ -214,7 +214,7 @@ func TestAccAWSS3AccessPoint_Bucket_Arn(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3AccessPoint_Policy(t *testing.T) {
+func TestAccS3ControlAccessPoint_policy(t *testing.T) {
 	var v s3control.GetAccessPointOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_access_point.test"
@@ -263,13 +263,13 @@ func TestAccAWSS3AccessPoint_Policy(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3control.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3AccessPointDestroy,
+		CheckDestroy: testAccCheckAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3AccessPointConfig_policy(rName),
+				Config: testAccAccessPointConfig_policy(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
-					testAccCheckAWSS3AccessPointHasPolicy(resourceName, expectedPolicyText1),
+					testAccCheckAccessPointExists(resourceName, &v),
+					testAccCheckAccessPointHasPolicy(resourceName, expectedPolicyText1),
 					acctest.CheckResourceAttrAccountID(resourceName, "account_id"),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "s3", fmt.Sprintf("accesspoint/%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "bucket", rName),
@@ -290,16 +290,16 @@ func TestAccAWSS3AccessPoint_Policy(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSS3AccessPointConfig_policyUpdated(rName),
+				Config: testAccAccessPointConfig_policyUpdated(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
-					testAccCheckAWSS3AccessPointHasPolicy(resourceName, expectedPolicyText2),
+					testAccCheckAccessPointExists(resourceName, &v),
+					testAccCheckAccessPointHasPolicy(resourceName, expectedPolicyText2),
 				),
 			},
 			{
-				Config: testAccAWSS3AccessPointConfig_noPolicy(rName),
+				Config: testAccAccessPointConfig_noPolicy(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
+					testAccCheckAccessPointExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "has_public_access_policy", "false"),
 					resource.TestCheckResourceAttr(resourceName, "policy", ""),
 				),
@@ -308,7 +308,7 @@ func TestAccAWSS3AccessPoint_Policy(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3AccessPoint_PublicAccessBlockConfiguration(t *testing.T) {
+func TestAccS3ControlAccessPoint_publicAccessBlock(t *testing.T) {
 	var v s3control.GetAccessPointOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_access_point.test"
@@ -317,12 +317,12 @@ func TestAccAWSS3AccessPoint_PublicAccessBlockConfiguration(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3control.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3AccessPointDestroy,
+		CheckDestroy: testAccCheckAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3AccessPointConfig_publicAccessBlock(rName),
+				Config: testAccAccessPointConfig_publicAccessBlock(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
+					testAccCheckAccessPointExists(resourceName, &v),
 					acctest.CheckResourceAttrAccountID(resourceName, "account_id"),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "s3", fmt.Sprintf("accesspoint/%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "bucket", rName),
@@ -347,7 +347,7 @@ func TestAccAWSS3AccessPoint_PublicAccessBlockConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSS3AccessPoint_VpcConfiguration(t *testing.T) {
+func TestAccS3ControlAccessPoint_vpc(t *testing.T) {
 	var v s3control.GetAccessPointOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_s3_access_point.test"
@@ -357,12 +357,12 @@ func TestAccAWSS3AccessPoint_VpcConfiguration(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, s3control.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSS3AccessPointDestroy,
+		CheckDestroy: testAccCheckAccessPointDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSS3AccessPointConfig_vpc(rName),
+				Config: testAccAccessPointConfig_vpc(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSS3AccessPointExists(resourceName, &v),
+					testAccCheckAccessPointExists(resourceName, &v),
 					acctest.CheckResourceAttrAccountID(resourceName, "account_id"),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "s3", fmt.Sprintf("accesspoint/%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "bucket", rName),
@@ -388,7 +388,7 @@ func TestAccAWSS3AccessPoint_VpcConfiguration(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSS3AccessPointDisappears(n string) resource.TestCheckFunc {
+func testAccCheckAccessPointDisappears(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -418,7 +418,7 @@ func testAccCheckAWSS3AccessPointDisappears(n string) resource.TestCheckFunc {
 	}
 }
 
-func testAccCheckAWSS3AccessPointDestroy(s *terraform.State) error {
+func testAccCheckAccessPointDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).S3ControlConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -442,7 +442,7 @@ func testAccCheckAWSS3AccessPointDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSS3AccessPointExists(n string, output *s3control.GetAccessPointOutput) resource.TestCheckFunc {
+func testAccCheckAccessPointExists(n string, output *s3control.GetAccessPointOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -474,7 +474,7 @@ func testAccCheckAWSS3AccessPointExists(n string, output *s3control.GetAccessPoi
 	}
 }
 
-func testAccCheckAWSS3AccessPointHasPolicy(n string, fn func() string) resource.TestCheckFunc {
+func testAccCheckAccessPointHasPolicy(n string, fn func() string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -516,7 +516,7 @@ func testAccCheckAWSS3AccessPointHasPolicy(n string, fn func() string) resource.
 	}
 }
 
-func testAccAWSS3AccessPointConfig_basic(bucketName, accessPointName string) string {
+func testAccAccessPointConfig_basic(bucketName, accessPointName string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket = %[1]q
@@ -529,7 +529,7 @@ resource "aws_s3_access_point" "test" {
 `, bucketName, accessPointName)
 }
 
-func testAccAWSS3AccessPointConfig_Bucket_Arn(rName string) string {
+func testAccAccessPointConfig_Bucket_ARN(rName string) string {
 	return fmt.Sprintf(`
 data "aws_outposts_outposts" "test" {}
 
@@ -561,7 +561,7 @@ resource "aws_s3_access_point" "test" {
 `, rName)
 }
 
-func testAccAWSS3AccessPointConfig_policy(rName string) string {
+func testAccAccessPointConfig_policy(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket = %[1]q
@@ -605,7 +605,7 @@ data "aws_iam_policy_document" "test" {
 `, rName)
 }
 
-func testAccAWSS3AccessPointConfig_policyUpdated(rName string) string {
+func testAccAccessPointConfig_policyUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket = %[1]q
@@ -650,7 +650,7 @@ data "aws_iam_policy_document" "test" {
 `, rName)
 }
 
-func testAccAWSS3AccessPointConfig_noPolicy(rName string) string {
+func testAccAccessPointConfig_noPolicy(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket = %[1]q
@@ -670,7 +670,7 @@ resource "aws_s3_access_point" "test" {
 `, rName)
 }
 
-func testAccAWSS3AccessPointConfig_publicAccessBlock(rName string) string {
+func testAccAccessPointConfig_publicAccessBlock(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket = %[1]q
@@ -690,7 +690,7 @@ resource "aws_s3_access_point" "test" {
 `, rName)
 }
 
-func testAccAWSS3AccessPointConfig_vpc(rName string) string {
+func testAccAccessPointConfig_vpc(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -715,7 +715,7 @@ resource "aws_s3_access_point" "test" {
 `, rName)
 }
 
-func testAccCheckAWSS3DestroyBucket(n string) resource.TestCheckFunc {
+func testAccCheckDestroyBucket(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -732,7 +732,7 @@ func testAccCheckAWSS3DestroyBucket(n string) resource.TestCheckFunc {
 		})
 
 		if err != nil {
-			return fmt.Errorf("Error destroying Bucket (%s) in testAccCheckAWSS3DestroyBucket: %s", rs.Primary.ID, err)
+			return fmt.Errorf("Error destroying Bucket (%s) in testAccCheckDestroyBucket: %s", rs.Primary.ID, err)
 		}
 		return nil
 	}
