@@ -8,14 +8,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSCallerIdentity_basic(t *testing.T) {
+func TestAccNASCallerIdentityDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, sts.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsCallerIdentityConfig_basic,
+				Config: testAccCheckAWSCallerIdentityConfig_basic,
 				Check: resource.ComposeTestCheckFunc(
 					acctest.CheckAwsCallerIdentityAccountId("data.aws_caller_identity.current"),
 				),
@@ -24,6 +24,6 @@ func TestAccAWSCallerIdentity_basic(t *testing.T) {
 	})
 }
 
-const testAccCheckAwsCallerIdentityConfig_basic = `
+const testAccCheckAWSCallerIdentityConfig_basic = `
 data "aws_caller_identity" "current" {}
 `

@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDefaultTagsDataSource_basic(t *testing.T) {
+func TestAccNASDefaultTagsDataSource_basic(t *testing.T) {
 	var providers []*schema.Provider
 
 	dataSourceName := "data.aws_default_tags.test"
@@ -23,7 +23,7 @@ func TestAccAWSDefaultTagsDataSource_basic(t *testing.T) {
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags1("first", "value"),
-					testAccAWSDefaultTagsDataSource(),
+					testAccDefaultTagsDataSource(),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "tags.%", "1"),
@@ -34,7 +34,7 @@ func TestAccAWSDefaultTagsDataSource_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDefaultTagsDataSource_empty(t *testing.T) {
+func TestAccNASDefaultTagsDataSource_empty(t *testing.T) {
 	var providers []*schema.Provider
 
 	dataSourceName := "data.aws_default_tags.test"
@@ -48,7 +48,7 @@ func TestAccAWSDefaultTagsDataSource_empty(t *testing.T) {
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags0(),
-					testAccAWSDefaultTagsDataSource(),
+					testAccDefaultTagsDataSource(),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "tags.%", "0"),
@@ -58,7 +58,7 @@ func TestAccAWSDefaultTagsDataSource_empty(t *testing.T) {
 	})
 }
 
-func TestAccAWSDefaultTagsDataSource_multiple(t *testing.T) {
+func TestAccNASDefaultTagsDataSource_multiple(t *testing.T) {
 	var providers []*schema.Provider
 
 	dataSourceName := "data.aws_default_tags.test"
@@ -72,7 +72,7 @@ func TestAccAWSDefaultTagsDataSource_multiple(t *testing.T) {
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags2("nuera", "hijo", "escalofrios", "calambres"),
-					testAccAWSDefaultTagsDataSource(),
+					testAccDefaultTagsDataSource(),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "tags.%", "2"),
@@ -84,7 +84,7 @@ func TestAccAWSDefaultTagsDataSource_multiple(t *testing.T) {
 	})
 }
 
-func TestAccAWSDefaultTagsDataSource_ignore(t *testing.T) {
+func TestAccNASDefaultTagsDataSource_ignore(t *testing.T) {
 	var providers []*schema.Provider
 
 	dataSourceName := "data.aws_default_tags.test"
@@ -98,7 +98,7 @@ func TestAccAWSDefaultTagsDataSource_ignore(t *testing.T) {
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultTags_Tags1("Tabac", "Louis Chiron"),
-					testAccAWSDefaultTagsDataSource(),
+					testAccDefaultTagsDataSource(),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "tags.%", "1"),
@@ -108,7 +108,7 @@ func TestAccAWSDefaultTagsDataSource_ignore(t *testing.T) {
 			{
 				Config: acctest.ConfigCompose(
 					acctest.ConfigDefaultAndIgnoreTagsKeys1("Tabac", "Louis Chiron"),
-					testAccAWSDefaultTagsDataSource(),
+					testAccDefaultTagsDataSource(),
 				),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "tags.%", "0"),
@@ -118,6 +118,6 @@ func TestAccAWSDefaultTagsDataSource_ignore(t *testing.T) {
 	})
 }
 
-func testAccAWSDefaultTagsDataSource() string {
+func testAccDefaultTagsDataSource() string {
 	return `data "aws_default_tags" "test" {}`
 }

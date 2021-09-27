@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSBillingServiceAccount_basic(t *testing.T) {
+func TestAccNASBillingServiceAccountDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_billing_service_account.main"
 
 	billingAccountID := "386209384616"
@@ -18,7 +18,7 @@ func TestAccAWSBillingServiceAccount_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsBillingServiceAccountConfig,
+				Config: testAccCheckAWSBillingServiceAccountConfig,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "id", billingAccountID),
 					acctest.CheckResourceAttrGlobalARNAccountID(dataSourceName, "arn", billingAccountID, "iam", "root"),
@@ -28,6 +28,6 @@ func TestAccAWSBillingServiceAccount_basic(t *testing.T) {
 	})
 }
 
-const testAccCheckAwsBillingServiceAccountConfig = `
+const testAccCheckAWSBillingServiceAccountConfig = `
 data "aws_billing_service_account" "main" {}
 `

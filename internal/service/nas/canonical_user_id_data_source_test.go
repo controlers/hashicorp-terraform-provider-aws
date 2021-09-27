@@ -10,23 +10,23 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsCanonicalUserId_basic(t *testing.T) {
+func TestAccNASCanonicalUserIDDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, s3.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsCanonicalUserIdConfig,
+				Config: testAccCanonicalUserIdDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccDataSourceAwsCanonicalUserIdCheckExists("data.aws_canonical_user_id.current"),
+					testAccCanonicalUserIdCheckExistsDataSource("data.aws_canonical_user_id.current"),
 				),
 			},
 		},
 	})
 }
 
-func testAccDataSourceAwsCanonicalUserIdCheckExists(name string) resource.TestCheckFunc {
+func testAccCanonicalUserIdCheckExistsDataSource(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -44,6 +44,6 @@ func testAccDataSourceAwsCanonicalUserIdCheckExists(name string) resource.TestCh
 	}
 }
 
-const testAccDataSourceAwsCanonicalUserIdConfig = `
+const testAccCanonicalUserIdDataSourceConfig = `
 data "aws_canonical_user_id" "current" {}
 `
