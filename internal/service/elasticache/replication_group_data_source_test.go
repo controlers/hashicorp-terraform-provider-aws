@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsElasticacheReplicationGroup_basic(t *testing.T) {
+func TestAccElastiCacheReplicationGroupDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
 	dataSourceName := "data.aws_elasticache_replication_group.test"
@@ -22,7 +22,7 @@ func TestAccDataSourceAwsElasticacheReplicationGroup_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsElasticacheReplicationGroupConfig_basic(rName),
+				Config: testAccReplicationGroupDataSourceConfig_basic(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "auth_token_enabled", "false"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "arn", resourceName, "arn"),
@@ -43,7 +43,7 @@ func TestAccDataSourceAwsElasticacheReplicationGroup_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsElasticacheReplicationGroup_ClusterMode(t *testing.T) {
+func TestAccElastiCacheReplicationGroupDataSource_clusterMode(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
 	dataSourceName := "data.aws_elasticache_replication_group.test"
@@ -54,7 +54,7 @@ func TestAccDataSourceAwsElasticacheReplicationGroup_ClusterMode(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsElasticacheReplicationGroupConfig_ClusterMode(rName),
+				Config: testAccReplicationGroupDataSourceConfig_ClusterMode(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(dataSourceName, "auth_token_enabled", "false"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "automatic_failover_enabled", resourceName, "automatic_failover_enabled"),
@@ -70,7 +70,7 @@ func TestAccDataSourceAwsElasticacheReplicationGroup_ClusterMode(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsElasticacheReplicationGroup_MultiAZ(t *testing.T) {
+func TestAccElastiCacheReplicationGroupDataSource_multiAZ(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
 	dataSourceName := "data.aws_elasticache_replication_group.test"
@@ -81,7 +81,7 @@ func TestAccDataSourceAwsElasticacheReplicationGroup_MultiAZ(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsElasticacheReplicationGroupConfig_MultiAZ(rName),
+				Config: testAccReplicationGroupDataSourceConfig_MultiAZ(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "automatic_failover_enabled", resourceName, "automatic_failover_enabled"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "multi_az_enabled", resourceName, "multi_az_enabled"),
@@ -91,7 +91,7 @@ func TestAccDataSourceAwsElasticacheReplicationGroup_MultiAZ(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsElasticacheReplicationGroup_NonExistent(t *testing.T) {
+func TestAccElastiCacheReplicationGroupDataSource_nonExistent(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -99,14 +99,14 @@ func TestAccDataSourceAwsElasticacheReplicationGroup_NonExistent(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccDataSourceAwsElasticacheReplicationGroupConfig_NonExistent,
+				Config:      testAccReplicationGroupDataSourceConfig_NonExistent,
 				ExpectError: regexp.MustCompile(`couldn't find resource`),
 			},
 		},
 	})
 }
 
-func testAccDataSourceAwsElasticacheReplicationGroupConfig_basic(rName string) string {
+func testAccReplicationGroupDataSourceConfig_basic(rName string) string {
 	return acctest.ConfigAvailableAZsNoOptIn() + fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -125,7 +125,7 @@ data "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccDataSourceAwsElasticacheReplicationGroupConfig_ClusterMode(rName string) string {
+func testAccReplicationGroupDataSourceConfig_ClusterMode(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -146,7 +146,7 @@ data "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccDataSourceAwsElasticacheReplicationGroupConfig_MultiAZ(rName string) string {
+func testAccReplicationGroupDataSourceConfig_MultiAZ(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -163,7 +163,7 @@ data "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-const testAccDataSourceAwsElasticacheReplicationGroupConfig_NonExistent = `
+const testAccReplicationGroupDataSourceConfig_NonExistent = `
 data "aws_elasticache_replication_group" "test" {
   replication_group_id = "tf-acc-test-nonexistent"
 }

@@ -83,7 +83,7 @@ func testSweepElasticacheReplicationGroups(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSElasticacheReplicationGroup_basic(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_basic(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -92,12 +92,12 @@ func TestAccAWSElasticacheReplicationGroup_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig(rName),
+				Config: testAccReplicationGroupConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "engine", "redis"),
 					acctest.CheckResourceAttrRegionalARN(resourceName, "arn", "elasticache", fmt.Sprintf("replicationgroup:%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "1"),
@@ -124,7 +124,7 @@ func TestAccAWSElasticacheReplicationGroup_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_Uppercase(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_uppercase(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -133,12 +133,12 @@ func TestAccAWSElasticacheReplicationGroup_Uppercase(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_Uppercase(strings.ToUpper(rName)),
+				Config: testAccReplicationGroupConfig_Uppercase(strings.ToUpper(rName)),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "replication_group_id", rName),
 				),
 			},
@@ -152,7 +152,7 @@ func TestAccAWSElasticacheReplicationGroup_Uppercase(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_EngineVersion_Update(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_EngineVersion_update(t *testing.T) {
 	var v1, v2, v3, v4, v5 elasticache.ReplicationGroup
 	var c1, c2, c3, c4, c5 map[string]*elasticache.CacheCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -162,53 +162,53 @@ func TestAccAWSElasticacheReplicationGroup_EngineVersion_Update(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_EngineVersion(rName, "3.2.6"),
+				Config: testAccReplicationGroupConfig_EngineVersion(rName, "3.2.6"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &v1),
-					testAccCheckAWSElastiCacheReplicationGroupMemberClusters(resourceName, &c1),
+					testAccCheckReplicationGroupExists(resourceName, &v1),
+					testAccCheckReplicationGroupMemberClusters(resourceName, &c1),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "3.2.6"),
 					resource.TestCheckResourceAttr(resourceName, "engine_version_actual", "3.2.6"),
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_EngineVersion(rName, "3.2.4"),
+				Config: testAccReplicationGroupConfig_EngineVersion(rName, "3.2.4"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &v2),
-					testAccCheckAWSElastiCacheReplicationGroupMemberClusters(resourceName, &c2),
-					testAccCheckAWSElastiCacheReplicationGroupRecreated(&c1, &c2),
+					testAccCheckReplicationGroupExists(resourceName, &v2),
+					testAccCheckReplicationGroupMemberClusters(resourceName, &c2),
+					testAccCheckReplicationGroupRecreated(&c1, &c2),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "3.2.4"),
 					resource.TestCheckResourceAttr(resourceName, "engine_version_actual", "3.2.4"),
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_EngineVersion(rName, "3.2.10"),
+				Config: testAccReplicationGroupConfig_EngineVersion(rName, "3.2.10"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &v3),
-					testAccCheckAWSElastiCacheReplicationGroupMemberClusters(resourceName, &c3),
-					testAccCheckAWSElastiCacheReplicationGroupNotRecreated(&c2, &c3),
+					testAccCheckReplicationGroupExists(resourceName, &v3),
+					testAccCheckReplicationGroupMemberClusters(resourceName, &c3),
+					testAccCheckReplicationGroupNotRecreated(&c2, &c3),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "3.2.10"),
 					resource.TestCheckResourceAttr(resourceName, "engine_version_actual", "3.2.10"),
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_EngineVersion(rName, "6.x"),
+				Config: testAccReplicationGroupConfig_EngineVersion(rName, "6.x"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &v4),
-					testAccCheckAWSElastiCacheReplicationGroupMemberClusters(resourceName, &c4),
-					testAccCheckAWSElastiCacheReplicationGroupNotRecreated(&c3, &c4),
+					testAccCheckReplicationGroupExists(resourceName, &v4),
+					testAccCheckReplicationGroupMemberClusters(resourceName, &c4),
+					testAccCheckReplicationGroupNotRecreated(&c3, &c4),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "6.x"),
 					resource.TestMatchResourceAttr(resourceName, "engine_version_actual", regexp.MustCompile(`^6\.[[:digit:]]+\.[[:digit:]]+$`)),
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_EngineVersion(rName, "5.0.6"),
+				Config: testAccReplicationGroupConfig_EngineVersion(rName, "5.0.6"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &v5),
-					testAccCheckAWSElastiCacheReplicationGroupMemberClusters(resourceName, &c5),
-					testAccCheckAWSElastiCacheReplicationGroupRecreated(&c4, &c5),
+					testAccCheckReplicationGroupExists(resourceName, &v5),
+					testAccCheckReplicationGroupMemberClusters(resourceName, &c5),
+					testAccCheckReplicationGroupRecreated(&c4, &c5),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", "5.0.6"),
 					resource.TestCheckResourceAttr(resourceName, "engine_version_actual", "5.0.6"),
 				),
@@ -217,7 +217,7 @@ func TestAccAWSElasticacheReplicationGroup_EngineVersion_Update(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_disappears(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_disappears(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -226,12 +226,12 @@ func TestAccAWSElasticacheReplicationGroup_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig(rName),
+				Config: testAccReplicationGroupConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					acctest.CheckResourceDisappears(acctest.Provider, tfelasticache.ResourceReplicationGroup(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -240,7 +240,7 @@ func TestAccAWSElasticacheReplicationGroup_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_updateDescription(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_updateDescription(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -249,12 +249,12 @@ func TestAccAWSElasticacheReplicationGroup_updateDescription(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig(rName),
+				Config: testAccReplicationGroupConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "1"),
 					resource.TestCheckResourceAttr(resourceName, "replication_group_description", "test description"),
 					resource.TestCheckResourceAttr(resourceName, "auto_minor_version_upgrade", "false"),
@@ -267,9 +267,9 @@ func TestAccAWSElasticacheReplicationGroup_updateDescription(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigUpdatedDescription(rName),
+				Config: testAccReplicationGroupUpdatedDescriptionConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "1"),
 					resource.TestCheckResourceAttr(resourceName, "replication_group_description", "updated description"),
 					resource.TestCheckResourceAttr(resourceName, "auto_minor_version_upgrade", "true"),
@@ -279,7 +279,7 @@ func TestAccAWSElasticacheReplicationGroup_updateDescription(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_updateMaintenanceWindow(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_updateMaintenanceWindow(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -288,12 +288,12 @@ func TestAccAWSElasticacheReplicationGroup_updateMaintenanceWindow(t *testing.T)
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig(rName),
+				Config: testAccReplicationGroupConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "maintenance_window", "tue:06:30-tue:07:30"),
 				),
 			},
@@ -304,9 +304,9 @@ func TestAccAWSElasticacheReplicationGroup_updateMaintenanceWindow(t *testing.T)
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigUpdatedMaintenanceWindow(rName),
+				Config: testAccReplicationGroupUpdatedMaintenanceWindowConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "maintenance_window", "wed:03:00-wed:06:00"),
 				),
 			},
@@ -314,7 +314,7 @@ func TestAccAWSElasticacheReplicationGroup_updateMaintenanceWindow(t *testing.T)
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_updateNodeSize(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_updateNodeSize(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -323,12 +323,12 @@ func TestAccAWSElasticacheReplicationGroup_updateNodeSize(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig(rName),
+				Config: testAccReplicationGroupConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "1"),
 					resource.TestCheckResourceAttr(resourceName, "node_type", "cache.t3.small"),
 				),
@@ -340,9 +340,9 @@ func TestAccAWSElasticacheReplicationGroup_updateNodeSize(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigUpdatedNodeSize(rName),
+				Config: testAccReplicationGroupUpdatedNodeSizeConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "1"),
 					resource.TestCheckResourceAttr(resourceName, "node_type", "cache.t3.medium"),
 				),
@@ -352,7 +352,7 @@ func TestAccAWSElasticacheReplicationGroup_updateNodeSize(t *testing.T) {
 }
 
 //This is a test to prove that we panic we get in https://github.com/hashicorp/terraform/issues/9097
-func TestAccAWSElasticacheReplicationGroup_updateParameterGroup(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_updateParameterGroup(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	parameterGroupResourceName1 := "aws_elasticache_parameter_group.test.0"
 	parameterGroupResourceName2 := "aws_elasticache_parameter_group.test.1"
@@ -363,12 +363,12 @@ func TestAccAWSElasticacheReplicationGroup_updateParameterGroup(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigParameterGroupName(rName, 0),
+				Config: testAccReplicationGroupParameterGroupNameConfig(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttrPair(resourceName, "parameter_group_name", parameterGroupResourceName1, "name"),
 				),
 			},
@@ -379,9 +379,9 @@ func TestAccAWSElasticacheReplicationGroup_updateParameterGroup(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigParameterGroupName(rName, 1),
+				Config: testAccReplicationGroupParameterGroupNameConfig(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttrPair(resourceName, "parameter_group_name", parameterGroupResourceName2, "name"),
 				),
 			},
@@ -389,7 +389,7 @@ func TestAccAWSElasticacheReplicationGroup_updateParameterGroup(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_vpc(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_vpc(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	resourceName := "aws_elasticache_replication_group.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -398,12 +398,12 @@ func TestAccAWSElasticacheReplicationGroup_vpc(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupInVPCConfig(rName),
+				Config: testAccReplicationGroupInVPCConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "1"),
 					resource.TestCheckResourceAttr(resourceName, "auto_minor_version_upgrade", "false"),
 				),
@@ -418,7 +418,7 @@ func TestAccAWSElasticacheReplicationGroup_vpc(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_multiAzNotInVpc(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_multiAzNotInVPC(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -427,12 +427,12 @@ func TestAccAWSElasticacheReplicationGroup_multiAzNotInVpc(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_MultiAZNotInVPC_Basic(rName),
+				Config: testAccReplicationGroupConfig_MultiAZNotInVPC_Basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", "true"),
@@ -445,9 +445,9 @@ func TestAccAWSElasticacheReplicationGroup_multiAzNotInVpc(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_MultiAZNotInVPC_AvailabilityZones(rName),
+				Config: testAccReplicationGroupConfig_MultiAZNotInVPC_AvailabilityZones(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", "true"),
@@ -466,7 +466,7 @@ func TestAccAWSElasticacheReplicationGroup_multiAzNotInVpc(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_multiAzInVpc(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_multiAzInVPC(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -475,12 +475,12 @@ func TestAccAWSElasticacheReplicationGroup_multiAzInVpc(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupMultiAZInVPCConfig(rName),
+				Config: testAccReplicationGroupMultiAZInVPCConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", "true"),
@@ -506,24 +506,24 @@ func TestAccAWSElasticacheReplicationGroup_multiAzInVpc(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_Validation_multiAz_NoAutomaticFailover(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ValidationMultiAz_noAutomaticFailover(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSElasticacheReplicationGroupConfig_MultiAZ_NoAutomaticFailover(rName),
+				Config:      testAccReplicationGroupConfig_MultiAZ_NoAutomaticFailover(rName),
 				ExpectError: regexp.MustCompile("automatic_failover_enabled must be true if multi_az_enabled is true"),
 			},
 		},
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_redisClusterInVpc2(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_redisClusterInVPC2(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -532,12 +532,12 @@ func TestAccAWSElasticacheReplicationGroup_redisClusterInVpc2(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupRedisClusterInVPCConfig(rName),
+				Config: testAccReplicationGroupRedisClusterInVPCConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", "false"),
@@ -559,7 +559,7 @@ func TestAccAWSElasticacheReplicationGroup_redisClusterInVpc2(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_ClusterMode_Basic(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ClusterMode_basic(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -568,12 +568,12 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_Basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -597,7 +597,7 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_Basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_ClusterMode_NonClusteredParameterGroup(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ClusterMode_nonClusteredParameterGroup(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -606,12 +606,12 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_NonClusteredParameterGrou
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig_NonClusteredParameterGroup(rName),
+				Config: testAccReplicationGroupNativeRedisClusterConfig_NonClusteredParameterGroup(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -633,7 +633,7 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_NonClusteredParameterGrou
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroups_ScaleUp(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ClusterModeUpdateNumNodeGroups_scaleUp(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -642,12 +642,12 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroups_Scale
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "4"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
@@ -657,9 +657,9 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroups_Scale
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 3, 1),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 3, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -673,7 +673,7 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroups_Scale
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroups_ScaleDown(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ClusterModeUpdateNumNodeGroups_scaleDown(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -682,12 +682,12 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroups_Scale
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 3, 1),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 3, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -698,9 +698,9 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroups_Scale
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -714,7 +714,7 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroups_Scale
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateReplicasPerNodeGroup(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ClusterMode_updateReplicasPerNodeGroup(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -723,12 +723,12 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateReplicasPerNodeGrou
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -739,9 +739,9 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateReplicasPerNodeGrou
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 2, 3),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 2, 3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -752,9 +752,9 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateReplicasPerNodeGrou
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 2, 2),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 2, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -768,7 +768,7 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateReplicasPerNodeGrou
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroupsAndReplicasPerNodeGroup_ScaleUp(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ClusterModeUpdateNumNodeGroupsAndReplicasPerNodeGroup_scaleUp(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -777,12 +777,12 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroupsAndRep
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -793,9 +793,9 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroupsAndRep
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 3, 2),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 3, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -809,7 +809,7 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroupsAndRep
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroupsAndReplicasPerNodeGroup_ScaleDown(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ClusterModeUpdateNumNodeGroupsAndReplicasPerNodeGroup_scaleDown(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -818,12 +818,12 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroupsAndRep
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 3, 2),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 3, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -834,9 +834,9 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroupsAndRep
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
+				Config: testAccReplicationGroupNativeRedisClusterConfig(rName, 2, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -850,7 +850,7 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_UpdateNumNodeGroupsAndRep
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_ClusterMode_SingleNode(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_ClusterMode_singleNode(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -859,12 +859,12 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_SingleNode(t *testing.T) 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig_SingleNode(rName),
+				Config: testAccReplicationGroupNativeRedisClusterConfig_SingleNode(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "cluster_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", "default.redis6.x.cluster.on"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
@@ -886,7 +886,7 @@ func TestAccAWSElasticacheReplicationGroup_ClusterMode_SingleNode(t *testing.T) 
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_clusteringAndCacheNodesCausesError(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_clusteringAndCacheNodesCausesError(t *testing.T) {
 	rInt := sdkacctest.RandInt()
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -894,17 +894,17 @@ func TestAccAWSElasticacheReplicationGroup_clusteringAndCacheNodesCausesError(t 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSElasticacheReplicationGroupNativeRedisClusterErrorConfig(rInt, rName),
+				Config:      testAccReplicationGroupNativeRedisClusterErrorConfig(rInt, rName),
 				ExpectError: regexp.MustCompile(`"cluster_mode.0.num_node_groups": conflicts with number_cache_clusters`),
 			},
 		},
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_enableSnapshotting(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_enableSnapshotting(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -913,12 +913,12 @@ func TestAccAWSElasticacheReplicationGroup_enableSnapshotting(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig(rName),
+				Config: testAccReplicationGroupConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "snapshot_retention_limit", "0"),
 				),
 			},
@@ -929,9 +929,9 @@ func TestAccAWSElasticacheReplicationGroup_enableSnapshotting(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigEnableSnapshotting(rName),
+				Config: testAccReplicationGroupEnableSnapshottingConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "snapshot_retention_limit", "2"),
 				),
 			},
@@ -939,7 +939,7 @@ func TestAccAWSElasticacheReplicationGroup_enableSnapshotting(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_enableAuthTokenTransitEncryption(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_enableAuthTokenTransitEncryption(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	resourceName := "aws_elasticache_replication_group.test"
 
@@ -947,12 +947,12 @@ func TestAccAWSElasticacheReplicationGroup_enableAuthTokenTransitEncryption(t *t
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroup_EnableAuthTokenTransitEncryptionConfig(sdkacctest.RandInt(), sdkacctest.RandString(10), sdkacctest.RandString(16)),
+				Config: testAccReplicationGroup_EnableAuthTokenTransitEncryptionConfig(sdkacctest.RandInt(), sdkacctest.RandString(10), sdkacctest.RandString(16)),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(
 						resourceName, "transit_encryption_enabled", "true"),
 				),
@@ -967,7 +967,7 @@ func TestAccAWSElasticacheReplicationGroup_enableAuthTokenTransitEncryption(t *t
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_enableAtRestEncryption(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_enableAtRestEncryption(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	resourceName := "aws_elasticache_replication_group.test"
 
@@ -975,12 +975,12 @@ func TestAccAWSElasticacheReplicationGroup_enableAtRestEncryption(t *testing.T) 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroup_EnableAtRestEncryptionConfig(sdkacctest.RandInt(), sdkacctest.RandString(10)),
+				Config: testAccReplicationGroup_EnableAtRestEncryptionConfig(sdkacctest.RandInt(), sdkacctest.RandString(10)),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "at_rest_encryption_enabled", "true"),
 				),
 			},
@@ -994,18 +994,18 @@ func TestAccAWSElasticacheReplicationGroup_enableAtRestEncryption(t *testing.T) 
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_useCmkKmsKeyId(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_useCMKKMSKeyID(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroup_UseCmkKmsKeyId(sdkacctest.RandInt(), sdkacctest.RandString(10)),
+				Config: testAccReplicationGroup_UseCMKKMSKeyID(sdkacctest.RandInt(), sdkacctest.RandString(10)),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists("aws_elasticache_replication_group.bar", &rg),
+					testAccCheckReplicationGroupExists("aws_elasticache_replication_group.bar", &rg),
 					resource.TestCheckResourceAttrSet("aws_elasticache_replication_group.bar", "kms_key_id"),
 				),
 			},
@@ -1013,7 +1013,7 @@ func TestAccAWSElasticacheReplicationGroup_useCmkKmsKeyId(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Basic(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_NumberCacheClusters_basic(t *testing.T) {
 	var replicationGroup elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1022,12 +1022,12 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Basic(t *testing.
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 2),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
@@ -1041,9 +1041,9 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Basic(t *testing.
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 4),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 4),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "4"),
@@ -1051,9 +1051,9 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Basic(t *testing.
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 2),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
@@ -1064,7 +1064,7 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Basic(t *testing.
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Failover_AutoFailoverDisabled(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_NumberCacheClustersFailover_autoFailoverDisabled(t *testing.T) {
 	var replicationGroup elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1076,12 +1076,12 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Failover_AutoFail
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_FailoverMultiAZ(rName, 3, autoFailoverEnabled, multiAZEnabled),
+				Config: testAccReplicationGroupConfig_FailoverMultiAZ(rName, 3, autoFailoverEnabled, multiAZEnabled),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", strconv.FormatBool(autoFailoverEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", strconv.FormatBool(multiAZEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "3"),
@@ -1100,13 +1100,13 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Failover_AutoFail
 					conn := acctest.Provider.Meta().(*conns.AWSClient).ElastiCacheConn
 					timeout := 40 * time.Minute
 
-					if err := resourceAwsElasticacheReplicationGroupSetPrimaryClusterID(conn, rName, formatReplicationGroupClusterID(rName, 3), timeout); err != nil {
+					if err := resourceReplicationGroupSetPrimaryClusterID(conn, rName, formatReplicationGroupClusterID(rName, 3), timeout); err != nil {
 						t.Fatalf("error changing primary cache cluster: %s", err)
 					}
 				},
-				Config: testAccAWSElasticacheReplicationGroupConfig_FailoverMultiAZ(rName, 2, autoFailoverEnabled, multiAZEnabled),
+				Config: testAccReplicationGroupConfig_FailoverMultiAZ(rName, 2, autoFailoverEnabled, multiAZEnabled),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", strconv.FormatBool(autoFailoverEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", strconv.FormatBool(multiAZEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
@@ -1117,7 +1117,7 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Failover_AutoFail
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Failover_AutoFailoverEnabled(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_NumberCacheClustersFailover_autoFailoverEnabled(t *testing.T) {
 	var replicationGroup elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1129,12 +1129,12 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Failover_AutoFail
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_FailoverMultiAZ(rName, 3, autoFailoverEnabled, multiAZEnabled),
+				Config: testAccReplicationGroupConfig_FailoverMultiAZ(rName, 3, autoFailoverEnabled, multiAZEnabled),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", strconv.FormatBool(autoFailoverEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", strconv.FormatBool(multiAZEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "3"),
@@ -1148,23 +1148,23 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Failover_AutoFail
 					timeout := 40 * time.Minute
 
 					// Must disable automatic failover first
-					if err := resourceAwsElasticacheReplicationGroupDisableAutomaticFailover(conn, rName, timeout); err != nil {
+					if err := resourceReplicationGroupDisableAutomaticFailover(conn, rName, timeout); err != nil {
 						t.Fatalf("error disabling automatic failover: %s", err)
 					}
 
 					// Set primary
-					if err := resourceAwsElasticacheReplicationGroupSetPrimaryClusterID(conn, rName, formatReplicationGroupClusterID(rName, 3), timeout); err != nil {
+					if err := resourceReplicationGroupSetPrimaryClusterID(conn, rName, formatReplicationGroupClusterID(rName, 3), timeout); err != nil {
 						t.Fatalf("error changing primary cache cluster: %s", err)
 					}
 
 					// Re-enable automatic failover like nothing ever happened
-					if err := resourceAwsElasticacheReplicationGroupEnableAutomaticFailover(conn, rName, multiAZEnabled, timeout); err != nil {
+					if err := resourceReplicationGroupEnableAutomaticFailover(conn, rName, multiAZEnabled, timeout); err != nil {
 						t.Fatalf("error re-enabling automatic failover: %s", err)
 					}
 				},
-				Config: testAccAWSElasticacheReplicationGroupConfig_FailoverMultiAZ(rName, 2, autoFailoverEnabled, multiAZEnabled),
+				Config: testAccReplicationGroupConfig_FailoverMultiAZ(rName, 2, autoFailoverEnabled, multiAZEnabled),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", strconv.FormatBool(autoFailoverEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", strconv.FormatBool(multiAZEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
@@ -1175,7 +1175,7 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_Failover_AutoFail
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MultiAZEnabled(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_NumberCacheClusters_multiAZEnabled(t *testing.T) {
 	var replicationGroup elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1187,12 +1187,12 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MultiAZEnabled(t 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_FailoverMultiAZ(rName, 3, autoFailoverEnabled, multiAZEnabled),
+				Config: testAccReplicationGroupConfig_FailoverMultiAZ(rName, 3, autoFailoverEnabled, multiAZEnabled),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", strconv.FormatBool(autoFailoverEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", strconv.FormatBool(multiAZEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "3"),
@@ -1206,23 +1206,23 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MultiAZEnabled(t 
 					timeout := 40 * time.Minute
 
 					// Must disable automatic failover first
-					if err := resourceAwsElasticacheReplicationGroupDisableAutomaticFailover(conn, rName, timeout); err != nil {
+					if err := resourceReplicationGroupDisableAutomaticFailover(conn, rName, timeout); err != nil {
 						t.Fatalf("error disabling automatic failover: %s", err)
 					}
 
 					// Set primary
-					if err := resourceAwsElasticacheReplicationGroupSetPrimaryClusterID(conn, rName, formatReplicationGroupClusterID(rName, 3), timeout); err != nil {
+					if err := resourceReplicationGroupSetPrimaryClusterID(conn, rName, formatReplicationGroupClusterID(rName, 3), timeout); err != nil {
 						t.Fatalf("error changing primary cache cluster: %s", err)
 					}
 
 					// Re-enable automatic failover like nothing ever happened
-					if err := resourceAwsElasticacheReplicationGroupEnableAutomaticFailover(conn, rName, multiAZEnabled, timeout); err != nil {
+					if err := resourceReplicationGroupEnableAutomaticFailover(conn, rName, multiAZEnabled, timeout); err != nil {
 						t.Fatalf("error re-enabling automatic failover: %s", err)
 					}
 				},
-				Config: testAccAWSElasticacheReplicationGroupConfig_FailoverMultiAZ(rName, 2, autoFailoverEnabled, multiAZEnabled),
+				Config: testAccReplicationGroupConfig_FailoverMultiAZ(rName, 2, autoFailoverEnabled, multiAZEnabled),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "automatic_failover_enabled", strconv.FormatBool(autoFailoverEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "multi_az_enabled", strconv.FormatBool(multiAZEnabled)),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
@@ -1233,7 +1233,7 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MultiAZEnabled(t 
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisappears_NoChange(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_NumberCacheClustersMemberClusterDisappears_noChange(t *testing.T) {
 	var replicationGroup elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1242,12 +1242,12 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 3),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "3"),
 					resource.TestCheckResourceAttr(resourceName, "member_clusters.#", "3"),
 				),
@@ -1268,9 +1268,9 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 						t.Fatalf("error deleting Cache Cluster (%s): %s", cacheClusterID, err)
 					}
 				},
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 3),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "3"),
 					resource.TestCheckResourceAttr(resourceName, "member_clusters.#", "3"),
 				),
@@ -1279,7 +1279,7 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisappears_AddMemberCluster(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_NumberCacheClustersMemberClusterDisappears_addMemberCluster(t *testing.T) {
 	var replicationGroup elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1288,12 +1288,12 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 3),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "3"),
 					resource.TestCheckResourceAttr(resourceName, "member_clusters.#", "3"),
 				),
@@ -1314,9 +1314,9 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 						t.Fatalf("error deleting Cache Cluster (%s): %s", cacheClusterID, err)
 					}
 				},
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 4),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 4),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "4"),
 					resource.TestCheckResourceAttr(resourceName, "member_clusters.#", "4"),
 				),
@@ -1325,7 +1325,7 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisappears_RemoveMemberCluster_AtTargetSize(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_NumberCacheClustersMemberClusterDisappearsRemoveMemberCluster_atTargetSize(t *testing.T) {
 	var replicationGroup elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1334,12 +1334,12 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 3),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 3),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "3"),
 					resource.TestCheckResourceAttr(resourceName, "member_clusters.#", "3"),
 				),
@@ -1360,9 +1360,9 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 						t.Fatalf("error deleting Cache Cluster (%s): %s", cacheClusterID, err)
 					}
 				},
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 2),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
 					resource.TestCheckResourceAttr(resourceName, "member_clusters.#", "2"),
 				),
@@ -1371,7 +1371,7 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisappears_RemoveMemberCluster_ScaleDown(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_NumberCacheClustersMemberClusterDisappearsRemoveMemberCluster_scaleDown(t *testing.T) {
 	var replicationGroup elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1380,12 +1380,12 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 4),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 4),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "4"),
 					resource.TestCheckResourceAttr(resourceName, "member_clusters.#", "4"),
 				),
@@ -1406,9 +1406,9 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 						t.Fatalf("error deleting Cache Cluster (%s): %s", cacheClusterID, err)
 					}
 				},
-				Config: testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName, 2),
+				Config: testAccReplicationGroupConfig_NumberCacheClusters(rName, 2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &replicationGroup),
+					testAccCheckReplicationGroupExists(resourceName, &replicationGroup),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", "2"),
 					resource.TestCheckResourceAttr(resourceName, "member_clusters.#", "2"),
 				),
@@ -1417,7 +1417,7 @@ func TestAccAWSElasticacheReplicationGroup_NumberCacheClusters_MemberClusterDisa
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_tags(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_tags(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1426,12 +1426,12 @@ func TestAccAWSElasticacheReplicationGroup_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigTags1(rName, "key1", "value1"),
+				Config: testAccReplicationGroupTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -1443,18 +1443,18 @@ func TestAccAWSElasticacheReplicationGroup_tags(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"apply_immediately"}, //not in the API
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccReplicationGroupTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigTags1(rName, "key2", "value2"),
+				Config: testAccReplicationGroupTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -1463,7 +1463,7 @@ func TestAccAWSElasticacheReplicationGroup_tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_FinalSnapshot(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_finalSnapshot(t *testing.T) {
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_replication_group.test"
@@ -1472,12 +1472,12 @@ func TestAccAWSElasticacheReplicationGroup_FinalSnapshot(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy: testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfigFinalSnapshot(rName),
+				Config: testAccReplicationGroupFinalSnapshotConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "final_snapshot_identifier", rName),
 				),
 			},
@@ -1485,7 +1485,7 @@ func TestAccAWSElasticacheReplicationGroup_FinalSnapshot(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_Validation_NoNodeType(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_Validation_noNodeType(t *testing.T) {
 	var providers []*schema.Provider
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -1496,17 +1496,17 @@ func TestAccAWSElasticacheReplicationGroup_Validation_NoNodeType(t *testing.T) {
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, elasticache.EndpointsID),
 		ProviderFactories: acctest.FactoriesMultipleRegion(&providers, 2),
-		CheckDestroy:      testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy:      testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSElasticacheReplicationGroupConfig_Validation_NoNodeType(rName),
+				Config:      testAccReplicationGroupConfig_Validation_NoNodeType(rName),
 				ExpectError: regexp.MustCompile(`"node_type" is required unless "global_replication_group_id" is set.`),
 			},
 		},
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_Validation_GlobalReplicationGroupIdAndNodeType(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_Validation_globalReplicationGroupIdAndNodeType(t *testing.T) {
 	var providers []*schema.Provider
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -1517,17 +1517,17 @@ func TestAccAWSElasticacheReplicationGroup_Validation_GlobalReplicationGroupIdAn
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, elasticache.EndpointsID),
 		ProviderFactories: acctest.FactoriesMultipleRegion(&providers, 2),
-		CheckDestroy:      testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy:      testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSElasticacheReplicationGroupConfig_Validation_GlobalReplicationGroupIdAndNodeType(rName),
+				Config:      testAccReplicationGroupConfig_Validation_GlobalReplicationGroupIdAndNodeType(rName),
 				ExpectError: regexp.MustCompile(`"global_replication_group_id": conflicts with node_type`),
 			},
 		},
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_Basic(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_GlobalReplicationGroupID_basic(t *testing.T) {
 	var providers []*schema.Provider
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1541,12 +1541,12 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_Basic(t *tes
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, elasticache.EndpointsID),
 		ProviderFactories: acctest.FactoriesMultipleRegion(&providers, 2),
-		CheckDestroy:      testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy:      testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
+				Config: testAccReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttrPair(resourceName, "global_replication_group_id", "aws_elasticache_global_replication_group.test", "global_replication_group_id"),
 					resource.TestCheckResourceAttrPair(resourceName, "node_type", primaryGroupResourceName, "node_type"),
 					resource.TestCheckResourceAttrPair(resourceName, "engine", primaryGroupResourceName, "engine"),
@@ -1557,7 +1557,7 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_Basic(t *tes
 				),
 			},
 			{
-				Config:                  testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
+				Config:                  testAccReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
 				ResourceName:            resourceName,
 				ImportState:             true,
 				ImportStateVerify:       true,
@@ -1567,7 +1567,7 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_Basic(t *tes
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_Full(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_GlobalReplicationGroupID_full(t *testing.T) {
 	var providers []*schema.Provider
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1584,12 +1584,12 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_Full(t *test
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, elasticache.EndpointsID),
 		ProviderFactories: acctest.FactoriesMultipleRegion(&providers, 2),
-		CheckDestroy:      testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy:      testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Full(rName, initialNumCacheClusters),
+				Config: testAccReplicationGroupConfig_GlobalReplicationGroupId_Full(rName, initialNumCacheClusters),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttrPair(resourceName, "global_replication_group_id", "aws_elasticache_global_replication_group.test", "global_replication_group_id"),
 					resource.TestCheckResourceAttrPair(resourceName, "node_type", primaryGroupResourceName, "node_type"),
 					resource.TestCheckResourceAttrPair(resourceName, "engine", primaryGroupResourceName, "engine"),
@@ -1607,16 +1607,16 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_Full(t *test
 				),
 			},
 			{
-				Config:                  testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
+				Config:                  testAccReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
 				ResourceName:            resourceName,
 				ImportState:             true,
 				ImportStateVerify:       true,
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Full(rName, updatedNumCacheClusters),
+				Config: testAccReplicationGroupConfig_GlobalReplicationGroupId_Full(rName, updatedNumCacheClusters),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					resource.TestCheckResourceAttr(resourceName, "number_cache_clusters", strconv.Itoa(updatedNumCacheClusters)),
 				),
 			},
@@ -1624,7 +1624,7 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_Full(t *test
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_ClusterMode_Basic(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_GlobalReplicationGroupIDClusterMode_basic(t *testing.T) {
 	var providers []*schema.Provider
 	var rg1, rg2 elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1638,12 +1638,12 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_ClusterMode_
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, elasticache.EndpointsID),
 		ProviderFactories: acctest.FactoriesMultipleRegion(&providers, 2),
-		CheckDestroy:      testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy:      testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode(rName, 2, 1),
+				Config: testAccReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode(rName, 2, 1),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg1),
+					testAccCheckReplicationGroupExists(resourceName, &rg1),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.0.num_node_groups", "2"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.0.replicas_per_node_group", "1"),
@@ -1656,16 +1656,16 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_ClusterMode_
 				),
 			},
 			{
-				Config:                  testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
+				Config:                  testAccReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
 				ResourceName:            resourceName,
 				ImportState:             true,
 				ImportStateVerify:       true,
 				ImportStateVerifyIgnore: []string{"apply_immediately"},
 			},
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode(rName, 1, 3),
+				Config: testAccReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode(rName, 1, 3),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg2),
+					testAccCheckReplicationGroupExists(resourceName, &rg2),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.0.num_node_groups", "2"),
 					resource.TestCheckResourceAttr(resourceName, "cluster_mode.0.replicas_per_node_group", "3"),
@@ -1681,7 +1681,7 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_ClusterMode_
 
 // Test for out-of-band deletion
 // Naming to allow grouping all TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_* tests
-func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_disappears(t *testing.T) { // nosemgrep: acceptance-test-naming-parent-disappears
+func TestAccElastiCacheReplicationGroup_GlobalReplicationGroupID_disappears(t *testing.T) { // nosemgrep: acceptance-test-naming-parent-disappears
 	var providers []*schema.Provider
 	var rg elasticache.ReplicationGroup
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1694,12 +1694,12 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_disappears(t
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, elasticache.EndpointsID),
 		ProviderFactories: acctest.FactoriesMultipleRegion(&providers, 2),
-		CheckDestroy:      testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy:      testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
+				Config: testAccReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSElasticacheReplicationGroupExists(resourceName, &rg),
+					testAccCheckReplicationGroupExists(resourceName, &rg),
 					acctest.CheckResourceDisappears(acctest.Provider, tfelasticache.ResourceReplicationGroup(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -1708,7 +1708,7 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_disappears(t
 	})
 }
 
-func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_ClusterMode_Validation_NumNodeGroupsOnSecondary(t *testing.T) {
+func TestAccElastiCacheReplicationGroup_GlobalReplicationGroupIDClusterModeValidation_numNodeGroupsOnSecondary(t *testing.T) {
 	var providers []*schema.Provider
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -1719,17 +1719,17 @@ func TestAccAWSElasticacheReplicationGroup_GlobalReplicationGroupId_ClusterMode_
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, elasticache.EndpointsID),
 		ProviderFactories: acctest.FactoriesMultipleRegion(&providers, 2),
-		CheckDestroy:      testAccCheckAWSElasticacheReplicationDestroy,
+		CheckDestroy:      testAccCheckReplicationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode_NumNodeGroupsOnSecondary(rName),
+				Config:      testAccReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode_NumNodeGroupsOnSecondary(rName),
 				ExpectError: regexp.MustCompile(`"global_replication_group_id": conflicts with cluster_mode.0.num_node_groups`),
 			},
 		},
 	})
 }
 
-func testAccCheckAWSElasticacheReplicationGroupExists(n string, v *elasticache.ReplicationGroup) resource.TestCheckFunc {
+func testAccCheckReplicationGroupExists(n string, v *elasticache.ReplicationGroup) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -1752,7 +1752,7 @@ func testAccCheckAWSElasticacheReplicationGroupExists(n string, v *elasticache.R
 	}
 }
 
-func testAccCheckAWSElasticacheReplicationDestroy(s *terraform.State) error {
+func testAccCheckReplicationDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ElastiCacheConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -1771,11 +1771,11 @@ func testAccCheckAWSElasticacheReplicationDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSElastiCacheReplicationGroupMemberClusters(n string, v *map[string]*elasticache.CacheCluster) resource.TestCheckFunc {
+func testAccCheckReplicationGroupMemberClusters(n string, v *map[string]*elasticache.CacheCluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		var rg elasticache.ReplicationGroup
 
-		err := testAccCheckAWSElasticacheReplicationGroupExists(n, &rg)(s)
+		err := testAccCheckReplicationGroupExists(n, &rg)(s)
 		if err != nil {
 			return err
 		}
@@ -1798,7 +1798,7 @@ func testAccCheckAWSElastiCacheReplicationGroupMemberClusters(n string, v *map[s
 	}
 }
 
-func testAccCheckAWSElastiCacheReplicationGroupRecreated(i, j *map[string]*elasticache.CacheCluster) resource.TestCheckFunc {
+func testAccCheckReplicationGroupRecreated(i, j *map[string]*elasticache.CacheCluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		for key, iv := range *i {
 			jv, ok := (*j)[key]
@@ -1815,7 +1815,7 @@ func testAccCheckAWSElastiCacheReplicationGroupRecreated(i, j *map[string]*elast
 	}
 }
 
-func testAccCheckAWSElastiCacheReplicationGroupNotRecreated(i, j *map[string]*elasticache.CacheCluster) resource.TestCheckFunc {
+func testAccCheckReplicationGroupNotRecreated(i, j *map[string]*elasticache.CacheCluster) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		for key, iv := range *i {
 			jv, ok := (*j)[key]
@@ -1832,7 +1832,7 @@ func testAccCheckAWSElastiCacheReplicationGroupNotRecreated(i, j *map[string]*el
 	}
 }
 
-func testAccAWSElasticacheReplicationGroupConfig(rName string) string {
+func testAccReplicationGroupConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -1847,7 +1847,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_Uppercase(rName string) string {
+func testAccReplicationGroupConfig_Uppercase(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -1894,7 +1894,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_EngineVersion(rName, engineVersion string) string {
+func testAccReplicationGroupConfig_EngineVersion(rName, engineVersion string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -1911,7 +1911,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName, engineVersion)
 }
 
-func testAccAWSElasticacheReplicationGroupConfigEnableSnapshotting(rName string) string {
+func testAccReplicationGroupEnableSnapshottingConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -1927,7 +1927,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfigParameterGroupName(rName string, parameterGroupNameIndex int) string {
+func testAccReplicationGroupParameterGroupNameConfig(rName string, parameterGroupNameIndex int) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_parameter_group" "test" {
   count = 2
@@ -1955,7 +1955,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName, parameterGroupNameIndex)
 }
 
-func testAccAWSElasticacheReplicationGroupConfigUpdatedDescription(rName string) string {
+func testAccReplicationGroupUpdatedDescriptionConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -1968,7 +1968,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfigUpdatedMaintenanceWindow(rName string) string {
+func testAccReplicationGroupUpdatedMaintenanceWindowConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -1983,7 +1983,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfigUpdatedNodeSize(rName string) string {
+func testAccReplicationGroupUpdatedNodeSizeConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -1995,7 +1995,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupInVPCConfig(rName string) string {
+func testAccReplicationGroupInVPCConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2057,7 +2057,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_MultiAZNotInVPC_Basic(rName string) string {
+func testAccReplicationGroupConfig_MultiAZNotInVPC_Basic(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -2070,7 +2070,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_MultiAZNotInVPC_AvailabilityZones(rName string) string {
+func testAccReplicationGroupConfig_MultiAZNotInVPC_AvailabilityZones(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2093,7 +2093,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupMultiAZInVPCConfig(rName string) string {
+func testAccReplicationGroupMultiAZInVPCConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2170,7 +2170,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_MultiAZ_NoAutomaticFailover(rName string) string {
+func testAccReplicationGroupConfig_MultiAZ_NoAutomaticFailover(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -2183,7 +2183,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupRedisClusterInVPCConfig(rName string) string {
+func testAccReplicationGroupRedisClusterInVPCConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2262,7 +2262,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupNativeRedisClusterErrorConfig(rInt int, rName string) string {
+func testAccReplicationGroupNativeRedisClusterErrorConfig(rInt int, rName string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2343,7 +2343,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rInt, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig(rName string, numNodeGroups, replicasPerNodeGroup int) string {
+func testAccReplicationGroupNativeRedisClusterConfig(rName string, numNodeGroups, replicasPerNodeGroup int) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2422,7 +2422,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName, numNodeGroups, replicasPerNodeGroup)
 }
 
-func testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig_NonClusteredParameterGroup(rName string) string {
+func testAccReplicationGroupNativeRedisClusterConfig_NonClusteredParameterGroup(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
@@ -2441,7 +2441,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName))
 }
 
-func testAccAWSElasticacheReplicationGroupNativeRedisClusterConfig_SingleNode(rName string) string {
+func testAccReplicationGroupNativeRedisClusterConfig_SingleNode(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
@@ -2460,7 +2460,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName))
 }
 
-func testAccAWSElasticacheReplicationGroup_UseCmkKmsKeyId(rInt int, rString string) string {
+func testAccReplicationGroup_UseCMKKMSKeyID(rInt int, rString string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2532,7 +2532,7 @@ resource "aws_elasticache_replication_group" "bar" {
 `, rInt, rInt, rString)
 }
 
-func testAccAWSElasticacheReplicationGroup_EnableAtRestEncryptionConfig(rInt int, rString string) string {
+func testAccReplicationGroup_EnableAtRestEncryptionConfig(rInt int, rString string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2599,7 +2599,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rInt, rInt, rString)
 }
 
-func testAccAWSElasticacheReplicationGroup_EnableAuthTokenTransitEncryptionConfig(rInt int, rString10 string, rString16 string) string {
+func testAccReplicationGroup_EnableAuthTokenTransitEncryptionConfig(rInt int, rString10 string, rString16 string) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2667,7 +2667,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rInt, rInt, rString10, rString16)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_NumberCacheClusters(rName string, numberCacheClusters int) string {
+func testAccReplicationGroupConfig_NumberCacheClusters(rName string, numberCacheClusters int) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2713,7 +2713,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName, numberCacheClusters)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_FailoverMultiAZ(rName string, numberCacheClusters int, autoFailover, multiAZ bool) string {
+func testAccReplicationGroupConfig_FailoverMultiAZ(rName string, numberCacheClusters int, autoFailover, multiAZ bool) string {
 	return fmt.Sprintf(`
 data "aws_availability_zones" "available" {
   state = "available"
@@ -2762,7 +2762,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName, numberCacheClusters, autoFailover, multiAZ)
 }
 
-func testAccAWSElasticacheReplicationGroupConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccReplicationGroupTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -2782,7 +2782,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSElasticacheReplicationGroupConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccReplicationGroupTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -2803,7 +2803,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName, tagKey1, tagValue1, tagKey2, tagValue2)
 }
 
-func testAccAWSElasticacheReplicationGroupConfigFinalSnapshot(rName string) string {
+func testAccReplicationGroupFinalSnapshotConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -2816,7 +2816,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_Validation_NoNodeType(rName string) string {
+func testAccReplicationGroupConfig_Validation_NoNodeType(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_elasticache_replication_group" "test" {
   replication_group_id          = %[1]q
@@ -2826,7 +2826,7 @@ resource "aws_elasticache_replication_group" "test" {
 `, rName)
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_Validation_GlobalReplicationGroupIdAndNodeType(rName string) string {
+func testAccReplicationGroupConfig_Validation_GlobalReplicationGroupIdAndNodeType(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigMultipleRegionProvider(2),
 		testAccElasticacheVpcBaseWithProvider(rName, "test", acctest.ProviderName, 1),
@@ -2870,7 +2870,7 @@ resource "aws_elasticache_replication_group" "primary" {
 `, rName))
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName string) string {
+func testAccReplicationGroupConfig_GlobalReplicationGroupId_Basic(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigMultipleRegionProvider(2),
 		testAccElasticacheVpcBaseWithProvider(rName, "test", acctest.ProviderName, 1),
@@ -2908,7 +2908,7 @@ resource "aws_elasticache_replication_group" "primary" {
 `, rName))
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_Full(rName string, numCacheClusters int) string {
+func testAccReplicationGroupConfig_GlobalReplicationGroupId_Full(rName string, numCacheClusters int) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigMultipleRegionProvider(2),
 		testAccElasticacheVpcBaseWithProvider(rName, "test", acctest.ProviderName, 2),
@@ -2959,7 +2959,7 @@ resource "aws_elasticache_replication_group" "primary" {
 `, rName, numCacheClusters))
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode(rName string, primaryReplicaCount, secondaryReplicaCount int) string {
+func testAccReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode(rName string, primaryReplicaCount, secondaryReplicaCount int) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigMultipleRegionProvider(2),
 		testAccElasticacheVpcBaseWithProvider(rName, "test", acctest.ProviderName, 2),
@@ -3008,7 +3008,7 @@ resource "aws_elasticache_replication_group" "primary" {
 `, rName, primaryReplicaCount, secondaryReplicaCount))
 }
 
-func testAccAWSElasticacheReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode_NumNodeGroupsOnSecondary(rName string) string {
+func testAccReplicationGroupConfig_GlobalReplicationGroupId_ClusterMode_NumNodeGroupsOnSecondary(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigMultipleRegionProvider(2),
 		testAccElasticacheVpcBaseWithProvider(rName, "test", acctest.ProviderName, 2),
@@ -3058,7 +3058,7 @@ resource "aws_elasticache_replication_group" "primary" {
 `, rName))
 }
 
-func resourceAwsElasticacheReplicationGroupDisableAutomaticFailover(conn *elasticache.ElastiCache, replicationGroupID string, timeout time.Duration) error {
+func resourceReplicationGroupDisableAutomaticFailover(conn *elasticache.ElastiCache, replicationGroupID string, timeout time.Duration) error {
 	return tfelasticache.ReplicationGroupModify(conn, timeout, &elasticache.ModifyReplicationGroupInput{
 		ReplicationGroupId:       aws.String(replicationGroupID),
 		ApplyImmediately:         aws.Bool(true),
@@ -3067,7 +3067,7 @@ func resourceAwsElasticacheReplicationGroupDisableAutomaticFailover(conn *elasti
 	})
 }
 
-func resourceAwsElasticacheReplicationGroupEnableAutomaticFailover(conn *elasticache.ElastiCache, replicationGroupID string, multiAZEnabled bool, timeout time.Duration) error {
+func resourceReplicationGroupEnableAutomaticFailover(conn *elasticache.ElastiCache, replicationGroupID string, multiAZEnabled bool, timeout time.Duration) error {
 	return tfelasticache.ReplicationGroupModify(conn, timeout, &elasticache.ModifyReplicationGroupInput{
 		ReplicationGroupId:       aws.String(replicationGroupID),
 		ApplyImmediately:         aws.Bool(true),
@@ -3076,7 +3076,7 @@ func resourceAwsElasticacheReplicationGroupEnableAutomaticFailover(conn *elastic
 	})
 }
 
-func resourceAwsElasticacheReplicationGroupSetPrimaryClusterID(conn *elasticache.ElastiCache, replicationGroupID, primaryClusterID string, timeout time.Duration) error {
+func resourceReplicationGroupSetPrimaryClusterID(conn *elasticache.ElastiCache, replicationGroupID, primaryClusterID string, timeout time.Duration) error {
 	return tfelasticache.ReplicationGroupModify(conn, timeout, &elasticache.ModifyReplicationGroupInput{
 		ReplicationGroupId: aws.String(replicationGroupID),
 		ApplyImmediately:   aws.Bool(true),

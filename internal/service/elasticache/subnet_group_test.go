@@ -62,7 +62,7 @@ func testSweepElasticacheSubnetGroups(region string) error {
 	return nil
 }
 
-func TestAccAWSElasticacheSubnetGroup_basic(t *testing.T) {
+func TestAccElastiCacheSubnetGroup_basic(t *testing.T) {
 	var csg elasticache.CacheSubnetGroup
 	resourceName := "aws_elasticache_subnet_group.test"
 
@@ -70,12 +70,12 @@ func TestAccAWSElasticacheSubnetGroup_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheSubnetGroupDestroy,
+		CheckDestroy: testAccCheckSubnetGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheSubnetGroupConfig(sdkacctest.RandInt()),
+				Config: testAccSubnetGroupConfig(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheSubnetGroupExists(resourceName, &csg),
+					testAccCheckSubnetGroupExists(resourceName, &csg),
 					resource.TestCheckResourceAttr(
 						resourceName, "description", "Managed by Terraform"),
 				),
@@ -91,7 +91,7 @@ func TestAccAWSElasticacheSubnetGroup_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSElasticacheSubnetGroup_update(t *testing.T) {
+func TestAccElastiCacheSubnetGroup_update(t *testing.T) {
 	var csg elasticache.CacheSubnetGroup
 	resourceName := "aws_elasticache_subnet_group.test"
 	rInt := sdkacctest.RandInt()
@@ -100,13 +100,13 @@ func TestAccAWSElasticacheSubnetGroup_update(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheSubnetGroupDestroy,
+		CheckDestroy: testAccCheckSubnetGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheSubnetGroupUpdateConfigPre(rInt),
+				Config: testAccSubnetGroupUpdatePreConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheSubnetGroupExists(resourceName, &csg),
-					testAccCheckAWSElastiCacheSubnetGroupAttrs(&csg, resourceName, 1),
+					testAccCheckSubnetGroupExists(resourceName, &csg),
+					testAccCheckSubnetGroupAttrs(&csg, resourceName, 1),
 				),
 			},
 			{
@@ -117,17 +117,17 @@ func TestAccAWSElasticacheSubnetGroup_update(t *testing.T) {
 					"description"},
 			},
 			{
-				Config: testAccAWSElasticacheSubnetGroupUpdateConfigPost(rInt),
+				Config: testAccSubnetGroupUpdatePostConfig(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheSubnetGroupExists(resourceName, &csg),
-					testAccCheckAWSElastiCacheSubnetGroupAttrs(&csg, resourceName, 2),
+					testAccCheckSubnetGroupExists(resourceName, &csg),
+					testAccCheckSubnetGroupAttrs(&csg, resourceName, 2),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSElasticacheSubnetGroup_tags(t *testing.T) {
+func TestAccElastiCacheSubnetGroup_tags(t *testing.T) {
 	var csg elasticache.CacheSubnetGroup
 	resourceName := "aws_elasticache_subnet_group.test"
 	rInt := sdkacctest.RandInt()
@@ -136,12 +136,12 @@ func TestAccAWSElasticacheSubnetGroup_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, elasticache.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSElasticacheSubnetGroupDestroy,
+		CheckDestroy: testAccCheckSubnetGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheSubnetGroupTags1(rInt, "key1", "value1"),
+				Config: testAccSubnetGroupTags1(rInt, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheSubnetGroupExists(resourceName, &csg),
+					testAccCheckSubnetGroupExists(resourceName, &csg),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 					resource.TestCheckResourceAttr(resourceName, "tags_all.%", "1"),
@@ -156,9 +156,9 @@ func TestAccAWSElasticacheSubnetGroup_tags(t *testing.T) {
 					"description"},
 			},
 			{
-				Config: testAccAWSElasticacheSubnetGroupTags2(rInt, "key1", "value1updated", "key2", "value2"),
+				Config: testAccSubnetGroupTags2(rInt, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheSubnetGroupExists(resourceName, &csg),
+					testAccCheckSubnetGroupExists(resourceName, &csg),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
@@ -168,9 +168,9 @@ func TestAccAWSElasticacheSubnetGroup_tags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSElasticacheSubnetGroupTags1(rInt, "key2", "value2"),
+				Config: testAccSubnetGroupTags1(rInt, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheSubnetGroupExists(resourceName, &csg),
+					testAccCheckSubnetGroupExists(resourceName, &csg),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 					resource.TestCheckResourceAttr(resourceName, "tags_all.%", "1"),
@@ -181,7 +181,7 @@ func TestAccAWSElasticacheSubnetGroup_tags(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSElasticacheSubnetGroupDestroy(s *terraform.State) error {
+func testAccCheckSubnetGroupDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ElastiCacheConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -205,7 +205,7 @@ func testAccCheckAWSElasticacheSubnetGroupDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSElasticacheSubnetGroupExists(n string, csg *elasticache.CacheSubnetGroup) resource.TestCheckFunc {
+func testAccCheckSubnetGroupExists(n string, csg *elasticache.CacheSubnetGroup) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -237,7 +237,7 @@ func testAccCheckAWSElasticacheSubnetGroupExists(n string, csg *elasticache.Cach
 	}
 }
 
-func testAccCheckAWSElastiCacheSubnetGroupAttrs(csg *elasticache.CacheSubnetGroup, n string, count int) resource.TestCheckFunc {
+func testAccCheckSubnetGroupAttrs(csg *elasticache.CacheSubnetGroup, n string, count int) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
 		rs, ok := s.RootModule().Resources[n]
@@ -257,7 +257,7 @@ func testAccCheckAWSElastiCacheSubnetGroupAttrs(csg *elasticache.CacheSubnetGrou
 	}
 }
 
-func testAccAWSElasticacheSubnetGroupConfig(rInt int) string {
+func testAccSubnetGroupConfig(rInt int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "foo" {
   cidr_block = "192.168.0.0/16"
@@ -287,7 +287,7 @@ resource "aws_elasticache_subnet_group" "test" {
 `, rInt))
 }
 
-func testAccAWSElasticacheSubnetGroupUpdateConfigPre(rInt int) string {
+func testAccSubnetGroupUpdatePreConfig(rInt int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "foo" {
   cidr_block = "10.0.0.0/16"
@@ -315,7 +315,7 @@ resource "aws_elasticache_subnet_group" "test" {
 `, rInt))
 }
 
-func testAccAWSElasticacheSubnetGroupUpdateConfigPost(rInt int) string {
+func testAccSubnetGroupUpdatePostConfig(rInt int) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "foo" {
   cidr_block = "10.0.0.0/16"
@@ -356,7 +356,7 @@ resource "aws_elasticache_subnet_group" "test" {
 `, rInt))
 }
 
-func testAccAWSElasticacheSubnetGroupTags1(rInt int, tag1Key, tag1Value string) string {
+func testAccSubnetGroupTags1(rInt int, tag1Key, tag1Value string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "foo" {
   cidr_block = "192.168.0.0/16"
@@ -390,7 +390,7 @@ resource "aws_elasticache_subnet_group" "test" {
 `, rInt, tag1Key, tag1Value))
 }
 
-func testAccAWSElasticacheSubnetGroupTags2(rInt int, tag1Key, tag1Value, tag2Key, tag2Value string) string {
+func testAccSubnetGroupTags2(rInt int, tag1Key, tag1Value, tag2Key, tag2Value string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "foo" {
   cidr_block = "192.168.0.0/16"

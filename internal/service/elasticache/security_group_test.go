@@ -67,7 +67,7 @@ func testSweepElasticacheCacheSecurityGroups(region string) error {
 	return nil
 }
 
-func TestAccAWSElasticacheSecurityGroup_basic(t *testing.T) {
+func TestAccElastiCacheSecurityGroup_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_elasticache_security_group.test"
 
@@ -75,12 +75,12 @@ func TestAccAWSElasticacheSecurityGroup_basic(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckEC2Classic(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, elasticache.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSElasticacheSecurityGroupDestroy,
+		CheckDestroy:      testAccCheckSecurityGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSElasticacheSecurityGroupConfig(rName),
+				Config: testAccSecurityGroupConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSElasticacheSecurityGroupExists(resourceName),
+					testAccCheckSecurityGroupExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "description", "Managed by Terraform"),
 				),
 			},
@@ -93,7 +93,7 @@ func TestAccAWSElasticacheSecurityGroup_basic(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSElasticacheSecurityGroupDestroy(s *terraform.State) error {
+func testAccCheckSecurityGroupDestroy(s *terraform.State) error {
 	conn := acctest.ProviderEC2Classic.Meta().(*conns.AWSClient).ElastiCacheConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -115,7 +115,7 @@ func testAccCheckAWSElasticacheSecurityGroupDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSElasticacheSecurityGroupExists(n string) resource.TestCheckFunc {
+func testAccCheckSecurityGroupExists(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -137,7 +137,7 @@ func testAccCheckAWSElasticacheSecurityGroupExists(n string) resource.TestCheckF
 	}
 }
 
-func testAccAWSElasticacheSecurityGroupConfig(rName string) string {
+func testAccSecurityGroupConfig(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigEC2ClassicRegionProvider(),
 		fmt.Sprintf(`
