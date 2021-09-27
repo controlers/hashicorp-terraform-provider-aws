@@ -80,20 +80,20 @@ func testAccErrorCheckSkipCognitoIdentityProvider(t *testing.T) resource.ErrorCh
 	)
 }
 
-func TestAccAWSCognitoUserPool_basic(t *testing.T) {
+func TestAccCognitoIDPUserPool_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_Name(rName),
+				Config: testAccUserPoolConfig_Name(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "cognito-idp", regexp.MustCompile(`userpool/.+`)),
 					resource.TestMatchResourceAttr(resourceName, "endpoint", regexp.MustCompile(`^cognito-idp\.[^.]+\.amazonaws.com/[\w-]+_[0-9a-zA-Z]+$`)),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
@@ -130,20 +130,20 @@ func TestAccAWSCognitoUserPool_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_recovery(t *testing.T) {
+func TestAccCognitoIDPUserPool_recovery(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfigAccountRecoverySingle(rName),
+				Config: testAccUserPoolAccountRecoverySingleConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "account_recovery_setting.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "account_recovery_setting.0.recovery_mechanism.#", "1"),
@@ -155,18 +155,18 @@ func TestAccAWSCognitoUserPool_recovery(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfigAccountRecoveryMulti(rName),
+				Config: testAccUserPoolAccountRecoveryMultiConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "account_recovery_setting.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "account_recovery_setting.0.recovery_mechanism.#", "2"),
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfigAccountRecoveryUpdate(rName),
+				Config: testAccUserPoolAccountRecoveryUpdateConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "account_recovery_setting.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "account_recovery_setting.0.recovery_mechanism.#", "1"),
@@ -176,20 +176,20 @@ func TestAccAWSCognitoUserPool_recovery(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withAdminCreateUserConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_withAdminCreateUser(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withAdminCreateUserConfiguration(rName),
+				Config: testAccUserPoolConfig_withAdminCreateUserConfiguration(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "admin_create_user_config.0.allow_admin_create_user_only", "true"),
 					resource.TestCheckResourceAttr(resourceName, "admin_create_user_config.0.invite_message_template.0.email_message", "Your username is {username} and temporary password is {####}. "),
 					resource.TestCheckResourceAttr(resourceName, "admin_create_user_config.0.invite_message_template.0.email_subject", "FooBar {####}"),
@@ -202,7 +202,7 @@ func TestAccAWSCognitoUserPool_withAdminCreateUserConfiguration(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withAdminCreateUserConfigurationUpdated(rName),
+				Config: testAccUserPoolConfig_withAdminCreateUserConfigurationUpdated(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "admin_create_user_config.0.allow_admin_create_user_only", "false"),
 					resource.TestCheckResourceAttr(resourceName, "admin_create_user_config.0.invite_message_template.0.email_message", "Your username is {username} and constant password is {####}. "),
@@ -215,20 +215,20 @@ func TestAccAWSCognitoUserPool_withAdminCreateUserConfiguration(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11858
-func TestAccAWSCognitoUserPool_withAdminCreateUserConfigurationAndPasswordPolicy(t *testing.T) {
+func TestAccCognitoIDPUserPool_withAdminCreateUserAndPasswordPolicy(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withAdminCreateUserConfigAndPasswordPolicy(rName),
+				Config: testAccUserPoolConfig_withAdminCreateUserConfigAndPasswordPolicy(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "admin_create_user_config.0.allow_admin_create_user_only", "true"),
 					resource.TestCheckResourceAttr(resourceName, "password_policy.0.temporary_password_validity_days", "7"),
 				),
@@ -242,20 +242,20 @@ func TestAccAWSCognitoUserPool_withAdminCreateUserConfigurationAndPasswordPolicy
 	})
 }
 
-func TestAccAWSCognitoUserPool_withAdvancedSecurityMode(t *testing.T) {
+func TestAccCognitoIDPUserPool_withAdvancedSecurityMode(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_AdvancedSecurityMode(rName, "OFF"),
+				Config: testAccUserPoolConfig_AdvancedSecurityMode(rName, "OFF"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "user_pool_add_ons.0.advanced_security_mode", "OFF"),
 				),
 			},
@@ -265,13 +265,13 @@ func TestAccAWSCognitoUserPool_withAdvancedSecurityMode(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_AdvancedSecurityMode(rName, "ENFORCED"),
+				Config: testAccUserPoolConfig_AdvancedSecurityMode(rName, "ENFORCED"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "user_pool_add_ons.0.advanced_security_mode", "ENFORCED"),
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_Name(rName),
+				Config: testAccUserPoolConfig_Name(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "user_pool_add_ons.#", "0"),
 				),
@@ -280,20 +280,20 @@ func TestAccAWSCognitoUserPool_withAdvancedSecurityMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withDeviceConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_withDevice(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withDeviceConfiguration(rName),
+				Config: testAccUserPoolConfig_withDeviceConfiguration(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "device_configuration.0.challenge_required_on_new_device", "true"),
 					resource.TestCheckResourceAttr(resourceName, "device_configuration.0.device_only_remembered_on_user_prompt", "false"),
 				),
@@ -304,7 +304,7 @@ func TestAccAWSCognitoUserPool_withDeviceConfiguration(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withDeviceConfigurationUpdated(rName),
+				Config: testAccUserPoolConfig_withDeviceConfigurationUpdated(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "device_configuration.0.challenge_required_on_new_device", "false"),
 					resource.TestCheckResourceAttr(resourceName, "device_configuration.0.device_only_remembered_on_user_prompt", "true"),
@@ -314,7 +314,7 @@ func TestAccAWSCognitoUserPool_withDeviceConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withEmailVerificationMessage(t *testing.T) {
+func TestAccCognitoIDPUserPool_withEmailVerificationMessage(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	subject := sdkacctest.RandString(10)
 	updatedSubject := sdkacctest.RandString(10)
@@ -323,15 +323,15 @@ func TestAccAWSCognitoUserPool_withEmailVerificationMessage(t *testing.T) {
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withEmailVerificationMessage(rName, subject, message),
+				Config: testAccUserPoolConfig_withEmailVerificationMessage(rName, subject, message),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "email_verification_subject", subject),
 					resource.TestCheckResourceAttr(resourceName, "email_verification_message", message),
 				),
@@ -342,7 +342,7 @@ func TestAccAWSCognitoUserPool_withEmailVerificationMessage(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withEmailVerificationMessage(rName, updatedSubject, upatedMessage),
+				Config: testAccUserPoolConfig_withEmailVerificationMessage(rName, updatedSubject, upatedMessage),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "email_verification_subject", updatedSubject),
 					resource.TestCheckResourceAttr(resourceName, "email_verification_message", upatedMessage),
@@ -352,19 +352,19 @@ func TestAccAWSCognitoUserPool_withEmailVerificationMessage(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_MFA_sms(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SmsConfiguration(rName),
+				Config: testAccUserPoolConfig_MFAConfiguration_SMSConfiguration(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -379,7 +379,7 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfiguration(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration(rName, cognitoidentityprovider.UserPoolMfaTypeOff),
+				Config: testAccUserPoolConfig_MFAConfiguration(rName, cognitoidentityprovider.UserPoolMfaTypeOff),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -387,7 +387,7 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfiguration(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SmsConfiguration(rName),
+				Config: testAccUserPoolConfig_MFAConfiguration_SMSConfiguration(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -400,19 +400,19 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfigurationAndSoftwareTokenMfaConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_MFA_smsAndSoftwareTokenMFA(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SmsConfigurationAndSoftwareTokenMfaConfigurationEnabled(rName, false),
+				Config: testAccUserPoolConfig_MFAConfiguration_SMSConfigurationAndSoftwareTokenMfaConfigurationEnabled(rName, false),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -428,7 +428,7 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfigurationAndSoftwareToken
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SmsConfigurationAndSoftwareTokenMfaConfigurationEnabled(rName, true),
+				Config: testAccUserPoolConfig_MFAConfiguration_SMSConfigurationAndSoftwareTokenMfaConfigurationEnabled(rName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -439,7 +439,7 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfigurationAndSoftwareToken
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration(rName, cognitoidentityprovider.UserPoolMfaTypeOff),
+				Config: testAccUserPoolConfig_MFAConfiguration(rName, cognitoidentityprovider.UserPoolMfaTypeOff),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -450,19 +450,19 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfigurationAndSoftwareToken
 	})
 }
 
-func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfigurationToSoftwareTokenMfaConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_MFA_smsToSoftwareTokenMFA(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SmsConfiguration(rName),
+				Config: testAccUserPoolConfig_MFAConfiguration_SMSConfiguration(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -477,7 +477,7 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfigurationToSoftwareTokenM
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SoftwareTokenMfaConfigurationEnabled(rName, true),
+				Config: testAccUserPoolConfig_MFAConfiguration_SoftwareTokenMfaConfigurationEnabled(rName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -489,18 +489,18 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SmsConfigurationToSoftwareTokenM
 	})
 }
 
-func TestAccAWSCognitoUserPool_MfaConfiguration_SoftwareTokenMfaConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_MFA_softwareTokenMFA(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SoftwareTokenMfaConfigurationEnabled(rName, true),
+				Config: testAccUserPoolConfig_MFAConfiguration_SoftwareTokenMfaConfigurationEnabled(rName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "0"),
@@ -514,7 +514,7 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SoftwareTokenMfaConfiguration(t 
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration(rName, cognitoidentityprovider.UserPoolMfaTypeOff),
+				Config: testAccUserPoolConfig_MFAConfiguration(rName, cognitoidentityprovider.UserPoolMfaTypeOff),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "0"),
@@ -522,7 +522,7 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SoftwareTokenMfaConfiguration(t 
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SoftwareTokenMfaConfigurationEnabled(rName, true),
+				Config: testAccUserPoolConfig_MFAConfiguration_SoftwareTokenMfaConfigurationEnabled(rName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "0"),
@@ -534,19 +534,19 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SoftwareTokenMfaConfiguration(t 
 	})
 }
 
-func TestAccAWSCognitoUserPool_MfaConfiguration_SoftwareTokenMfaConfigurationToSmsConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_MFA_softwareTokenMFAToSMS(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SoftwareTokenMfaConfigurationEnabled(rName, true),
+				Config: testAccUserPoolConfig_MFAConfiguration_SoftwareTokenMfaConfigurationEnabled(rName, true),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "0"),
@@ -560,7 +560,7 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SoftwareTokenMfaConfigurationToS
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_MfaConfiguration_SmsConfiguration(rName),
+				Config: testAccUserPoolConfig_MFAConfiguration_SMSConfiguration(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "ON"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -573,22 +573,22 @@ func TestAccAWSCognitoUserPool_MfaConfiguration_SoftwareTokenMfaConfigurationToS
 	})
 }
 
-func TestAccAWSCognitoUserPool_SmsAuthenticationMessage(t *testing.T) {
+func TestAccCognitoIDPUserPool_smsAuthenticationMessage(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	smsAuthenticationMessage1 := "test authentication message {####}"
 	smsAuthenticationMessage2 := "test authentication message updated {####}"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsAuthenticationMessage(rName, smsAuthenticationMessage1),
+				Config: testAccUserPoolConfig_SMSAuthenticationMessage(rName, smsAuthenticationMessage1),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "sms_authentication_message", smsAuthenticationMessage1),
 				),
 			},
@@ -598,9 +598,9 @@ func TestAccAWSCognitoUserPool_SmsAuthenticationMessage(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsAuthenticationMessage(rName, smsAuthenticationMessage2),
+				Config: testAccUserPoolConfig_SMSAuthenticationMessage(rName, smsAuthenticationMessage2),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "sms_authentication_message", smsAuthenticationMessage2),
 				),
 			},
@@ -608,19 +608,19 @@ func TestAccAWSCognitoUserPool_SmsAuthenticationMessage(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_SmsConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_sms(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsConfiguration_ExternalId(rName, "test"),
+				Config: testAccUserPoolConfig_SMSConfiguration_ExternalID(rName, "test"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -634,14 +634,14 @@ func TestAccAWSCognitoUserPool_SmsConfiguration(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_Name(rName),
+				Config: testAccUserPoolConfig_Name(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsConfiguration_ExternalId(rName, "test"),
+				Config: testAccUserPoolConfig_SMSConfiguration_ExternalID(rName, "test"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -653,19 +653,19 @@ func TestAccAWSCognitoUserPool_SmsConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_SmsConfiguration_ExternalId(t *testing.T) {
+func TestAccCognitoIDPUserPool_SMS_externalID(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsConfiguration_ExternalId(rName, "test"),
+				Config: testAccUserPoolConfig_SMSConfiguration_ExternalID(rName, "test"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -679,7 +679,7 @@ func TestAccAWSCognitoUserPool_SmsConfiguration_ExternalId(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsConfiguration_ExternalId(rName, "test2"),
+				Config: testAccUserPoolConfig_SMSConfiguration_ExternalID(rName, "test2"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -691,19 +691,19 @@ func TestAccAWSCognitoUserPool_SmsConfiguration_ExternalId(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_SmsConfiguration_SnsCallerArn(t *testing.T) {
+func TestAccCognitoIDPUserPool_SMS_snsCallerARN(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsConfiguration_ExternalId(rName, "test"),
+				Config: testAccUserPoolConfig_SMSConfiguration_ExternalID(rName, "test"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -717,7 +717,7 @@ func TestAccAWSCognitoUserPool_SmsConfiguration_SnsCallerArn(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsConfiguration_SnsCallerArn2(rName),
+				Config: testAccUserPoolConfig_SMSConfiguration_SNSCallerARN2(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", "OFF"),
 					resource.TestCheckResourceAttr(resourceName, "sms_configuration.#", "1"),
@@ -729,22 +729,22 @@ func TestAccAWSCognitoUserPool_SmsConfiguration_SnsCallerArn(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_SmsVerificationMessage(t *testing.T) {
+func TestAccCognitoIDPUserPool_smsVerificationMessage(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	smsVerificationMessage1 := "test verification message {####}"
 	smsVerificationMessage2 := "test verification message updated {####}"
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsVerificationMessage(rName, smsVerificationMessage1),
+				Config: testAccUserPoolConfig_SMSVerificationMessage(rName, smsVerificationMessage1),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "sms_verification_message", smsVerificationMessage1),
 				),
 			},
@@ -754,9 +754,9 @@ func TestAccAWSCognitoUserPool_SmsVerificationMessage(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_SmsVerificationMessage(rName, smsVerificationMessage2),
+				Config: testAccUserPoolConfig_SMSVerificationMessage(rName, smsVerificationMessage2),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "sms_verification_message", smsVerificationMessage2),
 				),
 			},
@@ -764,18 +764,18 @@ func TestAccAWSCognitoUserPool_SmsVerificationMessage(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withEmailConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_withEmail(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withEmailConfiguration(rName),
+				Config: testAccUserPoolConfig_withEmailConfiguration(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "email_configuration.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "email_configuration.0.reply_to_email_address", ""),
@@ -792,7 +792,7 @@ func TestAccAWSCognitoUserPool_withEmailConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withEmailConfigurationSource(t *testing.T) {
+func TestAccCognitoIDPUserPool_withEmailSource(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	replyTo := acctest.DefaultEmailAddress
 	resourceName := "aws_cognito_user_pool.test"
@@ -805,13 +805,13 @@ func TestAccAWSCognitoUserPool_withEmailConfigurationSource(t *testing.T) {
 	emailTo := sourceARN[strings.LastIndex(sourceARN, "/")+1:]
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withEmailConfigurationSource(rName, replyTo, sourceARN, emailTo, "DEVELOPER"),
+				Config: testAccUserPoolConfig_withEmailConfigurationSource(rName, replyTo, sourceARN, emailTo, "DEVELOPER"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "email_configuration.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "email_configuration.0.reply_to_email_address", replyTo),
@@ -825,20 +825,20 @@ func TestAccAWSCognitoUserPool_withEmailConfigurationSource(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withTags(t *testing.T) {
+func TestAccCognitoIDPUserPool_withTags(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_Tags1(rName, "key1", "value1"),
+				Config: testAccUserPoolConfig_Tags1(rName, "key1", "value1"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -849,7 +849,7 @@ func TestAccAWSCognitoUserPool_withTags(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_Tags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccUserPoolConfig_Tags2(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
@@ -857,9 +857,9 @@ func TestAccAWSCognitoUserPool_withTags(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_Tags1(rName, "key2", "value2"),
+				Config: testAccUserPoolConfig_Tags1(rName, "key2", "value2"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -868,20 +868,20 @@ func TestAccAWSCognitoUserPool_withTags(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withAliasAttributes(t *testing.T) {
+func TestAccCognitoIDPUserPool_withAliasAttributes(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withAliasAttributes(rName),
+				Config: testAccUserPoolConfig_withAliasAttributes(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "alias_attributes.#", "1"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "alias_attributes.*", "preferred_username"),
 					resource.TestCheckResourceAttr(resourceName, "auto_verified_attributes.#", "0"),
@@ -893,7 +893,7 @@ func TestAccAWSCognitoUserPool_withAliasAttributes(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withAliasAttributesUpdated(rName),
+				Config: testAccUserPoolConfig_withAliasAttributesUpdated(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "alias_attributes.#", "2"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "alias_attributes.*", "email"),
@@ -906,20 +906,20 @@ func TestAccAWSCognitoUserPool_withAliasAttributes(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withUsernameAttributes(t *testing.T) {
+func TestAccCognitoIDPUserPool_withUsernameAttributes(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withUsernameAttributes(rName),
+				Config: testAccUserPoolConfig_withUsernameAttributes(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "username_attributes.#", "1"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "username_attributes.*", "phone_number"),
 					resource.TestCheckResourceAttr(resourceName, "auto_verified_attributes.#", "0"),
@@ -931,7 +931,7 @@ func TestAccAWSCognitoUserPool_withUsernameAttributes(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withUsernameAttributesUpdated(rName),
+				Config: testAccUserPoolConfig_withUsernameAttributesUpdated(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "username_attributes.#", "2"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "username_attributes.*", "email"),
@@ -944,20 +944,20 @@ func TestAccAWSCognitoUserPool_withUsernameAttributes(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withPasswordPolicy(t *testing.T) {
+func TestAccCognitoIDPUserPool_withPasswordPolicy(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withPasswordPolicy(rName),
+				Config: testAccUserPoolConfig_withPasswordPolicy(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "password_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "password_policy.0.minimum_length", "7"),
 					resource.TestCheckResourceAttr(resourceName, "password_policy.0.require_lowercase", "true"),
@@ -973,7 +973,7 @@ func TestAccAWSCognitoUserPool_withPasswordPolicy(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withPasswordPolicyUpdated(rName),
+				Config: testAccUserPoolConfig_withPasswordPolicyUpdated(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "password_policy.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "password_policy.0.minimum_length", "9"),
@@ -988,20 +988,20 @@ func TestAccAWSCognitoUserPool_withPasswordPolicy(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withUsernameConfiguration(t *testing.T) {
+func TestAccCognitoIDPUserPool_withUsername(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withUsernameConfiguration(rName),
+				Config: testAccUserPoolConfig_withUsernameConfiguration(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "username_configuration.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "username_configuration.0.case_sensitive", "true"),
 				),
@@ -1012,9 +1012,9 @@ func TestAccAWSCognitoUserPool_withUsernameConfiguration(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withUsernameConfigurationUpdated(rName),
+				Config: testAccUserPoolConfig_withUsernameConfigurationUpdated(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "username_configuration.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "username_configuration.0.case_sensitive", "false"),
 				),
@@ -1023,22 +1023,22 @@ func TestAccAWSCognitoUserPool_withUsernameConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withLambdaConfig(t *testing.T) {
+func TestAccCognitoIDPUserPool_withLambda(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 	lambdaResourceName := "aws_lambda_function.test"
 	lambdaUpdatedResourceName := "aws_lambda_function.second"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withLambdaConfig(rName),
+				Config: testAccUserPoolConfig_withLambdaConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.#", "1"),
 					resource.TestCheckResourceAttrPair(resourceName, "lambda_config.0.create_auth_challenge", lambdaResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "lambda_config.0.custom_message", lambdaResourceName, "arn"),
@@ -1058,7 +1058,7 @@ func TestAccAWSCognitoUserPool_withLambdaConfig(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withLambdaConfigUpdated(rName),
+				Config: testAccUserPoolConfig_withLambdaConfigUpdated(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.#", "1"),
 					resource.TestCheckResourceAttrPair(resourceName, "lambda_config.0.create_auth_challenge", lambdaUpdatedResourceName, "arn"),
@@ -1074,9 +1074,9 @@ func TestAccAWSCognitoUserPool_withLambdaConfig(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_Name(rName),
+				Config: testAccUserPoolConfig_Name(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.#", "0"),
 				),
 			},
@@ -1084,7 +1084,7 @@ func TestAccAWSCognitoUserPool_withLambdaConfig(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSCognitoUserPoolNotRecreated(pool1, pool2 *cognitoidentityprovider.DescribeUserPoolOutput) resource.TestCheckFunc {
+func testAccCheckUserPoolNotRecreated(pool1, pool2 *cognitoidentityprovider.DescribeUserPoolOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if !aws.TimeValue(pool1.UserPool.CreationDate).Equal(aws.TimeValue(pool2.UserPool.CreationDate)) {
 			return fmt.Errorf("user pool was recreated. expected: %s, got: %s", pool1.UserPool.CreationDate, pool2.UserPool.CreationDate)
@@ -1093,22 +1093,22 @@ func testAccCheckAWSCognitoUserPoolNotRecreated(pool1, pool2 *cognitoidentitypro
 	}
 }
 
-func TestAccAWSCognitoUserPool_withLambdaConfig_emailConfig(t *testing.T) {
+func TestAccCognitoIDPUserPool_WithLambda_email(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 	lambdaResourceName := "aws_lambda_function.test"
 	lambdaUpdatedResourceName := "aws_lambda_function.second"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolLambdaConfigEmailSenderConfig(rName),
+				Config: testAccUserPoolLambdaEmailSenderConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.0.custom_email_sender.#", "1"),
 					resource.TestCheckResourceAttrPair(resourceName, "lambda_config.0.custom_email_sender.0.lambda_arn", lambdaResourceName, "arn"),
@@ -1121,7 +1121,7 @@ func TestAccAWSCognitoUserPool_withLambdaConfig_emailConfig(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolLambdaConfigEmailSenderConfigUpdated(rName),
+				Config: testAccUserPoolLambdaEmailSenderUpdatedConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.0.custom_email_sender.#", "1"),
@@ -1133,22 +1133,22 @@ func TestAccAWSCognitoUserPool_withLambdaConfig_emailConfig(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_withLambdaConfig_smsConfig(t *testing.T) {
+func TestAccCognitoIDPUserPool_WithLambda_sms(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 	lambdaResourceName := "aws_lambda_function.test"
 	lambdaUpdatedResourceName := "aws_lambda_function.second"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolLambdaConfigSMSSenderConfig(rName),
+				Config: testAccUserPoolLambdaSMSSenderConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.0.custom_sms_sender.#", "1"),
 					resource.TestCheckResourceAttrPair(resourceName, "lambda_config.0.custom_sms_sender.0.lambda_arn", lambdaResourceName, "arn"),
@@ -1161,7 +1161,7 @@ func TestAccAWSCognitoUserPool_withLambdaConfig_smsConfig(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolLambdaConfigSMSSenderConfigUpdated(rName),
+				Config: testAccUserPoolLambdaSMSSenderUpdatedConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "lambda_config.0.custom_sms_sender.#", "1"),
@@ -1173,21 +1173,21 @@ func TestAccAWSCognitoUserPool_withLambdaConfig_smsConfig(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_schemaAttributes(t *testing.T) {
+func TestAccCognitoIDPUserPool_schemaAttributes(t *testing.T) {
 	var pool1, pool2 cognitoidentityprovider.DescribeUserPoolOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withSchemaAttributes(rName),
+				Config: testAccUserPoolConfig_withSchemaAttributes(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, &pool1),
+					testAccCheckUserPoolExists(resourceName, &pool1),
 					resource.TestCheckResourceAttr(resourceName, "schema.#", "2"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "schema.*", map[string]string{
 						"attribute_data_type":            "String",
@@ -1212,10 +1212,10 @@ func TestAccAWSCognitoUserPool_schemaAttributes(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withSchemaAttributesUpdated(rName, "mybool"),
+				Config: testAccUserPoolConfig_withSchemaAttributesUpdated(rName, "mybool"),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, &pool2),
-					testAccCheckAWSCognitoUserPoolNotRecreated(&pool1, &pool2),
+					testAccCheckUserPoolExists(resourceName, &pool2),
+					testAccCheckUserPoolNotRecreated(&pool1, &pool2),
 					resource.TestCheckResourceAttr(resourceName, "schema.#", "3"),
 					resource.TestCheckTypeSetElemNestedAttrs(resourceName, "schema.*", map[string]string{
 						"attribute_data_type":            "String",
@@ -1259,60 +1259,60 @@ func TestAccAWSCognitoUserPool_schemaAttributes(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_schemaAttributesRemoved(t *testing.T) {
+func TestAccCognitoIDPUserPool_schemaAttributesRemoved(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withSchemaAttributesUpdated(rName, "mybool"),
+				Config: testAccUserPoolConfig_withSchemaAttributesUpdated(rName, "mybool"),
 			},
 			{
-				Config:      testAccAWSCognitoUserPoolConfig_withSchemaAttributes(rName),
+				Config:      testAccUserPoolConfig_withSchemaAttributes(rName),
 				ExpectError: regexp.MustCompile("cannot modify or remove schema items"),
 			},
 		},
 	})
 }
 
-func TestAccAWSCognitoUserPool_schemaAttributesModified(t *testing.T) {
+func TestAccCognitoIDPUserPool_schemaAttributesModified(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withSchemaAttributesUpdated(rName, "mybool"),
+				Config: testAccUserPoolConfig_withSchemaAttributesUpdated(rName, "mybool"),
 			},
 			{
-				Config:      testAccAWSCognitoUserPoolConfig_withSchemaAttributesUpdated(rName, "mybool2"),
+				Config:      testAccUserPoolConfig_withSchemaAttributesUpdated(rName, "mybool2"),
 				ExpectError: regexp.MustCompile("cannot modify or remove schema items"),
 			},
 		},
 	})
 }
 
-func TestAccAWSCognitoUserPool_withVerificationMessageTemplate(t *testing.T) {
+func TestAccCognitoIDPUserPool_withVerificationMessageTemplate(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withVerificationMessageTemplate(rName),
+				Config: testAccUserPoolConfig_withVerificationMessageTemplate(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "verification_message_template.0.default_email_option", "CONFIRM_WITH_LINK"),
 					resource.TestCheckResourceAttr(resourceName, "verification_message_template.0.email_message", "foo {####} bar"),
 					resource.TestCheckResourceAttr(resourceName, "verification_message_template.0.email_message_by_link", "{##foobar##}"),
@@ -1334,7 +1334,7 @@ func TestAccAWSCognitoUserPool_withVerificationMessageTemplate(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_withVerificationMessageTemplate_DefaultEmailOption(rName),
+				Config: testAccUserPoolConfig_withVerificationMessageTemplate_DefaultEmailOption(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "verification_message_template.0.default_email_option", "CONFIRM_WITH_CODE"),
 					resource.TestCheckResourceAttr(resourceName, "email_verification_message", "{####} Baz"),
@@ -1353,7 +1353,7 @@ func TestAccAWSCognitoUserPool_withVerificationMessageTemplate(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_update(t *testing.T) {
+func TestAccCognitoIDPUserPool_update(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	optionalMfa := "OPTIONAL"
 	offMfa := "OFF"
@@ -1362,15 +1362,15 @@ func TestAccAWSCognitoUserPool_update(t *testing.T) {
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_update(rName, optionalMfa, authenticationMessage),
+				Config: testAccUserPoolConfig_update(rName, optionalMfa, authenticationMessage),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "auto_verified_attributes.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", optionalMfa),
 					resource.TestCheckResourceAttr(resourceName, "email_verification_message", "Foo {####} Bar"),
@@ -1395,9 +1395,9 @@ func TestAccAWSCognitoUserPool_update(t *testing.T) {
 				ImportStateVerify: true,
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_update(rName, optionalMfa, updatedAuthenticationMessage),
+				Config: testAccUserPoolConfig_update(rName, optionalMfa, updatedAuthenticationMessage),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "auto_verified_attributes.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", optionalMfa),
 					resource.TestCheckResourceAttr(resourceName, "email_verification_message", "Foo {####} Bar"),
@@ -1417,9 +1417,9 @@ func TestAccAWSCognitoUserPool_update(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSCognitoUserPoolConfig_update(rName, offMfa, updatedAuthenticationMessage),
+				Config: testAccUserPoolConfig_update(rName, offMfa, updatedAuthenticationMessage),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					resource.TestCheckResourceAttr(resourceName, "auto_verified_attributes.#", "1"),
 					resource.TestCheckResourceAttr(resourceName, "mfa_configuration", offMfa),
 					resource.TestCheckResourceAttr(resourceName, "email_verification_message", "Foo {####} Bar"),
@@ -1442,20 +1442,20 @@ func TestAccAWSCognitoUserPool_update(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPool_disappears(t *testing.T) {
+func TestAccCognitoIDPUserPool_disappears(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_cognito_user_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDestroy,
+		CheckDestroy: testAccCheckUserPoolDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolConfig_Name(rName),
+				Config: testAccUserPoolConfig_Name(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolExists(resourceName, nil),
+					testAccCheckUserPoolExists(resourceName, nil),
 					acctest.CheckResourceDisappears(acctest.Provider, tfcognitoidp.ResourceUserPool(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -1464,7 +1464,7 @@ func TestAccAWSCognitoUserPool_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSCognitoUserPoolDestroy(s *terraform.State) error {
+func testAccCheckUserPoolDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).CognitoIDPConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -1489,7 +1489,7 @@ func testAccCheckAWSCognitoUserPoolDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSCognitoUserPoolExists(name string, pool *cognitoidentityprovider.DescribeUserPoolOutput) resource.TestCheckFunc {
+func testAccCheckUserPoolExists(name string, pool *cognitoidentityprovider.DescribeUserPoolOutput) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -1519,7 +1519,7 @@ func testAccCheckAWSCognitoUserPoolExists(name string, pool *cognitoidentityprov
 	}
 }
 
-func testAccPreCheckAWSCognitoIdentityProvider(t *testing.T) {
+func testAccPreCheckIdentityProvider(t *testing.T) {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).CognitoIDPConn
 
 	input := &cognitoidentityprovider.ListUserPoolsInput{
@@ -1537,7 +1537,7 @@ func testAccPreCheckAWSCognitoIdentityProvider(t *testing.T) {
 	}
 }
 
-func testAccAWSCognitoUserPoolConfigSmsConfigurationBase(rName string, externalID string) string {
+func testAccUserPoolSMSConfigurationBaseConfig(rName string, externalID string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -1577,7 +1577,7 @@ resource "aws_iam_role_policy" "test" {
 `, rName, externalID)
 }
 
-func testAccAWSCognitoUserPoolConfig_Name(rName string) string {
+func testAccUserPoolConfig_Name(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1585,7 +1585,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfigAccountRecoverySingle(rName string) string {
+func testAccUserPoolAccountRecoverySingleConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1600,7 +1600,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfigAccountRecoveryMulti(rName string) string {
+func testAccUserPoolAccountRecoveryMultiConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1620,7 +1620,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfigAccountRecoveryUpdate(rName string) string {
+func testAccUserPoolAccountRecoveryUpdateConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1635,7 +1635,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withAdminCreateUserConfiguration(rName string) string {
+func testAccUserPoolConfig_withAdminCreateUserConfiguration(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1653,7 +1653,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withAdminCreateUserConfigurationUpdated(rName string) string {
+func testAccUserPoolConfig_withAdminCreateUserConfigurationUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1671,7 +1671,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_AdvancedSecurityMode(rName string, advancedSecurityMode string) string {
+func testAccUserPoolConfig_AdvancedSecurityMode(rName string, advancedSecurityMode string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1683,7 +1683,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, advancedSecurityMode)
 }
 
-func testAccAWSCognitoUserPoolConfig_withDeviceConfiguration(rName string) string {
+func testAccUserPoolConfig_withDeviceConfiguration(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1696,7 +1696,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withDeviceConfigurationUpdated(rName string) string {
+func testAccUserPoolConfig_withDeviceConfigurationUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1709,7 +1709,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withEmailVerificationMessage(rName, subject, message string) string {
+func testAccUserPoolConfig_withEmailVerificationMessage(rName, subject, message string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name                       = %[1]q
@@ -1723,7 +1723,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, subject, message)
 }
 
-func testAccAWSCognitoUserPoolConfig_MfaConfiguration(rName string, mfaConfiguration string) string {
+func testAccUserPoolConfig_MFAConfiguration(rName string, mfaConfiguration string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   mfa_configuration = %[2]q
@@ -1732,8 +1732,8 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, mfaConfiguration)
 }
 
-func testAccAWSCognitoUserPoolConfig_MfaConfiguration_SmsConfiguration(rName string) string {
-	return testAccAWSCognitoUserPoolConfigSmsConfigurationBase(rName, "test") + fmt.Sprintf(`
+func testAccUserPoolConfig_MFAConfiguration_SMSConfiguration(rName string) string {
+	return testAccUserPoolSMSConfigurationBaseConfig(rName, "test") + fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   mfa_configuration = "ON"
   name              = %[1]q
@@ -1746,8 +1746,8 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_MfaConfiguration_SmsConfigurationAndSoftwareTokenMfaConfigurationEnabled(rName string, enabled bool) string {
-	return testAccAWSCognitoUserPoolConfigSmsConfigurationBase(rName, "test") + fmt.Sprintf(`
+func testAccUserPoolConfig_MFAConfiguration_SMSConfigurationAndSoftwareTokenMfaConfigurationEnabled(rName string, enabled bool) string {
+	return testAccUserPoolSMSConfigurationBaseConfig(rName, "test") + fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   mfa_configuration = "ON"
   name              = %[1]q
@@ -1764,7 +1764,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, enabled)
 }
 
-func testAccAWSCognitoUserPoolConfig_MfaConfiguration_SoftwareTokenMfaConfigurationEnabled(rName string, enabled bool) string {
+func testAccUserPoolConfig_MFAConfiguration_SoftwareTokenMfaConfigurationEnabled(rName string, enabled bool) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   mfa_configuration = "ON"
@@ -1777,7 +1777,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, enabled)
 }
 
-func testAccAWSCognitoUserPoolConfig_SmsAuthenticationMessage(rName, smsAuthenticationMessage string) string {
+func testAccUserPoolConfig_SMSAuthenticationMessage(rName, smsAuthenticationMessage string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name                       = %[1]q
@@ -1786,8 +1786,8 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, smsAuthenticationMessage)
 }
 
-func testAccAWSCognitoUserPoolConfig_SmsConfiguration_ExternalId(rName string, externalID string) string {
-	return testAccAWSCognitoUserPoolConfigSmsConfigurationBase(rName, externalID) + fmt.Sprintf(`
+func testAccUserPoolConfig_SMSConfiguration_ExternalID(rName string, externalID string) string {
+	return testAccUserPoolSMSConfigurationBaseConfig(rName, externalID) + fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
 
@@ -1799,8 +1799,8 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, externalID)
 }
 
-func testAccAWSCognitoUserPoolConfig_SmsConfiguration_SnsCallerArn2(rName string) string {
-	return testAccAWSCognitoUserPoolConfigSmsConfigurationBase(rName+"-2", "test") + fmt.Sprintf(`
+func testAccUserPoolConfig_SMSConfiguration_SNSCallerARN2(rName string) string {
+	return testAccUserPoolSMSConfigurationBaseConfig(rName+"-2", "test") + fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
 
@@ -1812,7 +1812,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_SmsVerificationMessage(rName, smsVerificationMessage string) string {
+func testAccUserPoolConfig_SMSVerificationMessage(rName, smsVerificationMessage string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name                     = %[1]q
@@ -1821,7 +1821,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, smsVerificationMessage)
 }
 
-func testAccAWSCognitoUserPoolConfig_Tags1(rName, tagKey1, tagValue1 string) string {
+func testAccUserPoolConfig_Tags1(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1833,7 +1833,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSCognitoUserPoolConfig_Tags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccUserPoolConfig_Tags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1846,7 +1846,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, tagKey1, tagValue1, tagKey2, tagValue2)
 }
 
-func testAccAWSCognitoUserPoolConfig_withEmailConfiguration(rName string) string {
+func testAccUserPoolConfig_withEmailConfiguration(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1858,7 +1858,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withEmailConfigurationSource(rName, email, arn, from, account string) string {
+func testAccUserPoolConfig_withEmailConfigurationSource(rName, email, arn, from, account string) string {
 	return fmt.Sprintf(`
 resource "aws_ses_configuration_set" "test" {
   name = %[1]q
@@ -1882,7 +1882,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName, email, arn, from, account)
 }
 
-func testAccAWSCognitoUserPoolConfig_withAliasAttributes(rName string) string {
+func testAccUserPoolConfig_withAliasAttributes(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1892,7 +1892,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withAliasAttributesUpdated(rName string) string {
+func testAccUserPoolConfig_withAliasAttributesUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1903,7 +1903,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withUsernameAttributes(rName string) string {
+func testAccUserPoolConfig_withUsernameAttributes(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1913,7 +1913,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withUsernameAttributesUpdated(rName string) string {
+func testAccUserPoolConfig_withUsernameAttributesUpdated(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1924,7 +1924,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withAdminCreateUserConfigAndPasswordPolicy(rName string) string {
+func testAccUserPoolConfig_withAdminCreateUserConfigAndPasswordPolicy(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1945,7 +1945,7 @@ resource "aws_cognito_user_pool" "test" {
 `, rName)
 }
 
-func testAccAWSCognitoUserPoolConfig_withPasswordPolicy(name string) string {
+func testAccUserPoolConfig_withPasswordPolicy(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1962,7 +1962,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_withPasswordPolicyUpdated(name string) string {
+func testAccUserPoolConfig_withPasswordPolicyUpdated(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1979,7 +1979,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_withUsernameConfiguration(name string) string {
+func testAccUserPoolConfig_withUsernameConfiguration(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -1991,7 +1991,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_withUsernameConfigurationUpdated(name string) string {
+func testAccUserPoolConfig_withUsernameConfigurationUpdated(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -2003,7 +2003,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfigLambdaConfigBase(name string) string {
+func testAccUserPoolLambdaBaseConfig(name string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "test" {
   name = %[1]q
@@ -2058,8 +2058,8 @@ POLICY
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_withLambdaConfig(name string) string {
-	return testAccAWSCognitoUserPoolConfigLambdaConfigBase(name) + fmt.Sprintf(`
+func testAccUserPoolConfig_withLambdaConfig(name string) string {
+	return testAccUserPoolLambdaBaseConfig(name) + fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
 
@@ -2079,8 +2079,8 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_withLambdaConfigUpdated(name string) string {
-	return testAccAWSCognitoUserPoolConfigLambdaConfigBase(name) + fmt.Sprintf(`
+func testAccUserPoolConfig_withLambdaConfigUpdated(name string) string {
+	return testAccUserPoolLambdaBaseConfig(name) + fmt.Sprintf(`
 resource "aws_lambda_function" "second" {
   filename      = "test-fixtures/lambdatest.zip"
   function_name = "%[1]s_second"
@@ -2108,8 +2108,8 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolLambdaConfigEmailSenderConfig(name string) string {
-	return testAccAWSCognitoUserPoolConfigLambdaConfigBase(name) + fmt.Sprintf(`
+func testAccUserPoolLambdaEmailSenderConfig(name string) string {
+	return testAccUserPoolLambdaBaseConfig(name) + fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
 
@@ -2125,8 +2125,8 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolLambdaConfigEmailSenderConfigUpdated(name string) string {
-	return testAccAWSCognitoUserPoolConfigLambdaConfigBase(name) + fmt.Sprintf(`
+func testAccUserPoolLambdaEmailSenderUpdatedConfig(name string) string {
+	return testAccUserPoolLambdaBaseConfig(name) + fmt.Sprintf(`
 resource "aws_lambda_function" "second" {
   filename      = "test-fixtures/lambdatest.zip"
   function_name = "%[1]s_second"
@@ -2150,8 +2150,8 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolLambdaConfigSMSSenderConfig(name string) string {
-	return testAccAWSCognitoUserPoolConfigLambdaConfigBase(name) + fmt.Sprintf(`
+func testAccUserPoolLambdaSMSSenderConfig(name string) string {
+	return testAccUserPoolLambdaBaseConfig(name) + fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
 
@@ -2167,8 +2167,8 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolLambdaConfigSMSSenderConfigUpdated(name string) string {
-	return testAccAWSCognitoUserPoolConfigLambdaConfigBase(name) + fmt.Sprintf(`
+func testAccUserPoolLambdaSMSSenderUpdatedConfig(name string) string {
+	return testAccUserPoolLambdaBaseConfig(name) + fmt.Sprintf(`
 resource "aws_lambda_function" "second" {
   filename      = "test-fixtures/lambdatest.zip"
   function_name = "%[1]s_second"
@@ -2192,7 +2192,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_withSchemaAttributes(name string) string {
+func testAccUserPoolConfig_withSchemaAttributes(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = "%[1]s"
@@ -2221,7 +2221,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_withSchemaAttributesUpdated(name string, boolname string) string {
+func testAccUserPoolConfig_withSchemaAttributesUpdated(name string, boolname string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = "%[1]s"
@@ -2263,7 +2263,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name, boolname)
 }
 
-func testAccAWSCognitoUserPoolConfig_withVerificationMessageTemplate(name string) string {
+func testAccUserPoolConfig_withVerificationMessageTemplate(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -2284,7 +2284,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_withVerificationMessageTemplate_DefaultEmailOption(name string) string {
+func testAccUserPoolConfig_withVerificationMessageTemplate_DefaultEmailOption(name string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool" "test" {
   name = %[1]q
@@ -2300,7 +2300,7 @@ resource "aws_cognito_user_pool" "test" {
 `, name)
 }
 
-func testAccAWSCognitoUserPoolConfig_update(name string, mfaconfig, smsAuthMsg string) string {
+func testAccUserPoolConfig_update(name string, mfaconfig, smsAuthMsg string) string {
 	return fmt.Sprintf(`
 data "aws_caller_identity" "current" {
 }

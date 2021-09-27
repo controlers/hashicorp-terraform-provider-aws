@@ -77,20 +77,20 @@ func testSweepCognitoUserPoolDomains(region string) error {
 	return nil
 }
 
-func TestAccAWSCognitoUserPoolDomain_basic(t *testing.T) {
+func TestAccCognitoIDPUserPoolDomain_basic(t *testing.T) {
 	domainName := fmt.Sprintf("tf-acc-test-domain-%d", sdkacctest.RandInt())
 	poolName := fmt.Sprintf("tf-acc-test-pool-%s", sdkacctest.RandString(10))
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDomainDestroy,
+		CheckDestroy: testAccCheckUserPoolDomainDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolDomainConfig_basic(domainName, poolName),
+				Config: testAccUserPoolDomainConfig_basic(domainName, poolName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolDomainExists("aws_cognito_user_pool_domain.main"),
+					testAccCheckUserPoolDomainExists("aws_cognito_user_pool_domain.main"),
 					resource.TestCheckResourceAttr("aws_cognito_user_pool_domain.main", "domain", domainName),
 					resource.TestCheckResourceAttr("aws_cognito_user_pool.main", "name", poolName),
 					resource.TestCheckResourceAttrSet("aws_cognito_user_pool_domain.main", "aws_account_id"),
@@ -108,7 +108,7 @@ func TestAccAWSCognitoUserPoolDomain_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPoolDomain_custom(t *testing.T) {
+func TestAccCognitoIDPUserPoolDomain_custom(t *testing.T) {
 	rootDomain := acctest.ACMCertificateDomainFromEnv(t)
 	domain := acctest.ACMCertificateRandomSubDomain(rootDomain)
 	poolName := fmt.Sprintf("tf-acc-test-pool-%s", sdkacctest.RandString(10))
@@ -121,12 +121,12 @@ func TestAccAWSCognitoUserPoolDomain_custom(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckCognitoUserPoolCustomDomain(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSCognitoUserPoolDomainDestroy,
+		CheckDestroy:      testAccCheckUserPoolDomainDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolDomainConfig_custom(rootDomain, domain, poolName),
+				Config: testAccUserPoolDomainConfig_custom(rootDomain, domain, poolName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolDomainExists(resourceName),
+					testAccCheckUserPoolDomainExists(resourceName),
 					acctest.CheckResourceAttrAccountID(resourceName, "aws_account_id"),
 					resource.TestCheckResourceAttrPair(resourceName, "certificate_arn", acmCertificateResourceName, "arn"),
 					//lintignore:AWSAT001 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11666
@@ -146,21 +146,21 @@ func TestAccAWSCognitoUserPoolDomain_custom(t *testing.T) {
 	})
 }
 
-func TestAccAWSCognitoUserPoolDomain_disappears(t *testing.T) {
+func TestAccCognitoIDPUserPoolDomain_disappears(t *testing.T) {
 	domainName := fmt.Sprintf("tf-acc-test-domain-%d", sdkacctest.RandInt())
 	poolName := fmt.Sprintf("tf-acc-test-pool-%s", sdkacctest.RandString(10))
 	resourceName := "aws_cognito_user_pool_domain.main"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCognitoIdentityProvider(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckIdentityProvider(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cognitoidentityprovider.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSCognitoUserPoolDomainDestroy,
+		CheckDestroy: testAccCheckUserPoolDomainDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCognitoUserPoolDomainConfig_basic(domainName, poolName),
+				Config: testAccUserPoolDomainConfig_basic(domainName, poolName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					testAccCheckAWSCognitoUserPoolDomainExists(resourceName),
+					testAccCheckUserPoolDomainExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfcognitoidp.ResourceUserPoolDomain(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -169,7 +169,7 @@ func TestAccAWSCognitoUserPoolDomain_disappears(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSCognitoUserPoolDomainExists(n string) resource.TestCheckFunc {
+func testAccCheckUserPoolDomainExists(n string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -190,7 +190,7 @@ func testAccCheckAWSCognitoUserPoolDomainExists(n string) resource.TestCheckFunc
 	}
 }
 
-func testAccCheckAWSCognitoUserPoolDomainDestroy(s *terraform.State) error {
+func testAccCheckUserPoolDomainDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).CognitoIDPConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -213,7 +213,7 @@ func testAccCheckAWSCognitoUserPoolDomainDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccAWSCognitoUserPoolDomainConfig_basic(domainName, poolName string) string {
+func testAccUserPoolDomainConfig_basic(domainName, poolName string) string {
 	return fmt.Sprintf(`
 resource "aws_cognito_user_pool_domain" "main" {
   domain       = "%s"
@@ -226,7 +226,7 @@ resource "aws_cognito_user_pool" "main" {
 `, domainName, poolName)
 }
 
-func testAccAWSCognitoUserPoolDomainConfig_custom(rootDomain string, domain string, poolName string) string {
+func testAccUserPoolDomainConfig_custom(rootDomain string, domain string, poolName string) string {
 	return acctest.ConfigCompose(
 		testAccCognitoUserPoolCustomDomainRegionProviderConfig(),
 		fmt.Sprintf(`
