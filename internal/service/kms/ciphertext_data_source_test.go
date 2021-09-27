@@ -8,14 +8,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsKmsCiphertext_basic(t *testing.T) {
+func TestAccKMSCiphertextDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsKmsCiphertextConfig_basic,
+				Config: testAccCiphertextDataSourceConfig_basic,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(
 						"data.aws_kms_ciphertext.foo", "ciphertext_blob"),
@@ -25,14 +25,14 @@ func TestAccDataSourceAwsKmsCiphertext_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsKmsCiphertext_validate(t *testing.T) {
+func TestAccKMSCiphertextDataSource_validate(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsKmsCiphertextConfig_validate,
+				Config: testAccCiphertextDataSourceConfig_validate,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(
 						"data.aws_kms_ciphertext.foo", "ciphertext_blob"),
@@ -42,14 +42,14 @@ func TestAccDataSourceAwsKmsCiphertext_validate(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsKmsCiphertext_validate_withContext(t *testing.T) {
+func TestAccKMSCiphertextDataSource_Validate_withContext(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsKmsCiphertextConfig_validate_withContext,
+				Config: testAccCiphertextDataSourceConfig_validate_withContext,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(
 						"data.aws_kms_ciphertext.foo", "ciphertext_blob"),
@@ -59,7 +59,7 @@ func TestAccDataSourceAwsKmsCiphertext_validate_withContext(t *testing.T) {
 	})
 }
 
-const testAccDataSourceAwsKmsCiphertextConfig_basic = `
+const testAccCiphertextDataSourceConfig_basic = `
 resource "aws_kms_key" "foo" {
   description = "tf-test-acc-data-source-aws-kms-ciphertext-basic"
   is_enabled  = true
@@ -72,7 +72,7 @@ data "aws_kms_ciphertext" "foo" {
 }
 `
 
-const testAccDataSourceAwsKmsCiphertextConfig_validate = `
+const testAccCiphertextDataSourceConfig_validate = `
 resource "aws_kms_key" "foo" {
   description = "tf-test-acc-data-source-aws-kms-ciphertext-validate"
   is_enabled  = true
@@ -85,7 +85,7 @@ data "aws_kms_ciphertext" "foo" {
 }
 `
 
-const testAccDataSourceAwsKmsCiphertextConfig_validate_withContext = `
+const testAccCiphertextDataSourceConfig_validate_withContext = `
 resource "aws_kms_key" "foo" {
   description = "tf-test-acc-data-source-aws-kms-ciphertext-validate-with-context"
   is_enabled  = true

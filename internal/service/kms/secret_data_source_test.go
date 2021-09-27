@@ -10,21 +10,21 @@ import (
 	tfkms "github.com/hashicorp/terraform-provider-aws/internal/service/kms"
 )
 
-func TestAccAWSKmsSecretDataSource_removed(t *testing.T) {
+func TestAccKMSSecretDataSource_removed(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAwsKmsSecretDataSourceConfig,
+				Config:      testAccSecretDataSourceConfig,
 				ExpectError: regexp.MustCompile(tfkms.SecretRemovedMessage),
 			},
 		},
 	})
 }
 
-const testAccAwsKmsSecretDataSourceConfig = `
+const testAccSecretDataSourceConfig = `
 data "aws_kms_secret" "testing" {
   secret {
     name    = "secret_name"

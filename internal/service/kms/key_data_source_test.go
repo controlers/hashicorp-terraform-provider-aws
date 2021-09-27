@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsKmsKey_basic(t *testing.T) {
+func TestAccKMSKeyDataSource_basic(t *testing.T) {
 	resourceName := "aws_kms_key.test"
 	datasourceName := "data.aws_kms_key.test"
 	rName := fmt.Sprintf("tf-testacc-kms-key-%s", sdkacctest.RandString(13))
@@ -22,9 +22,9 @@ func TestAccDataSourceAwsKmsKey_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsKmsKeyConfig(rName),
+				Config: testAccKeyDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccDataSourceAwsKmsKeyCheck(datasourceName),
+					testAccKeyCheckDataSource(datasourceName),
 					resource.TestCheckResourceAttrPair(datasourceName, "arn", resourceName, "arn"),
 					resource.TestCheckResourceAttrPair(datasourceName, "customer_master_key_spec", resourceName, "customer_master_key_spec"),
 					resource.TestCheckResourceAttrPair(datasourceName, "description", resourceName, "description"),
@@ -41,7 +41,7 @@ func TestAccDataSourceAwsKmsKey_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsKmsKeyCheck(name string) resource.TestCheckFunc {
+func testAccKeyCheckDataSource(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		_, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -52,7 +52,7 @@ func testAccDataSourceAwsKmsKeyCheck(name string) resource.TestCheckFunc {
 	}
 }
 
-func testAccDataSourceAwsKmsKeyConfig(rName string) string {
+func testAccKeyDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q

@@ -16,7 +16,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-func TestAccAWSKmsAlias_basic(t *testing.T) {
+func TestAccKMSAlias_basic(t *testing.T) {
 	var alias kms.AliasListEntry
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_alias.test"
@@ -26,12 +26,12 @@ func TestAccAWSKmsAlias_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsAliasDestroy,
+		CheckDestroy: testAccCheckAliasDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsAliasConfigName(rName),
+				Config: testAccAliasNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsAliasExists(resourceName, &alias),
+					testAccCheckAliasExists(resourceName, &alias),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "kms", regexp.MustCompile(`alias/.+`)),
 					resource.TestCheckResourceAttr(resourceName, "name", tfkms.AliasNamePrefix+rName),
 					resource.TestCheckResourceAttrPair(resourceName, "target_key_arn", keyResourceName, "arn"),
@@ -47,7 +47,7 @@ func TestAccAWSKmsAlias_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsAlias_disappears(t *testing.T) {
+func TestAccKMSAlias_disappears(t *testing.T) {
 	var alias kms.AliasListEntry
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_alias.test"
@@ -56,12 +56,12 @@ func TestAccAWSKmsAlias_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsAliasDestroy,
+		CheckDestroy: testAccCheckAliasDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsAliasConfigName(rName),
+				Config: testAccAliasNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsAliasExists(resourceName, &alias),
+					testAccCheckAliasExists(resourceName, &alias),
 					acctest.CheckResourceDisappears(acctest.Provider, tfkms.ResourceAlias(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -70,7 +70,7 @@ func TestAccAWSKmsAlias_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsAlias_Name_Generated(t *testing.T) {
+func TestAccKMSAlias_Name_generated(t *testing.T) {
 	var alias kms.AliasListEntry
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_alias.test"
@@ -79,12 +79,12 @@ func TestAccAWSKmsAlias_Name_Generated(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsAliasDestroy,
+		CheckDestroy: testAccCheckAliasDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsAliasConfigNameGenerated(rName),
+				Config: testAccAliasNameGeneratedConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsAliasExists(resourceName, &alias),
+					testAccCheckAliasExists(resourceName, &alias),
 					resource.TestMatchResourceAttr(resourceName, "name", regexp.MustCompile(fmt.Sprintf("%s[[:xdigit:]]{%d}", tfkms.AliasNamePrefix, resource.UniqueIDSuffixLength))),
 					resource.TestCheckResourceAttr(resourceName, "name_prefix", tfkms.AliasNamePrefix),
 				),
@@ -98,7 +98,7 @@ func TestAccAWSKmsAlias_Name_Generated(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsAlias_NamePrefix(t *testing.T) {
+func TestAccKMSAlias_namePrefix(t *testing.T) {
 	var alias kms.AliasListEntry
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_alias.test"
@@ -107,12 +107,12 @@ func TestAccAWSKmsAlias_NamePrefix(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsAliasDestroy,
+		CheckDestroy: testAccCheckAliasDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsAliasConfigNamePrefix(rName, tfkms.AliasNamePrefix+"tf-acc-test-prefix-"),
+				Config: testAccAliasNamePrefixConfig(rName, tfkms.AliasNamePrefix+"tf-acc-test-prefix-"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsAliasExists(resourceName, &alias),
+					testAccCheckAliasExists(resourceName, &alias),
 					create.TestCheckResourceAttrNameFromPrefix(resourceName, "name", tfkms.AliasNamePrefix+"tf-acc-test-prefix-"),
 					resource.TestCheckResourceAttr(resourceName, "name_prefix", tfkms.AliasNamePrefix+"tf-acc-test-prefix-"),
 				),
@@ -126,7 +126,7 @@ func TestAccAWSKmsAlias_NamePrefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsAlias_UpdateKeyID(t *testing.T) {
+func TestAccKMSAlias_updateKeyID(t *testing.T) {
 	var alias kms.AliasListEntry
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_alias.test"
@@ -137,20 +137,20 @@ func TestAccAWSKmsAlias_UpdateKeyID(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsAliasDestroy,
+		CheckDestroy: testAccCheckAliasDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsAliasConfigName(rName),
+				Config: testAccAliasNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsAliasExists(resourceName, &alias),
+					testAccCheckAliasExists(resourceName, &alias),
 					resource.TestCheckResourceAttrPair(resourceName, "target_key_arn", key1ResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "target_key_id", key1ResourceName, "id"),
 				),
 			},
 			{
-				Config: testAccAWSKmsAliasConfigUpdatedKeyId(rName),
+				Config: testAccAliasUpdatedKeyIDConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsAliasExists(resourceName, &alias),
+					testAccCheckAliasExists(resourceName, &alias),
 					resource.TestCheckResourceAttrPair(resourceName, "target_key_arn", key2ResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "target_key_id", key2ResourceName, "id"),
 				),
@@ -164,7 +164,7 @@ func TestAccAWSKmsAlias_UpdateKeyID(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsAlias_MultipleAliasesForSameKey(t *testing.T) {
+func TestAccKMSAlias_multipleAliasesForSameKey(t *testing.T) {
 	var alias kms.AliasListEntry
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_alias.test"
@@ -175,15 +175,15 @@ func TestAccAWSKmsAlias_MultipleAliasesForSameKey(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsAliasDestroy,
+		CheckDestroy: testAccCheckAliasDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsAliasConfigMultiple(rName),
+				Config: testAccAliasMultipleConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsAliasExists(resourceName, &alias),
+					testAccCheckAliasExists(resourceName, &alias),
 					resource.TestCheckResourceAttrPair(resourceName, "target_key_arn", keyResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "target_key_id", keyResourceName, "id"),
-					testAccCheckAWSKmsAliasExists(alias2ResourceName, &alias),
+					testAccCheckAliasExists(alias2ResourceName, &alias),
 					resource.TestCheckResourceAttrPair(alias2ResourceName, "target_key_arn", keyResourceName, "arn"),
 					resource.TestCheckResourceAttrPair(alias2ResourceName, "target_key_id", keyResourceName, "id"),
 				),
@@ -197,7 +197,7 @@ func TestAccAWSKmsAlias_MultipleAliasesForSameKey(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsAlias_ArnDiffSuppress(t *testing.T) {
+func TestAccKMSAlias_arnDiffSuppress(t *testing.T) {
 	var alias kms.AliasListEntry
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_alias.test"
@@ -206,12 +206,12 @@ func TestAccAWSKmsAlias_ArnDiffSuppress(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsAliasDestroy,
+		CheckDestroy: testAccCheckAliasDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsAliasConfigDiffSuppress(rName),
+				Config: testAccAliasDiffSuppressConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsAliasExists(resourceName, &alias),
+					testAccCheckAliasExists(resourceName, &alias),
 					resource.TestCheckResourceAttrSet(resourceName, "target_key_arn"),
 				),
 			},
@@ -223,13 +223,13 @@ func TestAccAWSKmsAlias_ArnDiffSuppress(t *testing.T) {
 			{
 				ExpectNonEmptyPlan: false,
 				PlanOnly:           true,
-				Config:             testAccAWSKmsAliasConfigDiffSuppress(rName),
+				Config:             testAccAliasDiffSuppressConfig(rName),
 			},
 		},
 	})
 }
 
-func testAccCheckAWSKmsAliasDestroy(s *terraform.State) error {
+func testAccCheckAliasDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).KMSConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -253,7 +253,7 @@ func testAccCheckAWSKmsAliasDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSKmsAliasExists(name string, v *kms.AliasListEntry) resource.TestCheckFunc {
+func testAccCheckAliasExists(name string, v *kms.AliasListEntry) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -278,7 +278,7 @@ func testAccCheckAWSKmsAliasExists(name string, v *kms.AliasListEntry) resource.
 	}
 }
 
-func testAccAWSKmsAliasConfigName(rName string) string {
+func testAccAliasNameConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -292,7 +292,7 @@ resource "aws_kms_alias" "test" {
 `, rName)
 }
 
-func testAccAWSKmsAliasConfigNameGenerated(rName string) string {
+func testAccAliasNameGeneratedConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -305,7 +305,7 @@ resource "aws_kms_alias" "test" {
 `, rName)
 }
 
-func testAccAWSKmsAliasConfigNamePrefix(rName, namePrefix string) string {
+func testAccAliasNamePrefixConfig(rName, namePrefix string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -319,7 +319,7 @@ resource "aws_kms_alias" "test" {
 `, rName, namePrefix)
 }
 
-func testAccAWSKmsAliasConfigUpdatedKeyId(rName string) string {
+func testAccAliasUpdatedKeyIDConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -338,7 +338,7 @@ resource "aws_kms_alias" "test" {
 `, rName)
 }
 
-func testAccAWSKmsAliasConfigMultiple(rName string) string {
+func testAccAliasMultipleConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -357,7 +357,7 @@ resource "aws_kms_alias" "test2" {
 `, rName)
 }
 
-func testAccAWSKmsAliasConfigDiffSuppress(rName string) string {
+func testAccAliasDiffSuppressConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q

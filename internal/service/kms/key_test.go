@@ -75,7 +75,7 @@ func testSweepKmsKeys(region string) error {
 	return nil
 }
 
-func TestAccAWSKmsKey_basic(t *testing.T) {
+func TestAccKMSKey_basic(t *testing.T) {
 	var key kms.KeyMetadata
 	resourceName := "aws_kms_key.test"
 
@@ -83,12 +83,12 @@ func TestAccAWSKmsKey_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKeyConfig(),
+				Config: testAccKeyConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 					resource.TestCheckResourceAttr(resourceName, "customer_master_key_spec", "SYMMETRIC_DEFAULT"),
 					resource.TestCheckResourceAttr(resourceName, "key_usage", "ENCRYPT_DECRYPT"),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),
@@ -104,7 +104,7 @@ func TestAccAWSKmsKey_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsKey_asymmetricKey(t *testing.T) {
+func TestAccKMSKey_asymmetricKey(t *testing.T) {
 	var key kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -113,12 +113,12 @@ func TestAccAWSKmsKey_asymmetricKey(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKey_asymmetric(rName),
+				Config: testAccKey_asymmetric(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 					resource.TestCheckResourceAttr(resourceName, "customer_master_key_spec", "ECC_NIST_P384"),
 					resource.TestCheckResourceAttr(resourceName, "key_usage", "SIGN_VERIFY"),
 				),
@@ -127,7 +127,7 @@ func TestAccAWSKmsKey_asymmetricKey(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsKey_disappears(t *testing.T) {
+func TestAccKMSKey_disappears(t *testing.T) {
 	var key kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -136,12 +136,12 @@ func TestAccAWSKmsKey_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKeyConfigName(rName),
+				Config: testAccKeyNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 					acctest.CheckResourceDisappears(acctest.Provider, tfkms.ResourceKey(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -150,7 +150,7 @@ func TestAccAWSKmsKey_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsKey_policy(t *testing.T) {
+func TestAccKMSKey_policy(t *testing.T) {
 	var key kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -160,13 +160,13 @@ func TestAccAWSKmsKey_policy(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKey_policy(rName),
+				Config: testAccKey_policy(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
-					testAccCheckAWSKmsKeyHasPolicy(resourceName, expectedPolicyText),
+					testAccCheckKeyExists(resourceName, &key),
+					testAccCheckKeyHasPolicy(resourceName, expectedPolicyText),
 				),
 			},
 			{
@@ -176,16 +176,16 @@ func TestAccAWSKmsKey_policy(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"deletion_window_in_days", "bypass_policy_lockout_safety_check"},
 			},
 			{
-				Config: testAccAWSKmsKey_removedPolicy(rName),
+				Config: testAccKey_removedPolicy(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAWSKmsKey_policyBypass(t *testing.T) {
+func TestAccKMSKey_policyBypass(t *testing.T) {
 	var key kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -194,16 +194,16 @@ func TestAccAWSKmsKey_policyBypass(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config:      testAccAWSKmsKey_policyBypass(rName, false),
+				Config:      testAccKey_policyBypass(rName, false),
 				ExpectError: regexp.MustCompile(`The new key policy will not allow you to update the key policy in the future`),
 			},
 			{
-				Config: testAccAWSKmsKey_policyBypass(rName, true),
+				Config: testAccKey_policyBypass(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 					resource.TestCheckResourceAttr(resourceName, "bypass_policy_lockout_safety_check", "true"),
 				),
 			},
@@ -217,7 +217,7 @@ func TestAccAWSKmsKey_policyBypass(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsKey_policyBypassUpdate(t *testing.T) {
+func TestAccKMSKey_policyBypassUpdate(t *testing.T) {
 	var before, after kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -226,19 +226,19 @@ func TestAccAWSKmsKey_policyBypassUpdate(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKeyConfigName(rName),
+				Config: testAccKeyNameConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &before),
+					testAccCheckKeyExists(resourceName, &before),
 					resource.TestCheckResourceAttr(resourceName, "bypass_policy_lockout_safety_check", "false"),
 				),
 			},
 			{
-				Config: testAccAWSKmsKey_policyBypass(rName, true),
+				Config: testAccKey_policyBypass(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &after),
+					testAccCheckKeyExists(resourceName, &after),
 					resource.TestCheckResourceAttr(resourceName, "bypass_policy_lockout_safety_check", "true"),
 				),
 			},
@@ -246,7 +246,7 @@ func TestAccAWSKmsKey_policyBypassUpdate(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsKey_Policy_IamRole(t *testing.T) {
+func TestAccKMSKey_Policy_iamRole(t *testing.T) {
 	var key kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -255,12 +255,12 @@ func TestAccAWSKmsKey_Policy_IamRole(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKeyConfigPolicyIamRole(rName),
+				Config: testAccKeyPolicyIAMRoleConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 				),
 			},
 			{
@@ -274,7 +274,7 @@ func TestAccAWSKmsKey_Policy_IamRole(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/7646
-func TestAccAWSKmsKey_Policy_IamServiceLinkedRole(t *testing.T) {
+func TestAccKMSKey_Policy_iamServiceLinkedRole(t *testing.T) {
 	var key kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -283,12 +283,12 @@ func TestAccAWSKmsKey_Policy_IamServiceLinkedRole(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKeyConfigPolicyIamServiceLinkedRole(rName),
+				Config: testAccKeyPolicyIAMServiceLinkedRoleConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 				),
 			},
 			{
@@ -301,7 +301,7 @@ func TestAccAWSKmsKey_Policy_IamServiceLinkedRole(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsKey_isEnabled(t *testing.T) {
+func TestAccKMSKey_isEnabled(t *testing.T) {
 	var key1, key2, key3 kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -310,14 +310,14 @@ func TestAccAWSKmsKey_isEnabled(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKey_enabledRotation(rName),
+				Config: testAccKey_enabledRotation(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key1),
+					testAccCheckKeyExists(resourceName, &key1),
 					resource.TestCheckResourceAttr(resourceName, "is_enabled", "true"),
-					testAccCheckAWSKmsKeyIsEnabled(&key1, true),
+					testAccCheckKeyIsEnabled(&key1, true),
 					resource.TestCheckResourceAttr("aws_kms_key.test", "enable_key_rotation", "true"),
 				),
 			},
@@ -328,20 +328,20 @@ func TestAccAWSKmsKey_isEnabled(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"deletion_window_in_days", "bypass_policy_lockout_safety_check"},
 			},
 			{
-				Config: testAccAWSKmsKey_disabled(rName),
+				Config: testAccKey_disabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key2),
+					testAccCheckKeyExists(resourceName, &key2),
 					resource.TestCheckResourceAttr(resourceName, "is_enabled", "false"),
-					testAccCheckAWSKmsKeyIsEnabled(&key2, false),
+					testAccCheckKeyIsEnabled(&key2, false),
 					resource.TestCheckResourceAttr(resourceName, "enable_key_rotation", "false"),
 				),
 			},
 			{
-				Config: testAccAWSKmsKey_enabled(rName),
+				Config: testAccKey_enabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key3),
+					testAccCheckKeyExists(resourceName, &key3),
 					resource.TestCheckResourceAttr(resourceName, "is_enabled", "true"),
-					testAccCheckAWSKmsKeyIsEnabled(&key3, true),
+					testAccCheckKeyIsEnabled(&key3, true),
 					resource.TestCheckResourceAttr(resourceName, "enable_key_rotation", "true"),
 				),
 			},
@@ -349,7 +349,7 @@ func TestAccAWSKmsKey_isEnabled(t *testing.T) {
 	})
 }
 
-func TestAccAWSKmsKey_tags(t *testing.T) {
+func TestAccKMSKey_tags(t *testing.T) {
 	var key kms.KeyMetadata
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_kms_key.test"
@@ -358,12 +358,12 @@ func TestAccAWSKmsKey_tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, kms.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSKmsKeyDestroy,
+		CheckDestroy: testAccCheckKeyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSKmsKeyConfigTags1(rName, "key1", "value1"),
+				Config: testAccKeyTags1Config(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -375,18 +375,18 @@ func TestAccAWSKmsKey_tags(t *testing.T) {
 				ImportStateVerifyIgnore: []string{"deletion_window_in_days", "bypass_policy_lockout_safety_check"},
 			},
 			{
-				Config: testAccAWSKmsKeyConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
+				Config: testAccKeyTags2Config(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
 			},
 			{
-				Config: testAccAWSKmsKeyConfigTags1(rName, "key2", "value2"),
+				Config: testAccKeyTags1Config(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSKmsKeyExists(resourceName, &key),
+					testAccCheckKeyExists(resourceName, &key),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -395,7 +395,7 @@ func TestAccAWSKmsKey_tags(t *testing.T) {
 	})
 }
 
-func testAccCheckAWSKmsKeyHasPolicy(name string, expectedPolicyText string) resource.TestCheckFunc {
+func testAccCheckKeyHasPolicy(name string, expectedPolicyText string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -431,7 +431,7 @@ func testAccCheckAWSKmsKeyHasPolicy(name string, expectedPolicyText string) reso
 	}
 }
 
-func testAccCheckAWSKmsKeyDestroy(s *terraform.State) error {
+func testAccCheckKeyDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).KMSConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -455,7 +455,7 @@ func testAccCheckAWSKmsKeyDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSKmsKeyExists(name string, key *kms.KeyMetadata) resource.TestCheckFunc {
+func testAccCheckKeyExists(name string, key *kms.KeyMetadata) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
@@ -482,7 +482,7 @@ func testAccCheckAWSKmsKeyExists(name string, key *kms.KeyMetadata) resource.Tes
 	}
 }
 
-func testAccCheckAWSKmsKeyIsEnabled(key *kms.KeyMetadata, isEnabled bool) resource.TestCheckFunc {
+func testAccCheckKeyIsEnabled(key *kms.KeyMetadata, isEnabled bool) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if got, want := aws.BoolValue(key.Enabled), isEnabled; got != want {
 			return fmt.Errorf("Expected key %q to have is_enabled=%t, given %t", aws.StringValue(key.Arn), want, got)
@@ -492,13 +492,13 @@ func testAccCheckAWSKmsKeyIsEnabled(key *kms.KeyMetadata, isEnabled bool) resour
 	}
 }
 
-func testAccAWSKmsKeyConfig() string {
+func testAccKeyConfig() string {
 	return `
 resource "aws_kms_key" "test" {}
 `
 }
 
-func testAccAWSKmsKeyConfigName(rName string) string {
+func testAccKeyNameConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -507,7 +507,7 @@ resource "aws_kms_key" "test" {
 `, rName)
 }
 
-func testAccAWSKmsKey_asymmetric(rName string) string {
+func testAccKey_asymmetric(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -519,7 +519,7 @@ resource "aws_kms_key" "test" {
 `, rName)
 }
 
-func testAccAWSKmsKey_policy(rName string) string {
+func testAccKey_policy(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -546,7 +546,7 @@ POLICY
 `, rName)
 }
 
-func testAccAWSKmsKey_policyBypass(rName string, bypassFlag bool) string {
+func testAccKey_policyBypass(rName string, bypassFlag bool) string {
 	return fmt.Sprintf(`
 data "aws_caller_identity" "current" {}
 
@@ -586,7 +586,7 @@ resource "aws_kms_key" "test" {
 `, rName, bypassFlag)
 }
 
-func testAccAWSKmsKeyConfigPolicyIamRole(rName string) string {
+func testAccKeyPolicyIAMRoleConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -645,7 +645,7 @@ resource "aws_kms_key" "test" {
 `, rName)
 }
 
-func testAccAWSKmsKeyConfigPolicyIamServiceLinkedRole(rName string) string {
+func testAccKeyPolicyIAMServiceLinkedRoleConfig(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -694,7 +694,7 @@ resource "aws_kms_key" "test" {
 `, rName)
 }
 
-func testAccAWSKmsKey_removedPolicy(rName string) string {
+func testAccKey_removedPolicy(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -703,7 +703,7 @@ resource "aws_kms_key" "test" {
 `, rName)
 }
 
-func testAccAWSKmsKey_enabledRotation(rName string) string {
+func testAccKey_enabledRotation(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -713,7 +713,7 @@ resource "aws_kms_key" "test" {
 `, rName)
 }
 
-func testAccAWSKmsKey_disabled(rName string) string {
+func testAccKey_disabled(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -724,7 +724,7 @@ resource "aws_kms_key" "test" {
 `, rName)
 }
 
-func testAccAWSKmsKey_enabled(rName string) string {
+func testAccKey_enabled(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description             = %[1]q
@@ -735,7 +735,7 @@ resource "aws_kms_key" "test" {
 `, rName)
 }
 
-func testAccAWSKmsKeyConfigTags1(rName, tagKey1, tagValue1 string) string {
+func testAccKeyTags1Config(rName, tagKey1, tagValue1 string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description = %[1]q
@@ -747,7 +747,7 @@ resource "aws_kms_key" "test" {
 `, rName, tagKey1, tagValue1)
 }
 
-func testAccAWSKmsKeyConfigTags2(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
+func testAccKeyTags2Config(rName, tagKey1, tagValue1, tagKey2, tagValue2 string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description = %[1]q
