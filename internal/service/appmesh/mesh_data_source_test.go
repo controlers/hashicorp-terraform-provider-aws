@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAWSAppmeshMesh_basic(t *testing.T) {
+func TestAccAppMeshMeshDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_appmesh_mesh.test"
 	dataSourceName := "data.aws_appmesh_mesh.test"
@@ -22,7 +22,7 @@ func TestAccDataSourceAWSAppmeshMesh_basic(t *testing.T) {
 		CheckDestroy: testAccCheckAppmeshMeshDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsAppmeshMeshDataSourceConfig(rName),
+				Config: testAccCheckMeshDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(resourceName, "arn", dataSourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "created_date", dataSourceName, "created_date"),
@@ -38,7 +38,7 @@ func TestAccDataSourceAWSAppmeshMesh_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSAppmeshMesh_meshOwner(t *testing.T) {
+func TestAccAppMeshMeshDataSource_meshOwner(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_appmesh_mesh.test"
 	dataSourceName := "data.aws_appmesh_mesh.test"
@@ -50,7 +50,7 @@ func TestAccDataSourceAWSAppmeshMesh_meshOwner(t *testing.T) {
 		CheckDestroy: testAccCheckAppmeshMeshDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsAppmeshMeshDataSourceConfig_meshOwner(rName),
+				Config: testAccCheckMeshDataSourceConfig_meshOwner(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(resourceName, "arn", dataSourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "created_date", dataSourceName, "created_date"),
@@ -66,7 +66,7 @@ func TestAccDataSourceAWSAppmeshMesh_meshOwner(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAWSAppmeshMesh_specAndTagsSet(t *testing.T) {
+func TestAccAppMeshMeshDataSource_specAndTagsSet(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_appmesh_mesh.test"
 	dataSourceName := "data.aws_appmesh_mesh.test"
@@ -78,7 +78,7 @@ func TestAccDataSourceAWSAppmeshMesh_specAndTagsSet(t *testing.T) {
 		CheckDestroy: testAccCheckAppmeshMeshDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsAppmeshMeshDataSourceConfig_specAndTagsSet(rName),
+				Config: testAccCheckMeshDataSourceConfig_specAndTagsSet(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(resourceName, "arn", dataSourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "created_date", dataSourceName, "created_date"),
@@ -94,7 +94,7 @@ func TestAccDataSourceAWSAppmeshMesh_specAndTagsSet(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsAppmeshMeshDataSourceConfig(rName string) string {
+func testAccCheckMeshDataSourceConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_appmesh_mesh" "test" {
   name = %[1]q
@@ -106,7 +106,7 @@ data "aws_appmesh_mesh" "test" {
 `, rName)
 }
 
-func testAccCheckAwsAppmeshMeshDataSourceConfig_meshOwner(rName string) string {
+func testAccCheckMeshDataSourceConfig_meshOwner(rName string) string {
 	return fmt.Sprintf(`
 data "aws_caller_identity" "current" {}
 
@@ -121,7 +121,7 @@ data "aws_appmesh_mesh" "test" {
 `, rName)
 }
 
-func testAccCheckAwsAppmeshMeshDataSourceConfig_specAndTagsSet(rName string) string {
+func testAccCheckMeshDataSourceConfig_specAndTagsSet(rName string) string {
 	return fmt.Sprintf(`
 data "aws_caller_identity" "current" {}
 

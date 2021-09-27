@@ -84,7 +84,7 @@ func testSweepAppmeshVirtualRouters(region string) error {
 	return nil
 }
 
-func testAccAwsAppmeshVirtualRouter_basic(t *testing.T) {
+func testAccVirtualRouter_basic(t *testing.T) {
 	var vr appmesh.VirtualRouterData
 	resourceName := "aws_appmesh_virtual_router.test"
 	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -138,7 +138,7 @@ func testAccAwsAppmeshVirtualRouter_basic(t *testing.T) {
 	})
 }
 
-func testAccAwsAppmeshVirtualRouter_tags(t *testing.T) {
+func testAccVirtualRouter_tags(t *testing.T) {
 	var vr appmesh.VirtualRouterData
 	resourceName := "aws_appmesh_virtual_router.test"
 	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")

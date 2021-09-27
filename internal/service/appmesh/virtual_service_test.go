@@ -81,7 +81,7 @@ func testSweepAppmeshVirtualServices(region string) error {
 	return nil
 }
 
-func testAccAwsAppmeshVirtualService_virtualNode(t *testing.T) {
+func testAccVirtualService_virtualNode(t *testing.T) {
 	var vs appmesh.VirtualServiceData
 	resourceName := "aws_appmesh_virtual_service.test"
 	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -135,7 +135,7 @@ func testAccAwsAppmeshVirtualService_virtualNode(t *testing.T) {
 	})
 }
 
-func testAccAwsAppmeshVirtualService_virtualRouter(t *testing.T) {
+func testAccVirtualService_virtualRouter(t *testing.T) {
 	var vs appmesh.VirtualServiceData
 	resourceName := "aws_appmesh_virtual_service.test"
 	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -182,7 +182,7 @@ func testAccAwsAppmeshVirtualService_virtualRouter(t *testing.T) {
 	})
 }
 
-func testAccAwsAppmeshVirtualService_tags(t *testing.T) {
+func testAccVirtualService_tags(t *testing.T) {
 	var vs appmesh.VirtualServiceData
 	resourceName := "aws_appmesh_virtual_service.test"
 	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")

@@ -69,7 +69,7 @@ func testSweepAppmeshMeshes(region string) error {
 	return nil
 }
 
-func testAccAwsAppmeshMesh_basic(t *testing.T) {
+func testAccMesh_basic(t *testing.T) {
 	var mesh appmesh.MeshData
 	resourceName := "aws_appmesh_mesh.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -101,7 +101,7 @@ func testAccAwsAppmeshMesh_basic(t *testing.T) {
 	})
 }
 
-func testAccAwsAppmeshMesh_egressFilter(t *testing.T) {
+func testAccMesh_egressFilter(t *testing.T) {
 	var mesh appmesh.MeshData
 	resourceName := "aws_appmesh_mesh.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -141,7 +141,7 @@ func testAccAwsAppmeshMesh_egressFilter(t *testing.T) {
 	})
 }
 
-func testAccAwsAppmeshMesh_tags(t *testing.T) {
+func testAccMesh_tags(t *testing.T) {
 	var mesh appmesh.MeshData
 	resourceName := "aws_appmesh_mesh.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
