@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsApiGatewayResource_basic(t *testing.T) {
+func TestAccAPIGatewayResourceDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandString(8)
 	resourceName1 := "aws_api_gateway_resource.example_v1"
 	dataSourceName1 := "data.aws_api_gateway_resource.example_v1"
@@ -23,7 +23,7 @@ func TestAccDataSourceAwsApiGatewayResource_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsApiGatewayResourceConfig(rName),
+				Config: testAccResourceDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(resourceName1, "id", dataSourceName1, "id"),
 					resource.TestCheckResourceAttrPair(resourceName1, "parent_id", dataSourceName1, "parent_id"),
@@ -37,7 +37,7 @@ func TestAccDataSourceAwsApiGatewayResource_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsApiGatewayResourceConfig(r string) string {
+func testAccResourceDataSourceConfig(r string) string {
 	return fmt.Sprintf(`
 resource "aws_api_gateway_rest_api" "example" {
   name = "%s_example"

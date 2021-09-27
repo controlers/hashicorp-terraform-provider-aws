@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsApiGatewayDomainName_basic(t *testing.T) {
+func TestAccAPIGatewayDomainNameDataSource_basic(t *testing.T) {
 	resourceName := "aws_api_gateway_domain_name.test"
 	dataSourceName := "data.aws_api_gateway_domain_name.test"
 	rName := acctest.RandomSubdomain()
@@ -21,10 +21,10 @@ func TestAccDataSourceAwsApiGatewayDomainName_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apigateway.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSAPIGatewayDomainNameDestroy,
+		CheckDestroy: testAccCheckDomainNameDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsApiGatewayDomainNameConfig_RegionalCertificateArn(rName, key, certificate),
+				Config: testAccDomainNameDataSourceConfig_RegionalCertificateARN(rName, key, certificate),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(resourceName, "arn", dataSourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "certificate_arn", dataSourceName, "certificate_arn"),
@@ -46,7 +46,7 @@ func TestAccDataSourceAwsApiGatewayDomainName_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsApiGatewayDomainNameConfig_RegionalCertificateArn(domainName, key, certificate string) string {
+func testAccDomainNameDataSourceConfig_RegionalCertificateARN(domainName, key, certificate string) string {
 	return fmt.Sprintf(`
 resource "aws_acm_certificate" "test" {
   certificate_body = "%[2]s"

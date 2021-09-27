@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsApiGatewayRestApi_basic(t *testing.T) {
+func TestAccAPIGatewayRestAPIDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandString(8)
 	dataSourceName := "data.aws_api_gateway_rest_api.test"
 	resourceName := "aws_api_gateway_rest_api.test"
@@ -20,8 +20,8 @@ func TestAccDataSourceAwsApiGatewayRestApi_basic(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAWSAPIGatewayRestAPIConfig_Name(rName),
-					testAccDataSourceAwsApiGatewayRestApiConfigName(),
+					testAccRestAPIConfig_Name(rName),
+					testAccRestAPINameDataSourceConfig(),
 				),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "name", resourceName, "name"),
@@ -41,7 +41,7 @@ func TestAccDataSourceAwsApiGatewayRestApi_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceAwsApiGatewayRestApi_EndpointConfiguration_VpcEndpointIds(t *testing.T) {
+func TestAccAPIGatewayRestAPIDataSource_Endpoint_vpcEndpointIDs(t *testing.T) {
 	rName := sdkacctest.RandString(8)
 	dataSourceName := "data.aws_api_gateway_rest_api.test"
 	resourceName := "aws_api_gateway_rest_api.test"
@@ -52,8 +52,8 @@ func TestAccDataSourceAwsApiGatewayRestApi_EndpointConfiguration_VpcEndpointIds(
 		Steps: []resource.TestStep{
 			{
 				Config: acctest.ConfigCompose(
-					testAccAWSAPIGatewayRestAPIConfigEndpointConfigurationVpcEndpointIds1(rName),
-					testAccDataSourceAwsApiGatewayRestApiConfigName(),
+					testAccRestAPIEndpointConfigurationVPCEndpointIds1Config(rName),
+					testAccRestAPINameDataSourceConfig(),
 				),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "name", resourceName, "name"),
@@ -74,7 +74,7 @@ func TestAccDataSourceAwsApiGatewayRestApi_EndpointConfiguration_VpcEndpointIds(
 	})
 }
 
-func testAccDataSourceAwsApiGatewayRestApiConfigName() string {
+func testAccRestAPINameDataSourceConfig() string {
 	return `
 data "aws_api_gateway_rest_api" "test" {
   name = aws_api_gateway_rest_api.test.name

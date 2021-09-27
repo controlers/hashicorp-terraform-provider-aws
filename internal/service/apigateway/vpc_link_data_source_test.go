@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccDataSourceAwsApiGatewayVpcLink_basic(t *testing.T) {
+func TestAccAPIGatewayVPCLinkDataSource_basic(t *testing.T) {
 	rName := fmt.Sprintf("tf-acc-test-%s", sdkacctest.RandString(8))
 	resourceName := "aws_api_gateway_vpc_link.vpc_link"
 	dataSourceName := "data.aws_api_gateway_vpc_link.vpc_link"
@@ -20,7 +20,7 @@ func TestAccDataSourceAwsApiGatewayVpcLink_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsApiGatewayVpcLinkConfig(rName),
+				Config: testAccVPCLinkDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(dataSourceName, "name", resourceName, "name"),
 					resource.TestCheckResourceAttrPair(dataSourceName, "id", resourceName, "id"),
@@ -35,7 +35,7 @@ func TestAccDataSourceAwsApiGatewayVpcLink_basic(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAwsApiGatewayVpcLinkConfig(r string) string {
+func testAccVPCLinkDataSourceConfig(r string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "apigateway_vpclink_test" {
   cidr_block = "10.0.0.0/16"
