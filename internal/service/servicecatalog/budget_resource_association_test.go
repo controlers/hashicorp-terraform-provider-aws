@@ -137,7 +137,7 @@ func testSweepServiceCatalogBudgetResourceAssociations(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSServiceCatalogBudgetResourceAssociation_basic(t *testing.T) {
+func TestAccServiceCatalogBudgetResourceAssociation_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_budget_resource_association.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -145,12 +145,12 @@ func TestAccAWSServiceCatalogBudgetResourceAssociation_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService("budgets", t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID, "budgets"),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsServiceCatalogBudgetResourceAssociationDestroy,
+		CheckDestroy: testAccCheckBudgetResourceAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSServiceCatalogBudgetResourceAssociationConfig_basic(rName),
+				Config: testAccBudgetResourceAssociationConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsServiceCatalogBudgetResourceAssociationExists(resourceName),
+					testAccCheckBudgetResourceAssociationExists(resourceName),
 					resource.TestCheckResourceAttrPair(resourceName, "resource_id", "aws_servicecatalog_portfolio.test", "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "budget_name", "aws_budgets_budget.test", "name"),
 				),
@@ -164,7 +164,7 @@ func TestAccAWSServiceCatalogBudgetResourceAssociation_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSServiceCatalogBudgetResourceAssociation_disappears(t *testing.T) {
+func TestAccServiceCatalogBudgetResourceAssociation_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_budget_resource_association.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -172,12 +172,12 @@ func TestAccAWSServiceCatalogBudgetResourceAssociation_disappears(t *testing.T) 
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService("budgets", t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID, "budgets"),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsServiceCatalogBudgetResourceAssociationDestroy,
+		CheckDestroy: testAccCheckBudgetResourceAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSServiceCatalogBudgetResourceAssociationConfig_basic(rName),
+				Config: testAccBudgetResourceAssociationConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsServiceCatalogBudgetResourceAssociationExists(resourceName),
+					testAccCheckBudgetResourceAssociationExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfservicecatalog.ResourceBudgetResourceAssociation(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -186,7 +186,7 @@ func TestAccAWSServiceCatalogBudgetResourceAssociation_disappears(t *testing.T) 
 	})
 }
 
-func testAccCheckAwsServiceCatalogBudgetResourceAssociationDestroy(s *terraform.State) error {
+func testAccCheckBudgetResourceAssociationDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ServiceCatalogConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -214,7 +214,7 @@ func testAccCheckAwsServiceCatalogBudgetResourceAssociationDestroy(s *terraform.
 	return nil
 }
 
-func testAccCheckAwsServiceCatalogBudgetResourceAssociationExists(resourceName string) resource.TestCheckFunc {
+func testAccCheckBudgetResourceAssociationExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 
@@ -240,7 +240,7 @@ func testAccCheckAwsServiceCatalogBudgetResourceAssociationExists(resourceName s
 	}
 }
 
-func testAccAWSServiceCatalogBudgetResourceAssociationConfig_base(rName, budgetType, limitAmount, limitUnit, timePeriodStart, timeUnit string) string {
+func testAccBudgetResourceAssociationConfig_base(rName, budgetType, limitAmount, limitUnit, timePeriodStart, timeUnit string) string {
 	return fmt.Sprintf(`
 resource "aws_servicecatalog_portfolio" "test" {
   name          = %[1]q
@@ -259,8 +259,8 @@ resource "aws_budgets_budget" "test" {
 `, rName, budgetType, limitAmount, limitUnit, timePeriodStart, timeUnit)
 }
 
-func testAccAWSServiceCatalogBudgetResourceAssociationConfig_basic(rName string) string {
-	return acctest.ConfigCompose(testAccAWSServiceCatalogBudgetResourceAssociationConfig_base(rName, "COST", "100.0", "USD", "2017-01-01_12:00", "MONTHLY"), fmt.Sprintf(`
+func testAccBudgetResourceAssociationConfig_basic(rName string) string {
+	return acctest.ConfigCompose(testAccBudgetResourceAssociationConfig_base(rName, "COST", "100.0", "USD", "2017-01-01_12:00", "MONTHLY"), fmt.Sprintf(`
 resource "aws_servicecatalog_budget_resource_association" "test" {
   resource_id = aws_servicecatalog_portfolio.test.id
   budget_name = %[1]q

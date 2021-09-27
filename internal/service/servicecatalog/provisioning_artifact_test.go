@@ -107,7 +107,7 @@ func testSweepServiceCatalogProvisioningArtifacts(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSServiceCatalogProvisioningArtifact_basic(t *testing.T) {
+func TestAccServiceCatalogProvisioningArtifact_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioning_artifact.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -117,12 +117,12 @@ func TestAccAWSServiceCatalogProvisioningArtifact_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsServiceCatalogProvisioningArtifactDestroy,
+		CheckDestroy: testAccCheckProvisioningArtifactDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSServiceCatalogProvisioningArtifactConfig_basic(rName, domain),
+				Config: testAccProvisioningArtifactConfig_basic(rName, domain),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsServiceCatalogProvisioningArtifactExists(resourceName),
+					testAccCheckProvisioningArtifactExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "accept_language", tfservicecatalog.AcceptLanguageEnglish),
 					resource.TestCheckResourceAttr(resourceName, "active", "true"),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -149,7 +149,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSServiceCatalogProvisioningArtifact_disappears(t *testing.T) {
+func TestAccServiceCatalogProvisioningArtifact_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioning_artifact.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -159,12 +159,12 @@ func TestAccAWSServiceCatalogProvisioningArtifact_disappears(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsServiceCatalogProvisioningArtifactDestroy,
+		CheckDestroy: testAccCheckProvisioningArtifactDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSServiceCatalogProvisioningArtifactConfig_basic(rName, domain),
+				Config: testAccProvisioningArtifactConfig_basic(rName, domain),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsServiceCatalogProvisioningArtifactExists(resourceName),
+					testAccCheckProvisioningArtifactExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfservicecatalog.ResourceProvisioningArtifact(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -173,7 +173,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAWSServiceCatalogProvisioningArtifact_update(t *testing.T) {
+func TestAccServiceCatalogProvisioningArtifact_update(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioning_artifact.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -183,12 +183,12 @@ func TestAccAWSServiceCatalogProvisioningArtifact_update(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsServiceCatalogProvisioningArtifactDestroy,
+		CheckDestroy: testAccCheckProvisioningArtifactDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSServiceCatalogProvisioningArtifactConfig_basic(rName, domain),
+				Config: testAccProvisioningArtifactConfig_basic(rName, domain),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsServiceCatalogProvisioningArtifactExists(resourceName),
+					testAccCheckProvisioningArtifactExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "accept_language", tfservicecatalog.AcceptLanguageEnglish),
 					resource.TestCheckResourceAttr(resourceName, "active", "true"),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -197,7 +197,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_update(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSServiceCatalogProvisioningArtifactConfig_update(rName, domain),
+				Config: testAccProvisioningArtifactConfig_update(rName, domain),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "accept_language", "jp"),
 					resource.TestCheckResourceAttr(resourceName, "active", "false"),
@@ -220,7 +220,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_update(t *testing.T) {
 	})
 }
 
-func TestAccAWSServiceCatalogProvisioningArtifact_physicalID(t *testing.T) {
+func TestAccServiceCatalogProvisioningArtifact_physicalID(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioning_artifact.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -230,12 +230,12 @@ func TestAccAWSServiceCatalogProvisioningArtifact_physicalID(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsServiceCatalogProvisioningArtifactDestroy,
+		CheckDestroy: testAccCheckProvisioningArtifactDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSServiceCatalogProvisioningArtifactConfig_physicalID(rName, domain),
+				Config: testAccProvisioningArtifactConfig_physicalID(rName, domain),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsServiceCatalogProvisioningArtifactExists(resourceName),
+					testAccCheckProvisioningArtifactExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "accept_language", tfservicecatalog.AcceptLanguageEnglish),
 					resource.TestCheckResourceAttr(resourceName, "active", "true"),
 					resource.TestCheckResourceAttr(resourceName, "description", rName),
@@ -262,7 +262,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_physicalID(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsServiceCatalogProvisioningArtifactDestroy(s *terraform.State) error {
+func testAccCheckProvisioningArtifactDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ServiceCatalogConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -299,7 +299,7 @@ func testAccCheckAwsServiceCatalogProvisioningArtifactDestroy(s *terraform.State
 	return nil
 }
 
-func testAccCheckAwsServiceCatalogProvisioningArtifactExists(resourceName string) resource.TestCheckFunc {
+func testAccCheckProvisioningArtifactExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 
@@ -330,7 +330,7 @@ func testAccCheckAwsServiceCatalogProvisioningArtifactExists(resourceName string
 	}
 }
 
-func testAccAWSServiceCatalogProvisioningArtifactConfigTemplateURLBase(rName, domain string) string {
+func testAccProvisioningArtifactTemplateURLBaseConfig(rName, domain string) string {
 	return fmt.Sprintf(`
 resource "aws_s3_bucket" "test" {
   bucket        = %[1]q
@@ -390,8 +390,8 @@ resource "aws_servicecatalog_product" "test" {
 `, rName, domain, acctest.DefaultEmailAddress)
 }
 
-func testAccAWSServiceCatalogProvisioningArtifactConfig_basic(rName, domain string) string {
-	return acctest.ConfigCompose(testAccAWSServiceCatalogProvisioningArtifactConfigTemplateURLBase(rName, domain), fmt.Sprintf(`
+func testAccProvisioningArtifactConfig_basic(rName, domain string) string {
+	return acctest.ConfigCompose(testAccProvisioningArtifactTemplateURLBaseConfig(rName, domain), fmt.Sprintf(`
 resource "aws_servicecatalog_provisioning_artifact" "test" {
   accept_language             = "en"
   active                      = true
@@ -406,8 +406,8 @@ resource "aws_servicecatalog_provisioning_artifact" "test" {
 `, rName))
 }
 
-func testAccAWSServiceCatalogProvisioningArtifactConfig_update(rName, domain string) string {
-	return acctest.ConfigCompose(testAccAWSServiceCatalogProvisioningArtifactConfigTemplateURLBase(rName, domain), fmt.Sprintf(`
+func testAccProvisioningArtifactConfig_update(rName, domain string) string {
+	return acctest.ConfigCompose(testAccProvisioningArtifactTemplateURLBaseConfig(rName, domain), fmt.Sprintf(`
 resource "aws_servicecatalog_provisioning_artifact" "test" {
   accept_language             = "jp"
   active                      = false
@@ -422,7 +422,7 @@ resource "aws_servicecatalog_provisioning_artifact" "test" {
 `, rName))
 }
 
-func testAccAWSServiceCatalogProvisioningArtifactConfigPhysicalIDBase(rName, domain string) string {
+func testAccProvisioningArtifactPhysicalIDBaseConfig(rName, domain string) string {
 	return fmt.Sprintf(`
 resource "aws_cloudformation_stack" "test" {
   name = %[1]q
@@ -470,8 +470,8 @@ resource "aws_servicecatalog_product" "test" {
 `, rName, domain, acctest.DefaultEmailAddress)
 }
 
-func testAccAWSServiceCatalogProvisioningArtifactConfig_physicalID(rName, domain string) string {
-	return acctest.ConfigCompose(testAccAWSServiceCatalogProvisioningArtifactConfigPhysicalIDBase(rName, domain), fmt.Sprintf(`
+func testAccProvisioningArtifactConfig_physicalID(rName, domain string) string {
+	return acctest.ConfigCompose(testAccProvisioningArtifactPhysicalIDBaseConfig(rName, domain), fmt.Sprintf(`
 resource "aws_servicecatalog_provisioning_artifact" "test" {
   accept_language             = "en"
   active                      = true

@@ -99,7 +99,7 @@ func testSweepServiceCatalogPrincipalPortfolioAssociations(region string) error 
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSServiceCatalogPrincipalPortfolioAssociation_basic(t *testing.T) {
+func TestAccServiceCatalogPrincipalPortfolioAssociation_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_principal_portfolio_association.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -107,12 +107,12 @@ func TestAccAWSServiceCatalogPrincipalPortfolioAssociation_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsServiceCatalogPrincipalPortfolioAssociationDestroy,
+		CheckDestroy: testAccCheckPrincipalPortfolioAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSServiceCatalogPrincipalPortfolioAssociationConfig_basic(rName),
+				Config: testAccPrincipalPortfolioAssociationConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsServiceCatalogPrincipalPortfolioAssociationExists(resourceName),
+					testAccCheckPrincipalPortfolioAssociationExists(resourceName),
 					resource.TestCheckResourceAttrPair(resourceName, "portfolio_id", "aws_servicecatalog_portfolio.test", "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "principal_arn", "aws_iam_role.test", "arn"),
 				),
@@ -126,7 +126,7 @@ func TestAccAWSServiceCatalogPrincipalPortfolioAssociation_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSServiceCatalogPrincipalPortfolioAssociation_disappears(t *testing.T) {
+func TestAccServiceCatalogPrincipalPortfolioAssociation_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_principal_portfolio_association.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 
@@ -134,12 +134,12 @@ func TestAccAWSServiceCatalogPrincipalPortfolioAssociation_disappears(t *testing
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsServiceCatalogPrincipalPortfolioAssociationDestroy,
+		CheckDestroy: testAccCheckPrincipalPortfolioAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSServiceCatalogPrincipalPortfolioAssociationConfig_basic(rName),
+				Config: testAccPrincipalPortfolioAssociationConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsServiceCatalogPrincipalPortfolioAssociationExists(resourceName),
+					testAccCheckPrincipalPortfolioAssociationExists(resourceName),
 					acctest.CheckResourceDisappears(acctest.Provider, tfservicecatalog.ResourcePrincipalPortfolioAssociation(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
@@ -148,7 +148,7 @@ func TestAccAWSServiceCatalogPrincipalPortfolioAssociation_disappears(t *testing
 	})
 }
 
-func testAccCheckAwsServiceCatalogPrincipalPortfolioAssociationDestroy(s *terraform.State) error {
+func testAccCheckPrincipalPortfolioAssociationDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).ServiceCatalogConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -176,7 +176,7 @@ func testAccCheckAwsServiceCatalogPrincipalPortfolioAssociationDestroy(s *terraf
 	return nil
 }
 
-func testAccCheckAwsServiceCatalogPrincipalPortfolioAssociationExists(resourceName string) resource.TestCheckFunc {
+func testAccCheckPrincipalPortfolioAssociationExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 
@@ -202,7 +202,7 @@ func testAccCheckAwsServiceCatalogPrincipalPortfolioAssociationExists(resourceNa
 	}
 }
 
-func testAccAWSServiceCatalogPrincipalPortfolioAssociationConfig_base(rName string) string {
+func testAccPrincipalPortfolioAssociationConfig_base(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -229,8 +229,8 @@ resource "aws_servicecatalog_portfolio" "test" {
 `, rName)
 }
 
-func testAccAWSServiceCatalogPrincipalPortfolioAssociationConfig_basic(rName string) string {
-	return acctest.ConfigCompose(testAccAWSServiceCatalogPrincipalPortfolioAssociationConfig_base(rName), `
+func testAccPrincipalPortfolioAssociationConfig_basic(rName string) string {
+	return acctest.ConfigCompose(testAccPrincipalPortfolioAssociationConfig_base(rName), `
 resource "aws_servicecatalog_principal_portfolio_association" "test" {
   portfolio_id  = aws_servicecatalog_portfolio.test.id
   principal_arn = aws_iam_role.test.arn

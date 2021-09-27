@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSServiceCatalogPortfolioDataSource_basic(t *testing.T) {
+func TestAccServiceCatalogPortfolioDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	dataSourceName := "data.aws_servicecatalog_portfolio.test"
 	resourceName := "aws_servicecatalog_portfolio.test"
@@ -21,7 +21,7 @@ func TestAccAWSServiceCatalogPortfolioDataSource_basic(t *testing.T) {
 		CheckDestroy: testAccCheckServiceCatlaogPortfolioDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCheckAwsServiceCatalogPortfolioDataSourceConfigBasic(rName),
+				Config: testAccCheckPortfolioBasicDataSourceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(resourceName, "arn", dataSourceName, "arn"),
 					resource.TestCheckResourceAttrPair(resourceName, "created_time", dataSourceName, "created_time"),
@@ -36,8 +36,8 @@ func TestAccAWSServiceCatalogPortfolioDataSource_basic(t *testing.T) {
 	})
 }
 
-func testAccCheckAwsServiceCatalogPortfolioDataSourceConfigBasic(rName string) string {
-	return acctest.ConfigCompose(testAccCheckAwsServiceCatalogPortfolioResourceConfigTags1(rName, "Chicane", "Nick"), `
+func testAccCheckPortfolioBasicDataSourceConfig(rName string) string {
+	return acctest.ConfigCompose(testAccCheckPortfolioResourceTags1Config(rName, "Chicane", "Nick"), `
 data "aws_servicecatalog_portfolio" "test" {
   id = aws_servicecatalog_portfolio.test.id
 }
