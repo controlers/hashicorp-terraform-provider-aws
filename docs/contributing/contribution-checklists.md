@@ -272,7 +272,7 @@ More details about this code generation, including fixes for potential error mes
 - Check for a tagging code directive: `//go:generate go run -tags generate ../../generate/tags/main.go`. If one does not exist, add it. Note that without flags, the directive itself will not do anything useful. **WARNING:** You must never have more than one `generate/tags/main.go` directive in a `generate.go` file. Even if you want to generate all three types of tag code, you will use multiple flags but only one `generate/tags/main.go` directive! Including more than one directive will cause the generator to overwrite one set of generated code with whatever is specified in the next directive.
 - If the service supports service tags, determine the service's "type" of tagging implementation. Some services will use a simple map style (`map[string]*string` in Go) while others will have a separate structure (`[]service.Tag` `struct` with `Key` and `Value` fields).
 
-    - If the type is a map, add a new flag to the tagging directive (see above): `-ServiceTagsMap=yes`. If the type is `struct`, add a  `-ServiceTagsSlice=yes` flag. 
+    - If the type is a map, add a new flag to the tagging directive (see above): `-ServiceTagsMap=yes`. If the type is `struct`, add a  `-ServiceTagsSlice=yes` flag.
     - If you use the `-ServiceTagsSlice=yes` flag and if the `struct` name is not exactly `Tag`, you must include the `-TagType` flag with the name of the `struct` (e.g., `-TagType=S3Tag`). If the key and value elements of the `struct` are not exactly `Key` and `Value` respectively, you must include the `-TagTypeKeyElem` and/or `-TagTypeValElem` flags with the correct names.
     - In summary, you may need to include one or more of the following flags with `-ServiceTagsSlice` in order to properly customize the generated code: `-TagKeyType`, `TagPackage`, `TagResTypeElem`, `TagType`, `TagType2`, `TagTypeAddBoolElem`, `TagTypeAddBoolElemSnake`, `TagTypeIDElem`, `TagTypeKeyElem`, and `TagTypeValElem`.
 
@@ -285,14 +285,14 @@ More details about this code generation, including fixes for potential error mes
     - If the API list tags operation identifying element needs a slice, include the `-ListTagsInIDNeedSlice` flag with a `yes` value (e.g., `-ListTagsInIDNeedSlice=yes`).
     - If the API list tags operation output element is not exactly `Tags`, include the `-ListTagsOutTagsElem` flag with the name of the element (e.g., `-ListTagsOutTagsElem=TagList`).
     - In summary, you may need to include one or more of the following flags with `-ListTags` in order to properly customize the generated code: `ListTagsInFiltIDName`, `ListTagsInIDElem`, `ListTagsInIDNeedSlice`, `ListTagsOp`, `ListTagsOutTagsElem`, `TagPackage`, `TagResTypeElem`, and `TagTypeIDElem`.
-    
+
 - If the service API supports updating tags (usually `TagResource` and `UntagResource` API calls), follow these guidelines.
 
     - Add a new flag to the tagging directive (see above): `-UpdateTags=yes`.
     - If the API tag operation is not exactly `TagResource`, include the `-TagOp` flag with the name of the operation (e.g., `-TagOp=AddTags`).
     - If the API untag operation is not exactly `UntagResource`, include the `-UntagOp` flag with the name of the operation (e.g., `-UntagOp=RemoveTags`).
     - If the API operation identifying element is not exactly `ResourceArn`, include the `-TagInIDElem` flag with the name of the element (e.g., `-TagInIDElem=ResourceARN`).
-    - If the API untag operation tags input element is not exactly `TagKeys`, include the `-UntagInTagsElem` flag with the name of the element (e.g., `-UntagInTagsElem=Keys`).    
+    - If the API untag operation tags input element is not exactly `TagKeys`, include the `-UntagInTagsElem` flag with the name of the element (e.g., `-UntagInTagsElem=Keys`).
     - In summary, you may need to include one or more of the following flags with `-UpdateTags` in order to properly customize the generated code: `TagInCustomVal`, `TagInIDElem`, `TagInIDNeedSlice`, `TagInTagsElem`, `TagOp`, `TagOpBatchSize`, `TagPackage`, `TagResTypeElem`, `TagTypeAddBoolElem`, `TagTypeIDElem`, `UntagInCustomVal`, `UntagInNeedTagKeyType`, `UntagInNeedTagType`, `UntagInTagsElem`, and `UntagOp`.
 
 - Run `make gen` (`go generate ./...`) and ensure there are no errors via `make test` (`go test ./...`)
