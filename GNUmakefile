@@ -20,7 +20,7 @@ sweep:
 	go test $(SWEEP_DIR) -v -sweep=$(SWEEP) $(SWEEPARGS) -timeout 60m
 
 test: fmtcheck
-	go test $(TEST) $(TESTARGS) -timeout=5m -parallel=4
+	go test $(TEST) $(TESTARGS) -timeout=5m
 
 testacc: fmtcheck
 	@if [ "$(TESTARGS)" = "-run=TestAccXXX" ]; then \
@@ -83,7 +83,7 @@ docscheck:
 	@misspell -error -source text CHANGELOG.md .changelog
 
 # lint: golangci-lint providerlint importlint
-lint: ;
+lint: importlint
 
 golangci-lint:
 	@golangci-lint run ./$(PKG_NAME)/...
