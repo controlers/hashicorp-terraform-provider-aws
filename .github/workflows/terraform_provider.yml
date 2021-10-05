@@ -201,19 +201,19 @@ jobs:
     - name: go env
       run: |
         echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_ENV
-    # - uses: actions/cache@v2
-    #   continue-on-error: true
-    #   timeout-minutes: 2
-    #   with:
-    #     path: ${{ env.GOCACHE }}
-    #     key: ${{ runner.os }}-GOCACHE-${{ hashFiles('go.sum') }}-${{ hashFiles('internal/**') }}
-    # - uses: actions/cache@v2
-    #   continue-on-error: true
-    #   timeout-minutes: 2
-    #   with:
-    #     path: ~/go/pkg/mod
-    #     key: ${{ runner.os }}-go-pkg-mod-${{ hashFiles('go.sum') }}
-    # - run: go test ./... -timeout=5m
+    - uses: actions/cache@v2
+      continue-on-error: true
+      timeout-minutes: 2
+      with:
+        path: ${{ env.GOCACHE }}
+        key: ${{ runner.os }}-GOCACHE-${{ hashFiles('go.sum') }}-${{ hashFiles('internal/**') }}
+    - uses: actions/cache@v2
+      continue-on-error: true
+      timeout-minutes: 2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-pkg-mod-${{ hashFiles('go.sum') }}
+    - run: go test ./... -timeout=5m
 
   golangci-lint:
     needs: [go_build]
