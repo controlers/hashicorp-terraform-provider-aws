@@ -5,16 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/glue"
 	"github.com/hashicorp/aws-sdk-go-base/tfawserr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	tfglue "github.com/hashicorp/terraform-provider-aws/aws/internal/service/glue"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
-	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
-	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
-	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
-	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
-	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
-	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
-	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
-	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
 )
 
 func FindDevEndpointByName(conn *glue.Glue, name string) (*glue.DevEndpoint, error) {
@@ -78,7 +69,7 @@ func FindTriggerByName(conn *glue.Glue, name string) (*glue.GetTriggerOutput, er
 // FindRegistryByID returns the Registry corresponding to the specified ID.
 func FindRegistryByID(conn *glue.Glue, id string) (*glue.GetRegistryOutput, error) {
 	input := &glue.GetRegistryInput{
-		RegistryId: tfglue.createRegistryID(id),
+		RegistryId: createRegistryID(id),
 	}
 
 	output, err := conn.GetRegistry(input)
@@ -92,7 +83,7 @@ func FindRegistryByID(conn *glue.Glue, id string) (*glue.GetRegistryOutput, erro
 // FindSchemaByID returns the Schema corresponding to the specified ID.
 func FindSchemaByID(conn *glue.Glue, id string) (*glue.GetSchemaOutput, error) {
 	input := &glue.GetSchemaInput{
-		SchemaId: tfglue.createSchemaID(id),
+		SchemaId: createSchemaID(id),
 	}
 
 	output, err := conn.GetSchema(input)
@@ -106,7 +97,7 @@ func FindSchemaByID(conn *glue.Glue, id string) (*glue.GetSchemaOutput, error) {
 // FindSchemaVersionByID returns the Schema corresponding to the specified ID.
 func FindSchemaVersionByID(conn *glue.Glue, id string) (*glue.GetSchemaVersionOutput, error) {
 	input := &glue.GetSchemaVersionInput{
-		SchemaId: tfglue.createSchemaID(id),
+		SchemaId: createSchemaID(id),
 		SchemaVersionNumber: &glue.SchemaVersionNumber{
 			LatestVersion: aws.Bool(true),
 		},
@@ -123,7 +114,7 @@ func FindSchemaVersionByID(conn *glue.Glue, id string) (*glue.GetSchemaVersionOu
 // FindPartitionByValues returns the Partition corresponding to the specified Partition Values.
 func FindPartitionByValues(conn *glue.Glue, id string) (*glue.Partition, error) {
 
-	catalogID, dbName, tableName, values, err := tfglue.readPartitionID(id)
+	catalogID, dbName, tableName, values, err := readPartitionID(id)
 	if err != nil {
 		return nil, err
 	}
