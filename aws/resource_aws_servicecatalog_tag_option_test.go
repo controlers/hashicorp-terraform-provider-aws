@@ -82,7 +82,7 @@ func TestAccAWSServiceCatalogTagOption_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogTagOptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -111,14 +111,14 @@ func TestAccAWSServiceCatalogTagOption_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogTagOptionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSServiceCatalogTagOptionConfig_basic(rName, "värde", "active = true"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsServiceCatalogTagOptionExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsServiceCatalogTagOption(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsServiceCatalogTagOption(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -137,7 +137,7 @@ func TestAccAWSServiceCatalogTagOption_update(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogTagOptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -196,7 +196,7 @@ func TestAccAWSServiceCatalogTagOption_notActive(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogTagOptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -213,7 +213,7 @@ func TestAccAWSServiceCatalogTagOption_notActive(t *testing.T) {
 }
 
 func testAccCheckAwsServiceCatalogTagOptionDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).scconn
+	conn := acctest.Provider.Meta().(*AWSClient).scconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_servicecatalog_tag_option" {
@@ -250,7 +250,7 @@ func testAccCheckAwsServiceCatalogTagOptionExists(resourceName string) resource.
 			return fmt.Errorf("resource not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).scconn
+		conn := acctest.Provider.Meta().(*AWSClient).scconn
 
 		input := &servicecatalog.DescribeTagOptionInput{
 			Id: aws.String(rs.Primary.ID),

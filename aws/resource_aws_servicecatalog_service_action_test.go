@@ -83,7 +83,7 @@ func TestAccAWSServiceCatalogServiceAction_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogServiceActionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -116,14 +116,14 @@ func TestAccAWSServiceCatalogServiceAction_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogServiceActionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSServiceCatalogServiceActionConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsServiceCatalogServiceActionExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsServiceCatalogServiceAction(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsServiceCatalogServiceAction(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -139,7 +139,7 @@ func TestAccAWSServiceCatalogServiceAction_update(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogServiceActionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -167,7 +167,7 @@ func TestAccAWSServiceCatalogServiceAction_update(t *testing.T) {
 }
 
 func testAccCheckAwsServiceCatalogServiceActionDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).scconn
+	conn := acctest.Provider.Meta().(*AWSClient).scconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_servicecatalog_service_action" {
@@ -204,7 +204,7 @@ func testAccCheckAwsServiceCatalogServiceActionExists(resourceName string) resou
 			return fmt.Errorf("resource not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).scconn
+		conn := acctest.Provider.Meta().(*AWSClient).scconn
 
 		input := &servicecatalog.DescribeServiceActionInput{
 			Id: aws.String(rs.Primary.ID),
