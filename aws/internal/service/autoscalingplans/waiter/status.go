@@ -9,6 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/autoscalingplans/finder"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfautoscalingplans "github.com/hashicorp/terraform-provider-aws/internal/service/autoscalingplans"
 )
 
 const (
@@ -16,10 +17,10 @@ const (
 	scalingPlanStatusUnknown  = "Unknown"
 )
 
-// ScalingPlanStatus fetches the ScalingPlan and its Status
-func ScalingPlanStatus(conn *autoscalingplans.AutoScalingPlans, scalingPlanName string, scalingPlanVersion int) resource.StateRefreshFunc {
+// statusScalingPlan fetches the ScalingPlan and its Status
+func statusScalingPlan(conn *autoscalingplans.AutoScalingPlans, scalingPlanName string, scalingPlanVersion int) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		scalingPlan, err := finder.ScalingPlan(conn, scalingPlanName, scalingPlanVersion)
+		scalingPlan, err := tfautoscalingplans.FindScalingPlan(conn, scalingPlanName, scalingPlanVersion)
 
 		if tfawserr.ErrCodeEquals(err, autoscalingplans.ErrCodeObjectNotFoundException) {
 			return nil, scalingPlanStatusNotFound, nil

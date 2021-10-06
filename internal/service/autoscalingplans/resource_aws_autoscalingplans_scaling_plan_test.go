@@ -21,6 +21,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfautoscalingplans "github.com/hashicorp/terraform-provider-aws/internal/service/autoscalingplans"
 )
 
 func init() {
@@ -299,7 +300,7 @@ func testAccCheckAutoScalingPlansScalingPlanDestroy(s *terraform.State) error {
 			return err
 		}
 
-		scalingPlan, err := finder.ScalingPlan(conn, rs.Primary.Attributes["name"], scalingPlanVersion)
+		scalingPlan, err := tfautoscalingplans.FindScalingPlan(conn, rs.Primary.Attributes["name"], scalingPlanVersion)
 		if err != nil {
 			return err
 		}
@@ -329,7 +330,7 @@ func testAccCheckAutoScalingPlansScalingPlanExists(name string, v *autoscalingpl
 			return err
 		}
 
-		scalingPlan, err := finder.ScalingPlan(conn, rs.Primary.Attributes["name"], scalingPlanVersion)
+		scalingPlan, err := tfautoscalingplans.FindScalingPlan(conn, rs.Primary.Attributes["name"], scalingPlanVersion)
 		if err != nil {
 			return err
 		}
