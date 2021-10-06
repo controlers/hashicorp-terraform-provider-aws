@@ -31,7 +31,7 @@ func ResourceService() *schema.Resource {
 		Update: resourceServiceUpdate,
 		Delete: resourceServiceDelete,
 		Importer: &schema.ResourceImporter{
-			State: resourceAwsEcsServiceImport,
+			State: resourceServiceImport,
 		},
 
 		CustomizeDiff: verify.SetTagsDiff,
@@ -220,7 +220,7 @@ func ResourceService() *schema.Resource {
 						},
 					},
 				},
-				Set: resourceAwsEcsLoadBalancerHash,
+				Set: resourceLoadBalancerHash,
 			},
 			"name": {
 				Type:     schema.TypeString,
@@ -385,7 +385,7 @@ func ResourceService() *schema.Resource {
 	}
 }
 
-func resourceAwsEcsServiceImport(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+func resourceServiceImport(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	if len(strings.Split(d.Id(), "/")) != 2 {
 		return []*schema.ResourceData{}, fmt.Errorf("wrong format of resource: %s, expecting 'cluster-name/service-name'", d.Id())
 	}
@@ -1253,7 +1253,7 @@ func resourceServiceDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceAwsEcsLoadBalancerHash(v interface{}) int {
+func resourceLoadBalancerHash(v interface{}) int {
 	var buf bytes.Buffer
 	m := v.(map[string]interface{})
 

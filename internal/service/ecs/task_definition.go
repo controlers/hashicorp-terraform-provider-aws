@@ -51,7 +51,7 @@ func ResourceTaskDefinition() *schema.Resource {
 		CustomizeDiff: verify.SetTagsDiff,
 
 		SchemaVersion: 1,
-		MigrateState:  resourceAwsEcsTaskDefinitionMigrateState,
+		MigrateState:  resourceTaskDefinitionMigrateState,
 
 		Schema: map[string]*schema.Schema{
 			"arn": {
@@ -298,7 +298,7 @@ func ResourceTaskDefinition() *schema.Resource {
 						},
 					},
 				},
-				Set: resourceAwsEcsTaskDefinitionVolumeHash,
+				Set: resourceTaskDefinitionVolumeHash,
 			},
 
 			"placement_constraints": {
@@ -664,7 +664,7 @@ func resourceTaskDefinitionDelete(d *schema.ResourceData, meta interface{}) erro
 	return nil
 }
 
-func resourceAwsEcsTaskDefinitionVolumeHash(v interface{}) int {
+func resourceTaskDefinitionVolumeHash(v interface{}) int {
 	var buf bytes.Buffer
 	m := v.(map[string]interface{})
 	buf.WriteString(fmt.Sprintf("%s-", m["name"].(string)))
