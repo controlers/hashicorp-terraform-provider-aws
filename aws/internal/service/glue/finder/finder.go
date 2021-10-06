@@ -7,9 +7,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	tfglue "github.com/hashicorp/terraform-provider-aws/aws/internal/service/glue"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
 )
 
-func DevEndpointByName(conn *glue.Glue, name string) (*glue.DevEndpoint, error) {
+func FindDevEndpointByName(conn *glue.Glue, name string) (*glue.DevEndpoint, error) {
 	input := &glue.GetDevEndpointInput{
 		EndpointName: aws.String(name),
 	}
@@ -37,8 +45,8 @@ func DevEndpointByName(conn *glue.Glue, name string) (*glue.DevEndpoint, error) 
 	return output.DevEndpoint, nil
 }
 
-// TableByName returns the Table corresponding to the specified name.
-func TableByName(conn *glue.Glue, catalogID, dbName, name string) (*glue.GetTableOutput, error) {
+// FindTableByName returns the Table corresponding to the specified name.
+func FindTableByName(conn *glue.Glue, catalogID, dbName, name string) (*glue.GetTableOutput, error) {
 	input := &glue.GetTableInput{
 		CatalogId:    aws.String(catalogID),
 		DatabaseName: aws.String(dbName),
@@ -53,8 +61,8 @@ func TableByName(conn *glue.Glue, catalogID, dbName, name string) (*glue.GetTabl
 	return output, nil
 }
 
-// TriggerByName returns the Trigger corresponding to the specified name.
-func TriggerByName(conn *glue.Glue, name string) (*glue.GetTriggerOutput, error) {
+// FindTriggerByName returns the Trigger corresponding to the specified name.
+func FindTriggerByName(conn *glue.Glue, name string) (*glue.GetTriggerOutput, error) {
 	input := &glue.GetTriggerInput{
 		Name: aws.String(name),
 	}
@@ -67,10 +75,10 @@ func TriggerByName(conn *glue.Glue, name string) (*glue.GetTriggerOutput, error)
 	return output, nil
 }
 
-// RegistryByID returns the Registry corresponding to the specified ID.
-func RegistryByID(conn *glue.Glue, id string) (*glue.GetRegistryOutput, error) {
+// FindRegistryByID returns the Registry corresponding to the specified ID.
+func FindRegistryByID(conn *glue.Glue, id string) (*glue.GetRegistryOutput, error) {
 	input := &glue.GetRegistryInput{
-		RegistryId: tfglue.CreateAwsGlueRegistryID(id),
+		RegistryId: tfglue.createRegistryID(id),
 	}
 
 	output, err := conn.GetRegistry(input)
@@ -81,10 +89,10 @@ func RegistryByID(conn *glue.Glue, id string) (*glue.GetRegistryOutput, error) {
 	return output, nil
 }
 
-// SchemaByID returns the Schema corresponding to the specified ID.
-func SchemaByID(conn *glue.Glue, id string) (*glue.GetSchemaOutput, error) {
+// FindSchemaByID returns the Schema corresponding to the specified ID.
+func FindSchemaByID(conn *glue.Glue, id string) (*glue.GetSchemaOutput, error) {
 	input := &glue.GetSchemaInput{
-		SchemaId: tfglue.CreateAwsGlueSchemaID(id),
+		SchemaId: tfglue.createSchemaID(id),
 	}
 
 	output, err := conn.GetSchema(input)
@@ -95,10 +103,10 @@ func SchemaByID(conn *glue.Glue, id string) (*glue.GetSchemaOutput, error) {
 	return output, nil
 }
 
-// SchemaVersionByID returns the Schema corresponding to the specified ID.
-func SchemaVersionByID(conn *glue.Glue, id string) (*glue.GetSchemaVersionOutput, error) {
+// FindSchemaVersionByID returns the Schema corresponding to the specified ID.
+func FindSchemaVersionByID(conn *glue.Glue, id string) (*glue.GetSchemaVersionOutput, error) {
 	input := &glue.GetSchemaVersionInput{
-		SchemaId: tfglue.CreateAwsGlueSchemaID(id),
+		SchemaId: tfglue.createSchemaID(id),
 		SchemaVersionNumber: &glue.SchemaVersionNumber{
 			LatestVersion: aws.Bool(true),
 		},
@@ -112,10 +120,10 @@ func SchemaVersionByID(conn *glue.Glue, id string) (*glue.GetSchemaVersionOutput
 	return output, nil
 }
 
-// PartitionByValues returns the Partition corresponding to the specified Partition Values.
-func PartitionByValues(conn *glue.Glue, id string) (*glue.Partition, error) {
+// FindPartitionByValues returns the Partition corresponding to the specified Partition Values.
+func FindPartitionByValues(conn *glue.Glue, id string) (*glue.Partition, error) {
 
-	catalogID, dbName, tableName, values, err := tfglue.ReadAwsGluePartitionID(id)
+	catalogID, dbName, tableName, values, err := tfglue.readPartitionID(id)
 	if err != nil {
 		return nil, err
 	}
