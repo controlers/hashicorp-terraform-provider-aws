@@ -21,12 +21,12 @@ func TestAccAWSDxConnectionAssociation_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxConnectionAssociationDestroy,
+		CheckDestroy: testAccCheckConnectionAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxConnectionAssociationConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxConnectionAssociationExists("aws_dx_connection_association.test"),
+					testAccCheckConnectionAssociationExists("aws_dx_connection_association.test"),
 				),
 			},
 		},
@@ -40,20 +40,20 @@ func TestAccAWSDxConnectionAssociation_multiConns(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAwsDxConnectionAssociationDestroy,
+		CheckDestroy: testAccCheckConnectionAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccDxConnectionAssociationConfig_multiConns(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAwsDxConnectionAssociationExists("aws_dx_connection_association.test1"),
-					testAccCheckAwsDxConnectionAssociationExists("aws_dx_connection_association.test2"),
+					testAccCheckConnectionAssociationExists("aws_dx_connection_association.test1"),
+					testAccCheckConnectionAssociationExists("aws_dx_connection_association.test2"),
 				),
 			},
 		},
 	})
 }
 
-func testAccCheckAwsDxConnectionAssociationDestroy(s *terraform.State) error {
+func testAccCheckConnectionAssociationDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).DirectConnectConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -77,7 +77,7 @@ func testAccCheckAwsDxConnectionAssociationDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAwsDxConnectionAssociationExists(name string) resource.TestCheckFunc {
+func testAccCheckConnectionAssociationExists(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).DirectConnectConn
 
