@@ -73,7 +73,7 @@ func sweepVaultNotifications(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAwsBackupVaultNotification_basic(t *testing.T) {
+func TestAccBackupVaultNotifications_Notification_basic(t *testing.T) {
 	var vault backup.GetBackupVaultNotificationsOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -100,7 +100,7 @@ func TestAccAwsBackupVaultNotification_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsBackupVaultNotification_disappears(t *testing.T) {
+func TestAccBackupVaultNotifications_Notification_disappears(t *testing.T) {
 	var vault backup.GetBackupVaultNotificationsOutput
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
