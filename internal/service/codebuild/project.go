@@ -354,7 +354,7 @@ func ResourceProject() *schema.Resource {
 									"location": {
 										Type:         schema.TypeString,
 										Optional:     true,
-										ValidateFunc: validateAwsCodeBuildProjectS3LogsLocation,
+										ValidateFunc: validProjectS3LogsLocation,
 									},
 									"encryption_disabled": {
 										Type:     schema.TypeBool,
@@ -1879,7 +1879,7 @@ func ValidProjectName(v interface{}, k string) (ws []string, errors []error) {
 	return
 }
 
-func validateAwsCodeBuildProjectS3LogsLocation(v interface{}, k string) (ws []string, errors []error) {
+func validProjectS3LogsLocation(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 
 	if _, errs := verify.ValidARN(v, k); len(errs) == 0 {
