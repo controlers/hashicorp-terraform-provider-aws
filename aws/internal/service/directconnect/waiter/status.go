@@ -7,11 +7,22 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/directconnect/finder"
 	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
+	tfdirectconnect "github.com/hashicorp/terraform-provider-aws/internal/service/directconnect"
 )
 
-func ConnectionState(conn *directconnect.DirectConnect, id string) resource.StateRefreshFunc {
+func statusConnectionState(conn *directconnect.DirectConnect, id string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.ConnectionByID(conn, id)
+		output, err := tfdirectconnect.FindConnectionByID(conn, id)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
@@ -25,9 +36,9 @@ func ConnectionState(conn *directconnect.DirectConnect, id string) resource.Stat
 	}
 }
 
-func GatewayState(conn *directconnect.DirectConnect, id string) resource.StateRefreshFunc {
+func statusGatewayState(conn *directconnect.DirectConnect, id string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.GatewayByID(conn, id)
+		output, err := tfdirectconnect.FindGatewayByID(conn, id)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
@@ -41,9 +52,9 @@ func GatewayState(conn *directconnect.DirectConnect, id string) resource.StateRe
 	}
 }
 
-func GatewayAssociationState(conn *directconnect.DirectConnect, id string) resource.StateRefreshFunc {
+func statusGatewayAssociationState(conn *directconnect.DirectConnect, id string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.GatewayAssociationByID(conn, id)
+		output, err := tfdirectconnect.FindGatewayAssociationByID(conn, id)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
@@ -57,9 +68,9 @@ func GatewayAssociationState(conn *directconnect.DirectConnect, id string) resou
 	}
 }
 
-func LagState(conn *directconnect.DirectConnect, id string) resource.StateRefreshFunc {
+func statusLagState(conn *directconnect.DirectConnect, id string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		output, err := finder.LagByID(conn, id)
+		output, err := tfdirectconnect.FindLagByID(conn, id)
 
 		if tfresource.NotFound(err) {
 			return nil, "", nil
