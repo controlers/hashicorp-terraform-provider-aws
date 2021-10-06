@@ -71,7 +71,7 @@ func sweepDevEndpoint(region string) error {
 	return nil
 }
 
-func TestAccGlueDevEndpoint_Basic(t *testing.T) {
+func TestAccGlueDevEndpoint_basic(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -105,7 +105,7 @@ func TestAccGlueDevEndpoint_Basic(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_Arguments(t *testing.T) {
+func TestAccGlueDevEndpoint_arguments(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -151,7 +151,7 @@ func TestAccGlueDevEndpoint_Arguments(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_ExtraJarsS3Path(t *testing.T) {
+func TestAccGlueDevEndpoint_extraJarsS3Path(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -188,7 +188,7 @@ func TestAccGlueDevEndpoint_ExtraJarsS3Path(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_ExtraPythonLibsS3Path(t *testing.T) {
+func TestAccGlueDevEndpoint_extraPythonLibsS3Path(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -225,7 +225,7 @@ func TestAccGlueDevEndpoint_ExtraPythonLibsS3Path(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_GlueVersion(t *testing.T) {
+func TestAccGlueDevEndpoint_glueVersion(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -264,7 +264,7 @@ func TestAccGlueDevEndpoint_GlueVersion(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_NumberOfNodes(t *testing.T) {
+func TestAccGlueDevEndpoint_numberOfNodes(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -303,7 +303,7 @@ func TestAccGlueDevEndpoint_NumberOfNodes(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_NumberOfWorkers(t *testing.T) {
+func TestAccGlueDevEndpoint_numberOfWorkers(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -342,7 +342,7 @@ func TestAccGlueDevEndpoint_NumberOfWorkers(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_PublicKey(t *testing.T) {
+func TestAccGlueDevEndpoint_publicKey(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -386,7 +386,7 @@ func TestAccGlueDevEndpoint_PublicKey(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_PublicKeys(t *testing.T) {
+func TestAccGlueDevEndpoint_publicKeys(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -445,7 +445,7 @@ func TestAccGlueDevEndpoint_PublicKeys(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_SecurityConfiguration(t *testing.T) {
+func TestAccGlueDevEndpoint_security(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -474,7 +474,7 @@ func TestAccGlueDevEndpoint_SecurityConfiguration(t *testing.T) {
 }
 
 // Note: Either none or both of subnetId and securityGroupIds must be specified.
-func TestAccGlueDevEndpoint_SubnetID_SecurityGroupIDs(t *testing.T) {
+func TestAccGlueDevEndpoint_SubnetID_securityGroupIDs(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -505,7 +505,7 @@ func TestAccGlueDevEndpoint_SubnetID_SecurityGroupIDs(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_Tags(t *testing.T) {
+func TestAccGlueDevEndpoint_tags(t *testing.T) {
 	var endpoint1, endpoint2, endpoint3 glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
@@ -551,7 +551,7 @@ func TestAccGlueDevEndpoint_Tags(t *testing.T) {
 	})
 }
 
-func TestAccGlueDevEndpoint_WorkerType(t *testing.T) {
+func TestAccGlueDevEndpoint_workerType(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
 	rName := sdkacctest.RandomWithPrefix(GlueDevEndpointResourcePrefix)
