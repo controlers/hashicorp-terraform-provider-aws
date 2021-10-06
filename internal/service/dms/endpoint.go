@@ -522,7 +522,7 @@ func resourceEndpointRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	err = resourceAwsDmsEndpointSetState(d, response.Endpoints[0])
+	err = resourceEndpointSetState(d, response.Endpoints[0])
 	if err != nil {
 		return err
 	}
@@ -758,7 +758,7 @@ func resourceEndpointDelete(d *schema.ResourceData, meta interface{}) error {
 	return err
 }
 
-func resourceAwsDmsEndpointSetState(d *schema.ResourceData, endpoint *dms.Endpoint) error {
+func resourceEndpointSetState(d *schema.ResourceData, endpoint *dms.Endpoint) error {
 	d.SetId(aws.StringValue(endpoint.EndpointIdentifier))
 
 	d.Set("certificate_arn", endpoint.CertificateArn)
