@@ -28,7 +28,7 @@ func ResourceCluster() *schema.Resource {
 		Update: resourceClusterUpdate,
 		Delete: resourceClusterDelete,
 		Importer: &schema.ResourceImporter{
-			State: resourceAwsDocDBClusterImport,
+			State: resourceClusterImport,
 		},
 
 		Timeouts: &schema.ResourceTimeout{
@@ -255,7 +255,7 @@ func ResourceCluster() *schema.Resource {
 	}
 }
 
-func resourceAwsDocDBClusterImport(
+func resourceClusterImport(
 	d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	// Neither skip_final_snapshot nor final_snapshot_identifier can be fetched
 	// from any API call, so we need to default skip_final_snapshot to true so
@@ -461,7 +461,7 @@ func resourceClusterCreate(d *schema.ResourceData, meta interface{}) error {
 	stateConf := &resource.StateChangeConf{
 		Pending:    resourceAwsDocDBClusterCreatePendingStates,
 		Target:     []string{"available"},
-		Refresh:    resourceAwsDocDBClusterStateRefreshFunc(conn, d.Id()),
+		Refresh:    resourceClusterStateRefreshFunc(conn, d.Id()),
 		Timeout:    d.Timeout(schema.TimeoutCreate),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second,
@@ -747,7 +747,7 @@ func resourceClusterDelete(d *schema.ResourceData, meta interface{}) error {
 	stateConf := &resource.StateChangeConf{
 		Pending:    resourceAwsDocDBClusterDeletePendingStates,
 		Target:     []string{"destroyed"},
-		Refresh:    resourceAwsDocDBClusterStateRefreshFunc(conn, d.Id()),
+		Refresh:    resourceClusterStateRefreshFunc(conn, d.Id()),
 		Timeout:    d.Timeout(schema.TimeoutDelete),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second,
@@ -762,7 +762,7 @@ func resourceClusterDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceAwsDocDBClusterStateRefreshFunc(conn *docdb.DocDB, dbClusterIdentifier string) resource.StateRefreshFunc {
+func resourceClusterStateRefreshFunc(conn *docdb.DocDB, dbClusterIdentifier string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		resp, err := conn.DescribeDBClusters(&docdb.DescribeDBClustersInput{
 			DBClusterIdentifier: aws.String(dbClusterIdentifier),
@@ -823,7 +823,7 @@ func waitForDocDBClusterUpdate(conn *docdb.DocDB, id string, timeout time.Durati
 	stateConf := &resource.StateChangeConf{
 		Pending:    resourceAwsDocDBClusterUpdatePendingStates,
 		Target:     []string{"available"},
-		Refresh:    resourceAwsDocDBClusterStateRefreshFunc(conn, id),
+		Refresh:    resourceClusterStateRefreshFunc(conn, id),
 		Timeout:    timeout,
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second, // Wait 30 secs before starting
