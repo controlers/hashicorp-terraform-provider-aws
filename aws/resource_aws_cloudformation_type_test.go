@@ -31,7 +31,7 @@ func TestAccAwsCloudformationType_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudformationTypeDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -69,16 +69,16 @@ func TestAccAwsCloudformationType_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudformationTypeDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccCloudformationTypeConfigTypeName(rName, zipPath, typeName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					testAccCheckAwsCloudformationTypeExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsCloudFormationType(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsCloudFormationType(), resourceName),
 					// Verify Delete error handling
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsCloudFormationType(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsCloudFormationType(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -96,7 +96,7 @@ func TestAccAwsCloudformationType_ExecutionRoleArn(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudformationTypeDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -121,7 +121,7 @@ func TestAccAwsCloudformationType_LoggingConfig(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudformationTypeDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -148,7 +148,7 @@ func testAccCheckAwsCloudformationTypeExists(resourceName string) resource.TestC
 			return fmt.Errorf("No CloudFormation Type ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).cfconn
+		conn := acctest.Provider.Meta().(*AWSClient).cfconn
 
 		_, err := finder.TypeByARN(context.TODO(), conn, rs.Primary.ID)
 
@@ -161,7 +161,7 @@ func testAccCheckAwsCloudformationTypeExists(resourceName string) resource.TestC
 }
 
 func testAccCheckAwsCloudformationTypeDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).cfconn
+	conn := acctest.Provider.Meta().(*AWSClient).cfconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_cloudformation_stack_set" {

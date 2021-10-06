@@ -106,7 +106,7 @@ func TestAccAWSCloudFormationStackSetInstance_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCloudFormationStackSet(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudFormationStackSetInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -141,14 +141,14 @@ func TestAccAWSCloudFormationStackSetInstance_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCloudFormationStackSet(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudFormationStackSetInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSCloudFormationStackSetInstanceConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFormationStackSetInstanceExists(resourceName, &stackInstance1),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsCloudFormationStackSetInstance(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsCloudFormationStackSetInstance(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -166,7 +166,7 @@ func TestAccAWSCloudFormationStackSetInstance_disappears_StackSet(t *testing.T) 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCloudFormationStackSet(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudFormationStackSetInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -174,8 +174,8 @@ func TestAccAWSCloudFormationStackSetInstance_disappears_StackSet(t *testing.T) 
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudFormationStackSetExists(stackSetResourceName, &stackSet1),
 					testAccCheckCloudFormationStackSetInstanceExists(resourceName, &stackInstance1),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsCloudFormationStackSetInstance(), resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsCloudFormationStackSet(), stackSetResourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsCloudFormationStackSetInstance(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsCloudFormationStackSet(), stackSetResourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -191,7 +191,7 @@ func TestAccAWSCloudFormationStackSetInstance_ParameterOverrides(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCloudFormationStackSet(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudFormationStackSetInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -255,7 +255,7 @@ func TestAccAWSCloudFormationStackSetInstance_RetainStack(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSCloudFormationStackSet(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudformation.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudFormationStackSetInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -308,7 +308,7 @@ func testAccCheckCloudFormationStackSetInstanceExists(resourceName string, v *cl
 			return fmt.Errorf("Not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).cfconn
+		conn := acctest.Provider.Meta().(*AWSClient).cfconn
 
 		stackSetName, accountID, region, err := tfcloudformation.StackSetInstanceParseResourceID(rs.Primary.ID)
 
@@ -330,7 +330,7 @@ func testAccCheckCloudFormationStackSetInstanceExists(resourceName string, v *cl
 
 func testAccCheckCloudFormationStackSetInstanceStackExists(stackInstance *cloudformation.StackInstance, v *cloudformation.Stack) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).cfconn
+		conn := acctest.Provider.Meta().(*AWSClient).cfconn
 
 		output, err := finder.StackByID(conn, aws.StringValue(stackInstance.StackId))
 
@@ -345,7 +345,7 @@ func testAccCheckCloudFormationStackSetInstanceStackExists(stackInstance *cloudf
 }
 
 func testAccCheckAWSCloudFormationStackSetInstanceDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).cfconn
+	conn := acctest.Provider.Meta().(*AWSClient).cfconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_cloudformation_stack_set_instance" {
