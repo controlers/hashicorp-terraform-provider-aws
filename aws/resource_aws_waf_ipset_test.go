@@ -114,7 +114,7 @@ func TestAccAWSWafIPSet_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafIPSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -146,7 +146,7 @@ func TestAccAWSWafIPSet_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafIPSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -170,7 +170,7 @@ func TestAccAWSWafIPSet_changeNameForceNew(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafIPSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -212,7 +212,7 @@ func TestAccAWSWafIPSet_changeDescriptors(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafIPSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -256,7 +256,7 @@ func TestAccAWSWafIPSet_noDescriptors(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafIPSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -303,7 +303,7 @@ func TestAccAWSWafIPSet_IpSetDescriptors_1000UpdateLimit(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafIPSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -435,7 +435,7 @@ func TestAccAWSWafIPSet_ipv6(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafIPSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -455,7 +455,7 @@ func TestAccAWSWafIPSet_ipv6(t *testing.T) {
 
 func testAccCheckAWSWafIPSetDisappears(v *waf.IPSet) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).wafconn
+		conn := acctest.Provider.Meta().(*AWSClient).wafconn
 
 		wr := newWafRetryer(conn)
 		_, err := wr.RetryWithToken(func(token *string) (interface{}, error) {
@@ -501,7 +501,7 @@ func testAccCheckAWSWafIPSetDestroy(s *terraform.State) error {
 			continue
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).wafconn
+		conn := acctest.Provider.Meta().(*AWSClient).wafconn
 		resp, err := conn.GetIPSet(
 			&waf.GetIPSetInput{
 				IPSetId: aws.String(rs.Primary.ID),
@@ -535,7 +535,7 @@ func testAccCheckAWSWafIPSetExists(n string, v *waf.IPSet) resource.TestCheckFun
 			return fmt.Errorf("No WAF IPSet ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).wafconn
+		conn := acctest.Provider.Meta().(*AWSClient).wafconn
 		resp, err := conn.GetIPSet(&waf.GetIPSetInput{
 			IPSetId: aws.String(rs.Primary.ID),
 		})

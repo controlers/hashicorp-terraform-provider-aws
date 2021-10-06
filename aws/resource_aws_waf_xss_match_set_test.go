@@ -111,7 +111,7 @@ func TestAccAWSWafXssMatchSet_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafXssMatchSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -153,7 +153,7 @@ func TestAccAWSWafXssMatchSet_changeNameForceNew(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafXssMatchSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -189,14 +189,14 @@ func TestAccAWSWafXssMatchSet_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafXssMatchSetDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSWafXssMatchSetConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSWafXssMatchSetExists(resourceName, &v),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsWafXssMatchSet(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsWafXssMatchSet(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -212,7 +212,7 @@ func TestAccAWSWafXssMatchSet_changeTuples(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafXssMatchSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -272,7 +272,7 @@ func TestAccAWSWafXssMatchSet_noTuples(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSWaf(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, waf.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSWafXssMatchSetDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -303,7 +303,7 @@ func testAccCheckAWSWafXssMatchSetExists(n string, v *waf.XssMatchSet) resource.
 			return fmt.Errorf("No WAF XSS Match Set ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).wafconn
+		conn := acctest.Provider.Meta().(*AWSClient).wafconn
 		resp, err := conn.GetXssMatchSet(&waf.GetXssMatchSetInput{
 			XssMatchSetId: aws.String(rs.Primary.ID),
 		})
@@ -327,7 +327,7 @@ func testAccCheckAWSWafXssMatchSetDestroy(s *terraform.State) error {
 			continue
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).wafconn
+		conn := acctest.Provider.Meta().(*AWSClient).wafconn
 		resp, err := conn.GetXssMatchSet(
 			&waf.GetXssMatchSetInput{
 				XssMatchSetId: aws.String(rs.Primary.ID),
