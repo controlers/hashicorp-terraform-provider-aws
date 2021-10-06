@@ -80,7 +80,7 @@ func TestAccAWSSagemakerAppImageConfig_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSagemakerAppImageConfigDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -110,7 +110,7 @@ func TestAccAWSSagemakerAppImageConfig_kernelGatewayImageConfig_kernalSpecs(t *t
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSagemakerAppImageConfigDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -153,7 +153,7 @@ func TestAccAWSSagemakerAppImageConfig_kernelGatewayImageConfig_fileSystemConfig
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSagemakerAppImageConfigDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -199,7 +199,7 @@ func TestAccAWSSagemakerAppImageConfig_tags(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSagemakerAppDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -244,14 +244,14 @@ func TestAccAWSSagemakerAppImageConfig_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, sagemaker.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSagemakerAppImageConfigDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSSagemakerAppImageConfigBasicConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSSagemakerAppImageConfigExists(resourceName, &config),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsSagemakerAppImageConfig(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsSagemakerAppImageConfig(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -260,7 +260,7 @@ func TestAccAWSSagemakerAppImageConfig_disappears(t *testing.T) {
 }
 
 func testAccCheckAWSSagemakerAppImageConfigDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).sagemakerconn
+	conn := acctest.Provider.Meta().(*AWSClient).sagemakerconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_sagemaker_app_image_config" {
@@ -296,7 +296,7 @@ func testAccCheckAWSSagemakerAppImageConfigExists(n string, config *sagemaker.De
 			return fmt.Errorf("No sagmaker App Image Config ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).sagemakerconn
+		conn := acctest.Provider.Meta().(*AWSClient).sagemakerconn
 		resp, err := finder.AppImageConfigByName(conn, rs.Primary.ID)
 		if err != nil {
 			return err
