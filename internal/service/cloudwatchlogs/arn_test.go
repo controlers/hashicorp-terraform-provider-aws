@@ -1,4 +1,4 @@
-package cloudwatchlogs_test
+package cloudwatchlogs
 
 import (
 	"testing"
