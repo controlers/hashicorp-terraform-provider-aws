@@ -26,10 +26,10 @@ import (
 
 func ResourceListenerRule() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceAwsLbListenerRuleCreate,
-		Read:   resourceAwsLbListenerRuleRead,
-		Update: resourceAwsLbListenerRuleUpdate,
-		Delete: resourceAwsLbListenerRuleDelete,
+		Create: resourceListenerRuleCreate,
+		Read:   resourceListenerRuleRead,
+		Update: resourceListenerRuleUpdate,
+		Delete: resourceListenerRuleDelete,
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
 		},
@@ -476,7 +476,7 @@ func suppressIfActionTypeNot(t string) schema.SchemaDiffSuppressFunc {
 	}
 }
 
-func resourceAwsLbListenerRuleCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceListenerRuleCreate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).ELBV2Conn
 	listenerArn := d.Get("listener_arn").(string)
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
@@ -546,10 +546,10 @@ func resourceAwsLbListenerRuleCreate(d *schema.ResourceData, meta interface{}) e
 
 	d.SetId(aws.StringValue(resp.Rules[0].RuleArn))
 
-	return resourceAwsLbListenerRuleRead(d, meta)
+	return resourceListenerRuleRead(d, meta)
 }
 
-func resourceAwsLbListenerRuleRead(d *schema.ResourceData, meta interface{}) error {
+func resourceListenerRuleRead(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).ELBV2Conn
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
@@ -790,7 +790,7 @@ func resourceAwsLbListenerRuleRead(d *schema.ResourceData, meta interface{}) err
 	return nil
 }
 
-func resourceAwsLbListenerRuleUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceListenerRuleUpdate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).ELBV2Conn
 
 	if d.HasChange("priority") {
@@ -870,10 +870,10 @@ func resourceAwsLbListenerRuleUpdate(d *schema.ResourceData, meta interface{}) e
 		}
 	}
 
-	return resourceAwsLbListenerRuleRead(d, meta)
+	return resourceListenerRuleRead(d, meta)
 }
 
-func resourceAwsLbListenerRuleDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceListenerRuleDelete(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).ELBV2Conn
 
 	_, err := conn.DeleteRule(&elbv2.DeleteRuleInput{
