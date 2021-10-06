@@ -17,50 +17,9 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
-	resource.AddTestSweepers("aws_glue_connection", &resource.Sweeper{
-		Name: "aws_glue_connection",
-		F:    sweepConnections,
-	})
-}
 
-func sweepConnections(region string) error {
-	client, err := sweep.SharedRegionalSweepClient(region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %s", err)
-	}
-	conn := client.(*conns.AWSClient).GlueConn
-	catalogID := client.(*conns.AWSClient).AccountID
 
-	input := &glue.GetConnectionsInput{
-		CatalogId: aws.String(catalogID),
-	}
-	err = conn.GetConnectionsPages(input, func(page *glue.GetConnectionsOutput, lastPage bool) bool {
-		if len(page.ConnectionList) == 0 {
-			log.Printf("[INFO] No Glue Connections to sweep")
-			return false
-		}
-		for _, connection := range page.ConnectionList {
-			name := aws.StringValue(connection.Name)
 
-			log.Printf("[INFO] Deleting Glue Connection: %s", name)
-			err := tfglue.DeleteConnection(conn, catalogID, name)
-			if err != nil {
-				log.Printf("[ERROR] Failed to delete Glue Connection %s: %s", name, err)
-			}
-		}
-		return !lastPage
-	})
-	if err != nil {
-		if sweep.SkipSweepError(err) {
-			log.Printf("[WARN] Skipping Glue Connection sweep for %s: %s", region, err)
-			return nil
-		}
-		return fmt.Errorf("Error retrieving Glue Connections: %s", err)
-	}
-
-	return nil
-}
 
 func TestAccGlueConnection_basic(t *testing.T) {
 	var connection glue.Connection
