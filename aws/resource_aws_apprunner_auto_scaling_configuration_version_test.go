@@ -93,7 +93,7 @@ func TestAccAwsAppRunnerAutoScalingConfigurationVersion_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerAutoScalingConfigurationVersionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -126,7 +126,7 @@ func TestAccAwsAppRunnerAutoScalingConfigurationVersion_complex(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerAutoScalingConfigurationVersionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -195,7 +195,7 @@ func TestAccAwsAppRunnerAutoScalingConfigurationVersion_MultipleVersions(t *test
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerAutoScalingConfigurationVersionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -253,7 +253,7 @@ func TestAccAwsAppRunnerAutoScalingConfigurationVersion_UpdateMultipleVersions(t
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerAutoScalingConfigurationVersionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -307,14 +307,14 @@ func TestAccAwsAppRunnerAutoScalingConfigurationVersion_disappears(t *testing.T)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerAutoScalingConfigurationVersionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppRunnerAutoScalingConfigurationVersionConfig_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsAppRunnerAutoScalingConfigurationVersionExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsAppRunnerAutoScalingConfigurationVersion(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsAppRunnerAutoScalingConfigurationVersion(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -329,7 +329,7 @@ func TestAccAwsAppRunnerAutoScalingConfigurationVersion_tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerAutoScalingConfigurationVersionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -372,7 +372,7 @@ func testAccCheckAwsAppRunnerAutoScalingConfigurationVersionDestroy(s *terraform
 			continue
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).apprunnerconn
+		conn := acctest.Provider.Meta().(*AWSClient).apprunnerconn
 
 		input := &apprunner.DescribeAutoScalingConfigurationInput{
 			AutoScalingConfigurationArn: aws.String(rs.Primary.ID),
@@ -407,7 +407,7 @@ func testAccCheckAwsAppRunnerAutoScalingConfigurationVersionExists(n string) res
 			return fmt.Errorf("No App Runner Service ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).apprunnerconn
+		conn := acctest.Provider.Meta().(*AWSClient).apprunnerconn
 
 		input := &apprunner.DescribeAutoScalingConfigurationInput{
 			AutoScalingConfigurationArn: aws.String(rs.Primary.ID),

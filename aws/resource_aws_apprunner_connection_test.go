@@ -89,7 +89,7 @@ func TestAccAwsAppRunnerConnection_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -119,14 +119,14 @@ func TestAccAwsAppRunnerConnection_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAppRunnerConnection_basic(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsAppRunnerConnectionExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsAppRunnerConnection(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsAppRunnerConnection(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -141,7 +141,7 @@ func TestAccAwsAppRunnerConnection_tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAppRunner(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, apprunner.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsAppRunnerConnectionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -191,7 +191,7 @@ func testAccCheckAwsAppRunnerConnectionDestroy(s *terraform.State) error {
 			continue
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).apprunnerconn
+		conn := acctest.Provider.Meta().(*AWSClient).apprunnerconn
 
 		connection, err := finder.ConnectionSummaryByName(context.Background(), conn, rs.Primary.ID)
 
@@ -222,7 +222,7 @@ func testAccCheckAwsAppRunnerConnectionExists(n string) resource.TestCheckFunc {
 			return fmt.Errorf("No App Runner Connection ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).apprunnerconn
+		conn := acctest.Provider.Meta().(*AWSClient).apprunnerconn
 
 		connection, err := finder.ConnectionSummaryByName(context.Background(), conn, rs.Primary.ID)
 
