@@ -74,7 +74,7 @@ func sweepScalingPlans(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func TestAccAwsAutoScalingPlansScalingPlan_basicDynamicScaling(t *testing.T) {
+func TestAccAutoScalingPlansScalingPlan_basicDynamicScaling(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -123,7 +123,7 @@ func TestAccAwsAutoScalingPlansScalingPlan_basicDynamicScaling(t *testing.T) {
 	})
 }
 
-func TestAccAwsAutoScalingPlansScalingPlan_basicPredictiveScaling(t *testing.T) {
+func TestAccAutoScalingPlansScalingPlan_basicPredictiveScaling(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -178,7 +178,7 @@ func TestAccAwsAutoScalingPlansScalingPlan_basicPredictiveScaling(t *testing.T) 
 	})
 }
 
-func TestAccAwsAutoScalingPlansScalingPlan_basicUpdate(t *testing.T) {
+func TestAccAutoScalingPlansScalingPlan_basicUpdate(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -260,7 +260,7 @@ func TestAccAwsAutoScalingPlansScalingPlan_basicUpdate(t *testing.T) {
 	})
 }
 
-func TestAccAwsAutoScalingPlansScalingPlan_disappears(t *testing.T) {
+func TestAccAutoScalingPlansScalingPlan_disappears(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
