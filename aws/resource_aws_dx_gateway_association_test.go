@@ -176,7 +176,7 @@ func TestAccAwsDxGatewayAssociation_V0StateUpgrade(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsDxGatewayAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -202,7 +202,7 @@ func TestAccAwsDxGatewayAssociation_basicVpnGatewaySingleAccount(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsDxGatewayAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -276,7 +276,7 @@ func TestAccAwsDxGatewayAssociation_basicTransitGatewaySingleAccount(t *testing.
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsDxGatewayAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -351,7 +351,7 @@ func TestAccAwsDxGatewayAssociation_multiVpnGatewaysSingleAccount(t *testing.T) 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsDxGatewayAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -383,7 +383,7 @@ func TestAccAwsDxGatewayAssociation_allowedPrefixesVpnGatewaySingleAccount(t *te
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, directconnect.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsDxGatewayAssociationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -505,7 +505,7 @@ func testAccAwsDxGatewayAssociationImportStateIdFunc(resourceName string) resour
 }
 
 func testAccCheckAwsDxGatewayAssociationDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).dxconn
+	conn := acctest.Provider.Meta().(*AWSClient).dxconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_dx_gateway_association" {
@@ -538,7 +538,7 @@ func testAccCheckAwsDxGatewayAssociationExists(name string, ga *directconnect.Ga
 			return fmt.Errorf("No Direct Connect Gateway Association ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).dxconn
+		conn := acctest.Provider.Meta().(*AWSClient).dxconn
 
 		output, err := finder.GatewayAssociationByID(conn, rs.Primary.Attributes["dx_gateway_association_id"])
 
@@ -589,7 +589,7 @@ func testAccCheckAwsDxGatewayAssociationStateUpgradeV0(name string) resource.Tes
 			"vpn_gateway_id": rs.Primary.Attributes["associated_gateway_id"], // vpn_gateway_id was removed in 3.0, but older state still has it
 		}
 
-		updatedRawState, err := resourceAwsDxGatewayAssociationStateUpgradeV0(context.Background(), rawState, testAccProvider.Meta())
+		updatedRawState, err := resourceAwsDxGatewayAssociationStateUpgradeV0(context.Background(), rawState, acctest.Provider.Meta())
 
 		if err != nil {
 			return err
