@@ -98,7 +98,7 @@ func ResourceInstanceFleet() *schema.Resource {
 										Type:         schema.TypeString,
 										Required:     true,
 										ForceNew:     true,
-										ValidateFunc: validateAwsEMREBSVolumeType(),
+										ValidateFunc: validEBSVolumeType(),
 									},
 									"volumes_per_instance": {
 										Type:     schema.TypeInt,
