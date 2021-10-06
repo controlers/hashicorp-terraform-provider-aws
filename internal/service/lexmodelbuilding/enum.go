@@ -1,4 +1,4 @@
-package lex
+package lexmodelbuilding
 
 const (
 	BotVersionLatest    = "$LATEST"
