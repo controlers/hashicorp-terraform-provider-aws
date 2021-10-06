@@ -19,7 +19,7 @@ func TestAccAWSIAMUsersDataSource_nameRegex(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:  testAccProviders,
+		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSIAMUsersConfigDataSource_nameRegex(rCount, rName),
@@ -41,7 +41,7 @@ func TestAccAWSIAMUsersDataSource_pathPrefix(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:  testAccProviders,
+		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSIAMUsersConfigDataSource_pathPrefix(rCount, rName, rPathPrefix),
@@ -60,7 +60,7 @@ func TestAccAWSIAMUsersDataSource_nonExistentNameRegex(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:  testAccProviders,
+		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSIAMUsersConfigDataSource_nonExistentNameRegex,
@@ -79,7 +79,7 @@ func TestAccAWSIAMUsersDataSource_nonExistentPathPrefix(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:  testAccProviders,
+		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSIAMUsersConfigDataSource_nonExistentPathPrefix,
