@@ -97,7 +97,7 @@ func TestAccAWSCloudWatchEventRule_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -168,7 +168,7 @@ func TestAccAWSCloudWatchEventRule_EventBusName(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -218,7 +218,7 @@ func TestAccAWSCloudWatchEventRule_role(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -246,7 +246,7 @@ func TestAccAWSCloudWatchEventRule_description(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -282,7 +282,7 @@ func TestAccAWSCloudWatchEventRule_pattern(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -319,7 +319,7 @@ func TestAccAWSCloudWatchEventRule_ScheduleAndPattern(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -348,7 +348,7 @@ func TestAccAWSCloudWatchEventRule_NamePrefix(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -375,7 +375,7 @@ func TestAccAWSCloudWatchEventRule_Name_Generated(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -403,7 +403,7 @@ func TestAccAWSCloudWatchEventRule_tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -455,7 +455,7 @@ func TestAccAWSCloudWatchEventRule_IsEnabled(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -505,7 +505,7 @@ func TestAccAWSCloudWatchEventRule_PartnerEventBus(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -541,7 +541,7 @@ func TestAccAWSCloudWatchEventRule_EventBusArn(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, events.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchEventRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -579,7 +579,7 @@ func testAccCheckCloudWatchEventRuleExists(n string, rule *events.DescribeRuleOu
 			return fmt.Errorf("No CloudWatch Events Rule ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).cloudwatcheventsconn
+		conn := acctest.Provider.Meta().(*AWSClient).cloudwatcheventsconn
 
 		resp, err := finder.RuleByResourceID(conn, rs.Primary.ID)
 
@@ -600,7 +600,7 @@ func testAccCheckCloudWatchEventRuleEnabled(n string, desired string) resource.T
 			return fmt.Errorf("Not found: %s", n)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).cloudwatcheventsconn
+		conn := acctest.Provider.Meta().(*AWSClient).cloudwatcheventsconn
 
 		resp, err := finder.RuleByResourceID(conn, rs.Primary.ID)
 
@@ -617,7 +617,7 @@ func testAccCheckCloudWatchEventRuleEnabled(n string, desired string) resource.T
 }
 
 func testAccCheckAWSCloudWatchEventRuleDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).cloudwatcheventsconn
+	conn := acctest.Provider.Meta().(*AWSClient).cloudwatcheventsconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_cloudwatch_event_rule" {
