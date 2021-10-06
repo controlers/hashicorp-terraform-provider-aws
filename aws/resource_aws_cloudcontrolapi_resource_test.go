@@ -33,7 +33,7 @@ func TestAccAwsCloudControlApiResource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -54,13 +54,13 @@ func TestAccAwsCloudControlApiResource_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAwsCloudControlApiResourceConfig(rName),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsCloudControlApiResource(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsCloudControlApiResource(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -75,7 +75,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_BooleanValueAdded(t *testing
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -101,7 +101,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_BooleanValueRemoved(t *testi
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -127,7 +127,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_BooleanValueUpdate(t *testin
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -154,7 +154,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_CreateOnly(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -180,7 +180,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_IntegerValueAdded(t *testing
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -206,7 +206,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_IntegerValueRemoved(t *testi
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -232,7 +232,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_IntegerValueUpdate(t *testin
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -257,7 +257,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_InvalidPropertyName(t *testi
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -274,7 +274,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_InvalidPropertyValue(t *test
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -292,7 +292,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_ObjectValueAdded(t *testing.
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -318,7 +318,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_ObjectValueRemoved(t *testin
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -344,7 +344,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_ObjectValueUpdate(t *testing
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -376,7 +376,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_StringValueAdded(t *testing.
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -402,7 +402,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_StringValueRemoved(t *testin
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -428,7 +428,7 @@ func TestAccAwsCloudControlApiResource_DesiredState_StringValueUpdate(t *testing
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -454,7 +454,7 @@ func TestAccAwsCloudControlApiResource_ResourceSchema(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID, cloudformation.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -468,7 +468,7 @@ func TestAccAwsCloudControlApiResource_ResourceSchema(t *testing.T) {
 }
 
 func testAccCheckAwsCloudControlApiResourceDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).cloudcontrolapiconn
+	conn := acctest.Provider.Meta().(*AWSClient).cloudcontrolapiconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_cloudcontrolapi_resource" {
