@@ -21,11 +21,11 @@ import (
 func init() {
 	resource.AddTestSweepers("aws_route53_resolver_firewall_rule_group_association", &resource.Sweeper{
 		Name: "aws_route53_resolver_firewall_rule_group_association",
-		F:    testSweepRoute53ResolverFirewallRuleGroupAssociations,
+		F:    sweepFirewallRuleGroupAssociations,
 	})
 }
 
-func testSweepRoute53ResolverFirewallRuleGroupAssociations(region string) error {
+func sweepFirewallRuleGroupAssociations(region string) error {
 	client, err := sweep.SharedRegionalSweepClient(region)
 	if err != nil {
 		return fmt.Errorf("error getting client: %s", err)
@@ -73,7 +73,7 @@ func TestAccAWSRoute53ResolverFirewallRuleGroupAssociation_basic(t *testing.T) {
 	resourceName := "aws_route53_resolver_firewall_rule_group_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupAssociationDestroy,
@@ -106,7 +106,7 @@ func TestAccAWSRoute53ResolverFirewallRuleGroupAssociation_name(t *testing.T) {
 	resourceName := "aws_route53_resolver_firewall_rule_group_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupAssociationDestroy,
@@ -140,7 +140,7 @@ func TestAccAWSRoute53ResolverFirewallRuleGroupAssociation_mutationProtection(t 
 	resourceName := "aws_route53_resolver_firewall_rule_group_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupAssociationDestroy,
@@ -174,7 +174,7 @@ func TestAccAWSRoute53ResolverFirewallRuleGroupAssociation_priority(t *testing.T
 	resourceName := "aws_route53_resolver_firewall_rule_group_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupAssociationDestroy,
@@ -208,7 +208,7 @@ func TestAccAWSRoute53ResolverFirewallRuleGroupAssociation_disappears(t *testing
 	resourceName := "aws_route53_resolver_firewall_rule_group_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupAssociationDestroy,
@@ -231,7 +231,7 @@ func TestAccAWSRoute53ResolverFirewallRuleGroupAssociation_tags(t *testing.T) {
 	resourceName := "aws_route53_resolver_firewall_rule_group_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
+		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
 		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleGroupAssociationDestroy,
