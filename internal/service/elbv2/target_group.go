@@ -85,13 +85,13 @@ func ResourceTargetGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							Optional:     true,
 							Computed:     true,
-							ValidateFunc: validateAwsLbTargetGroupHealthCheckPath,
+							ValidateFunc: validTargetGroupHealthCheckPath,
 						},
 						"port": {
 							Type:             schema.TypeString,
 							Optional:         true,
 							Default:          "traffic-port",
-							ValidateFunc:     validateAwsLbTargetGroupHealthCheckPort,
+							ValidateFunc:     validTargetGroupHealthCheckPort,
 							DiffSuppressFunc: suppressIfTargetType(elbv2.TargetTypeEnumLambda),
 						},
 						"protocol": {
@@ -657,7 +657,7 @@ func resourceTargetGroupDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func validateAwsLbTargetGroupHealthCheckPath(v interface{}, k string) (ws []string, errors []error) {
+func validTargetGroupHealthCheckPath(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 	if len(value) > 1024 {
 		errors = append(errors, fmt.Errorf(
@@ -683,7 +683,7 @@ func validateSlowStart(v interface{}, k string) (ws []string, errors []error) {
 	return
 }
 
-func validateAwsLbTargetGroupHealthCheckPort(v interface{}, k string) (ws []string, errors []error) {
+func validTargetGroupHealthCheckPort(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 
 	if value == "traffic-port" {

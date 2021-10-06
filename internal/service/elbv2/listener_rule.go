@@ -50,7 +50,7 @@ func ResourceListenerRule() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 				ForceNew:     true,
-				ValidateFunc: validateAwsLbListenerRulePriority,
+				ValidateFunc: validListenerRulePriority,
 			},
 			"action": {
 				Type:     schema.TypeList,
@@ -885,7 +885,7 @@ func resourceListenerRuleDelete(d *schema.ResourceData, meta interface{}) error 
 	return nil
 }
 
-func validateAwsLbListenerRulePriority(v interface{}, k string) (ws []string, errors []error) {
+func validListenerRulePriority(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(int)
 	if value < 1 || (value > 50000 && value != 99999) {
 		errors = append(errors, fmt.Errorf("%q must be in the range 1-50000 for normal rule or 99999 for default rule", k))
