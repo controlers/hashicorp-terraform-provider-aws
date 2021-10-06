@@ -56,7 +56,7 @@ func sweepInstances(region string) error {
 	return sweep.SweepOrchestrator(sweepResources)
 }
 
-func TestAccAWSDBInstance_basic(t *testing.T) {
+func TestAccRDSInstance_basic(t *testing.T) {
 	var dbInstance1 rds.DBInstance
 	resourceName := "aws_db_instance.bar"
 
@@ -120,7 +120,7 @@ func TestAccAWSDBInstance_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_OnlyMajorVersion(t *testing.T) {
+func TestAccRDSInstance_onlyMajorVersion(t *testing.T) {
 	var dbInstance1 rds.DBInstance
 	resourceName := "aws_db_instance.test"
 	engine := "mysql"
@@ -153,7 +153,7 @@ func TestAccAWSDBInstance_OnlyMajorVersion(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_namePrefix(t *testing.T) {
+func TestAccRDSInstance_namePrefix(t *testing.T) {
 	var v rds.DBInstance
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -175,7 +175,7 @@ func TestAccAWSDBInstance_namePrefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_generatedName(t *testing.T) {
+func TestAccRDSInstance_generatedName(t *testing.T) {
 	var v rds.DBInstance
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -195,7 +195,7 @@ func TestAccAWSDBInstance_generatedName(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_kmsKey(t *testing.T) {
+func TestAccRDSInstance_kmsKey(t *testing.T) {
 	var v rds.DBInstance
 	kmsKeyResourceName := "aws_kms_key.foo"
 	resourceName := "aws_db_instance.bar"
@@ -230,7 +230,7 @@ func TestAccAWSDBInstance_kmsKey(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_subnetGroup(t *testing.T) {
+func TestAccRDSInstance_subnetGroup(t *testing.T) {
 	var v rds.DBInstance
 	rName := sdkacctest.RandString(10)
 
@@ -260,7 +260,7 @@ func TestAccAWSDBInstance_subnetGroup(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_optionGroup(t *testing.T) {
+func TestAccRDSInstance_optionGroup(t *testing.T) {
 	var v rds.DBInstance
 
 	rName := fmt.Sprintf("tf-option-test-%d", sdkacctest.RandInt())
@@ -284,7 +284,7 @@ func TestAccAWSDBInstance_optionGroup(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_iamAuth(t *testing.T) {
+func TestAccRDSInstance_iamAuth(t *testing.T) {
 	var v rds.DBInstance
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -306,7 +306,7 @@ func TestAccAWSDBInstance_iamAuth(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_AllowMajorVersionUpgrade(t *testing.T) {
+func TestAccRDSInstance_allowMajorVersionUpgrade(t *testing.T) {
 	var dbInstance1 rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -348,7 +348,7 @@ func TestAccAWSDBInstance_AllowMajorVersionUpgrade(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_DbSubnetGroupName(t *testing.T) {
+func TestAccRDSInstance_dbSubnetGroupName(t *testing.T) {
 	var dbInstance rds.DBInstance
 	var dbSubnetGroup rds.DBSubnetGroup
 
@@ -374,7 +374,7 @@ func TestAccAWSDBInstance_DbSubnetGroupName(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_DbSubnetGroupName_RamShared(t *testing.T) {
+func TestAccRDSInstance_DBSubnetGroupName_ramShared(t *testing.T) {
 	var dbInstance rds.DBInstance
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
@@ -405,7 +405,7 @@ func TestAccAWSDBInstance_DbSubnetGroupName_RamShared(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_DbSubnetGroupName_VpcSecurityGroupIds(t *testing.T) {
+func TestAccRDSInstance_DBSubnetGroupName_vpcSecurityGroupIDs(t *testing.T) {
 	var dbInstance rds.DBInstance
 	var dbSubnetGroup rds.DBSubnetGroup
 
@@ -431,7 +431,7 @@ func TestAccAWSDBInstance_DbSubnetGroupName_VpcSecurityGroupIds(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_DeletionProtection(t *testing.T) {
+func TestAccRDSInstance_deletionProtection(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -473,7 +473,7 @@ func TestAccAWSDBInstance_DeletionProtection(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_FinalSnapshotIdentifier(t *testing.T) {
+func TestAccRDSInstance_finalSnapshotIdentifier(t *testing.T) {
 	var snap rds.DBInstance
 	rInt := sdkacctest.RandInt()
 
@@ -495,7 +495,7 @@ func TestAccAWSDBInstance_FinalSnapshotIdentifier(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_FinalSnapshotIdentifier_SkipFinalSnapshot(t *testing.T) {
+func TestAccRDSInstance_FinalSnapshotIdentifier_skipFinalSnapshot(t *testing.T) {
 	var snap rds.DBInstance
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -514,7 +514,7 @@ func TestAccAWSDBInstance_FinalSnapshotIdentifier_SkipFinalSnapshot(t *testing.T
 	})
 }
 
-func TestAccAWSDBInstance_IsAlreadyBeingDeleted(t *testing.T) {
+func TestAccRDSInstance_isAlreadyBeingDeleted(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -552,7 +552,7 @@ func TestAccAWSDBInstance_IsAlreadyBeingDeleted(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MaxAllocatedStorage(t *testing.T) {
+func TestAccRDSInstance_maxAllocatedStorage(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -596,7 +596,7 @@ func TestAccAWSDBInstance_MaxAllocatedStorage(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_Password(t *testing.T) {
+func TestAccRDSInstance_password(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -635,7 +635,7 @@ func TestAccAWSDBInstance_Password(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb(t *testing.T) {
+func TestAccRDSInstance_replicateSourceDB(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -660,7 +660,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_AllocatedStorage(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_allocatedStorage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -686,7 +686,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AllocatedStorage(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_Iops(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_iops(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -712,7 +712,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_Iops(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_AllocatedStorageAndIops(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_allocatedStorageAndIops(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -739,7 +739,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AllocatedStorageAndIops(t *testing.T
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_AllowMajorVersionUpgrade(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_allowMajorVersionUpgrade(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -765,7 +765,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AllowMajorVersionUpgrade(t *testing.
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_AutoMinorVersionUpgrade(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_autoMinorVersionUpgrade(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -791,7 +791,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AutoMinorVersionUpgrade(t *testing.T
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_AvailabilityZone(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_availabilityZone(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -816,7 +816,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AvailabilityZone(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_BackupRetentionPeriod(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_backupRetentionPeriod(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -842,7 +842,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_BackupRetentionPeriod(t *testing.T) 
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_BackupWindow(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_backupWindow(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -868,7 +868,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_BackupWindow(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_dbSubnetGroupName(t *testing.T) {
 	var dbInstance rds.DBInstance
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
@@ -898,7 +898,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName_RamShared(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDBDBSubnetGroupName_ramShared(t *testing.T) {
 	var dbInstance rds.DBInstance
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
@@ -930,7 +930,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName_RamShared(t *testi
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName_VpcSecurityGroupIds(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDBDBSubnetGroupName_vpcSecurityGroupIDs(t *testing.T) {
 	var dbInstance rds.DBInstance
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
@@ -960,9 +960,9 @@ func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName_VpcSecurityGroupId
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_DeletionProtection(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_deletionProtection(t *testing.T) {
 	acctest.Skip(t, "CreateDBInstanceReadReplica API currently ignores DeletionProtection=true with SourceDBInstanceIdentifier set")
-	// --- FAIL: TestAccAWSDBInstance_ReplicateSourceDb_DeletionProtection (1624.88s)
+	// --- FAIL: TestAccRDSInstance_ReplicateSourceDB_deletionProtection (1624.88s)
 	//     testing.go:527: Step 0 error: Check failed: Check 4/4 error: aws_db_instance.test: Attribute 'deletion_protection' expected "true", got "false"
 	//
 	// Action=CreateDBInstanceReadReplica&AutoMinorVersionUpgrade=true&CopyTagsToSnapshot=false&DBInstanceClass=db.t2.micro&DBInstanceIdentifier=tf-acc-test-6591588621809891413&DeletionProtection=true&PubliclyAccessible=false&SourceDBInstanceIdentifier=tf-acc-test-6591588621809891413-source&Tags=&Version=2014-10-31
@@ -1008,7 +1008,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_DeletionProtection(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_IamDatabaseAuthenticationEnabled(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_iamDatabaseAuthenticationEnabled(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1034,7 +1034,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_IamDatabaseAuthenticationEnabled(t *
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_MaintenanceWindow(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_maintenanceWindow(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1060,7 +1060,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_MaintenanceWindow(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_MaxAllocatedStorage(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_maxAllocatedStorage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1086,7 +1086,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_MaxAllocatedStorage(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_Monitoring(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_monitoring(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1112,7 +1112,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_Monitoring(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_MultiAZ(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_multiAZ(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1138,7 +1138,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_MultiAZ(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_ParameterGroupName(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_parameterGroupName(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1165,7 +1165,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_ParameterGroupName(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_Port(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_port(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1191,7 +1191,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_Port(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_VpcSecurityGroupIds(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_vpcSecurityGroupIDs(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1217,7 +1217,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_VpcSecurityGroupIds(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_CACertificateIdentifier(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_caCertificateIdentifier(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1245,7 +1245,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_CACertificateIdentifier(t *testing.T
 	})
 }
 
-func TestAccAWSDBInstance_S3Import(t *testing.T) {
+func TestAccRDSInstance_s3Import(t *testing.T) {
 	var snap rds.DBInstance
 	bucket := sdkacctest.RandomWithPrefix("tf-acc-test")
 	uniqueId := sdkacctest.RandomWithPrefix("tf-acc-s3-import-test")
@@ -1267,7 +1267,7 @@ func TestAccAWSDBInstance_S3Import(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier(t *testing.T) {
+func TestAccRDSInstance_snapshotIdentifier(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1294,7 +1294,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifierRemoved(t *testing.T) {
+func TestAccRDSInstance_snapshotIdentifierRemoved(t *testing.T) {
 	var dbInstance1, dbInstance2 rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1323,7 +1323,7 @@ func TestAccAWSDBInstance_SnapshotIdentifierRemoved(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_AllocatedStorage(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_allocatedStorage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1351,7 +1351,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_AllocatedStorage(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_Io1Storage(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_io1Storage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1379,7 +1379,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Io1Storage(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_AllowMajorVersionUpgrade(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_allowMajorVersionUpgrade(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1407,7 +1407,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_AllowMajorVersionUpgrade(t *testing
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_AutoMinorVersionUpgrade(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_autoMinorVersionUpgrade(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1435,7 +1435,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_AutoMinorVersionUpgrade(t *testing.
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_AvailabilityZone(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_availabilityZone(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1462,7 +1462,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_AvailabilityZone(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_BackupRetentionPeriod(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_backupRetentionPeriod(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1490,7 +1490,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_BackupRetentionPeriod(t *testing.T)
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_BackupRetentionPeriod_Unset(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifierBackupRetentionPeriod_unset(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1518,7 +1518,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_BackupRetentionPeriod_Unset(t *test
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_BackupWindow(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_backupWindow(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1546,7 +1546,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_BackupWindow(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_dbSubnetGroupName(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 	var dbSubnetGroup rds.DBSubnetGroup
@@ -1577,7 +1577,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName_RamShared(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifierDBSubnetGroupName_ramShared(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 	var dbSubnetGroup rds.DBSubnetGroup
@@ -1613,7 +1613,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName_RamShared(t *test
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName_VpcSecurityGroupIds(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifierDBSubnetGroupName_vpcSecurityGroupIDs(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 	var dbSubnetGroup rds.DBSubnetGroup
@@ -1644,7 +1644,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName_VpcSecurityGroupI
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_DeletionProtection(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_deletionProtection(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1682,7 +1682,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_DeletionProtection(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_IamDatabaseAuthenticationEnabled(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_iamDatabaseAuthenticationEnabled(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1710,7 +1710,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_IamDatabaseAuthenticationEnabled(t 
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_MaintenanceWindow(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_maintenanceWindow(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1738,7 +1738,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_MaintenanceWindow(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_MaxAllocatedStorage(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_maxAllocatedStorage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1766,7 +1766,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_MaxAllocatedStorage(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_Monitoring(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_monitoring(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1794,7 +1794,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Monitoring(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_MultiAZ(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_multiAZ(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1822,7 +1822,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_MultiAZ(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_MultiAZ_SQLServer(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifierMultiAZ_sqlServer(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1850,7 +1850,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_MultiAZ_SQLServer(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_ParameterGroupName(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_parameterGroupName(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1879,7 +1879,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_ParameterGroupName(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_Port(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_port(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1907,7 +1907,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Port(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_Tags(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_tags(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -1936,9 +1936,9 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_Tags_Unset(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifierTags_unset(t *testing.T) {
 	acctest.Skip(t, "To be fixed: https://github.com/hashicorp/terraform-provider-aws/issues/5959")
-	// --- FAIL: TestAccAWSDBInstance_SnapshotIdentifier_Tags_Unset (1086.15s)
+	// --- FAIL: TestAccRDSInstance_SnapshotIdentifierTags_unset (1086.15s)
 	//     testing.go:527: Step 0 error: Check failed: Check 4/4 error: aws_db_instance.test: Attribute 'tags.%' expected "0", got "1"
 
 	var dbInstance, sourceDbInstance rds.DBInstance
@@ -1999,7 +1999,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_VpcSecurityGroupIds(t *testing.T) {
 // This acceptance test explicitly tests when snapshot_identifier is set,
 // vpc_security_group_ids is set (which triggered the resource update function),
 // and tags is set which was missing its ARN used for tagging
-func TestAccAWSDBInstance_SnapshotIdentifier_VpcSecurityGroupIds_Tags(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifierVPCSecurityGroupIDs_tags(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -2028,7 +2028,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_VpcSecurityGroupIds_Tags(t *testing
 	})
 }
 
-func TestAccAWSDBInstance_MonitoringInterval(t *testing.T) {
+func TestAccRDSInstance_monitoringInterval(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_db_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2082,7 +2082,7 @@ func TestAccAWSDBInstance_MonitoringInterval(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MonitoringRoleArn_EnabledToDisabled(t *testing.T) {
+func TestAccRDSInstance_MonitoringRoleARN_enabledToDisabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_db_instance.test"
@@ -2123,7 +2123,7 @@ func TestAccAWSDBInstance_MonitoringRoleArn_EnabledToDisabled(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MonitoringRoleArn_EnabledToRemoved(t *testing.T) {
+func TestAccRDSInstance_MonitoringRoleARN_enabledToRemoved(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_db_instance.test"
@@ -2163,7 +2163,7 @@ func TestAccAWSDBInstance_MonitoringRoleArn_EnabledToRemoved(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MonitoringRoleArn_RemovedToEnabled(t *testing.T) {
+func TestAccRDSInstance_MonitoringRoleARN_removedToEnabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_db_instance.test"
@@ -2206,7 +2206,7 @@ func TestAccAWSDBInstance_MonitoringRoleArn_RemovedToEnabled(t *testing.T) {
 // Regression test for https://github.com/hashicorp/terraform/issues/3760 .
 // We apply a plan, then change just the iops. If the apply succeeds, we
 // consider this a pass, as before in 3760 the request would fail
-func TestAccAWSDBInstance_separateIopsUpdate(t *testing.T) {
+func TestAccRDSInstance_separateIopsUpdate(t *testing.T) {
 	var v rds.DBInstance
 
 	rName := sdkacctest.RandString(5)
@@ -2236,7 +2236,7 @@ func TestAccAWSDBInstance_separateIopsUpdate(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_portUpdate(t *testing.T) {
+func TestAccRDSInstance_portUpdate(t *testing.T) {
 	var v rds.DBInstance
 
 	rName := sdkacctest.RandString(5)
@@ -2268,7 +2268,7 @@ func TestAccAWSDBInstance_portUpdate(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MSSQL_TZ(t *testing.T) {
+func TestAccRDSInstance_MSSQL_tz(t *testing.T) {
 	var v rds.DBInstance
 	rInt := sdkacctest.RandInt()
 
@@ -2305,7 +2305,7 @@ func TestAccAWSDBInstance_MSSQL_TZ(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MSSQL_Domain(t *testing.T) {
+func TestAccRDSInstance_MSSQL_domain(t *testing.T) {
 	var vBefore, vAfter rds.DBInstance
 	resourceName := "aws_db_instance.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2342,7 +2342,7 @@ func TestAccAWSDBInstance_MSSQL_Domain(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MSSQL_DomainSnapshotRestore(t *testing.T) {
+func TestAccRDSInstance_MSSQL_domainSnapshotRestore(t *testing.T) {
 	var v, vRestoredInstance rds.DBInstance
 	resourceName := "aws_db_instance.test"
 	originResourceName := "aws_db_instance.origin"
@@ -2370,7 +2370,7 @@ func TestAccAWSDBInstance_MSSQL_DomainSnapshotRestore(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MySQL_SnapshotRestoreWithEngineVersion(t *testing.T) {
+func TestAccRDSInstance_MySQL_snapshotRestoreWithEngineVersion(t *testing.T) {
 	var v, vRestoredInstance rds.DBInstance
 	rInt := sdkacctest.RandInt()
 
@@ -2393,7 +2393,7 @@ func TestAccAWSDBInstance_MySQL_SnapshotRestoreWithEngineVersion(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_MinorVersion(t *testing.T) {
+func TestAccRDSInstance_minorVersion(t *testing.T) {
 	var v rds.DBInstance
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2412,7 +2412,7 @@ func TestAccAWSDBInstance_MinorVersion(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ec2Classic(t *testing.T) {
+func TestAccRDSInstance_ec2Classic(t *testing.T) {
 	var v rds.DBInstance
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_db_instance.bar"
@@ -2433,7 +2433,7 @@ func TestAccAWSDBInstance_ec2Classic(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_cloudwatchLogsExportConfiguration(t *testing.T) {
+func TestAccRDSInstance_cloudWatchLogsExport(t *testing.T) {
 	var v rds.DBInstance
 
 	rInt := sdkacctest.RandInt()
@@ -2466,7 +2466,7 @@ func TestAccAWSDBInstance_cloudwatchLogsExportConfiguration(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_MySQL(t *testing.T) {
+func TestAccRDSInstance_EnabledCloudWatchLogsExports_mySQL(t *testing.T) {
 	var v rds.DBInstance
 	resourceName := "aws_db_instance.bar"
 	rInt := sdkacctest.RandInt()
@@ -2517,7 +2517,7 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_MySQL(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_MSSQL(t *testing.T) {
+func TestAccRDSInstance_EnabledCloudWatchLogsExports_msSQL(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2551,7 +2551,7 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_MSSQL(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_Oracle(t *testing.T) {
+func TestAccRDSInstance_EnabledCloudWatchLogsExports_oracle(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2586,7 +2586,7 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_Oracle(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_Postgresql(t *testing.T) {
+func TestAccRDSInstance_EnabledCloudWatchLogsExports_postgresql(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -2621,7 +2621,7 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_Postgresql(t *testing.T) 
 	})
 }
 
-func TestAccAWSDBInstance_NoDeleteAutomatedBackups(t *testing.T) {
+func TestAccRDSInstance_noDeleteAutomatedBackups(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-testacc-nodelautobak")
@@ -3003,7 +3003,7 @@ func testAccCheckInstanceEC2ClassicExists(resourceName string, dbInstance *rds.D
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/8792
-func TestAccAWSDBInstance_PerformanceInsightsEnabled_DisabledToEnabled(t *testing.T) {
+func TestAccRDSInstance_PerformanceInsightsEnabled_disabledToEnabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_instance.test"
@@ -3042,7 +3042,7 @@ func TestAccAWSDBInstance_PerformanceInsightsEnabled_DisabledToEnabled(t *testin
 	})
 }
 
-func TestAccAWSDBInstance_PerformanceInsightsEnabled_EnabledToDisabled(t *testing.T) {
+func TestAccRDSInstance_PerformanceInsightsEnabled_enabledToDisabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_instance.test"
@@ -3081,7 +3081,7 @@ func TestAccAWSDBInstance_PerformanceInsightsEnabled_EnabledToDisabled(t *testin
 	})
 }
 
-func TestAccAWSDBInstance_PerformanceInsightsKmsKeyId(t *testing.T) {
+func TestAccRDSInstance_performanceInsightsKMSKeyID(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	kmsKeyResourceName := "aws_kms_key.test"
@@ -3131,7 +3131,7 @@ func TestAccAWSDBInstance_PerformanceInsightsKmsKeyId(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_PerformanceInsightsRetentionPeriod(t *testing.T) {
+func TestAccRDSInstance_performanceInsightsRetentionPeriod(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_instance.test"
@@ -3172,7 +3172,7 @@ func TestAccAWSDBInstance_PerformanceInsightsRetentionPeriod(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_ReplicateSourceDb_PerformanceInsightsEnabled(t *testing.T) {
+func TestAccRDSInstance_ReplicateSourceDB_performanceInsightsEnabled(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -3201,7 +3201,7 @@ func TestAccAWSDBInstance_ReplicateSourceDb_PerformanceInsightsEnabled(t *testin
 	})
 }
 
-func TestAccAWSDBInstance_SnapshotIdentifier_PerformanceInsightsEnabled(t *testing.T) {
+func TestAccRDSInstance_SnapshotIdentifier_performanceInsightsEnabled(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -3232,7 +3232,7 @@ func TestAccAWSDBInstance_SnapshotIdentifier_PerformanceInsightsEnabled(t *testi
 	})
 }
 
-func TestAccAWSDBInstance_CACertificateIdentifier(t *testing.T) {
+func TestAccRDSInstance_caCertificateIdentifier(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	resourceName := "aws_db_instance.bar"
@@ -3255,7 +3255,7 @@ func TestAccAWSDBInstance_CACertificateIdentifier(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_RestoreToPointInTime_SourceIdentifier(t *testing.T) {
+func TestAccRDSInstance_RestoreToPointInTime_sourceIdentifier(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	sourceName := "aws_db_instance.test"
 	resourceName := "aws_db_instance.restore"
@@ -3291,7 +3291,7 @@ func TestAccAWSDBInstance_RestoreToPointInTime_SourceIdentifier(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_RestoreToPointInTime_SourceResourceID(t *testing.T) {
+func TestAccRDSInstance_RestoreToPointInTime_sourceResourceID(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	sourceName := "aws_db_instance.test"
 	resourceName := "aws_db_instance.restore"
@@ -3327,7 +3327,7 @@ func TestAccAWSDBInstance_RestoreToPointInTime_SourceResourceID(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_NationalCharacterSet_Oracle(t *testing.T) {
+func TestAccRDSInstance_NationalCharacterSet_oracle(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -3362,7 +3362,7 @@ func TestAccAWSDBInstance_NationalCharacterSet_Oracle(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_NoNationalCharacterSet_Oracle(t *testing.T) {
+func TestAccRDSInstance_NoNationalCharacterSet_oracle(t *testing.T) {
 	var dbInstance rds.DBInstance
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -3397,7 +3397,7 @@ func TestAccAWSDBInstance_NoNationalCharacterSet_Oracle(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_CoipEnabled(t *testing.T) {
+func TestAccRDSInstance_coIPEnabled(t *testing.T) {
 	var v rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_instance.test"
@@ -3421,7 +3421,7 @@ func TestAccAWSDBInstance_CoipEnabled(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_CoipEnabled_DisabledToEnabled(t *testing.T) {
+func TestAccRDSInstance_CoIPEnabled_disabledToEnabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_instance.test"
@@ -3460,7 +3460,7 @@ func TestAccAWSDBInstance_CoipEnabled_DisabledToEnabled(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_CoipEnabled_EnabledToDisabled(t *testing.T) {
+func TestAccRDSInstance_CoIPEnabled_enabledToDisabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_instance.test"
@@ -3499,7 +3499,7 @@ func TestAccAWSDBInstance_CoipEnabled_EnabledToDisabled(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_CoipEnabled_RestoreToPointInTime(t *testing.T) {
+func TestAccRDSInstance_CoIPEnabled_restoreToPointInTime(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	sourceName := "aws_db_instance.test"
@@ -3537,7 +3537,7 @@ func TestAccAWSDBInstance_CoipEnabled_RestoreToPointInTime(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_CoipEnabled_SnapshotIdentifier(t *testing.T) {
+func TestAccRDSInstance_CoIPEnabled_snapshotIdentifier(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
@@ -3565,7 +3565,7 @@ func TestAccAWSDBInstance_CoipEnabled_SnapshotIdentifier(t *testing.T) {
 	})
 }
 
-func TestAccAWSDBInstance_license(t *testing.T) {
+func TestAccRDSInstance_license(t *testing.T) {
 	var dbInstance1 rds.DBInstance
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_db_instance.test"
