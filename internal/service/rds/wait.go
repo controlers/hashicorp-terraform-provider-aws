@@ -5,18 +5,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/rds"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	tfrds "github.com/hashicorp/terraform-provider-aws/aws/internal/service/rds"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
-	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
 )
 
 const (
@@ -28,8 +17,8 @@ const (
 
 func waitEventSubscriptionCreated(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending:    []string{tfrds.EventSubscriptionStatusCreating},
-		Target:     []string{tfrds.EventSubscriptionStatusActive},
+		Pending:    []string{EventSubscriptionStatusCreating},
+		Target:     []string{EventSubscriptionStatusActive},
 		Refresh:    statusEventSubscription(conn, id),
 		Timeout:    timeout,
 		MinTimeout: 10 * time.Second,
@@ -47,7 +36,7 @@ func waitEventSubscriptionCreated(conn *rds.RDS, id string, timeout time.Duratio
 
 func waitEventSubscriptionDeleted(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending:    []string{tfrds.EventSubscriptionStatusDeleting},
+		Pending:    []string{EventSubscriptionStatusDeleting},
 		Target:     []string{},
 		Refresh:    statusEventSubscription(conn, id),
 		Timeout:    timeout,
@@ -66,8 +55,8 @@ func waitEventSubscriptionDeleted(conn *rds.RDS, id string, timeout time.Duratio
 
 func waitEventSubscriptionUpdated(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending:    []string{tfrds.EventSubscriptionStatusModifying},
-		Target:     []string{tfrds.EventSubscriptionStatusActive},
+		Pending:    []string{EventSubscriptionStatusModifying},
+		Target:     []string{EventSubscriptionStatusActive},
 		Refresh:    statusEventSubscription(conn, id),
 		Timeout:    timeout,
 		MinTimeout: 10 * time.Second,
@@ -124,8 +113,8 @@ func waitDBProxyEndpointDeleted(conn *rds.RDS, id string, timeout time.Duration)
 
 func waitDBClusterRoleAssociationCreated(conn *rds.RDS, dbClusterID, roleARN string) (*rds.DBClusterRole, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending: []string{tfrds.ClusterRoleStatusPending},
-		Target:  []string{tfrds.ClusterRoleStatusActive},
+		Pending: []string{ClusterRoleStatusPending},
+		Target:  []string{ClusterRoleStatusActive},
 		Refresh: statusDBClusterRole(conn, dbClusterID, roleARN),
 		Timeout: dbClusterRoleAssociationCreatedTimeout,
 	}
@@ -141,7 +130,7 @@ func waitDBClusterRoleAssociationCreated(conn *rds.RDS, dbClusterID, roleARN str
 
 func waitDBClusterRoleAssociationDeleted(conn *rds.RDS, dbClusterID, roleARN string) (*rds.DBClusterRole, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending: []string{tfrds.ClusterRoleStatusActive, tfrds.ClusterRoleStatusPending},
+		Pending: []string{ClusterRoleStatusActive, ClusterRoleStatusPending},
 		Target:  []string{},
 		Refresh: statusDBClusterRole(conn, dbClusterID, roleARN),
 		Timeout: dbClusterRoleAssociationDeletedTimeout,
