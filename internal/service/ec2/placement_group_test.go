@@ -18,10 +18,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
-
-
 func TestAccEC2PlacementGroup_basic(t *testing.T) {
 	var pg ec2.PlacementGroup
 	resourceName := "aws_placement_group.test"

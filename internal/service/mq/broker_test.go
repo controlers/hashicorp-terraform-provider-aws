@@ -22,8 +22,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
 func TestResourceAWSMqBrokerPasswordValidation(t *testing.T) {
 	cases := []struct {
 		Value    string
@@ -71,8 +69,6 @@ func TestResourceAWSMqBrokerPasswordValidation(t *testing.T) {
 		}
 	}
 }
-
-
 
 func TestDiffAwsMqBrokerUsers(t *testing.T) {
 	testCases := []struct {
