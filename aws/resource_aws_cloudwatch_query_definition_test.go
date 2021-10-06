@@ -90,7 +90,7 @@ func TestAccAWSCloudWatchQueryDefinition_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudwatchlogs.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSCloudWatchQueryDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -135,14 +135,14 @@ func TestAccAWSCloudWatchQueryDefinition_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudwatchlogs.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSCloudWatchQueryDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSCloudWatchQueryDefinitionConfig_Basic(queryName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSCloudWatchQueryDefinitionExists(resourceName, &v),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsCloudWatchQueryDefinition(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsCloudWatchQueryDefinition(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -159,7 +159,7 @@ func TestAccAWSCloudWatchQueryDefinition_Rename(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudwatchlogs.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSCloudWatchQueryDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -194,7 +194,7 @@ func TestAccAWSCloudWatchQueryDefinition_LogGroups(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudwatchlogs.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSCloudWatchQueryDefinitionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -232,7 +232,7 @@ func testAccCheckAWSCloudWatchQueryDefinitionExists(rName string, v *cloudwatchl
 		if !ok {
 			return fmt.Errorf("Not found: %s", rName)
 		}
-		conn := testAccProvider.Meta().(*AWSClient).cloudwatchlogsconn
+		conn := acctest.Provider.Meta().(*AWSClient).cloudwatchlogsconn
 
 		result, err := finder.QueryDefinition(context.Background(), conn, "", rs.Primary.ID)
 
@@ -251,7 +251,7 @@ func testAccCheckAWSCloudWatchQueryDefinitionExists(rName string, v *cloudwatchl
 }
 
 func testAccCheckAWSCloudWatchQueryDefinitionDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).cloudwatchlogsconn
+	conn := acctest.Provider.Meta().(*AWSClient).cloudwatchlogsconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_cloudwatch_query_definition" {
