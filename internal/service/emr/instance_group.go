@@ -106,7 +106,7 @@ func ResourceInstanceGroup() *schema.Resource {
 						},
 					},
 				},
-				Set: resourceAwsEMRClusterEBSConfigHash,
+				Set: resourceClusterEBSHashConfig,
 			},
 			"instance_count": {
 				Type:     schema.TypeInt,

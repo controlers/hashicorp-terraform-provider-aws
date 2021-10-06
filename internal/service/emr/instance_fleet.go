@@ -108,7 +108,7 @@ func ResourceInstanceFleet() *schema.Resource {
 									},
 								},
 							},
-							Set: resourceAwsEMRClusterEBSConfigHash,
+							Set: resourceClusterEBSHashConfig,
 						},
 						"instance_type": {
 							Type:     schema.TypeString,
@@ -123,7 +123,7 @@ func ResourceInstanceFleet() *schema.Resource {
 						},
 					},
 				},
-				Set: resourceAwsEMRInstanceTypeConfigHash,
+				Set: resourceInstanceTypeHashConfig,
 			},
 			"launch_specifications": {
 				Type:     schema.TypeList,
