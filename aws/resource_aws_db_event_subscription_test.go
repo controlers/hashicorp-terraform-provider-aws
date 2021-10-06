@@ -74,7 +74,7 @@ func TestAccAWSDBEventSubscription_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDBEventSubscriptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -109,14 +109,14 @@ func TestAccAWSDBEventSubscription_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDBEventSubscriptionDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSDBEventSubscriptionConfigBasic(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSDBEventSubscriptionExists(resourceName, &eventSubscription),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsDbEventSubscription(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsDbEventSubscription(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -132,7 +132,7 @@ func TestAccAWSDBEventSubscription_Name_Generated(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDBEventSubscriptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -160,7 +160,7 @@ func TestAccAWSDBEventSubscription_NamePrefix(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDBEventSubscriptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -188,7 +188,7 @@ func TestAccAWSDBEventSubscription_Tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDBEventSubscriptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -234,7 +234,7 @@ func TestAccAWSDBEventSubscription_Categories(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDBEventSubscriptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -295,7 +295,7 @@ func TestAccAWSDBEventSubscription_SourceIDs(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDBEventSubscriptionDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -335,7 +335,7 @@ func testAccCheckAWSDBEventSubscriptionExists(n string, v *rds.EventSubscription
 			return fmt.Errorf("No RDS Event Subscription is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).rdsconn
+		conn := acctest.Provider.Meta().(*AWSClient).rdsconn
 
 		output, err := finder.EventSubscriptionByID(conn, rs.Primary.ID)
 
@@ -350,7 +350,7 @@ func testAccCheckAWSDBEventSubscriptionExists(n string, v *rds.EventSubscription
 }
 
 func testAccCheckAWSDBEventSubscriptionDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).rdsconn
+	conn := acctest.Provider.Meta().(*AWSClient).rdsconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_db_event_subscription" {
