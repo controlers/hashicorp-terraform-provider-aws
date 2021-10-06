@@ -22,7 +22,7 @@ func TestAccAWSVPNGatewayRoutePropagation_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSVPNGatewayRoutePropagation_basic,
+				Config: testAccVPNGatewayRoutePropagation_basic,
 				Check: func(state *terraform.State) error {
 					conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
 
@@ -76,7 +76,7 @@ func TestAccAWSVPNGatewayRoutePropagation_basic(t *testing.T) {
 
 }
 
-const testAccAWSVPNGatewayRoutePropagation_basic = `
+const testAccVPNGatewayRoutePropagation_basic = `
 resource "aws_vpc" "foo" {
   cidr_block = "10.1.0.0/16"
 

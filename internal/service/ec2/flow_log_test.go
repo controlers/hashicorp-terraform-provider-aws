@@ -22,11 +22,11 @@ import (
 func init() {
 	resource.AddTestSweepers("aws_flow_log", &resource.Sweeper{
 		Name: "aws_flow_log",
-		F:    testSweepFlowLogs,
+		F:    sweepFlowLogs,
 	})
 }
 
-func testSweepFlowLogs(region string) error {
+func sweepFlowLogs(region string) error {
 	client, err := sweep.SharedRegionalSweepClient(region)
 	if err != nil {
 		return fmt.Errorf("error getting client: %w", err)
@@ -89,7 +89,7 @@ func TestAccAWSFlowLog_VPCID(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
 					acctest.MatchResourceAttrRegionalARN(resourceName, "arn", "ec2", regexp.MustCompile(`vpc-flow-log/fl-.+`)),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttrPair(resourceName, "iam_role_arn", iamRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "log_destination", ""),
 					resource.TestCheckResourceAttr(resourceName, "log_destination_type", "cloud-watch-logs"),
@@ -128,7 +128,7 @@ func TestAccAWSFlowLog_LogFormat(t *testing.T) {
 				Config: testAccFlowLogConfig_LogFormat(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "log_format", logFormat),
 				),
 			},
@@ -163,7 +163,7 @@ func TestAccAWSFlowLog_SubnetID(t *testing.T) {
 				Config: testAccFlowLogConfig_SubnetID(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttrPair(resourceName, "iam_role_arn", iamRoleResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "log_destination", ""),
 					resource.TestCheckResourceAttr(resourceName, "log_destination_type", "cloud-watch-logs"),
@@ -198,7 +198,7 @@ func TestAccAWSFlowLog_LogDestinationType_CloudWatchLogs(t *testing.T) {
 				Config: testAccFlowLogConfig_LogDestinationType_CloudWatchLogs(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					// We automatically trim :* from ARNs if present
 					acctest.CheckResourceAttrRegionalARN(resourceName, "log_destination", "logs", fmt.Sprintf("log-group:%s", rName)),
 					resource.TestCheckResourceAttr(resourceName, "log_destination_type", "cloud-watch-logs"),
@@ -230,7 +230,7 @@ func TestAccAWSFlowLog_LogDestinationType_S3(t *testing.T) {
 				Config: testAccFlowLogConfig_LogDestinationType_S3(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttrPair(resourceName, "log_destination", s3ResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "log_destination_type", "s3"),
 					resource.TestCheckResourceAttr(resourceName, "log_group_name", ""),
@@ -277,7 +277,7 @@ func TestAccAWSFlowLog_LogDestinationType_MaxAggregationInterval(t *testing.T) {
 				Config: testAccFlowLogConfig_MaxAggregationInterval(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "max_aggregation_interval", "60"),
 				),
 			},
@@ -305,7 +305,7 @@ func TestAccAWSFlowLog_tags(t *testing.T) {
 				Config: testAccFlowLogConfigTags1(rName, "key1", "value1"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -319,7 +319,7 @@ func TestAccAWSFlowLog_tags(t *testing.T) {
 				Config: testAccFlowLogConfigTags2(rName, "key1", "value1updated", "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "2"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1updated"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
@@ -329,7 +329,7 @@ func TestAccAWSFlowLog_tags(t *testing.T) {
 				Config: testAccFlowLogConfigTags1(rName, "key2", "value2"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFlowLogExists(resourceName, &flowLog),
-					testAccCheckAWSFlowLogAttributes(&flowLog),
+					testAccCheckFlowLogAttributes(&flowLog),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key2", "value2"),
 				),
@@ -389,7 +389,7 @@ func testAccCheckFlowLogExists(n string, flowLog *ec2.FlowLog) resource.TestChec
 	}
 }
 
-func testAccCheckAWSFlowLogAttributes(flowLog *ec2.FlowLog) resource.TestCheckFunc {
+func testAccCheckFlowLogAttributes(flowLog *ec2.FlowLog) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if flowLog.FlowLogStatus != nil && *flowLog.FlowLogStatus == "ACTIVE" {
 			return nil

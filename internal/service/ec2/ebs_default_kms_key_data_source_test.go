@@ -19,7 +19,7 @@ func TestAccDataSourceAwsEBSDefaultKmsKey_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAwsEBSDefaultKmsKeyConfig,
+				Config: testAccEBSDefaultKMSKeyDataSourceConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckDataSourceAwsEBSDefaultKmsKey("data.aws_ebs_default_kms_key.current"),
 				),
@@ -56,6 +56,6 @@ func testAccCheckDataSourceAwsEBSDefaultKmsKey(n string) resource.TestCheckFunc 
 	}
 }
 
-const testAccDataSourceAwsEBSDefaultKmsKeyConfig = `
+const testAccEBSDefaultKMSKeyDataSourceConfig = `
 data "aws_ebs_default_kms_key" "current" {}
 `
