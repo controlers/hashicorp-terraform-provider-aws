@@ -95,7 +95,7 @@ func resourceUserGroupCreate(d *schema.ResourceData, meta interface{}) error {
 	stateConf := &resource.StateChangeConf{
 		Pending:    resourceAwsElasticacheUserGroupPendingStates,
 		Target:     []string{"active"},
-		Refresh:    resourceAwsElasticacheUserGroupStateRefreshFunc(d.Get("user_group_id").(string), conn),
+		Refresh:    resourceUserGroupStateRefreshFunc(d.Get("user_group_id").(string), conn),
 		Timeout:    d.Timeout(schema.TimeoutCreate),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -190,7 +190,7 @@ func resourceUserGroupUpdate(d *schema.ResourceData, meta interface{}) error {
 			stateConf := &resource.StateChangeConf{
 				Pending:    resourceAwsElasticacheUserGroupPendingStates,
 				Target:     []string{"active"},
-				Refresh:    resourceAwsElasticacheUserGroupStateRefreshFunc(d.Get("user_group_id").(string), conn),
+				Refresh:    resourceUserGroupStateRefreshFunc(d.Get("user_group_id").(string), conn),
 				Timeout:    d.Timeout(schema.TimeoutCreate),
 				MinTimeout: 10 * time.Second,
 				Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -230,7 +230,7 @@ func resourceUserGroupDelete(d *schema.ResourceData, meta interface{}) error {
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{"deleting"},
 		Target:     []string{},
-		Refresh:    resourceAwsElasticacheUserGroupStateRefreshFunc(d.Get("user_group_id").(string), conn),
+		Refresh:    resourceUserGroupStateRefreshFunc(d.Get("user_group_id").(string), conn),
 		Timeout:    d.Timeout(schema.TimeoutCreate),
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second, // Wait 30 secs before starting
@@ -248,7 +248,7 @@ func resourceUserGroupDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceAwsElasticacheUserGroupStateRefreshFunc(id string, conn *elasticache.ElastiCache) resource.StateRefreshFunc {
+func resourceUserGroupStateRefreshFunc(id string, conn *elasticache.ElastiCache) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		v, err := FindElastiCacheUserGroupByID(conn, id)
 
