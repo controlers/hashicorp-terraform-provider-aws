@@ -897,7 +897,7 @@ func expandPlacementConstraints(tfList []interface{}) ([]*ecs.PlacementConstrain
 			apiObject.Type = aws.String(v)
 		}
 
-		if err := validateAwsECSPlacementConstraint(aws.StringValue(apiObject.Type), aws.StringValue(apiObject.Expression)); err != nil {
+		if err := validPlacementConstraint(aws.StringValue(apiObject.Type), aws.StringValue(apiObject.Expression)); err != nil {
 			return result, err
 		}
 
@@ -948,7 +948,7 @@ func expandPlacementStrategy(s []interface{}) ([]*ecs.PlacementStrategy, error) 
 			return nil, fmt.Errorf("missing field attribute in placement strategy configuration block")
 		}
 
-		if err := validateAwsECSPlacementStrategy(t, f); err != nil {
+		if err := validPlacementStrategy(t, f); err != nil {
 			return nil, err
 		}
 		ps := &ecs.PlacementStrategy{

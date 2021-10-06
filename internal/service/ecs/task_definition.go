@@ -756,7 +756,7 @@ func expandEcsTaskDefinitionPlacementConstraints(constraints []interface{}) ([]*
 		p := raw.(map[string]interface{})
 		t := p["type"].(string)
 		e := p["expression"].(string)
-		if err := validateAwsECSPlacementConstraint(t, e); err != nil {
+		if err := validPlacementConstraint(t, e); err != nil {
 			return nil, err
 		}
 		pc = append(pc, &ecs.TaskDefinitionPlacementConstraint{
