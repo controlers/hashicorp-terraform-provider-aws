@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSDataSourceCloudwatch_Event_Connection_basic(t *testing.T) {
+func TestAccAWSDataSourceCloudWatchEvent_Connection_basic(t *testing.T) {
 	dataSourceName := "data.aws_cloudwatch_event_connection.test"
 	resourceName := "aws_cloudwatch_event_connection.api_key"
 
@@ -24,7 +24,7 @@ func TestAccAWSDataSourceCloudwatch_Event_Connection_basic(t *testing.T) {
 		Providers:  acctest.Providers,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSCloudwatch_Event_ConnectionDataConfig(
+				Config: testAcc_ConnectionDataConfig(
 					name,
 					description,
 					authorizationType,
@@ -42,9 +42,9 @@ func TestAccAWSDataSourceCloudwatch_Event_Connection_basic(t *testing.T) {
 	})
 }
 
-func testAccAWSCloudwatch_Event_ConnectionDataConfig(name, description, authorizationType, key, value string) string {
+func testAcc_ConnectionDataConfig(name, description, authorizationType, key, value string) string {
 	return acctest.ConfigCompose(
-		testAccAWSCloudWatchEventConnectionConfig_apiKey(name, description, authorizationType, key, value),
+		testAccConnectionConfig_apiKey(name, description, authorizationType, key, value),
 		`
 data "aws_cloudwatch_event_connection" "test" {
   name = aws_cloudwatch_event_connection.api_key.name
