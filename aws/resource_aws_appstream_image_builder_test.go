@@ -86,7 +86,7 @@ func TestAccAwsAppStreamImageBuilder_basic(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamImageBuilderDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -116,7 +116,7 @@ func TestAccAwsAppStreamImageBuilder_disappears(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamImageBuilderDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -124,7 +124,7 @@ func TestAccAwsAppStreamImageBuilder_disappears(t *testing.T) {
 				Config: testAccAwsAppStreamImageBuilderConfig(instanceType, rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsAppStreamImageBuilderExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsAppStreamImageBuilder(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsAppStreamImageBuilder(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -142,7 +142,7 @@ func TestAccAwsAppStreamImageBuilder_complete(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamImageBuilderDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -191,7 +191,7 @@ func TestAccAwsAppStreamImageBuilder_Tags(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamImageBuilderDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -237,7 +237,7 @@ func testAccCheckAwsAppStreamImageBuilderExists(resourceName string) resource.Te
 			return fmt.Errorf("not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).appstreamconn
+		conn := acctest.Provider.Meta().(*AWSClient).appstreamconn
 
 		imageBuilder, err := finder.ImageBuilderByName(context.Background(), conn, rs.Primary.ID)
 
@@ -254,7 +254,7 @@ func testAccCheckAwsAppStreamImageBuilderExists(resourceName string) resource.Te
 }
 
 func testAccCheckAwsAppStreamImageBuilderDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).appstreamconn
+	conn := acctest.Provider.Meta().(*AWSClient).appstreamconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_appstream_image_builder" {

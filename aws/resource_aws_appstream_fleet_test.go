@@ -98,7 +98,7 @@ func TestAccAwsAppStreamFleet_basic(t *testing.T) {
 			acctest.PreCheck(t)
 			acctest.PreCheckHasIAMRole(t, "AmazonAppStreamServiceAccess")
 		},
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamFleetDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -132,7 +132,7 @@ func TestAccAwsAppStreamFleet_disappears(t *testing.T) {
 			acctest.PreCheck(t)
 			acctest.PreCheckHasIAMRole(t, "AmazonAppStreamServiceAccess")
 		},
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamFleetDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -140,7 +140,7 @@ func TestAccAwsAppStreamFleet_disappears(t *testing.T) {
 				Config: testAccAwsAppStreamFleetConfig(rName, instanceType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsAppStreamFleetExists(resourceName, &fleetOutput),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsAppStreamFleet(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsAppStreamFleet(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -163,7 +163,7 @@ func TestAccAwsAppStreamFleet_completeWithStop(t *testing.T) {
 			acctest.PreCheck(t)
 			acctest.PreCheckHasIAMRole(t, "AmazonAppStreamServiceAccess")
 		},
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamFleetDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -213,7 +213,7 @@ func TestAccAwsAppStreamFleet_completeWithoutStop(t *testing.T) {
 			acctest.PreCheck(t)
 			acctest.PreCheckHasIAMRole(t, "AmazonAppStreamServiceAccess")
 		},
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamFleetDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -266,7 +266,7 @@ func TestAccAwsAppStreamFleet_withTags(t *testing.T) {
 			acctest.PreCheck(t)
 			acctest.PreCheckHasIAMRole(t, "AmazonAppStreamServiceAccess")
 		},
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamFleetDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -316,7 +316,7 @@ func testAccCheckAwsAppStreamFleetExists(resourceName string, appStreamFleet *ap
 			return fmt.Errorf("not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).appstreamconn
+		conn := acctest.Provider.Meta().(*AWSClient).appstreamconn
 		resp, err := conn.DescribeFleets(&appstream.DescribeFleetsInput{Names: []*string{aws.String(rs.Primary.ID)}})
 
 		if err != nil {
@@ -334,7 +334,7 @@ func testAccCheckAwsAppStreamFleetExists(resourceName string, appStreamFleet *ap
 }
 
 func testAccCheckAwsAppStreamFleetDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).appstreamconn
+	conn := acctest.Provider.Meta().(*AWSClient).appstreamconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_appstream_fleet" {
