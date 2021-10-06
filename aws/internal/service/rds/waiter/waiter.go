@@ -7,20 +7,30 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	tfrds "github.com/hashicorp/terraform-provider-aws/aws/internal/service/rds"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
 )
 
 const (
-	RdsClusterInitiateUpgradeTimeout = 5 * time.Minute
+	rdsClusterInitiateUpgradeTimeout = 5 * time.Minute
 
-	DBClusterRoleAssociationCreatedTimeout = 5 * time.Minute
-	DBClusterRoleAssociationDeletedTimeout = 5 * time.Minute
+	dbClusterRoleAssociationCreatedTimeout = 5 * time.Minute
+	dbClusterRoleAssociationDeletedTimeout = 5 * time.Minute
 )
 
-func EventSubscriptionCreated(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
+func waitEventSubscriptionCreated(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{tfrds.EventSubscriptionStatusCreating},
 		Target:     []string{tfrds.EventSubscriptionStatusActive},
-		Refresh:    EventSubscriptionStatus(conn, id),
+		Refresh:    statusEventSubscription(conn, id),
 		Timeout:    timeout,
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second,
@@ -35,11 +45,11 @@ func EventSubscriptionCreated(conn *rds.RDS, id string, timeout time.Duration) (
 	return nil, err
 }
 
-func EventSubscriptionDeleted(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
+func waitEventSubscriptionDeleted(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{tfrds.EventSubscriptionStatusDeleting},
 		Target:     []string{},
-		Refresh:    EventSubscriptionStatus(conn, id),
+		Refresh:    statusEventSubscription(conn, id),
 		Timeout:    timeout,
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second,
@@ -54,11 +64,11 @@ func EventSubscriptionDeleted(conn *rds.RDS, id string, timeout time.Duration) (
 	return nil, err
 }
 
-func EventSubscriptionUpdated(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
+func waitEventSubscriptionUpdated(conn *rds.RDS, id string, timeout time.Duration) (*rds.EventSubscription, error) {
 	stateConf := &resource.StateChangeConf{
 		Pending:    []string{tfrds.EventSubscriptionStatusModifying},
 		Target:     []string{tfrds.EventSubscriptionStatusActive},
-		Refresh:    EventSubscriptionStatus(conn, id),
+		Refresh:    statusEventSubscription(conn, id),
 		Timeout:    timeout,
 		MinTimeout: 10 * time.Second,
 		Delay:      30 * time.Second,
@@ -73,15 +83,15 @@ func EventSubscriptionUpdated(conn *rds.RDS, id string, timeout time.Duration) (
 	return nil, err
 }
 
-// DBProxyEndpointAvailable waits for a DBProxyEndpoint to return Available
-func DBProxyEndpointAvailable(conn *rds.RDS, id string, timeout time.Duration) (*rds.DBProxyEndpoint, error) {
+// waitDBProxyEndpointAvailable waits for a DBProxyEndpoint to return Available
+func waitDBProxyEndpointAvailable(conn *rds.RDS, id string, timeout time.Duration) (*rds.DBProxyEndpoint, error) {
 	stateConf := &resource.StateChangeConf{
 		Pending: []string{
 			rds.DBProxyEndpointStatusCreating,
 			rds.DBProxyEndpointStatusModifying,
 		},
 		Target:  []string{rds.DBProxyEndpointStatusAvailable},
-		Refresh: DBProxyEndpointStatus(conn, id),
+		Refresh: statusDBProxyEndpoint(conn, id),
 		Timeout: timeout,
 	}
 
@@ -94,12 +104,12 @@ func DBProxyEndpointAvailable(conn *rds.RDS, id string, timeout time.Duration) (
 	return nil, err
 }
 
-// DBProxyEndpointDeleted waits for a DBProxyEndpoint to return Deleted
-func DBProxyEndpointDeleted(conn *rds.RDS, id string, timeout time.Duration) (*rds.DBProxyEndpoint, error) {
+// waitDBProxyEndpointDeleted waits for a DBProxyEndpoint to return Deleted
+func waitDBProxyEndpointDeleted(conn *rds.RDS, id string, timeout time.Duration) (*rds.DBProxyEndpoint, error) {
 	stateConf := &resource.StateChangeConf{
 		Pending: []string{rds.DBProxyEndpointStatusDeleting},
 		Target:  []string{},
-		Refresh: DBProxyEndpointStatus(conn, id),
+		Refresh: statusDBProxyEndpoint(conn, id),
 		Timeout: timeout,
 	}
 
@@ -112,12 +122,12 @@ func DBProxyEndpointDeleted(conn *rds.RDS, id string, timeout time.Duration) (*r
 	return nil, err
 }
 
-func DBClusterRoleAssociationCreated(conn *rds.RDS, dbClusterID, roleARN string) (*rds.DBClusterRole, error) {
+func waitDBClusterRoleAssociationCreated(conn *rds.RDS, dbClusterID, roleARN string) (*rds.DBClusterRole, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending: []string{tfrds.DBClusterRoleStatusPending},
-		Target:  []string{tfrds.DBClusterRoleStatusActive},
-		Refresh: DBClusterRoleStatus(conn, dbClusterID, roleARN),
-		Timeout: DBClusterRoleAssociationCreatedTimeout,
+		Pending: []string{tfrds.ClusterRoleStatusPending},
+		Target:  []string{tfrds.ClusterRoleStatusActive},
+		Refresh: statusDBClusterRole(conn, dbClusterID, roleARN),
+		Timeout: dbClusterRoleAssociationCreatedTimeout,
 	}
 
 	outputRaw, err := stateConf.WaitForState()
@@ -129,12 +139,12 @@ func DBClusterRoleAssociationCreated(conn *rds.RDS, dbClusterID, roleARN string)
 	return nil, err
 }
 
-func DBClusterRoleAssociationDeleted(conn *rds.RDS, dbClusterID, roleARN string) (*rds.DBClusterRole, error) {
+func waitDBClusterRoleAssociationDeleted(conn *rds.RDS, dbClusterID, roleARN string) (*rds.DBClusterRole, error) {
 	stateConf := &resource.StateChangeConf{
-		Pending: []string{tfrds.DBClusterRoleStatusActive, tfrds.DBClusterRoleStatusPending},
+		Pending: []string{tfrds.ClusterRoleStatusActive, tfrds.ClusterRoleStatusPending},
 		Target:  []string{},
-		Refresh: DBClusterRoleStatus(conn, dbClusterID, roleARN),
-		Timeout: DBClusterRoleAssociationDeletedTimeout,
+		Refresh: statusDBClusterRole(conn, dbClusterID, roleARN),
+		Timeout: dbClusterRoleAssociationDeletedTimeout,
 	}
 
 	outputRaw, err := stateConf.WaitForState()

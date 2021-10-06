@@ -1,9 +1,9 @@
 package rds
 
 const (
-	DBClusterRoleStatusActive  = "ACTIVE"
-	DBClusterRoleStatusDeleted = "DELETED"
-	DBClusterRoleStatusPending = "PENDING"
+	ClusterRoleStatusActive  = "ACTIVE"
+	ClusterRoleStatusDeleted = "DELETED"
+	ClusterRoleStatusPending = "PENDING"
 )
 
 const (

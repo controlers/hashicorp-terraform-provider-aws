@@ -21,6 +21,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/flex"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfiam "github.com/hashicorp/terraform-provider-aws/internal/service/iam"
 )
 
 func ResourceInstance() *schema.Resource {
@@ -798,7 +799,7 @@ func resourceInstanceCreate(d *schema.ResourceData, meta interface{}) error {
 		log.Printf("[DEBUG] DB Instance S3 Restore configuration: %#v", opts)
 		var err error
 		// Retry for IAM eventual consistency
-		err = resource.Retry(iamwaiter.PropagationTimeout, func() *resource.RetryError {
+		err = resource.Retry(tfiam.PropagationTimeout, func() *resource.RetryError {
 			_, err = conn.RestoreDBInstanceFromS3(&opts)
 			if err != nil {
 				if tfawserr.ErrMessageContains(err, "InvalidParameterValue", "ENHANCED_MONITORING") {
@@ -1757,7 +1758,7 @@ func resourceInstanceUpdate(d *schema.ResourceData, meta interface{}) error {
 	if requestUpdate {
 		log.Printf("[DEBUG] DB Instance Modification request: %s", req)
 
-		err := resource.Retry(iamwaiter.PropagationTimeout, func() *resource.RetryError {
+		err := resource.Retry(tfiam.PropagationTimeout, func() *resource.RetryError {
 			_, err := conn.ModifyDBInstance(req)
 
 			// Retry for IAM eventual consistency
