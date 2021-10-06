@@ -1,4 +1,4 @@
-package aws
+package elbv2
 
 import (
 	"context"
@@ -16,28 +16,11 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	tftags "github.com/hashicorp/terraform-provider-aws/aws/internal/tags"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/elbv2/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/elbv2/waiter"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
-	tfelbv2 "github.com/hashicorp/terraform-provider-aws/internal/service/elbv2"
 )
 
 func ResourceTargetGroup() *schema.Resource {
@@ -404,10 +387,10 @@ func resourceTargetGroupRead(d *schema.ResourceData, meta interface{}) error {
 
 	var targetGroup *elbv2.TargetGroup
 
-	err := resource.Retry(tfelbv2.propagationTimeout, func() *resource.RetryError {
+	err := resource.Retry(propagationTimeout, func() *resource.RetryError {
 		var err error
 
-		targetGroup, err = tfelbv2.FindTargetGroupByARN(conn, d.Id())
+		targetGroup, err = FindTargetGroupByARN(conn, d.Id())
 
 		if d.IsNewResource() && tfawserr.ErrCodeEquals(err, elbv2.ErrCodeTargetGroupNotFoundException) {
 			return resource.RetryableError(err)
@@ -427,7 +410,7 @@ func resourceTargetGroupRead(d *schema.ResourceData, meta interface{}) error {
 	})
 
 	if tfresource.TimedOut(err) {
-		targetGroup, err = tfelbv2.FindTargetGroupByARN(conn, d.Id())
+		targetGroup, err = FindTargetGroupByARN(conn, d.Id())
 	}
 
 	if !d.IsNewResource() && tfawserr.ErrCodeEquals(err, elbv2.ErrCodeTargetGroupNotFoundException) {
@@ -459,7 +442,7 @@ func resourceTargetGroupUpdate(d *schema.ResourceData, meta interface{}) error {
 	if d.HasChange("tags_all") {
 		o, n := d.GetChange("tags_all")
 
-		err := resource.Retry(tfelbv2.loadBalancerTagPropagationTimeout, func() *resource.RetryError {
+		err := resource.Retry(loadBalancerTagPropagationTimeout, func() *resource.RetryError {
 			err := tftags.Elbv2UpdateTags(conn, d.Id(), o, n)
 
 			if tfawserr.ErrCodeEquals(err, elbv2.ErrCodeTargetGroupNotFoundException) {
@@ -650,7 +633,7 @@ func resourceTargetGroupDelete(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	log.Printf("[DEBUG] Deleting Target Group (%s): %s", d.Id(), input)
-	err := resource.Retry(tfelbv2.targetGroupDeleteTimeout, func() *resource.RetryError {
+	err := resource.Retry(targetGroupDeleteTimeout, func() *resource.RetryError {
 		_, err := conn.DeleteTargetGroup(input)
 
 		if tfawserr.ErrMessageContains(err, "ResourceInUse", "is currently in use by a listener or a rule") {
