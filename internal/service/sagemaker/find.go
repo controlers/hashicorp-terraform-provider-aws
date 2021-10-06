@@ -5,10 +5,8 @@ import (
 	"github.com/aws/aws-sdk-go/service/sagemaker"
 	"github.com/hashicorp/aws-sdk-go-base/tfawserr"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	tfsagemaker "github.com/hashicorp/terraform-provider-aws/aws/internal/service/sagemaker"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
-	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
 )
 
 // FindCodeRepositoryByName returns the code repository corresponding to the specified name.
@@ -100,7 +98,7 @@ func FindDeviceFleetByName(conn *sagemaker.SageMaker, id string) (*sagemaker.Des
 
 	output, err := conn.DescribeDeviceFleet(input)
 
-	if tfawserr.ErrMessageContains(err, tfsagemaker.ErrCodeValidationException, "No devicefleet with name") {
+	if tfawserr.ErrMessageContains(err, ErrCodeValidationException, "No devicefleet with name") {
 		return nil, &resource.NotFoundError{
 			LastError:   err,
 			LastRequest: input,
@@ -234,7 +232,7 @@ func FindWorkforceByName(conn *sagemaker.SageMaker, name string) (*sagemaker.Wor
 
 	output, err := conn.DescribeWorkforce(input)
 
-	if tfawserr.ErrMessageContains(err, tfsagemaker.ErrCodeValidationException, "No workforce") {
+	if tfawserr.ErrMessageContains(err, ErrCodeValidationException, "No workforce") {
 		return nil, &resource.NotFoundError{
 			LastError:   err,
 			LastRequest: input,
@@ -259,7 +257,7 @@ func FindWorkteamByName(conn *sagemaker.SageMaker, name string) (*sagemaker.Work
 
 	output, err := conn.DescribeWorkteam(input)
 
-	if tfawserr.ErrMessageContains(err, tfsagemaker.ErrCodeValidationException, "The work team") {
+	if tfawserr.ErrMessageContains(err, ErrCodeValidationException, "The work team") {
 		return nil, &resource.NotFoundError{
 			LastError:   err,
 			LastRequest: input,
@@ -309,7 +307,7 @@ func FindEndpointConfigByName(conn *sagemaker.SageMaker, name string) (*sagemake
 
 	output, err := conn.DescribeEndpointConfig(input)
 
-	if tfawserr.ErrMessageContains(err, tfsagemaker.ErrCodeValidationException, "Could not find endpoint configuration") {
+	if tfawserr.ErrMessageContains(err, ErrCodeValidationException, "Could not find endpoint configuration") {
 		return nil, &resource.NotFoundError{
 			LastError:   err,
 			LastRequest: input,
