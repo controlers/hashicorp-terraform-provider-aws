@@ -22,11 +22,11 @@ import (
 func init() {
 	resource.AddTestSweepers("aws_db_instance", &resource.Sweeper{
 		Name: "aws_db_instance",
-		F:    testSweepDbInstances,
+		F:    sweepInstances,
 	})
 }
 
-func testSweepDbInstances(region string) error {
+func sweepInstances(region string) error {
 	client, err := sweep.SharedRegionalSweepClient(region)
 	if err != nil {
 		return fmt.Errorf("error getting client: %s", err)
@@ -64,13 +64,13 @@ func TestAccAWSDBInstance_basic(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceBasicConfig(),
+				Config: testAccInstanceBasicConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance1),
-					testAccCheckAWSDBInstanceAttributes(&dbInstance1),
+					testAccCheckInstanceExists(resourceName, &dbInstance1),
+					testAccCheckInstanceAttributes(&dbInstance1),
 					resource.TestCheckResourceAttr(resourceName, "allocated_storage", "10"),
 					resource.TestCheckNoResourceAttr(resourceName, "allow_major_version_upgrade"),
 					resource.TestCheckResourceAttr(resourceName, "auto_minor_version_upgrade", "true"),
@@ -130,12 +130,12 @@ func TestAccAWSDBInstance_OnlyMajorVersion(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_MajorVersionOnly(engine, engineVersion1),
+				Config: testAccInstanceConfig_MajorVersionOnly(engine, engineVersion1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance1),
+					testAccCheckInstanceExists(resourceName, &dbInstance1),
 					resource.TestCheckResourceAttr(resourceName, "engine", engine),
 					resource.TestCheckResourceAttr(resourceName, "engine_version", engineVersion1),
 				),
@@ -160,13 +160,13 @@ func TestAccAWSDBInstance_namePrefix(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_namePrefix(),
+				Config: testAccInstanceConfig_namePrefix(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.test", &v),
-					testAccCheckAWSDBInstanceAttributes(&v),
+					testAccCheckInstanceExists("aws_db_instance.test", &v),
+					testAccCheckInstanceAttributes(&v),
 					resource.TestMatchResourceAttr(
 						"aws_db_instance.test", "identifier", regexp.MustCompile("^tf-test-")),
 				),
@@ -182,13 +182,13 @@ func TestAccAWSDBInstance_generatedName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_generatedName(),
+				Config: testAccInstanceConfig_generatedName(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.test", &v),
-					testAccCheckAWSDBInstanceAttributes(&v),
+					testAccCheckInstanceExists("aws_db_instance.test", &v),
+					testAccCheckInstanceAttributes(&v),
 				),
 			},
 		},
@@ -204,13 +204,13 @@ func TestAccAWSDBInstance_kmsKey(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_KmsKeyId(sdkacctest.RandInt()),
+				Config: testAccInstanceConfig_KMSKeyID(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &v),
-					testAccCheckAWSDBInstanceAttributes(&v),
+					testAccCheckInstanceExists(resourceName, &v),
+					testAccCheckInstanceAttributes(&v),
 					resource.TestCheckResourceAttrPair(resourceName, "kms_key_id", kmsKeyResourceName, "arn"),
 				),
 			},
@@ -238,20 +238,20 @@ func TestAccAWSDBInstance_subnetGroup(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_WithSubnetGroup(rName),
+				Config: testAccInstanceConfig_WithSubnetGroup(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
 					resource.TestCheckResourceAttr(
 						"aws_db_instance.bar", "db_subnet_group_name", "foo-"+rName),
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_WithSubnetGroupUpdated(rName),
+				Config: testAccInstanceConfig_WithSubnetGroupUpdated(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
 					resource.TestCheckResourceAttr(
 						"aws_db_instance.bar", "db_subnet_group_name", "bar-"+rName),
 				),
@@ -269,13 +269,13 @@ func TestAccAWSDBInstance_optionGroup(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_WithOptionGroup(rName),
+				Config: testAccInstanceConfig_WithOptionGroup(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
-					testAccCheckAWSDBInstanceAttributes(&v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceAttributes(&v),
 					resource.TestCheckResourceAttr(
 						"aws_db_instance.bar", "option_group_name", rName),
 				),
@@ -291,13 +291,13 @@ func TestAccAWSDBInstance_iamAuth(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_IAMAuth(sdkacctest.RandInt()),
+				Config: testAccInstanceConfig_IAMAuth(sdkacctest.RandInt()),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
-					testAccCheckAWSDBInstanceAttributes(&v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceAttributes(&v),
 					resource.TestCheckResourceAttr(
 						"aws_db_instance.bar", "iam_database_authentication_enabled", "true"),
 				),
@@ -316,12 +316,12 @@ func TestAccAWSDBInstance_AllowMajorVersionUpgrade(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_AllowMajorVersionUpgrade(rName, true),
+				Config: testAccInstanceConfig_AllowMajorVersionUpgrade(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance1),
+					testAccCheckInstanceExists(resourceName, &dbInstance1),
 					resource.TestCheckResourceAttr(resourceName, "allow_major_version_upgrade", "true"),
 				),
 			},
@@ -338,9 +338,9 @@ func TestAccAWSDBInstance_AllowMajorVersionUpgrade(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_AllowMajorVersionUpgrade(rName, false),
+				Config: testAccInstanceConfig_AllowMajorVersionUpgrade(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance1),
+					testAccCheckInstanceExists(resourceName, &dbInstance1),
 					resource.TestCheckResourceAttr(resourceName, "allow_major_version_upgrade", "false"),
 				),
 			},
@@ -360,12 +360,12 @@ func TestAccAWSDBInstance_DbSubnetGroupName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_DbSubnetGroupName(rName),
+				Config: testAccInstanceConfig_DBSubnetGroupName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(resourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -391,12 +391,12 @@ func TestAccAWSDBInstance_DbSubnetGroupName_RamShared(t *testing.T) {
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, rds.EndpointsID),
 		ProviderFactories: acctest.FactoriesAlternate(&providers),
-		CheckDestroy:      testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy:      testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_DbSubnetGroupName_RamShared(rName),
+				Config: testAccInstanceConfig_DBSubnetGroupName_RAMShared(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(dbSubnetGroupResourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -417,12 +417,12 @@ func TestAccAWSDBInstance_DbSubnetGroupName_VpcSecurityGroupIds(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_DbSubnetGroupName_VpcSecurityGroupIds(rName),
+				Config: testAccInstanceConfig_DBSubnetGroupName_VPCSecurityGroupIDs(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(resourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -441,12 +441,12 @@ func TestAccAWSDBInstance_DeletionProtection(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_DeletionProtection(rName, true),
+				Config: testAccInstanceConfig_DeletionProtection(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "true"),
 				),
 			},
@@ -463,9 +463,9 @@ func TestAccAWSDBInstance_DeletionProtection(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_DeletionProtection(rName, false),
+				Config: testAccInstanceConfig_DeletionProtection(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "false"),
 				),
 			},
@@ -481,14 +481,14 @@ func TestAccAWSDBInstance_FinalSnapshotIdentifier(t *testing.T) {
 		PreCheck:   func() { acctest.PreCheck(t) },
 		ErrorCheck: acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:  acctest.Providers,
-		// testAccCheckAWSDBInstanceSnapshot verifies a database snapshot is
+		// testAccCheckInstanceSnapshot verifies a database snapshot is
 		// created, and subsequently deletes it
-		CheckDestroy: testAccCheckAWSDBInstanceSnapshot,
+		CheckDestroy: testAccCheckInstanceSnapshot,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_FinalSnapshotIdentifier(rInt),
+				Config: testAccInstanceConfig_FinalSnapshotIdentifier(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.snapshot", &snap),
+					testAccCheckInstanceExists("aws_db_instance.snapshot", &snap),
 				),
 			},
 		},
@@ -502,12 +502,12 @@ func TestAccAWSDBInstance_FinalSnapshotIdentifier_SkipFinalSnapshot(t *testing.T
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceNoSnapshot,
+		CheckDestroy: testAccCheckInstanceNoSnapshot,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_FinalSnapshotIdentifier_SkipFinalSnapshot(),
+				Config: testAccInstanceConfig_FinalSnapshotIdentifier_SkipFinalSnapshot(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.snapshot", &snap),
+					testAccCheckInstanceExists("aws_db_instance.snapshot", &snap),
 				),
 			},
 		},
@@ -524,12 +524,12 @@ func TestAccAWSDBInstance_IsAlreadyBeingDeleted(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_MariaDB(rName),
+				Config: testAccInstanceConfig_MariaDB(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 			{
@@ -545,7 +545,7 @@ func TestAccAWSDBInstance_IsAlreadyBeingDeleted(t *testing.T) {
 						t.Fatalf("error deleting Database Instance: %s", err)
 					}
 				},
-				Config:  testAccAWSDBInstanceConfig_MariaDB(rName),
+				Config:  testAccInstanceConfig_MariaDB(rName),
 				Destroy: true,
 			},
 		},
@@ -562,33 +562,33 @@ func TestAccAWSDBInstance_MaxAllocatedStorage(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_MaxAllocatedStorage(rName, 10),
+				Config: testAccInstanceConfig_MaxAllocatedStorage(rName, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "max_allocated_storage", "10"),
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_MaxAllocatedStorage(rName, 5),
+				Config: testAccInstanceConfig_MaxAllocatedStorage(rName, 5),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "max_allocated_storage", "0"),
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_MaxAllocatedStorage(rName, 15),
+				Config: testAccInstanceConfig_MaxAllocatedStorage(rName, 15),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "max_allocated_storage", "15"),
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_MaxAllocatedStorage(rName, 0),
+				Config: testAccInstanceConfig_MaxAllocatedStorage(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "max_allocated_storage", "0"),
 				),
 			},
@@ -606,17 +606,17 @@ func TestAccAWSDBInstance_Password(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			// Password should not be shown in error message
 			{
-				Config:      testAccAWSDBInstanceConfig_Password(rName, "invalid"),
+				Config:      testAccInstanceConfig_Password(rName, "invalid"),
 				ExpectError: regexp.MustCompile(`MasterUserPassword: "\*{8}",`),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_Password(rName, "valid-password"),
+				Config: testAccInstanceConfig_Password(rName, "valid-password"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "password", "valid-password"),
 				),
 			},
@@ -646,14 +646,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 				),
 			},
 		},
@@ -671,14 +671,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AllocatedStorage(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_AllocatedStorage(rName, 10),
+				Config: testAccInstanceConfig_ReplicateSourceDB_AllocatedStorage(rName, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "allocated_storage", "10"),
 				),
 			},
@@ -697,14 +697,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_Iops(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_Iops(rName, 1000),
+				Config: testAccInstanceConfig_ReplicateSourceDB_Iops(rName, 1000),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "iops", "1000"),
 				),
 			},
@@ -723,14 +723,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AllocatedStorageAndIops(t *testing.T
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_AllocatedStorageAndIops(rName, 220, 2200),
+				Config: testAccInstanceConfig_ReplicateSourceDB_AllocatedStorageAndIops(rName, 220, 2200),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "allocated_storage", "220"),
 					resource.TestCheckResourceAttr(resourceName, "iops", "2200"),
 				),
@@ -750,14 +750,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AllowMajorVersionUpgrade(t *testing.
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_AllowMajorVersionUpgrade(rName, true),
+				Config: testAccInstanceConfig_ReplicateSourceDB_AllowMajorVersionUpgrade(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "allow_major_version_upgrade", "true"),
 				),
 			},
@@ -776,14 +776,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AutoMinorVersionUpgrade(t *testing.T
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_AutoMinorVersionUpgrade(rName, false),
+				Config: testAccInstanceConfig_ReplicateSourceDB_AutoMinorVersionUpgrade(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "auto_minor_version_upgrade", "false"),
 				),
 			},
@@ -802,14 +802,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_AvailabilityZone(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_AvailabilityZone(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB_AvailabilityZone(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 				),
 			},
 		},
@@ -827,14 +827,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_BackupRetentionPeriod(t *testing.T) 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_BackupRetentionPeriod(rName, 1),
+				Config: testAccInstanceConfig_ReplicateSourceDB_BackupRetentionPeriod(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "backup_retention_period", "1"),
 				),
 			},
@@ -853,14 +853,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_BackupWindow(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_BackupWindow(rName, "00:00-08:00", "sun:23:00-sun:23:30"),
+				Config: testAccInstanceConfig_ReplicateSourceDB_BackupWindow(rName, "00:00-08:00", "sun:23:00-sun:23:30"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "backup_window", "00:00-08:00"),
 				),
 			},
@@ -884,12 +884,12 @@ func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName(t *testing.T) {
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, rds.EndpointsID),
 		ProviderFactories: acctest.FactoriesAlternate(&providers),
-		CheckDestroy:      testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy:      testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_DbSubnetGroupName(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB_DbSubnetGroupName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(resourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -916,12 +916,12 @@ func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName_RamShared(t *testi
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, rds.EndpointsID),
 		ProviderFactories: acctest.FactoriesAlternateAccountAndAlternateRegion(&providers),
-		CheckDestroy:      testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy:      testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_DbSubnetGroupName_RamShared(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB_DbSubnetGroupName_RAMShared(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(dbSubnetGroupResourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -946,12 +946,12 @@ func TestAccAWSDBInstance_ReplicateSourceDb_DbSubnetGroupName_VpcSecurityGroupId
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, rds.EndpointsID),
 		ProviderFactories: acctest.FactoriesAlternate(&providers),
-		CheckDestroy:      testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy:      testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_DbSubnetGroupName_VpcSecurityGroupIds(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB_DbSubnetGroupName_VPCSecurityGroupIDs(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(resourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -983,24 +983,24 @@ func TestAccAWSDBInstance_ReplicateSourceDb_DeletionProtection(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_DeletionProtection(rName, true),
+				Config: testAccInstanceConfig_ReplicateSourceDB_DeletionProtection(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "true"),
 				),
 			},
 			// Ensure we disable deletion protection before attempting to delete :)
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_DeletionProtection(rName, false),
+				Config: testAccInstanceConfig_ReplicateSourceDB_DeletionProtection(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "false"),
 				),
 			},
@@ -1019,14 +1019,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_IamDatabaseAuthenticationEnabled(t *
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_IamDatabaseAuthenticationEnabled(rName, true),
+				Config: testAccInstanceConfig_ReplicateSourceDB_IAMDatabaseAuthenticationEnabled(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "iam_database_authentication_enabled", "true"),
 				),
 			},
@@ -1045,14 +1045,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_MaintenanceWindow(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_MaintenanceWindow(rName, "00:00-08:00", "sun:23:00-sun:23:30"),
+				Config: testAccInstanceConfig_ReplicateSourceDB_MaintenanceWindow(rName, "00:00-08:00", "sun:23:00-sun:23:30"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "maintenance_window", "sun:23:00-sun:23:30"),
 				),
 			},
@@ -1071,14 +1071,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_MaxAllocatedStorage(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_MaxAllocatedStorage(rName, 10),
+				Config: testAccInstanceConfig_ReplicateSourceDB_MaxAllocatedStorage(rName, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "max_allocated_storage", "10"),
 				),
 			},
@@ -1097,14 +1097,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_Monitoring(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_Monitoring(rName, 5),
+				Config: testAccInstanceConfig_ReplicateSourceDB_Monitoring(rName, 5),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "5"),
 				),
 			},
@@ -1123,14 +1123,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_MultiAZ(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_MultiAZ(rName, true),
+				Config: testAccInstanceConfig_ReplicateSourceDB_MultiAZ(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "multi_az", "true"),
 				),
 			},
@@ -1149,16 +1149,16 @@ func TestAccAWSDBInstance_ReplicateSourceDb_ParameterGroupName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_ParameterGroupName(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB_ParameterGroupName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", rName),
-					testAccCheckAWSDBInstanceParameterApplyStatusInSync(&dbInstance),
+					testAccCheckInstanceParameterApplyStatusInSync(&dbInstance),
 				),
 			},
 		},
@@ -1176,14 +1176,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_Port(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_Port(rName, 9999),
+				Config: testAccInstanceConfig_ReplicateSourceDB_Port(rName, 9999),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "port", "9999"),
 				),
 			},
@@ -1202,14 +1202,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_VpcSecurityGroupIds(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_VpcSecurityGroupIds(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB_VPCSecurityGroupIDs(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "vpc_security_group_ids.#", "1"),
 				),
 			},
@@ -1229,14 +1229,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_CACertificateIdentifier(t *testing.T
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_CACertificateIdentifier(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB_CACertificateIdentifier(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttrPair(sourceResourceName, "ca_cert_identifier", dataSourceName, "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "ca_cert_identifier", dataSourceName, "id"),
 				),
@@ -1255,12 +1255,12 @@ func TestAccAWSDBInstance_S3Import(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_S3Import(bucket, bucketPrefix, uniqueId),
+				Config: testAccInstanceConfig_S3Import(bucket, bucketPrefix, uniqueId),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.s3", &snap),
+					testAccCheckInstanceExists("aws_db_instance.s3", &snap),
 				),
 			},
 		},
@@ -1280,14 +1280,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 		},
@@ -1304,19 +1304,19 @@ func TestAccAWSDBInstance_SnapshotIdentifierRemoved(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance1),
+					testAccCheckInstanceExists(resourceName, &dbInstance1),
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifierRemoved(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifierRemoved(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance2),
-					testAccCheckAWSDBInstanceNotRecreated(&dbInstance1, &dbInstance2),
+					testAccCheckInstanceExists(resourceName, &dbInstance2),
+					testAccCheckInstanceNotRecreated(&dbInstance1, &dbInstance2),
 				),
 			},
 		},
@@ -1336,14 +1336,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_AllocatedStorage(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_AllocatedStorage(rName, 10),
+				Config: testAccInstanceConfig_SnapshotIdentifier_AllocatedStorage(rName, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "allocated_storage", "10"),
 				),
 			},
@@ -1364,14 +1364,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Io1Storage(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_Io1Storage(rName, 1000),
+				Config: testAccInstanceConfig_SnapshotIdentifier_Io1Storage(rName, 1000),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "iops", "1000"),
 				),
 			},
@@ -1392,14 +1392,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_AllowMajorVersionUpgrade(t *testing
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_AllowMajorVersionUpgrade(rName, true),
+				Config: testAccInstanceConfig_SnapshotIdentifier_AllowMajorVersionUpgrade(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "allow_major_version_upgrade", "true"),
 				),
 			},
@@ -1420,14 +1420,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_AutoMinorVersionUpgrade(t *testing.
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_AutoMinorVersionUpgrade(rName, false),
+				Config: testAccInstanceConfig_SnapshotIdentifier_AutoMinorVersionUpgrade(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "auto_minor_version_upgrade", "false"),
 				),
 			},
@@ -1448,14 +1448,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_AvailabilityZone(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_AvailabilityZone(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_AvailabilityZone(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 		},
@@ -1475,14 +1475,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_BackupRetentionPeriod(t *testing.T)
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_BackupRetentionPeriod(rName, 1),
+				Config: testAccInstanceConfig_SnapshotIdentifier_BackupRetentionPeriod(rName, 1),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "backup_retention_period", "1"),
 				),
 			},
@@ -1503,14 +1503,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_BackupRetentionPeriod_Unset(t *test
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_BackupRetentionPeriod_Unset(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_BackupRetentionPeriod_Unset(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "backup_retention_period", "0"),
 				),
 			},
@@ -1531,14 +1531,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_BackupWindow(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_BackupWindow(rName, "00:00-08:00", "sun:23:00-sun:23:30"),
+				Config: testAccInstanceConfig_SnapshotIdentifier_BackupWindow(rName, "00:00-08:00", "sun:23:00-sun:23:30"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "backup_window", "00:00-08:00"),
 				),
 			},
@@ -1561,14 +1561,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_DbSubnetGroupName(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_DBSubnetGroupName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(resourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -1597,14 +1597,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName_RamShared(t *test
 		},
 		ErrorCheck:        acctest.ErrorCheck(t, rds.EndpointsID),
 		ProviderFactories: acctest.FactoriesAlternate(&providers),
-		CheckDestroy:      testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy:      testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_DbSubnetGroupName_RamShared(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_DBSubnetGroupName_RAMShared(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(dbSubnetGroupResourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -1628,14 +1628,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_DbSubnetGroupName_VpcSecurityGroupI
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_DbSubnetGroupName_VpcSecurityGroupIds(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_DBSubnetGroupName_VPCSecurityGroupIDs(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					testAccCheckDBSubnetGroupExists(resourceName, &dbSubnetGroup),
 					resource.TestCheckResourceAttrPair(resourceName, "db_subnet_group_name", dbSubnetGroupResourceName, "name"),
 				),
@@ -1657,24 +1657,24 @@ func TestAccAWSDBInstance_SnapshotIdentifier_DeletionProtection(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_DeletionProtection(rName, true),
+				Config: testAccInstanceConfig_SnapshotIdentifier_DeletionProtection(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "true"),
 				),
 			},
 			// Ensure we disable deletion protection before attempting to delete :)
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_DeletionProtection(rName, false),
+				Config: testAccInstanceConfig_SnapshotIdentifier_DeletionProtection(rName, false),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "deletion_protection", "false"),
 				),
 			},
@@ -1695,14 +1695,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_IamDatabaseAuthenticationEnabled(t 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_IamDatabaseAuthenticationEnabled(rName, true),
+				Config: testAccInstanceConfig_SnapshotIdentifier_IAMDatabaseAuthenticationEnabled(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "iam_database_authentication_enabled", "true"),
 				),
 			},
@@ -1723,14 +1723,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_MaintenanceWindow(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_MaintenanceWindow(rName, "00:00-08:00", "sun:23:00-sun:23:30"),
+				Config: testAccInstanceConfig_SnapshotIdentifier_MaintenanceWindow(rName, "00:00-08:00", "sun:23:00-sun:23:30"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "maintenance_window", "sun:23:00-sun:23:30"),
 				),
 			},
@@ -1751,14 +1751,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_MaxAllocatedStorage(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_MaxAllocatedStorage(rName, 10),
+				Config: testAccInstanceConfig_SnapshotIdentifier_MaxAllocatedStorage(rName, 10),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "max_allocated_storage", "10"),
 				),
 			},
@@ -1779,14 +1779,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Monitoring(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_Monitoring(rName, 5),
+				Config: testAccInstanceConfig_SnapshotIdentifier_Monitoring(rName, 5),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "5"),
 				),
 			},
@@ -1807,14 +1807,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_MultiAZ(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_MultiAZ(rName, true),
+				Config: testAccInstanceConfig_SnapshotIdentifier_MultiAZ(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "multi_az", "true"),
 				),
 			},
@@ -1835,14 +1835,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_MultiAZ_SQLServer(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_MultiAZ_SQLServer(rName, true),
+				Config: testAccInstanceConfig_SnapshotIdentifier_MultiAZ_SQLServer(rName, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "multi_az", "true"),
 				),
 			},
@@ -1863,16 +1863,16 @@ func TestAccAWSDBInstance_SnapshotIdentifier_ParameterGroupName(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_ParameterGroupName(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_ParameterGroupName(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "parameter_group_name", rName),
-					testAccCheckAWSDBInstanceParameterApplyStatusInSync(&dbInstance),
+					testAccCheckInstanceParameterApplyStatusInSync(&dbInstance),
 				),
 			},
 		},
@@ -1892,14 +1892,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Port(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_Port(rName, 9999),
+				Config: testAccInstanceConfig_SnapshotIdentifier_Port(rName, 9999),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "port", "9999"),
 				),
 			},
@@ -1920,14 +1920,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Tags(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_Tags(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_Tags(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -1953,14 +1953,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_Tags_Unset(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_Tags_Unset(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_Tags_Unset(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "0"),
 				),
 			},
@@ -1981,14 +1981,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_VpcSecurityGroupIds(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_VpcSecurityGroupIds(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_VPCSecurityGroupIDs(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 		},
@@ -2012,14 +2012,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_VpcSecurityGroupIds_Tags(t *testing
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_VpcSecurityGroupIds_Tags(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_VPCSecurityGroupIds_Tags(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
 					resource.TestCheckResourceAttr(resourceName, "tags.key1", "value1"),
 				),
@@ -2037,12 +2037,12 @@ func TestAccAWSDBInstance_MonitoringInterval(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringInterval(rName, 30),
+				Config: testAccInstanceConfig_MonitoringInterval(rName, 30),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "30"),
 				),
 			},
@@ -2058,23 +2058,23 @@ func TestAccAWSDBInstance_MonitoringInterval(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringInterval(rName, 60),
+				Config: testAccInstanceConfig_MonitoringInterval(rName, 60),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "60"),
 				),
 			},
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringInterval(rName, 0),
+				Config: testAccInstanceConfig_MonitoringInterval(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "0"),
 				),
 			},
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringInterval(rName, 30),
+				Config: testAccInstanceConfig_MonitoringInterval(rName, 30),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "30"),
 				),
 			},
@@ -2092,12 +2092,12 @@ func TestAccAWSDBInstance_MonitoringRoleArn_EnabledToDisabled(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringRoleArn(rName),
+				Config: testAccInstanceConfig_MonitoringRoleARN(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttrPair(resourceName, "monitoring_role_arn", iamRoleResourceName, "arn"),
 				),
 			},
@@ -2113,9 +2113,9 @@ func TestAccAWSDBInstance_MonitoringRoleArn_EnabledToDisabled(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringInterval(rName, 0),
+				Config: testAccInstanceConfig_MonitoringInterval(rName, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "monitoring_interval", "0"),
 				),
 			},
@@ -2133,12 +2133,12 @@ func TestAccAWSDBInstance_MonitoringRoleArn_EnabledToRemoved(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringRoleArn(rName),
+				Config: testAccInstanceConfig_MonitoringRoleARN(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttrPair(resourceName, "monitoring_role_arn", iamRoleResourceName, "arn"),
 				),
 			},
@@ -2154,9 +2154,9 @@ func TestAccAWSDBInstance_MonitoringRoleArn_EnabledToRemoved(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringRoleArnRemoved(rName),
+				Config: testAccInstanceConfig_MonitoringRoleARNRemoved(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 		},
@@ -2173,12 +2173,12 @@ func TestAccAWSDBInstance_MonitoringRoleArn_RemovedToEnabled(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringRoleArnRemoved(rName),
+				Config: testAccInstanceConfig_MonitoringRoleARNRemoved(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 			{
@@ -2193,9 +2193,9 @@ func TestAccAWSDBInstance_MonitoringRoleArn_RemovedToEnabled(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDbInstanceConfig_MonitoringRoleArn(rName),
+				Config: testAccInstanceConfig_MonitoringRoleARN(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttrPair(resourceName, "monitoring_role_arn", iamRoleResourceName, "arn"),
 				),
 			},
@@ -2215,21 +2215,21 @@ func TestAccAWSDBInstance_separateIopsUpdate(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotInstanceConfig_iopsUpdate(rName, 1000),
+				Config: testAccInstanceConfig_SnapshotInstanceConfig_iopsUpdate(rName, 1000),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
-					testAccCheckAWSDBInstanceAttributes(&v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceAttributes(&v),
 				),
 			},
 
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotInstanceConfig_iopsUpdate(rName, 2000),
+				Config: testAccInstanceConfig_SnapshotInstanceConfig_iopsUpdate(rName, 2000),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
-					testAccCheckAWSDBInstanceAttributes(&v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceAttributes(&v),
 				),
 			},
 		},
@@ -2245,21 +2245,21 @@ func TestAccAWSDBInstance_portUpdate(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotInstanceConfig_mysqlPort(rName),
+				Config: testAccInstanceConfig_SnapshotInstanceConfig_mysqlPort(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
 					resource.TestCheckResourceAttr(
 						"aws_db_instance.bar", "port", "3306"),
 				),
 			},
 
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotInstanceConfig_updateMysqlPort(rName),
+				Config: testAccInstanceConfig_SnapshotInstanceConfig_updateMySQLPort(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
 					resource.TestCheckResourceAttr(
 						"aws_db_instance.bar", "port", "3305"),
 				),
@@ -2276,13 +2276,13 @@ func TestAccAWSDBInstance_MSSQL_TZ(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_MSSQL_timezone(rInt),
+				Config: testAccInstanceConfig_MSSQL_timezone(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.mssql", &v),
-					testAccCheckAWSDBInstanceAttributes_MSSQL(&v, ""),
+					testAccCheckInstanceExists("aws_db_instance.mssql", &v),
+					testAccCheckInstanceAttributes_MSSQL(&v, ""),
 					resource.TestCheckResourceAttr(
 						"aws_db_instance.mssql", "allocated_storage", "20"),
 					resource.TestCheckResourceAttr(
@@ -2291,10 +2291,10 @@ func TestAccAWSDBInstance_MSSQL_TZ(t *testing.T) {
 			},
 
 			{
-				Config: testAccAWSDBInstanceConfig_MSSQL_timezone_AKST(rInt),
+				Config: testAccInstanceConfig_MSSQL_timezone_AKST(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.mssql", &v),
-					testAccCheckAWSDBInstanceAttributes_MSSQL(&v, "Alaskan Standard Time"),
+					testAccCheckInstanceExists("aws_db_instance.mssql", &v),
+					testAccCheckInstanceAttributes_MSSQL(&v, "Alaskan Standard Time"),
 					resource.TestCheckResourceAttr(
 						"aws_db_instance.mssql", "allocated_storage", "20"),
 					resource.TestCheckResourceAttr(
@@ -2318,22 +2318,22 @@ func TestAccAWSDBInstance_MSSQL_Domain(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_MSSQLDomain(rName, directory1, directory2),
+				Config: testAccInstanceConfig_MSSQLDomain(rName, directory1, directory2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &vBefore),
-					testAccCheckAWSDBInstanceDomainAttributes(directory1, &vBefore),
+					testAccCheckInstanceExists(resourceName, &vBefore),
+					testAccCheckInstanceDomainAttributes(directory1, &vBefore),
 					resource.TestCheckResourceAttrSet(resourceName, "domain"),
 					resource.TestCheckResourceAttrSet(resourceName, "domain_iam_role_name"),
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_MSSQLUpdateDomain(rName, directory1, directory2),
+				Config: testAccInstanceConfig_MSSQLUpdateDomain(rName, directory1, directory2),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &vAfter),
-					testAccCheckAWSDBInstanceDomainAttributes(directory2, &vAfter),
+					testAccCheckInstanceExists(resourceName, &vAfter),
+					testAccCheckInstanceDomainAttributes(directory2, &vAfter),
 					resource.TestCheckResourceAttrSet(resourceName, "domain"),
 					resource.TestCheckResourceAttrSet(resourceName, "domain_iam_role_name"),
 				),
@@ -2354,14 +2354,14 @@ func TestAccAWSDBInstance_MSSQL_DomainSnapshotRestore(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_MSSQLDomainSnapshotRestore(rName, domain),
+				Config: testAccInstanceConfig_MSSQLDomainSnapshotRestore(rName, domain),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &vRestoredInstance),
-					testAccCheckAWSDBInstanceExists(originResourceName, &v),
-					testAccCheckAWSDBInstanceDomainAttributes(domain, &vRestoredInstance),
+					testAccCheckInstanceExists(resourceName, &vRestoredInstance),
+					testAccCheckInstanceExists(originResourceName, &v),
+					testAccCheckInstanceDomainAttributes(domain, &vRestoredInstance),
 					resource.TestCheckResourceAttrSet(resourceName, "domain"),
 					resource.TestCheckResourceAttrSet(resourceName, "domain_iam_role_name"),
 				),
@@ -2378,13 +2378,13 @@ func TestAccAWSDBInstance_MySQL_SnapshotRestoreWithEngineVersion(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_MySQLSnapshotRestoreWithEngineVersion(rInt),
+				Config: testAccInstanceConfig_MySQLSnapshotRestoreWithEngineVersion(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.mysql_restore", &vRestoredInstance),
-					testAccCheckAWSDBInstanceExists("aws_db_instance.mysql", &v),
+					testAccCheckInstanceExists("aws_db_instance.mysql_restore", &vRestoredInstance),
+					testAccCheckInstanceExists("aws_db_instance.mysql", &v),
 					resource.TestCheckResourceAttr("aws_db_instance.mysql", "engine_version", "5.6.35"),
 					resource.TestCheckResourceAttr("aws_db_instance.mysql_restore", "engine_version", "5.6.41"),
 				),
@@ -2400,12 +2400,12 @@ func TestAccAWSDBInstance_MinorVersion(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_AutoMinorVersion(),
+				Config: testAccInstanceConfig_AutoMinorVersion(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
 				),
 			},
 		},
@@ -2421,12 +2421,12 @@ func TestAccAWSDBInstance_ec2Classic(t *testing.T) {
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckEC2Classic(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, rds.EndpointsID),
 		ProviderFactories: acctest.ProviderFactories,
-		CheckDestroy:      testAccCheckAWSDBInstanceEc2ClassicDestroy,
+		CheckDestroy:      testAccCheckInstanceEC2ClassicDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_Ec2Classic(rInt),
+				Config: testAccInstanceConfig_EC2Classic(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceEc2ClassicExists(resourceName, &v),
+					testAccCheckInstanceEC2ClassicExists(resourceName, &v),
 				),
 			},
 		},
@@ -2442,12 +2442,12 @@ func TestAccAWSDBInstance_cloudwatchLogsExportConfiguration(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_CloudwatchLogsExportConfiguration(rInt),
+				Config: testAccInstanceConfig_CloudWatchLogsExportConfiguration(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists("aws_db_instance.bar", &v),
+					testAccCheckInstanceExists("aws_db_instance.bar", &v),
 				),
 			},
 			{
@@ -2475,21 +2475,21 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_MySQL(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_CloudwatchLogsExportConfiguration(rInt),
+				Config: testAccInstanceConfig_CloudWatchLogsExportConfiguration(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &v),
+					testAccCheckInstanceExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "enabled_cloudwatch_logs_exports.#", "2"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "enabled_cloudwatch_logs_exports.*", "audit"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "enabled_cloudwatch_logs_exports.*", "error"),
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_CloudwatchLogsExportConfigurationAdd(rInt),
+				Config: testAccInstanceConfig_CloudWatchLogsExportConfigurationAdd(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &v),
+					testAccCheckInstanceExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "enabled_cloudwatch_logs_exports.#", "3"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "enabled_cloudwatch_logs_exports.*", "audit"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "enabled_cloudwatch_logs_exports.*", "error"),
@@ -2497,9 +2497,9 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_MySQL(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_CloudwatchLogsExportConfigurationModify(rInt),
+				Config: testAccInstanceConfig_CloudWatchLogsExportConfigurationModify(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &v),
+					testAccCheckInstanceExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "enabled_cloudwatch_logs_exports.#", "3"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "enabled_cloudwatch_logs_exports.*", "audit"),
 					resource.TestCheckTypeSetElemAttr(resourceName, "enabled_cloudwatch_logs_exports.*", "general"),
@@ -2507,9 +2507,9 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_MySQL(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_CloudwatchLogsExportConfigurationDelete(rInt),
+				Config: testAccInstanceConfig_CloudWatchLogsExportConfigurationDelete(rInt),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &v),
+					testAccCheckInstanceExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "enabled_cloudwatch_logs_exports.#", "0"),
 				),
 			},
@@ -2527,12 +2527,12 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_MSSQL(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_EnabledCloudwatchLogsExports_MSSQL(rName),
+				Config: testAccInstanceConfig_EnabledCloudWatchLogsExports_MSSQL(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "enabled_cloudwatch_logs_exports.#", "2"),
 				),
 			},
@@ -2561,12 +2561,12 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_Oracle(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_EnabledCloudwatchLogsExports_Oracle(rName),
+				Config: testAccInstanceConfig_EnabledCloudWatchLogsExports_Oracle(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "enabled_cloudwatch_logs_exports.#", "3"),
 				),
 			},
@@ -2596,12 +2596,12 @@ func TestAccAWSDBInstance_EnabledCloudwatchLogsExports_Postgresql(t *testing.T) 
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_EnabledCloudwatchLogsExports_Postgresql(rName),
+				Config: testAccInstanceConfig_EnabledCloudWatchLogsExports_Postgresql(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "enabled_cloudwatch_logs_exports.#", "2"),
 				),
 			},
@@ -2631,19 +2631,19 @@ func TestAccAWSDBInstance_NoDeleteAutomatedBackups(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceAutomatedBackups,
+		CheckDestroy: testAccCheckInstanceAutomatedBackups,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_NoDeleteAutomatedBackups(rName),
+				Config: testAccInstanceConfig_NoDeleteAutomatedBackups(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 		},
 	})
 }
 
-func testAccCheckAWSDBInstanceAutomatedBackups(s *terraform.State) error {
+func testAccCheckInstanceAutomatedBackups(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -2674,10 +2674,10 @@ func testAccCheckAWSDBInstanceAutomatedBackups(s *terraform.State) error {
 		}
 	}
 
-	return testAccCheckAWSDBInstanceDestroy(s)
+	return testAccCheckInstanceDestroy(s)
 }
 
-func testAccCheckAWSDBInstanceDestroy(s *terraform.State) error {
+func testAccCheckInstanceDestroy(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -2708,7 +2708,7 @@ func testAccCheckAWSDBInstanceDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSDBInstanceAttributes(v *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckInstanceAttributes(v *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if *v.Engine != "mysql" {
 			return fmt.Errorf("bad engine: %#v", *v.Engine)
@@ -2726,7 +2726,7 @@ func testAccCheckAWSDBInstanceAttributes(v *rds.DBInstance) resource.TestCheckFu
 	}
 }
 
-func testAccCheckAWSDBInstanceAttributes_MSSQL(v *rds.DBInstance, tz string) resource.TestCheckFunc {
+func testAccCheckInstanceAttributes_MSSQL(v *rds.DBInstance, tz string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if *v.Engine != "sqlserver-ex" {
 			return fmt.Errorf("bad engine: %#v", *v.Engine)
@@ -2745,7 +2745,7 @@ func testAccCheckAWSDBInstanceAttributes_MSSQL(v *rds.DBInstance, tz string) res
 	}
 }
 
-func testAccCheckAWSDBInstanceDomainAttributes(domain string, v *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckInstanceDomainAttributes(domain string, v *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		for _, dm := range v.DomainMemberships {
 			if *dm.FQDN != domain {
@@ -2759,7 +2759,7 @@ func testAccCheckAWSDBInstanceDomainAttributes(domain string, v *rds.DBInstance)
 	}
 }
 
-func testAccCheckAWSDBInstanceParameterApplyStatusInSync(dbInstance *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckInstanceParameterApplyStatusInSync(dbInstance *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		for _, dbParameterGroup := range dbInstance.DBParameterGroups {
 			parameterApplyStatus := aws.StringValue(dbParameterGroup.ParameterApplyStatus)
@@ -2774,7 +2774,7 @@ func testAccCheckAWSDBInstanceParameterApplyStatusInSync(dbInstance *rds.DBInsta
 	}
 }
 
-func testAccCheckAWSDBInstanceReplicaAttributes(source, replica *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckInstanceReplicaAttributes(source, replica *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if replica.ReadReplicaSourceDBInstanceIdentifier != nil && *replica.ReadReplicaSourceDBInstanceIdentifier != *source.DBInstanceIdentifier {
 			return fmt.Errorf("bad source identifier for replica, expected: '%s', got: '%s'", *source.DBInstanceIdentifier, *replica.ReadReplicaSourceDBInstanceIdentifier)
@@ -2784,7 +2784,7 @@ func testAccCheckAWSDBInstanceReplicaAttributes(source, replica *rds.DBInstance)
 	}
 }
 
-func testAccCheckAWSDBInstanceSnapshot(s *terraform.State) error {
+func testAccCheckInstanceSnapshot(s *terraform.State) error {
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_db_instance" {
 			continue
@@ -2861,7 +2861,7 @@ func testAccCheckAWSDBInstanceSnapshot(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSDBInstanceNoSnapshot(s *terraform.State) error {
+func testAccCheckInstanceNoSnapshot(s *terraform.State) error {
 	conn := acctest.Provider.Meta().(*conns.AWSClient).RDSConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -2895,7 +2895,7 @@ func testAccCheckAWSDBInstanceNoSnapshot(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSDBInstanceNotRecreated(instance1, instance2 *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckInstanceNotRecreated(instance1, instance2 *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		if !aws.TimeValue(instance1.InstanceCreateTime).Equal(aws.TimeValue(instance2.InstanceCreateTime)) {
 			return fmt.Errorf("database instance was recreated. expected: %s, got: %s", instance1.InstanceCreateTime, instance2.InstanceCreateTime)
@@ -2904,7 +2904,7 @@ func testAccCheckAWSDBInstanceNotRecreated(instance1, instance2 *rds.DBInstance)
 	}
 }
 
-func testAccCheckAWSDBInstanceExists(n string, v *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckInstanceExists(n string, v *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[n]
 		if !ok {
@@ -2938,7 +2938,7 @@ func testAccCheckAWSDBInstanceExists(n string, v *rds.DBInstance) resource.TestC
 	}
 }
 
-func testAccCheckAWSDBInstanceEc2ClassicDestroy(s *terraform.State) error {
+func testAccCheckInstanceEC2ClassicDestroy(s *terraform.State) error {
 	conn := acctest.ProviderEC2Classic.Meta().(*conns.AWSClient).RDSConn
 
 	for _, rs := range s.RootModule().Resources {
@@ -2968,7 +2968,7 @@ func testAccCheckAWSDBInstanceEc2ClassicDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testAccCheckAWSDBInstanceEc2ClassicExists(resourceName string, dbInstance *rds.DBInstance) resource.TestCheckFunc {
+func testAccCheckInstanceEC2ClassicExists(resourceName string, dbInstance *rds.DBInstance) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		rs, ok := s.RootModule().Resources[resourceName]
 
@@ -3012,12 +3012,12 @@ func TestAccAWSDBInstance_PerformanceInsightsEnabled_DisabledToEnabled(t *testin
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, "mysql") },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsDisabled(rName),
+				Config: testAccInstanceConfig_PerformanceInsightsDisabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "false"),
 				),
 			},
@@ -3032,9 +3032,9 @@ func TestAccAWSDBInstance_PerformanceInsightsEnabled_DisabledToEnabled(t *testin
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsEnabled(rName),
+				Config: testAccInstanceConfig_PerformanceInsightsEnabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 				),
 			},
@@ -3051,12 +3051,12 @@ func TestAccAWSDBInstance_PerformanceInsightsEnabled_EnabledToDisabled(t *testin
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, "mysql") },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsEnabled(rName),
+				Config: testAccInstanceConfig_PerformanceInsightsEnabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 				),
 			},
@@ -3071,9 +3071,9 @@ func TestAccAWSDBInstance_PerformanceInsightsEnabled_EnabledToDisabled(t *testin
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsDisabled(rName),
+				Config: testAccInstanceConfig_PerformanceInsightsDisabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "false"),
 				),
 			},
@@ -3091,12 +3091,12 @@ func TestAccAWSDBInstance_PerformanceInsightsKmsKeyId(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, "mysql") },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsKmsKeyId(rName),
+				Config: testAccInstanceConfig_PerformanceInsightsKMSKeyID(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttrPair(resourceName, "performance_insights_kms_key_id", kmsKeyResourceName, "arn"),
 				),
@@ -3112,17 +3112,17 @@ func TestAccAWSDBInstance_PerformanceInsightsKmsKeyId(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsKmsKeyIdDisabled(rName),
+				Config: testAccInstanceConfig_PerformanceInsightsKMSKeyIdDisabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "false"),
 					resource.TestCheckResourceAttrPair(resourceName, "performance_insights_kms_key_id", kmsKeyResourceName, "arn"),
 				),
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsKmsKeyId(rName),
+				Config: testAccInstanceConfig_PerformanceInsightsKMSKeyID(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttrPair(resourceName, "performance_insights_kms_key_id", kmsKeyResourceName, "arn"),
 				),
@@ -3140,12 +3140,12 @@ func TestAccAWSDBInstance_PerformanceInsightsRetentionPeriod(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, "mysql") },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSClusterDestroy,
+		CheckDestroy: testAccCheckClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsRetentionPeriod(rName, 731),
+				Config: testAccInstanceConfig_PerformanceInsightsRetentionPeriod(rName, 731),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_retention_period", "731"),
 				),
@@ -3161,9 +3161,9 @@ func TestAccAWSDBInstance_PerformanceInsightsRetentionPeriod(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_PerformanceInsightsRetentionPeriod(rName, 7),
+				Config: testAccInstanceConfig_PerformanceInsightsRetentionPeriod(rName, 7),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_retention_period", "7"),
 				),
@@ -3184,14 +3184,14 @@ func TestAccAWSDBInstance_ReplicateSourceDb_PerformanceInsightsEnabled(t *testin
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, "mysql") },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_ReplicateSourceDb_PerformanceInsightsEnabled(rName),
+				Config: testAccInstanceConfig_ReplicateSourceDB_PerformanceInsightsEnabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceResourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
-					testAccCheckAWSDBInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
+					testAccCheckInstanceExists(sourceResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceReplicaAttributes(&sourceDbInstance, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttrPair(resourceName, "performance_insights_kms_key_id", kmsKeyResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_retention_period", "7"),
@@ -3215,14 +3215,14 @@ func TestAccAWSDBInstance_SnapshotIdentifier_PerformanceInsightsEnabled(t *testi
 		PreCheck:     func() { acctest.PreCheck(t); testAccRDSPerformanceInsightsDefaultVersionPreCheck(t, "mysql") },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_SnapshotIdentifier_PerformanceInsightsEnabled(rName),
+				Config: testAccInstanceConfig_SnapshotIdentifier_PerformanceInsightsEnabled(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_enabled", "true"),
 					resource.TestCheckResourceAttrPair(resourceName, "performance_insights_kms_key_id", kmsKeyResourceName, "arn"),
 					resource.TestCheckResourceAttr(resourceName, "performance_insights_retention_period", "7"),
@@ -3242,12 +3242,12 @@ func TestAccAWSDBInstance_CACertificateIdentifier(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_WithCACertificateIdentifier(),
+				Config: testAccInstanceConfig_WithCACertificateIdentifier(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttrPair(resourceName, "ca_cert_identifier", dataSourceName, "id"),
 				),
 			},
@@ -3264,13 +3264,13 @@ func TestAccAWSDBInstance_RestoreToPointInTime_SourceIdentifier(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_RestoreToPointInTime_SourceIdentifier(),
+				Config: testAccInstanceConfig_RestoreToPointInTime_SourceIdentifier(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(sourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 			{
@@ -3300,13 +3300,13 @@ func TestAccAWSDBInstance_RestoreToPointInTime_SourceResourceID(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_RestoreToPointInTime_SourceResourceID(),
+				Config: testAccInstanceConfig_RestoreToPointInTime_SourceResourceID(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(sourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 				),
 			},
 			{
@@ -3337,12 +3337,12 @@ func TestAccAWSDBInstance_NationalCharacterSet_Oracle(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_NationalCharacterSet_Oracle(rName),
+				Config: testAccInstanceConfig_NationalCharacterSet_Oracle(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "nchar_character_set_name", "UTF8"),
 				),
 			},
@@ -3372,12 +3372,12 @@ func TestAccAWSDBInstance_NoNationalCharacterSet_Oracle(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_NoNationalCharacterSet_Oracle(rName),
+				Config: testAccInstanceConfig_NoNationalCharacterSet_Oracle(rName),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "nchar_character_set_name", "AL16UTF16"),
 				),
 			},
@@ -3406,13 +3406,13 @@ func TestAccAWSDBInstance_CoipEnabled(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_Outpost_CoipEnabled(rName, true, 0),
+				Config: testAccInstanceConfig_Outpost_CoIPEnabled(rName, true, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &v),
-					testAccCheckAWSDBInstanceAttributes(&v),
+					testAccCheckInstanceExists(resourceName, &v),
+					testAccCheckInstanceAttributes(&v),
 					resource.TestCheckResourceAttr(
 						resourceName, "customer_owned_ip_enabled", "true"),
 				),
@@ -3430,12 +3430,12 @@ func TestAccAWSDBInstance_CoipEnabled_DisabledToEnabled(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_Outpost_CoipEnabled(rName, false, 0),
+				Config: testAccInstanceConfig_Outpost_CoIPEnabled(rName, false, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "customer_owned_ip_enabled", "false"),
 				),
 			},
@@ -3450,9 +3450,9 @@ func TestAccAWSDBInstance_CoipEnabled_DisabledToEnabled(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_Outpost_CoipEnabled(rName, true, 0),
+				Config: testAccInstanceConfig_Outpost_CoIPEnabled(rName, true, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "customer_owned_ip_enabled", "true"),
 				),
 			},
@@ -3469,12 +3469,12 @@ func TestAccAWSDBInstance_CoipEnabled_EnabledToDisabled(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_Outpost_CoipEnabled(rName, true, 0),
+				Config: testAccInstanceConfig_Outpost_CoIPEnabled(rName, true, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "customer_owned_ip_enabled", "true"),
 				),
 			},
@@ -3489,9 +3489,9 @@ func TestAccAWSDBInstance_CoipEnabled_EnabledToDisabled(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_Outpost_CoipEnabled(rName, false, 0),
+				Config: testAccInstanceConfig_Outpost_CoIPEnabled(rName, false, 0),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "customer_owned_ip_enabled", "false"),
 				),
 			},
@@ -3509,13 +3509,13 @@ func TestAccAWSDBInstance_CoipEnabled_RestoreToPointInTime(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_CoipEnabled_RestorePointInTime(rName, false, true),
+				Config: testAccInstanceConfig_CoIPEnabled_RestorePointInTime(rName, false, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceName, &sourceDbInstance),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(sourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "customer_owned_ip_enabled", "true"),
 				),
 			},
@@ -3550,14 +3550,14 @@ func TestAccAWSDBInstance_CoipEnabled_SnapshotIdentifier(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_CoipEnabled_SnapshotIdentifier(rName, false, true),
+				Config: testAccInstanceConfig_CoIPEnabled_SnapshotIdentifier(rName, false, true),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(sourceDbResourceName, &sourceDbInstance),
+					testAccCheckInstanceExists(sourceDbResourceName, &sourceDbInstance),
 					testAccCheckDbSnapshotExists(snapshotResourceName, &dbSnapshot),
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance),
+					testAccCheckInstanceExists(resourceName, &dbInstance),
 					resource.TestCheckResourceAttr(resourceName, "customer_owned_ip_enabled", "true"),
 				),
 			},
@@ -3574,12 +3574,12 @@ func TestAccAWSDBInstance_license(t *testing.T) {
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
 		Providers:    acctest.Providers,
-		CheckDestroy: testAccCheckAWSDBInstanceDestroy,
+		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAWSDBInstanceConfig_license(rName, "license-included"),
+				Config: testAccInstanceConfig_license(rName, "license-included"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance1),
+					testAccCheckInstanceExists(resourceName, &dbInstance1),
 					resource.TestCheckResourceAttr(resourceName, "license_model", "license-included"),
 				),
 			},
@@ -3596,9 +3596,9 @@ func TestAccAWSDBInstance_license(t *testing.T) {
 				},
 			},
 			{
-				Config: testAccAWSDBInstanceConfig_license(rName, "bring-your-own-license"),
+				Config: testAccInstanceConfig_license(rName, "bring-your-own-license"),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckAWSDBInstanceExists(resourceName, &dbInstance1),
+					testAccCheckInstanceExists(resourceName, &dbInstance1),
 					resource.TestCheckResourceAttr(resourceName, "license_model", "bring-your-own-license"),
 				),
 			},
@@ -3606,7 +3606,7 @@ func TestAccAWSDBInstance_license(t *testing.T) {
 	})
 }
 
-func testAccAWSDBInstanceConfig_orderableClass(engine, version, license string) string {
+func testAccInstanceConfig_orderableClass(engine, version, license string) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine         = %q
@@ -3619,20 +3619,20 @@ data "aws_rds_orderable_db_instance" "test" {
 `, engine, version, license)
 }
 
-func testAccAWSDBInstanceConfig_orderableClassMysql() string {
-	return testAccAWSDBInstanceConfig_orderableClass("mysql", "5.6.35", "general-public-license")
+func testAccInstanceConfig_orderableClassMySQL() string {
+	return testAccInstanceConfig_orderableClass("mysql", "5.6.35", "general-public-license")
 }
 
-func testAccAWSDBInstanceConfig_orderableClassMariadb() string {
-	return testAccAWSDBInstanceConfig_orderableClass("mariadb", "10.2.15", "general-public-license")
+func testAccInstanceConfig_orderableClassMariadb() string {
+	return testAccInstanceConfig_orderableClass("mariadb", "10.2.15", "general-public-license")
 }
 
-func testAccAWSDBInstanceConfig_orderableClassSQLServerEx() string {
-	return testAccAWSDBInstanceConfig_orderableClass("sqlserver-ex", "14.00.1000.169.v1", "license-included")
+func testAccInstanceConfig_orderableClassSQLServerEx() string {
+	return testAccInstanceConfig_orderableClass("sqlserver-ex", "14.00.1000.169.v1", "license-included")
 }
 
-func testAccAWSDBInstanceBasicConfig() string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), `
+func testAccInstanceBasicConfig() string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), `
 resource "aws_db_instance" "bar" {
   allocated_storage       = 10
   backup_retention_period = 0
@@ -3653,8 +3653,8 @@ resource "aws_db_instance" "bar" {
 `)
 }
 
-func testAccAWSDBInstanceConfig_MajorVersionOnly(engine, engineVersion string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_MajorVersionOnly(engine, engineVersion string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 locals {
   engine = %[1]q
 }
@@ -3679,8 +3679,8 @@ resource "aws_db_instance" "test" {
 `, engine, engineVersion))
 }
 
-func testAccAWSDBInstanceConfig_namePrefix() string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), `
+func testAccInstanceConfig_namePrefix() string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), `
 resource "aws_db_instance" "test" {
   allocated_storage   = 10
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -3694,8 +3694,8 @@ resource "aws_db_instance" "test" {
 `)
 }
 
-func testAccAWSDBInstanceConfig_generatedName() string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), `
+func testAccInstanceConfig_generatedName() string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), `
 resource "aws_db_instance" "test" {
   allocated_storage   = 10
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -3708,7 +3708,7 @@ resource "aws_db_instance" "test" {
 `)
 }
 
-func testAccAWSDBInstanceConfig_KmsKeyId(rInt int) string {
+func testAccInstanceConfig_KMSKeyID(rInt int) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "foo" {
   description = "Terraform acc test %d"
@@ -3768,8 +3768,8 @@ resource "aws_db_instance" "bar" {
 `, rInt)
 }
 
-func testAccAWSDBInstanceConfig_WithCACertificateIdentifier() string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), `
+func testAccInstanceConfig_WithCACertificateIdentifier() string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), `
 data "aws_rds_certificate" "latest" {
   latest_valid_till = true
 }
@@ -3788,8 +3788,8 @@ resource "aws_db_instance" "bar" {
 `)
 }
 
-func testAccAWSDBInstanceConfig_WithOptionGroup(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_WithOptionGroup(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_option_group" "test" {
   engine_name              = data.aws_rds_orderable_db_instance.test.engine
   major_engine_version     = "5.6"
@@ -3812,7 +3812,7 @@ resource "aws_db_instance" "bar" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_IAMAuth(n int) string {
+func testAccInstanceConfig_IAMAuth(n int) string {
 	return fmt.Sprintf(`
 data "aws_rds_engine_version" "default" {
   engine = "mysql"
@@ -3845,8 +3845,8 @@ resource "aws_db_instance" "bar" {
 `, n)
 }
 
-func testAccAWSDBInstanceConfig_FinalSnapshotIdentifier_SkipFinalSnapshot() string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_FinalSnapshotIdentifier_SkipFinalSnapshot() string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "snapshot" {
   identifier = "tf-acc-test-%[1]d"
 
@@ -3869,7 +3869,7 @@ resource "aws_db_instance" "snapshot" {
 `, sdkacctest.RandInt()))
 }
 
-func testAccAWSDBInstanceConfig_S3Import(bucketName string, bucketPrefix string, uniqueId string) string {
+func testAccInstanceConfig_S3Import(bucketName string, bucketPrefix string, uniqueId string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_s3_bucket" "xtrabackup" {
   bucket = %[1]q
@@ -4015,8 +4015,8 @@ resource "aws_db_instance" "s3" {
 `, bucketName, bucketPrefix, uniqueId))
 }
 
-func testAccAWSDBInstanceConfig_FinalSnapshotIdentifier(rInt int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_FinalSnapshotIdentifier(rInt int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "snapshot" {
   identifier = "tf-snapshot-%[1]d"
 
@@ -4042,7 +4042,7 @@ resource "aws_db_instance" "snapshot" {
 `, rInt))
 }
 
-func testAccAWSDbInstanceConfig_MonitoringInterval(rName string, monitoringInterval int) string {
+func testAccInstanceConfig_MonitoringInterval(rName string, monitoringInterval int) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -4103,7 +4103,7 @@ resource "aws_db_instance" "test" {
 `, rName, monitoringInterval)
 }
 
-func testAccAWSDbInstanceConfig_MonitoringRoleArnRemoved(rName string) string {
+func testAccInstanceConfig_MonitoringRoleARNRemoved(rName string) string {
 	return fmt.Sprintf(`
 data "aws_rds_engine_version" "default" {
   engine = "mysql"
@@ -4133,7 +4133,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDbInstanceConfig_MonitoringRoleArn(rName string) string {
+func testAccInstanceConfig_MonitoringRoleARN(rName string) string {
 	return fmt.Sprintf(`
 data "aws_partition" "current" {}
 
@@ -4194,7 +4194,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-const testAccAWSDBInstanceBaseConfig = `
+const testAccInstanceBaseConfig = `
 data "aws_rds_engine_version" "test" {
   engine = "mysql"
 }
@@ -4219,9 +4219,9 @@ resource "aws_db_instance" "test" {
 }
 `
 
-func testAccAWSDBInstanceConfig_RestoreToPointInTime_SourceIdentifier() string {
+func testAccInstanceConfig_RestoreToPointInTime_SourceIdentifier() string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceBaseConfig,
+		testAccInstanceBaseConfig,
 		fmt.Sprintf(`
 resource "aws_db_instance" "restore" {
   identifier     = "tf-acc-test-point-in-time-restore-%d"
@@ -4235,9 +4235,9 @@ resource "aws_db_instance" "restore" {
 `, sdkacctest.RandInt()))
 }
 
-func testAccAWSDBInstanceConfig_RestoreToPointInTime_SourceResourceID() string {
+func testAccInstanceConfig_RestoreToPointInTime_SourceResourceID() string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceBaseConfig,
+		testAccInstanceBaseConfig,
 		fmt.Sprintf(`
 resource "aws_db_instance" "restore" {
   identifier     = "tf-acc-test-point-in-time-restore-%d"
@@ -4251,7 +4251,7 @@ resource "aws_db_instance" "restore" {
 `, sdkacctest.RandInt()))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotInstanceConfig_iopsUpdate(rName string, iops int) string {
+func testAccInstanceConfig_SnapshotInstanceConfig_iopsUpdate(rName string, iops int) string {
 	return fmt.Sprintf(`
 data "aws_rds_engine_version" "default" {
   engine = "mysql"
@@ -4287,8 +4287,8 @@ resource "aws_db_instance" "bar" {
 `, rName, iops)
 }
 
-func testAccAWSDBInstanceConfig_SnapshotInstanceConfig_mysqlPort(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotInstanceConfig_mysqlPort(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "bar" {
   identifier           = "mydb-rds-%s"
   engine               = data.aws_rds_orderable_db_instance.test.engine
@@ -4307,8 +4307,8 @@ resource "aws_db_instance" "bar" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotInstanceConfig_updateMysqlPort(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotInstanceConfig_updateMySQLPort(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "bar" {
   identifier           = "mydb-rds-%s"
   engine               = data.aws_rds_orderable_db_instance.test.engine
@@ -4327,9 +4327,9 @@ resource "aws_db_instance" "bar" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_WithSubnetGroup(rName string) string {
+func testAccInstanceConfig_WithSubnetGroup(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -4389,9 +4389,9 @@ resource "aws_db_instance" "bar" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_WithSubnetGroupUpdated(rName string) string {
+func testAccInstanceConfig_WithSubnetGroupUpdated(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -4489,9 +4489,9 @@ resource "aws_db_instance" "bar" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_MSSQL_timezone(rInt int) string {
+func testAccInstanceConfig_MSSQL_timezone(rInt int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassSQLServerEx(),
+		testAccInstanceConfig_orderableClassSQLServerEx(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -4563,9 +4563,9 @@ resource "aws_security_group_rule" "rds-mssql-1" {
 `, rInt))
 }
 
-func testAccAWSDBInstanceConfig_MSSQL_timezone_AKST(rInt int) string {
+func testAccInstanceConfig_MSSQL_timezone_AKST(rInt int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassSQLServerEx(),
+		testAccInstanceConfig_orderableClassSQLServerEx(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -4638,7 +4638,7 @@ resource "aws_security_group_rule" "rds-mssql-1" {
 `, rInt))
 }
 
-func testAccAWSDBInstanceConfig_RDSServiceRole(rName string) string {
+func testAccInstanceConfig_ServiceRole(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_iam_role" "role" {
   name = %[1]q
@@ -4667,7 +4667,7 @@ resource "aws_iam_role_policy_attachment" "attatch-policy" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_VpcConfigBase(rName string) string {
+func testAccInstanceConfig_VPCConfigBase(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -4689,12 +4689,12 @@ resource "aws_db_subnet_group" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_MSSQLDomain_SharedConfig(rName, domain string) string {
+func testAccInstanceConfig_MSSQLDomain_SharedConfig(rName, domain string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassSQLServerEx(),
+		testAccInstanceConfig_orderableClassSQLServerEx(),
 		acctest.ConfigAvailableAZsNoOptIn(),
-		testAccAWSDBInstanceConfig_VpcConfigBase(rName),
-		testAccAWSDBInstanceConfig_RDSServiceRole(rName),
+		testAccInstanceConfig_VPCConfigBase(rName),
+		testAccInstanceConfig_ServiceRole(rName),
 		fmt.Sprintf(`
 resource "aws_security_group" "test" {
   name   = %[1]q
@@ -4727,9 +4727,9 @@ data "aws_partition" "current" {}
 `, rName, domain))
 }
 
-func testAccAWSDBInstanceConfig_MSSQLDomain(rName, directory1, directory2 string) string {
+func testAccInstanceConfig_MSSQLDomain(rName, directory1, directory2 string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_MSSQLDomain_SharedConfig(rName, directory1),
+		testAccInstanceConfig_MSSQLDomain_SharedConfig(rName, directory1),
 		fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage       = 20
@@ -4762,9 +4762,9 @@ resource "aws_directory_service_directory" "directory-2" {
 `, rName, directory2))
 }
 
-func testAccAWSDBInstanceConfig_MSSQLUpdateDomain(rName, directory1, directory2 string) string {
+func testAccInstanceConfig_MSSQLUpdateDomain(rName, directory1, directory2 string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_MSSQLDomain_SharedConfig(rName, directory1),
+		testAccInstanceConfig_MSSQLDomain_SharedConfig(rName, directory1),
 		fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage       = 20
@@ -4798,9 +4798,9 @@ resource "aws_directory_service_directory" "directory-2" {
 `, rName, directory2))
 }
 
-func testAccAWSDBInstanceConfig_MSSQLDomainSnapshotRestore(rName, directory string) string {
+func testAccInstanceConfig_MSSQLDomainSnapshotRestore(rName, directory string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_MSSQLDomain_SharedConfig(rName, directory),
+		testAccInstanceConfig_MSSQLDomain_SharedConfig(rName, directory),
 		fmt.Sprintf(`
 resource "aws_db_instance" "origin" {
   allocated_storage   = 20
@@ -4840,9 +4840,9 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_MySQLSnapshotRestoreWithEngineVersion(rInt int) string {
+func testAccInstanceConfig_MySQLSnapshotRestoreWithEngineVersion(rInt int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -4935,8 +4935,8 @@ resource "aws_security_group_rule" "rds-mysql-1" {
 `, rInt))
 }
 
-func testAccAWSDBInstanceConfig_AllowMajorVersionUpgrade(rName string, allowMajorVersionUpgrade bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_AllowMajorVersionUpgrade(rName string, allowMajorVersionUpgrade bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage           = 10
   allow_major_version_upgrade = %t
@@ -4952,8 +4952,8 @@ resource "aws_db_instance" "test" {
 `, allowMajorVersionUpgrade, rName))
 }
 
-func testAccAWSDBInstanceConfig_AutoMinorVersion() string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_AutoMinorVersion() string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "bar" {
   identifier          = "foobarbaz-test-terraform-%d"
   allocated_storage   = 10
@@ -4968,9 +4968,9 @@ resource "aws_db_instance" "bar" {
 `, sdkacctest.RandInt()))
 }
 
-func testAccAWSDBInstanceConfig_CloudwatchLogsExportConfiguration(rInt int) string {
+func testAccInstanceConfig_CloudWatchLogsExportConfiguration(rInt int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -5030,9 +5030,9 @@ resource "aws_db_instance" "bar" {
 `, rInt))
 }
 
-func testAccAWSDBInstanceConfig_CloudwatchLogsExportConfigurationAdd(rInt int) string {
+func testAccInstanceConfig_CloudWatchLogsExportConfigurationAdd(rInt int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -5095,9 +5095,9 @@ resource "aws_db_instance" "bar" {
 `, rInt))
 }
 
-func testAccAWSDBInstanceConfig_CloudwatchLogsExportConfigurationModify(rInt int) string {
+func testAccInstanceConfig_CloudWatchLogsExportConfigurationModify(rInt int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -5160,9 +5160,9 @@ resource "aws_db_instance" "bar" {
 `, rInt))
 }
 
-func testAccAWSDBInstanceConfig_CloudwatchLogsExportConfigurationDelete(rInt int) string {
+func testAccInstanceConfig_CloudWatchLogsExportConfigurationDelete(rInt int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "foo" {
@@ -5219,7 +5219,7 @@ resource "aws_db_instance" "bar" {
 `, rInt))
 }
 
-func testAccAWSDBInstanceConfig_Ec2Classic(rInt int) string {
+func testAccInstanceConfig_EC2Classic(rInt int) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigEC2ClassicRegionProvider(),
 		fmt.Sprintf(`
@@ -5248,8 +5248,8 @@ resource "aws_db_instance" "bar" {
 `, rInt))
 }
 
-func testAccAWSDBInstanceConfig_MariaDB(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_MariaDB(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -5262,9 +5262,9 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_DbSubnetGroupName(rName string) string {
+func testAccInstanceConfig_DBSubnetGroupName(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "test" {
@@ -5305,9 +5305,9 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_DbSubnetGroupName_RamShared(rName string) string {
+func testAccInstanceConfig_DBSubnetGroupName_RAMShared(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAlternateAccountProvider(),
 		fmt.Sprintf(`
 data "aws_availability_zones" "alternate" {
@@ -5395,9 +5395,9 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_DbSubnetGroupName_VpcSecurityGroupIds(rName string) string {
+func testAccInstanceConfig_DBSubnetGroupName_VPCSecurityGroupIDs(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "test" {
@@ -5444,8 +5444,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_DeletionProtection(rName string, deletionProtection bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_DeletionProtection(rName string, deletionProtection bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage   = 5
   deletion_protection = %t
@@ -5459,7 +5459,7 @@ resource "aws_db_instance" "test" {
 `, deletionProtection, rName))
 }
 
-func testAccAWSDBInstanceConfig_EnabledCloudwatchLogsExports_Oracle(rName string) string {
+func testAccInstanceConfig_EnabledCloudWatchLogsExports_Oracle(rName string) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine        = "oracle-se2"
@@ -5483,7 +5483,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_NationalCharacterSet_Oracle(rName string) string {
+func testAccInstanceConfig_NationalCharacterSet_Oracle(rName string) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine        = "oracle-se2"
@@ -5507,7 +5507,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_NoNationalCharacterSet_Oracle(rName string) string {
+func testAccInstanceConfig_NoNationalCharacterSet_Oracle(rName string) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine        = "oracle-se2"
@@ -5530,7 +5530,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_EnabledCloudwatchLogsExports_MSSQL(rName string) string {
+func testAccInstanceConfig_EnabledCloudWatchLogsExports_MSSQL(rName string) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine         = "sqlserver-se"
@@ -5555,9 +5555,9 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_EnabledCloudwatchLogsExports_Postgresql(rName string) string {
+func testAccInstanceConfig_EnabledCloudWatchLogsExports_Postgresql(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClass("postgres", "12.2", "postgresql-license"),
+		testAccInstanceConfig_orderableClass("postgres", "12.2", "postgresql-license"),
 		fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage               = 10
@@ -5572,8 +5572,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_MaxAllocatedStorage(rName string, maxAllocatedStorage int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_MaxAllocatedStorage(rName string, maxAllocatedStorage int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage     = 5
   engine                = data.aws_rds_orderable_db_instance.test.engine
@@ -5587,8 +5587,8 @@ resource "aws_db_instance" "test" {
 `, rName, maxAllocatedStorage))
 }
 
-func testAccAWSDBInstanceConfig_Password(rName, password string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_Password(rName, password string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -5601,8 +5601,8 @@ resource "aws_db_instance" "test" {
 `, rName, password))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -5623,8 +5623,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_AllocatedStorage(rName string, allocatedStorage int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_AllocatedStorage(rName string, allocatedStorage int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -5646,7 +5646,7 @@ resource "aws_db_instance" "test" {
 `, rName, allocatedStorage))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_Iops(rName string, iops int) string {
+func testAccInstanceConfig_ReplicateSourceDB_Iops(rName string, iops int) string {
 	return fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 200
@@ -5672,7 +5672,7 @@ resource "aws_db_instance" "test" {
 `, rName, rName, iops)
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_AllocatedStorageAndIops(rName string, allocatedStorage, iops int) string {
+func testAccInstanceConfig_ReplicateSourceDB_AllocatedStorageAndIops(rName string, allocatedStorage, iops int) string {
 	return fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = %[2]d
@@ -5699,8 +5699,8 @@ resource "aws_db_instance" "test" {
 `, rName, allocatedStorage, iops)
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_AllowMajorVersionUpgrade(rName string, allowMajorVersionUpgrade bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_AllowMajorVersionUpgrade(rName string, allowMajorVersionUpgrade bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -5722,8 +5722,8 @@ resource "aws_db_instance" "test" {
 `, rName, allowMajorVersionUpgrade))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_AutoMinorVersionUpgrade(rName string, autoMinorVersionUpgrade bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_AutoMinorVersionUpgrade(rName string, autoMinorVersionUpgrade bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -5745,9 +5745,9 @@ resource "aws_db_instance" "test" {
 `, rName, autoMinorVersionUpgrade))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_AvailabilityZone(rName string) string {
+func testAccInstanceConfig_ReplicateSourceDB_AvailabilityZone(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMysql(),
+		testAccInstanceConfig_orderableClassMySQL(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_db_instance" "source" {
@@ -5771,8 +5771,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_BackupRetentionPeriod(rName string, backupRetentionPeriod int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_BackupRetentionPeriod(rName string, backupRetentionPeriod int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -5796,8 +5796,8 @@ resource "aws_db_instance" "test" {
 
 // We provide maintenance_window to prevent the following error from a randomly selected window:
 // InvalidParameterValue: The backup window and maintenance window must not overlap.
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_BackupWindow(rName, backupWindow, maintenanceWindow string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_BackupWindow(rName, backupWindow, maintenanceWindow string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -5820,7 +5820,7 @@ resource "aws_db_instance" "test" {
 `, rName, backupWindow, maintenanceWindow))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_DbSubnetGroupName(rName string) string {
+func testAccInstanceConfig_ReplicateSourceDB_DbSubnetGroupName(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAlternateRegionProvider(),
 		acctest.ConfigAvailableAZsNoOptIn(),
@@ -5926,7 +5926,7 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_DbSubnetGroupName_RamShared(rName string) string {
+func testAccInstanceConfig_ReplicateSourceDB_DbSubnetGroupName_RAMShared(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAlternateAccountAndAlternateRegionProvider() + fmt.Sprintf(`
 data "aws_availability_zones" "alternateaccountsameregion" {
   provider = "awsalternateaccountsameregion"
@@ -6076,7 +6076,7 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_DbSubnetGroupName_VpcSecurityGroupIds(rName string) string {
+func testAccInstanceConfig_ReplicateSourceDB_DbSubnetGroupName_VPCSecurityGroupIDs(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigAlternateRegionProvider(),
 		acctest.ConfigAvailableAZsNoOptIn(),
@@ -6188,8 +6188,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_DeletionProtection(rName string, deletionProtection bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_DeletionProtection(rName string, deletionProtection bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -6211,8 +6211,8 @@ resource "aws_db_instance" "test" {
 `, rName, deletionProtection))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_IamDatabaseAuthenticationEnabled(rName string, iamDatabaseAuthenticationEnabled bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_IAMDatabaseAuthenticationEnabled(rName string, iamDatabaseAuthenticationEnabled bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -6236,8 +6236,8 @@ resource "aws_db_instance" "test" {
 
 // We provide backup_window to prevent the following error from a randomly selected window:
 // InvalidParameterValue: The backup window and maintenance window must not overlap.
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_MaintenanceWindow(rName, backupWindow, maintenanceWindow string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_MaintenanceWindow(rName, backupWindow, maintenanceWindow string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -6260,8 +6260,8 @@ resource "aws_db_instance" "test" {
 `, rName, backupWindow, maintenanceWindow))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_MaxAllocatedStorage(rName string, maxAllocatedStorage int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_MaxAllocatedStorage(rName string, maxAllocatedStorage int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -6284,8 +6284,8 @@ resource "aws_db_instance" "test" {
 `, rName, maxAllocatedStorage))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_Monitoring(rName string, monitoringInterval int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_Monitoring(rName string, monitoringInterval int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 data "aws_partition" "current" {}
 
 resource "aws_iam_role" "test" {
@@ -6335,8 +6335,8 @@ resource "aws_db_instance" "test" {
 `, rName, monitoringInterval))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_MultiAZ(rName string, multiAz bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_MultiAZ(rName string, multiAz bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -6358,8 +6358,8 @@ resource "aws_db_instance" "test" {
 `, rName, multiAz))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_ParameterGroupName(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_ParameterGroupName(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_parameter_group" "test" {
   family = "mysql5.6"
   name   = %[1]q
@@ -6392,8 +6392,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_Port(rName string, port int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_Port(rName string, port int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -6415,8 +6415,8 @@ resource "aws_db_instance" "test" {
 `, rName, port))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_VpcSecurityGroupIds(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_VPCSecurityGroupIDs(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 data "aws_vpc" "default" {
   default = true
 }
@@ -6447,8 +6447,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_CACertificateIdentifier(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_ReplicateSourceDB_CACertificateIdentifier(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 data "aws_rds_certificate" "latest" {
   latest_valid_till = true
 }
@@ -6475,8 +6475,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -6501,8 +6501,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifierRemoved(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifierRemoved(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -6530,8 +6530,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_AllocatedStorage(rName string, allocatedStorage int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_AllocatedStorage(rName string, allocatedStorage int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -6557,7 +6557,7 @@ resource "aws_db_instance" "test" {
 `, rName, allocatedStorage))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_Io1Storage(rName string, iops int) string {
+func testAccInstanceConfig_SnapshotIdentifier_Io1Storage(rName string, iops int) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine         = "mariadb"
@@ -6595,7 +6595,7 @@ resource "aws_db_instance" "test" {
 `, rName, iops)
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_AllowMajorVersionUpgrade(rName string, allowMajorVersionUpgrade bool) string {
+func testAccInstanceConfig_SnapshotIdentifier_AllowMajorVersionUpgrade(rName string, allowMajorVersionUpgrade bool) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "postgres10" {
   engine         = "postgres"
@@ -6643,8 +6643,8 @@ resource "aws_db_instance" "test" {
 `, rName, allowMajorVersionUpgrade)
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_AutoMinorVersionUpgrade(rName string, autoMinorVersionUpgrade bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_AutoMinorVersionUpgrade(rName string, autoMinorVersionUpgrade bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -6670,9 +6670,9 @@ resource "aws_db_instance" "test" {
 `, rName, autoMinorVersionUpgrade))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_AvailabilityZone(rName string) string {
+func testAccInstanceConfig_SnapshotIdentifier_AvailabilityZone(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMariadb(),
+		testAccInstanceConfig_orderableClassMariadb(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_db_instance" "source" {
@@ -6700,8 +6700,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_BackupRetentionPeriod(rName string, backupRetentionPeriod int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_BackupRetentionPeriod(rName string, backupRetentionPeriod int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -6727,8 +6727,8 @@ resource "aws_db_instance" "test" {
 `, rName, backupRetentionPeriod))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_BackupRetentionPeriod_Unset(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_BackupRetentionPeriod_Unset(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage       = 5
   backup_retention_period = 1
@@ -6757,8 +6757,8 @@ resource "aws_db_instance" "test" {
 
 // We provide maintenance_window to prevent the following error from a randomly selected window:
 // InvalidParameterValue: The backup window and maintenance window must not overlap.
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_BackupWindow(rName, backupWindow, maintenanceWindow string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_BackupWindow(rName, backupWindow, maintenanceWindow string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -6785,9 +6785,9 @@ resource "aws_db_instance" "test" {
 `, rName, backupWindow, maintenanceWindow))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_DbSubnetGroupName(rName string) string {
+func testAccInstanceConfig_SnapshotIdentifier_DBSubnetGroupName(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMariadb(),
+		testAccInstanceConfig_orderableClassMariadb(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "test" {
@@ -6840,9 +6840,9 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_DbSubnetGroupName_RamShared(rName string) string {
+func testAccInstanceConfig_SnapshotIdentifier_DBSubnetGroupName_RAMShared(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMariadb(),
+		testAccInstanceConfig_orderableClassMariadb(),
 		acctest.ConfigAlternateAccountProvider(),
 		fmt.Sprintf(`
 data "aws_availability_zones" "alternate" {
@@ -6942,9 +6942,9 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_DbSubnetGroupName_VpcSecurityGroupIds(rName string) string {
+func testAccInstanceConfig_SnapshotIdentifier_DBSubnetGroupName_VPCSecurityGroupIDs(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMariadb(),
+		testAccInstanceConfig_orderableClassMariadb(),
 		acctest.ConfigAvailableAZsNoOptIn(),
 		fmt.Sprintf(`
 resource "aws_vpc" "test" {
@@ -7003,8 +7003,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_DeletionProtection(rName string, deletionProtection bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_DeletionProtection(rName string, deletionProtection bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -7030,8 +7030,8 @@ resource "aws_db_instance" "test" {
 `, rName, deletionProtection))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_IamDatabaseAuthenticationEnabled(rName string, iamDatabaseAuthenticationEnabled bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMysql(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_IAMDatabaseAuthenticationEnabled(rName string, iamDatabaseAuthenticationEnabled bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMySQL(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -7059,8 +7059,8 @@ resource "aws_db_instance" "test" {
 
 // We provide backup_window to prevent the following error from a randomly selected window:
 // InvalidParameterValue: The backup window and maintenance window must not overlap.
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_MaintenanceWindow(rName, backupWindow, maintenanceWindow string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_MaintenanceWindow(rName, backupWindow, maintenanceWindow string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -7087,8 +7087,8 @@ resource "aws_db_instance" "test" {
 `, rName, backupWindow, maintenanceWindow))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_MaxAllocatedStorage(rName string, maxAllocatedStorage int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_MaxAllocatedStorage(rName string, maxAllocatedStorage int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -7115,8 +7115,8 @@ resource "aws_db_instance" "test" {
 `, rName, maxAllocatedStorage))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_Monitoring(rName string, monitoringInterval int) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_Monitoring(rName string, monitoringInterval int) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 data "aws_partition" "current" {}
 
 resource "aws_iam_role" "test" {
@@ -7170,8 +7170,8 @@ resource "aws_db_instance" "test" {
 `, rName, monitoringInterval))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_MultiAZ(rName string, multiAz bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_MultiAZ(rName string, multiAz bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -7197,7 +7197,7 @@ resource "aws_db_instance" "test" {
 `, rName, multiAz))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_MultiAZ_SQLServer(rName string, multiAz bool) string {
+func testAccInstanceConfig_SnapshotIdentifier_MultiAZ_SQLServer(rName string, multiAz bool) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine         = "sqlserver-se"
@@ -7236,9 +7236,9 @@ resource "aws_db_instance" "test" {
 `, rName, multiAz)
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_ParameterGroupName(rName string) string {
+func testAccInstanceConfig_SnapshotIdentifier_ParameterGroupName(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMariadb(),
+		testAccInstanceConfig_orderableClassMariadb(),
 		fmt.Sprintf(`
 resource "aws_db_parameter_group" "test" {
   family = "mariadb10.2"
@@ -7276,9 +7276,9 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_Port(rName string, port int) string {
+func testAccInstanceConfig_SnapshotIdentifier_Port(rName string, port int) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMariadb(),
+		testAccInstanceConfig_orderableClassMariadb(),
 		fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
@@ -7305,9 +7305,9 @@ resource "aws_db_instance" "test" {
 `, rName, port))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_Tags(rName string) string {
+func testAccInstanceConfig_SnapshotIdentifier_Tags(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_orderableClassMariadb(),
+		testAccInstanceConfig_orderableClassMariadb(),
 		fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
@@ -7337,8 +7337,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_Tags_Unset(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_Tags_Unset(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "source" {
   allocated_storage   = 5
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -7369,8 +7369,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_VpcSecurityGroupIds(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_VPCSecurityGroupIDs(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 data "aws_vpc" "default" {
   default = true
 }
@@ -7405,8 +7405,8 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_VpcSecurityGroupIds_Tags(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_SnapshotIdentifier_VPCSecurityGroupIds_Tags(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 data "aws_vpc" "default" {
   default = true
 }
@@ -7445,7 +7445,7 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_PerformanceInsightsDisabled(rName string) string {
+func testAccInstanceConfig_PerformanceInsightsDisabled(rName string) string {
 	return fmt.Sprintf(`
 data "aws_rds_engine_version" "default" {
   engine = "mysql"
@@ -7475,7 +7475,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_PerformanceInsightsEnabled(rName string) string {
+func testAccInstanceConfig_PerformanceInsightsEnabled(rName string) string {
 	return fmt.Sprintf(`
 data "aws_rds_engine_version" "default" {
   engine = "mysql"
@@ -7507,7 +7507,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_PerformanceInsightsKmsKeyIdDisabled(rName string) string {
+func testAccInstanceConfig_PerformanceInsightsKMSKeyIdDisabled(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   deletion_window_in_days = 7
@@ -7540,7 +7540,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_PerformanceInsightsKmsKeyId(rName string) string {
+func testAccInstanceConfig_PerformanceInsightsKMSKeyID(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   deletion_window_in_days = 7
@@ -7577,7 +7577,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_PerformanceInsightsRetentionPeriod(rName string, performanceInsightsRetentionPeriod int) string {
+func testAccInstanceConfig_PerformanceInsightsRetentionPeriod(rName string, performanceInsightsRetentionPeriod int) string {
 	return fmt.Sprintf(`
 data "aws_rds_engine_version" "default" {
   engine = "mysql"
@@ -7609,7 +7609,7 @@ resource "aws_db_instance" "test" {
 `, rName, performanceInsightsRetentionPeriod)
 }
 
-func testAccAWSDBInstanceConfig_ReplicateSourceDb_PerformanceInsightsEnabled(rName string) string {
+func testAccInstanceConfig_ReplicateSourceDB_PerformanceInsightsEnabled(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description = "Terraform acc test"
@@ -7670,7 +7670,7 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_SnapshotIdentifier_PerformanceInsightsEnabled(rName string) string {
+func testAccInstanceConfig_SnapshotIdentifier_PerformanceInsightsEnabled(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_kms_key" "test" {
   description = "Terraform acc test"
@@ -7735,8 +7735,8 @@ resource "aws_db_instance" "test" {
 `, rName)
 }
 
-func testAccAWSDBInstanceConfig_NoDeleteAutomatedBackups(rName string) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
+func testAccInstanceConfig_NoDeleteAutomatedBackups(rName string) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_orderableClassMariadb(), fmt.Sprintf(`
 resource "aws_db_instance" "test" {
   allocated_storage   = 10
   engine              = data.aws_rds_orderable_db_instance.test.engine
@@ -7752,7 +7752,7 @@ resource "aws_db_instance" "test" {
 `, rName))
 }
 
-func testAccAWSDBInstanceConfig_Outpost_CoipEnabled(rName string, coipEnabled bool, backupRetentionPeriod int) string {
+func testAccInstanceConfig_Outpost_CoIPEnabled(rName string, coipEnabled bool, backupRetentionPeriod int) string {
 	return fmt.Sprintf(`
 data "aws_outposts_outposts" "test" {}
 
@@ -7827,9 +7827,9 @@ resource "aws_db_instance" "test" {
 `, rName, coipEnabled, backupRetentionPeriod)
 }
 
-func testAccAWSDBInstanceConfig_CoipEnabled_RestorePointInTime(rName string, sourceCoipEnabled bool, targetCoipEnabled bool) string {
+func testAccInstanceConfig_CoIPEnabled_RestorePointInTime(rName string, sourceCoipEnabled bool, targetCoipEnabled bool) string {
 	return acctest.ConfigCompose(
-		testAccAWSDBInstanceConfig_Outpost_CoipEnabled(rName, sourceCoipEnabled, 1),
+		testAccInstanceConfig_Outpost_CoIPEnabled(rName, sourceCoipEnabled, 1),
 		fmt.Sprintf(`
 resource "aws_db_instance" "restore" {
   identifier     = "%[1]s-restore"
@@ -7846,8 +7846,8 @@ resource "aws_db_instance" "restore" {
 `, rName, targetCoipEnabled))
 }
 
-func testAccAWSDBInstanceConfig_CoipEnabled_SnapshotIdentifier(rName string, sourceCoipEnabled bool, targetCoipEnabled bool) string {
-	return acctest.ConfigCompose(testAccAWSDBInstanceConfig_Outpost_CoipEnabled(rName, sourceCoipEnabled, 1), fmt.Sprintf(`
+func testAccInstanceConfig_CoIPEnabled_SnapshotIdentifier(rName string, sourceCoipEnabled bool, targetCoipEnabled bool) string {
+	return acctest.ConfigCompose(testAccInstanceConfig_Outpost_CoIPEnabled(rName, sourceCoipEnabled, 1), fmt.Sprintf(`
 resource "aws_db_snapshot" "test" {
   db_instance_identifier = aws_db_instance.test.id
   db_snapshot_identifier = %[1]q
@@ -7865,7 +7865,7 @@ resource "aws_db_instance" "restore" {
 `, rName, targetCoipEnabled))
 }
 
-func testAccAWSDBInstanceConfig_license(rName, license string) string {
+func testAccInstanceConfig_license(rName, license string) string {
 	return fmt.Sprintf(`
 data "aws_rds_orderable_db_instance" "test" {
   engine        = "oracle-se2"
