@@ -165,7 +165,7 @@ func TestAccAWSIAMRole_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -193,7 +193,7 @@ func TestAccAWSIAMRole_basicWithDescription(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -236,7 +236,7 @@ func TestAccAWSIAMRole_NameGenerated(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -264,7 +264,7 @@ func TestAccAWSIAMRole_NamePrefix(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -292,7 +292,7 @@ func TestAccAWSIAMRole_testNameChange(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -322,7 +322,7 @@ func TestAccAWSIAMRole_badJSON(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -342,14 +342,14 @@ func TestAccAWSIAMRole_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSIAMRoleConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSRoleExists(resourceName, &role),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsIamRole(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsIamRole(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -365,7 +365,7 @@ func TestAccAWSIAMRole_force_detach_policies(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -393,7 +393,7 @@ func TestAccAWSIAMRole_MaxSessionDuration(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -444,7 +444,7 @@ func TestAccAWSIAMRole_PermissionsBoundary(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSUserDestroy,
 		Steps: []resource.TestStep{
 			// Test creation
@@ -513,7 +513,7 @@ func TestAccAWSIAMRole_tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSUserDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -553,7 +553,7 @@ func TestAccAWSIAMRole_policyBasicInline(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -598,7 +598,7 @@ func TestAccAWSIAMRole_policyBasicInlineEmpty(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -622,7 +622,7 @@ func TestAccAWSIAMRole_policyBasicManaged(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -667,7 +667,7 @@ func TestAccAWSIAMRole_policyOutOfBandRemovalAddedBack_managedNonEmpty(t *testin
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -700,7 +700,7 @@ func TestAccAWSIAMRole_policyOutOfBandRemovalAddedBack_inlineNonEmpty(t *testing
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -734,7 +734,7 @@ func TestAccAWSIAMRole_policyOutOfBandAdditionRemoved_managedNonEmpty(t *testing
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -768,7 +768,7 @@ func TestAccAWSIAMRole_policyOutOfBandAdditionRemoved_inlineNonEmpty(t *testing.
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -803,7 +803,7 @@ func TestAccAWSIAMRole_policyOutOfBandAdditionIgnored_inlineNonExistent(t *testi
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -843,7 +843,7 @@ func TestAccAWSIAMRole_policyOutOfBandAdditionIgnored_managedNonExistent(t *test
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -875,7 +875,7 @@ func TestAccAWSIAMRole_policyOutOfBandAdditionRemoved_inlineEmpty(t *testing.T) 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -907,7 +907,7 @@ func TestAccAWSIAMRole_policyOutOfBandAdditionRemoved_managedEmpty(t *testing.T)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, iam.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSRoleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -929,7 +929,7 @@ func TestAccAWSIAMRole_policyOutOfBandAdditionRemoved_managedEmpty(t *testing.T)
 }
 
 func testAccCheckAWSRoleDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).iamconn
+	conn := acctest.Provider.Meta().(*AWSClient).iamconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_iam_role" {
@@ -963,7 +963,7 @@ func testAccCheckAWSRoleExists(n string, v *iam.Role) resource.TestCheckFunc {
 			return fmt.Errorf("No IAM Role ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).iamconn
+		conn := acctest.Provider.Meta().(*AWSClient).iamconn
 
 		output, err := finder.RoleByName(conn, rs.Primary.ID)
 
@@ -988,7 +988,7 @@ func testAccAddAwsIAMRolePolicy(n string) resource.TestCheckFunc {
 			return fmt.Errorf("No Role name is set")
 		}
 
-		iamconn := testAccProvider.Meta().(*AWSClient).iamconn
+		iamconn := acctest.Provider.Meta().(*AWSClient).iamconn
 
 		input := &iam.PutRolePolicyInput{
 			RoleName: aws.String(rs.Primary.ID),
@@ -1026,7 +1026,7 @@ func testAccCheckAWSRolePermissionsBoundary(role *iam.Role, expectedPermissionsB
 
 func testAccCheckAWSRolePolicyDetachManagedPolicy(role *iam.Role, policyName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).iamconn
+		conn := acctest.Provider.Meta().(*AWSClient).iamconn
 
 		var managedARN string
 		input := &iam.ListAttachedRolePoliciesInput{
@@ -1064,7 +1064,7 @@ func testAccCheckAWSRolePolicyDetachManagedPolicy(role *iam.Role, policyName str
 
 func testAccCheckAWSRolePolicyAttachManagedPolicy(role *iam.Role, policyName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).iamconn
+		conn := acctest.Provider.Meta().(*AWSClient).iamconn
 
 		var managedARN string
 		input := &iam.ListPoliciesInput{
@@ -1103,7 +1103,7 @@ func testAccCheckAWSRolePolicyAttachManagedPolicy(role *iam.Role, policyName str
 
 func testAccCheckAWSRolePolicyAddInlinePolicy(role *iam.Role, inlinePolicy string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).iamconn
+		conn := acctest.Provider.Meta().(*AWSClient).iamconn
 
 		_, err := conn.PutRolePolicy(&iam.PutRolePolicyInput{
 			PolicyDocument: aws.String(testAccAWSRolePolicyExtraInlineConfig()),
@@ -1120,7 +1120,7 @@ func testAccCheckAWSRolePolicyAddInlinePolicy(role *iam.Role, inlinePolicy strin
 
 func testAccCheckAWSRolePolicyRemoveInlinePolicy(role *iam.Role, inlinePolicy string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).iamconn
+		conn := acctest.Provider.Meta().(*AWSClient).iamconn
 
 		_, err := conn.DeleteRolePolicy(&iam.DeleteRolePolicyInput{
 			PolicyName: aws.String(inlinePolicy),
