@@ -20,6 +20,13 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
+	tfglue "github.com/hashicorp/terraform-provider-aws/internal/service/glue"
 )
 
 const (
@@ -633,7 +640,7 @@ func testAccCheckAWSGlueDevEndpointExists(resourceName string, v *glue.DevEndpoi
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).GlueConn
 
-		output, err := finder.DevEndpointByName(conn, rs.Primary.ID)
+		output, err := tfglue.FindDevEndpointByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
@@ -653,7 +660,7 @@ func testAccCheckAWSGlueDevEndpointDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.DevEndpointByName(conn, rs.Primary.ID)
+		_, err := tfglue.FindDevEndpointByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
