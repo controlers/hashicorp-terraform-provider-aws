@@ -1,4 +1,4 @@
-package aws
+package transfer
 
 import (
 	"context"
@@ -15,13 +15,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	tftags "github.com/hashicorp/terraform-provider-aws/aws/internal/tags"
-	ec2finder "github.com/hashicorp/terraform-provider-aws/aws/internal/service/ec2/finder"
-	ec2waiter "github.com/hashicorp/terraform-provider-aws/aws/internal/service/ec2/waiter"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/aws/internal/service/transfer"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/transfer/finder"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/service/transfer/waiter"
-	"github.com/hashicorp/terraform-provider-aws/aws/internal/tfresource"
+	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
+	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
@@ -184,26 +179,8 @@ import (
 	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
 	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
 	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
-	tftransfer "github.com/hashicorp/terraform-provider-aws/internal/service/transfer"
+	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
+	tfec2 "github.com/hashicorp/terraform-provider-aws/internal/service/ec2"
 )
 
 func ResourceServer() *schema.Resource {
@@ -359,8 +336,8 @@ func ResourceServer() *schema.Resource {
 			"security_policy_name": {
 				Type:         schema.TypeString,
 				Optional:     true,
-				Default:      tftransfer.SecurityPolicyName2018_11,
-				ValidateFunc: validation.StringInSlice(tftransfer.SecurityPolicyName_Values(), false),
+				Default:      SecurityPolicyName2018_11,
+				ValidateFunc: validation.StringInSlice(SecurityPolicyName_Values(), false),
 			},
 
 			"tags":     tftags.TagsSchema(),
@@ -461,7 +438,7 @@ func resourceServerCreate(d *schema.ResourceData, meta interface{}) error {
 
 	d.SetId(aws.StringValue(output.ServerId))
 
-	_, err = tftransfer.waitServerCreated(conn, d.Id(), d.Timeout(schema.TimeoutCreate))
+	_, err = waitServerCreated(conn, d.Id(), d.Timeout(schema.TimeoutCreate))
 
 	if err != nil {
 		return fmt.Errorf("error waiting for Transfer Server (%s) to create: %w", d.Id(), err)
@@ -497,7 +474,7 @@ func resourceServerRead(d *schema.ResourceData, meta interface{}) error {
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	output, err := tftransfer.FindServerByID(conn, d.Id())
+	output, err := FindServerByID(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] Transfer Server (%s) not found, removing from state", d.Id())
@@ -829,7 +806,7 @@ func resourceServerDelete(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error deleting Transfer Server (%s): %w", d.Id(), err)
 	}
 
-	_, err = tftransfer.waitServerDeleted(conn, d.Id())
+	_, err = waitServerDeleted(conn, d.Id())
 
 	if err != nil {
 		return fmt.Errorf("error waiting for Transfer Server (%s) delete: %w", d.Id(), err)
@@ -909,7 +886,7 @@ func stopTransferServer(conn *transfer.Transfer, serverID string, timeout time.D
 		return fmt.Errorf("error stopping Transfer Server (%s): %w", serverID, err)
 	}
 
-	if _, err := tftransfer.waitServerStopped(conn, serverID, timeout); err != nil {
+	if _, err := waitServerStopped(conn, serverID, timeout); err != nil {
 		return fmt.Errorf("error waiting for Transfer Server (%s) to stop: %w", serverID, err)
 	}
 
@@ -925,7 +902,7 @@ func startTransferServer(conn *transfer.Transfer, serverID string, timeout time.
 		return fmt.Errorf("error starting Transfer Server (%s): %w", serverID, err)
 	}
 
-	if _, err := tftransfer.waitServerStarted(conn, serverID, timeout); err != nil {
+	if _, err := waitServerStarted(conn, serverID, timeout); err != nil {
 		return fmt.Errorf("error waiting for Transfer Server (%s) to start: %w", serverID, err)
 	}
 
