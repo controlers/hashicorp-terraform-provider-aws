@@ -264,7 +264,7 @@ Thus, for in-flight and future contributions, implementing tagging support for T
 
 This step is only necessary for the first implementation and may have been previously completed. If so, move on to the next section.
 
-More details about this code generation, including fixes for potential error messages in this process, can be found in the [generate documentation](../../internal/generate/README.md).
+More details about this code generation, including fixes for potential error messages in this process, can be found in the [generate documentation](../../internal/generate/tags/README.md).
 
 - Open the AWS Go SDK documentation for the service, e.g., for [`service/eks`](https://docs.aws.amazon.com/sdk-for-go/api/service/eks/). Note: there can be a delay between the AWS announcement and the updated AWS Go SDK documentation.
 - Use the AWS Go SDK to determine which types of tagging code to generate. There are three main types of tagging code you can generate: service tags, list tags, and update tags. These are not mutually exclusive and some services use more than one.
@@ -570,7 +570,7 @@ See the [EC2 Listing and filtering your resources page](https://docs.aws.amazon.
 
 Implementing server-side filtering support for Terraform AWS Provider resources requires the following, each with its own section below:
 
-- [ ] _Generated Service Filtering Code_: In the internal code generators (e.g., `aws/internal/namevaluesfilters`), implementation and customization of how a service handles filtering, which is standardized for the resources.
+- [ ] _Generated Service Filtering Code_: In the internal code generators (e.g., `internal/generate/namevaluesfilters`), implementation and customization of how a service handles filtering, which is standardized for the resources.
 - [ ] _Resource Filtering Code Implementation_: In the resource's equivalent data source code (e.g., `aws/data_source_aws_service_thing.go`), implementation of `filter` schema attribute, along with handling in the `Read` function.
 - [ ] _Resource Filtering Documentation Implementation_: In the resource's equivalent data source documentation (e.g., `website/docs/d/service_thing.html.markdown`), addition of `filter` argument
 
@@ -578,15 +578,15 @@ Implementing server-side filtering support for Terraform AWS Provider resources 
 
 This step is only necessary for the first implementation and may have been previously completed. If so, move on to the next section.
 
-More details about this code generation can be found in the [namevaluesfilters documentation](../../aws/internal/namevaluesfilters/README.md).
+More details about this code generation can be found in the [namevaluesfilters documentation](../../internal/generate/namevaluesfilters/README.md).
 
 - Open the AWS Go SDK documentation for the service, e.g., for [`service/rds`](https://docs.aws.amazon.com/sdk-for-go/api/service/rds/). Note: there can be a delay between the AWS announcement and the updated AWS Go SDK documentation.
-- Determine if the service API includes functionality for filtering resources (usually a `Filters` argument to a `DescribeThing` API call). If so, add the AWS Go SDK service name (e.g., `rds`) to `sliceServiceNames` in `aws/internal/namevaluesfilters/generators/servicefilters/main.go`.
+- Determine if the service API includes functionality for filtering resources (usually a `Filters` argument to a `DescribeThing` API call). If so, add the AWS Go SDK service name (e.g., `rds`) to `sliceServiceNames` in `internal/generate/namevaluesfilters/generators/servicefilters/main.go`.
 - Run `make gen` (`go generate ./...`) and ensure there are no errors via `make test` (`go test ./...`)
 
 ### Resource Filter Code Implementation
 
-- In the resource's equivalent data source Go file (e.g., `aws/data_source_aws_internet_gateway.go`), add the following Go import: `"github.com/hashicorp/terraform-provider-aws/aws/internal/namevaluesfilters"`
+- In the resource's equivalent data source Go file (e.g., `aws/data_source_aws_internet_gateway.go`), add the following Go import: `"github.com/hashicorp/terraform-provider-aws/internal/namevaluesfilters"`
 - In the resource schema, add `"filter": namevaluesfilters.Schema(),`
 - Implement the logic to build the list of filters:
 
@@ -623,7 +623,7 @@ More complex filters can be expressed using one or more `filter` sub-blocks, whi
 
 ## New Resource
 
-_Before submitting this type of contribution, it is highly recommended to read and understand the other pages of the [Contributing Guide](contributing.md)._
+_Before submitting this type of contribution, it is highly recommended to read and understand the other pages of the [Contributing Guide](./README.md)._
 
 Implementing a new resource is a good way to learn more about how Terraform
 interacts with upstream APIs. There are plenty of examples to draw from in the
