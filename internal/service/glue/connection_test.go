@@ -17,10 +17,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
-
-
 func TestAccGlueConnection_basic(t *testing.T) {
 	var connection glue.Connection
 
