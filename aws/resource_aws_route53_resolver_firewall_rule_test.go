@@ -69,13 +69,13 @@ func testSweepRoute53ResolverFirewallRules(region string) error {
 
 func TestAccAWSRoute53ResolverFirewallRule_basic(t *testing.T) {
 	var v route53resolver.FirewallRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -100,13 +100,13 @@ func TestAccAWSRoute53ResolverFirewallRule_basic(t *testing.T) {
 
 func TestAccAWSRoute53ResolverFirewallRule_block(t *testing.T) {
 	var v route53resolver.FirewallRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -129,13 +129,13 @@ func TestAccAWSRoute53ResolverFirewallRule_block(t *testing.T) {
 
 func TestAccAWSRoute53ResolverFirewallRule_blockOverride(t *testing.T) {
 	var v route53resolver.FirewallRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -161,20 +161,20 @@ func TestAccAWSRoute53ResolverFirewallRule_blockOverride(t *testing.T) {
 
 func TestAccAWSRoute53ResolverFirewallRule_disappears(t *testing.T) {
 	var v route53resolver.FirewallRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSRoute53Resolver(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, route53resolver.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckRoute53ResolverFirewallRuleDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccRoute53ResolverFirewallRuleConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckRoute53ResolverFirewallRuleExists(resourceName, &v),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsRoute53ResolverFirewallRule(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsRoute53ResolverFirewallRule(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -183,7 +183,7 @@ func TestAccAWSRoute53ResolverFirewallRule_disappears(t *testing.T) {
 }
 
 func testAccCheckRoute53ResolverFirewallRuleDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).route53resolverconn
+	conn := acctest.Provider.Meta().(*AWSClient).route53resolverconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_route53_resolver_firewall_rule" {
@@ -216,7 +216,7 @@ func testAccCheckRoute53ResolverFirewallRuleExists(n string, v *route53resolver.
 			return fmt.Errorf("No Route 53 Resolver DNS Firewall rule ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).route53resolverconn
+		conn := acctest.Provider.Meta().(*AWSClient).route53resolverconn
 		out, err := finder.FirewallRuleByID(conn, rs.Primary.ID)
 		if err != nil {
 			return err
