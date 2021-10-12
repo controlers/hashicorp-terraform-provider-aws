@@ -242,7 +242,7 @@ func resourceClusterInstanceCreate(d *schema.ResourceData, meta interface{}) err
 		PubliclyAccessible:      aws.Bool(d.Get("publicly_accessible").(bool)),
 		PromotionTier:           aws.Int64(int64(d.Get("promotion_tier").(int))),
 		AutoMinorVersionUpgrade: aws.Bool(d.Get("auto_minor_version_upgrade").(bool)),
-		Tags:                    Tags(tags.IgnoreAws()),
+		Tags:                    Tags(tags.IgnoreAWS()),
 	}
 
 	if attr, ok := d.GetOk("availability_zone"); ok {
@@ -367,7 +367,7 @@ func resourceClusterInstanceCreate(d *schema.ResourceData, meta interface{}) err
 		}
 
 		log.Printf("[INFO] Waiting for DB Instance (%s) to be available", d.Id())
-		err = waitUntilAwsDbInstanceIsAvailableAfterUpdate(d.Id(), conn, d.Timeout(schema.TimeoutUpdate))
+		err = waitUntilDBInstanceAvailableAfterUpdate(d.Id(), conn, d.Timeout(schema.TimeoutUpdate))
 
 		if err != nil {
 			return fmt.Errorf("error waiting for RDS Cluster Instance (%s) to be available: %w", d.Id(), err)
@@ -387,7 +387,7 @@ func resourceClusterInstanceCreate(d *schema.ResourceData, meta interface{}) err
 		}
 
 		log.Printf("[INFO] Waiting for DB Instance (%s) to be available", d.Id())
-		err = waitUntilAwsDbInstanceIsAvailableAfterUpdate(d.Id(), conn, d.Timeout(schema.TimeoutUpdate))
+		err = waitUntilDBInstanceAvailableAfterUpdate(d.Id(), conn, d.Timeout(schema.TimeoutUpdate))
 
 		if err != nil {
 			return fmt.Errorf("error waiting for RDS Cluster Instance (%s) to be available: %w", d.Id(), err)
@@ -476,7 +476,7 @@ func resourceClusterInstanceRead(d *schema.ResourceData, meta interface{}) error
 	if err != nil {
 		return fmt.Errorf("error listing tags for RDS Cluster Instance (%s): %w", d.Id(), err)
 	}
-	tags = tags.IgnoreAws().IgnoreConfig(ignoreTagsConfig)
+	tags = tags.IgnoreAWS().IgnoreConfig(ignoreTagsConfig)
 
 	//lintignore:AWSR002
 	if err := d.Set("tags", tags.RemoveDefaultConfig(defaultTagsConfig).Map()); err != nil {
