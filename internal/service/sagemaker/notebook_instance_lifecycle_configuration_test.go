@@ -18,8 +18,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
 )
 
-const SagemakerNotebookInstanceLifecycleConfigurationResourcePrefix = "tf-acc-test"
-
 func init() {
 	resource.AddTestSweepers("aws_sagemaker_notebook_instance_lifecycle_configuration", &resource.Sweeper{
 		Name: "aws_sagemaker_notebook_instance_lifecycle_configuration",
@@ -45,7 +43,7 @@ func testSweepSagemakerNotebookInstanceLifecycleConfiguration(region string) err
 		}
 		for _, lifecycleConfig := range page.NotebookInstanceLifecycleConfigs {
 			name := aws.StringValue(lifecycleConfig.NotebookInstanceLifecycleConfigName)
-			if !strings.HasPrefix(name, SagemakerNotebookInstanceLifecycleConfigurationResourcePrefix) {
+			if !strings.HasPrefix(name, "tf-acc-test") {
 				log.Printf("[INFO] Skipping SageMaker Notebook Instance Lifecycle Configuration: %s", name)
 				continue
 			}
@@ -73,7 +71,7 @@ func testSweepSagemakerNotebookInstanceLifecycleConfiguration(region string) err
 
 func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_basic(t *testing.T) {
 	var lifecycleConfig sagemaker.DescribeNotebookInstanceLifecycleConfigOutput
-	rName := sdkacctest.RandomWithPrefix(SagemakerNotebookInstanceLifecycleConfigurationResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_notebook_instance_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -104,7 +102,7 @@ func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_basic(t *testing.
 
 func TestAccAWSSagemakerNotebookInstanceLifecycleConfiguration_Update(t *testing.T) {
 	var lifecycleConfig sagemaker.DescribeNotebookInstanceLifecycleConfigOutput
-	rName := sdkacctest.RandomWithPrefix(SagemakerNotebookInstanceLifecycleConfigurationResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_sagemaker_notebook_instance_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
