@@ -18,7 +18,7 @@ func TestAccAwsCloudControlApiResourceDataSource_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, cloudcontrolapi.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsCloudControlApiResourceDestroy,
 		Steps: []resource.TestStep{
 			{
