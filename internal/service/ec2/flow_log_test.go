@@ -19,56 +19,9 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
-	resource.AddTestSweepers("aws_flow_log", &resource.Sweeper{
-		Name: "aws_flow_log",
-		F:    sweepFlowLogs,
-	})
-}
 
-func sweepFlowLogs(region string) error {
-	client, err := sweep.SharedRegionalSweepClient(region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %w", err)
-	}
-	conn := client.(*conns.AWSClient).EC2Conn
-	var sweeperErrs *multierror.Error
 
-	err = conn.DescribeFlowLogsPages(&ec2.DescribeFlowLogsInput{}, func(page *ec2.DescribeFlowLogsOutput, lastPage bool) bool {
-		if page == nil {
-			return !lastPage
-		}
 
-		for _, flowLog := range page.FlowLogs {
-			id := aws.StringValue(flowLog.FlowLogId)
-
-			log.Printf("[INFO] Deleting Flow Log: %s", id)
-			_, err := conn.DeleteFlowLogs(&ec2.DeleteFlowLogsInput{
-				FlowLogIds: aws.StringSlice([]string{id}),
-			})
-			if tfawserr.ErrMessageContains(err, "InvalidFlowLogId.NotFound", "") {
-				continue
-			}
-			if err != nil {
-				sweeperErr := fmt.Errorf("error deleting Flow Log (%s): %w", id, err)
-				log.Printf("[ERROR] %s", sweeperErr)
-				sweeperErrs = multierror.Append(sweeperErrs, sweeperErr)
-				continue
-			}
-		}
-
-		return !lastPage
-	})
-	if sweep.SkipSweepError(err) {
-		log.Printf("[WARN] Skipping Flow Logs sweep for %s: %s", region, err)
-		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-	}
-	if err != nil {
-		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error retrieving Flow Logs: %w", err))
-	}
-
-	return sweeperErrs.ErrorOrNil()
-}
 
 func TestAccEC2FlowLog_vpcID(t *testing.T) {
 	var flowLog ec2.FlowLog
