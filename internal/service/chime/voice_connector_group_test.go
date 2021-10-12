@@ -17,7 +17,7 @@ import (
 func TestAccChimeVoiceConnectorGroup_basic(t *testing.T) {
 	var voiceConnectorGroup *chime.VoiceConnectorGroup
 
-	vcgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	vcgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccChimeVoiceConnectorGroup_basic(t *testing.T) {
 func TestAccChimeVoiceConnectorGroup_disappears(t *testing.T) {
 	var voiceConnectorGroup *chime.VoiceConnectorGroup
 
-	vcgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	vcgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -71,7 +71,7 @@ func TestAccChimeVoiceConnectorGroup_disappears(t *testing.T) {
 func TestAccChimeVoiceConnectorGroup_update(t *testing.T) {
 	var voiceConnectorGroup *chime.VoiceConnectorGroup
 
-	vcgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	vcgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

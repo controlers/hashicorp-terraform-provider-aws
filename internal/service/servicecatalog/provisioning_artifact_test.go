@@ -19,7 +19,7 @@ import (
 
 func TestAccServiceCatalogProvisioningArtifact_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioning_artifact.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
@@ -61,7 +61,7 @@ func TestAccServiceCatalogProvisioningArtifact_basic(t *testing.T) {
 
 func TestAccServiceCatalogProvisioningArtifact_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioning_artifact.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
@@ -85,7 +85,7 @@ func TestAccServiceCatalogProvisioningArtifact_disappears(t *testing.T) {
 
 func TestAccServiceCatalogProvisioningArtifact_update(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioning_artifact.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
@@ -132,7 +132,7 @@ func TestAccServiceCatalogProvisioningArtifact_update(t *testing.T) {
 
 func TestAccServiceCatalogProvisioningArtifact_physicalID(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioning_artifact.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 

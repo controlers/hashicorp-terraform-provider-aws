@@ -19,7 +19,7 @@ import (
 func TestAccSSOAdminPermissionSetInlinePolicy_basic(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set_inline_policy.test"
 	permissionSetResourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -48,7 +48,7 @@ func TestAccSSOAdminPermissionSetInlinePolicy_basic(t *testing.T) {
 
 func TestAccSSOAdminPermissionSetInlinePolicy_update(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set_inline_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -80,7 +80,7 @@ func TestAccSSOAdminPermissionSetInlinePolicy_update(t *testing.T) {
 
 func TestAccSSOAdminPermissionSetInlinePolicy_disappears(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set_inline_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -103,7 +103,7 @@ func TestAccSSOAdminPermissionSetInlinePolicy_disappears(t *testing.T) {
 func TestAccSSOAdminPermissionSetInlinePolicy_Disappears_permissionSet(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set_inline_policy.test"
 	permissionSetResourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },

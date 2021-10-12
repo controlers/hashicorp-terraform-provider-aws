@@ -18,7 +18,7 @@ import (
 
 func TestAccKafkaConfiguration_basic(t *testing.T) {
 	var configuration1 kafka.DescribeConfigurationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -50,7 +50,7 @@ func TestAccKafkaConfiguration_basic(t *testing.T) {
 
 func TestAccKafkaConfiguration_disappears(t *testing.T) {
 	var configuration1 kafka.DescribeConfigurationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -73,7 +73,7 @@ func TestAccKafkaConfiguration_disappears(t *testing.T) {
 
 func TestAccKafkaConfiguration_description(t *testing.T) {
 	var configuration1, configuration2 kafka.DescribeConfigurationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -108,7 +108,7 @@ func TestAccKafkaConfiguration_description(t *testing.T) {
 
 func TestAccKafkaConfiguration_kafkaVersions(t *testing.T) {
 	var configuration1 kafka.DescribeConfigurationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -137,7 +137,7 @@ func TestAccKafkaConfiguration_kafkaVersions(t *testing.T) {
 
 func TestAccKafkaConfiguration_serverProperties(t *testing.T) {
 	var configuration1, configuration2 kafka.DescribeConfigurationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_configuration.test"
 	serverProperty1 := "auto.create.topics.enable = false"
 	serverProperty2 := "auto.create.topics.enable = true"

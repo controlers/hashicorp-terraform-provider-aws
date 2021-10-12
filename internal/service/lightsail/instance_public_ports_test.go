@@ -15,7 +15,7 @@ import (
 )
 
 func TestAccLightsailInstancePublicPorts_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lightsail_instance_public_ports.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -45,7 +45,7 @@ func TestAccLightsailInstancePublicPorts_basic(t *testing.T) {
 }
 
 func TestAccLightsailInstancePublicPorts_multiple(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lightsail_instance_public_ports.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -80,7 +80,7 @@ func TestAccLightsailInstancePublicPorts_multiple(t *testing.T) {
 }
 
 func TestAccLightsailInstancePublicPorts_cidrs(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lightsail_instance_public_ports.test"
 
 	resource.ParallelTest(t, resource.TestCase{

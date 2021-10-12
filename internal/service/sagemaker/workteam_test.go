@@ -17,7 +17,7 @@ import (
 
 func testAccWorkteam_cognitoConfig(t *testing.T) {
 	var workteam sagemaker.Workteam
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workteam.test"
 
 	resource.Test(t, resource.TestCase{
@@ -88,7 +88,7 @@ func testAccWorkteam_cognitoConfig(t *testing.T) {
 
 func testAccWorkteam_oidcConfig(t *testing.T) {
 	var workteam sagemaker.Workteam
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workteam.test"
 
 	resource.Test(t, resource.TestCase{
@@ -145,7 +145,7 @@ func testAccWorkteam_oidcConfig(t *testing.T) {
 
 func testAccWorkteam_tags(t *testing.T) {
 	var workteam sagemaker.Workteam
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workteam.test"
 
 	resource.Test(t, resource.TestCase{
@@ -191,7 +191,7 @@ func testAccWorkteam_tags(t *testing.T) {
 
 func testAccWorkteam_notificationConfig(t *testing.T) {
 	var workteam sagemaker.Workteam
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workteam.test"
 
 	resource.Test(t, resource.TestCase{
@@ -244,7 +244,7 @@ func testAccWorkteam_notificationConfig(t *testing.T) {
 
 func testAccWorkteam_disappears(t *testing.T) {
 	var workteam sagemaker.Workteam
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workteam.test"
 
 	resource.Test(t, resource.TestCase{

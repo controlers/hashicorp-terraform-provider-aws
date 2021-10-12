@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccAppRunnerConnection_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_connection.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccAppRunnerConnection_basic(t *testing.T) {
 }
 
 func TestAccAppRunnerConnection_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_connection.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -69,7 +69,7 @@ func TestAccAppRunnerConnection_disappears(t *testing.T) {
 }
 
 func TestAccAppRunnerConnection_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_connection.test"
 
 	resource.ParallelTest(t, resource.TestCase{

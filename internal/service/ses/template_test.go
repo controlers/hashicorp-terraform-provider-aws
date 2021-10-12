@@ -18,7 +18,7 @@ import (
 
 func TestAccSESTemplate_basic(t *testing.T) {
 	resourceName := "aws_ses_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var template ses.Template
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -48,7 +48,7 @@ func TestAccSESTemplate_basic(t *testing.T) {
 
 func TestAccSESTemplate_update(t *testing.T) {
 	acctest.Skip(t, "Skip due to SES.UpdateTemplate eventual consistency issues")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_template.test"
 	var template ses.Template
 
@@ -100,7 +100,7 @@ func TestAccSESTemplate_update(t *testing.T) {
 
 func TestAccSESTemplate_disappears(t *testing.T) {
 	resourceName := "aws_ses_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var template ses.Template
 
 	resource.ParallelTest(t, resource.TestCase{

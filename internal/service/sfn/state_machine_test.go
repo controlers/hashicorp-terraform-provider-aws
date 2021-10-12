@@ -19,7 +19,7 @@ func TestAccSFNStateMachine_createUpdate(t *testing.T) {
 	var sm sfn.DescribeStateMachineOutput
 	resourceName := "aws_sfn_state_machine.test"
 	roleResourceName := "aws_iam_role.for_sfn"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -80,7 +80,7 @@ func TestAccSFNStateMachine_createUpdate(t *testing.T) {
 func TestAccSFNStateMachine_expressUpdate(t *testing.T) {
 	var sm sfn.DescribeStateMachineOutput
 	resourceName := "aws_sfn_state_machine.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -120,7 +120,7 @@ func TestAccSFNStateMachine_expressUpdate(t *testing.T) {
 func TestAccSFNStateMachine_standardUpdate(t *testing.T) {
 	var sm sfn.DescribeStateMachineOutput
 	resourceName := "aws_sfn_state_machine.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -160,7 +160,7 @@ func TestAccSFNStateMachine_standardUpdate(t *testing.T) {
 func TestAccSFNStateMachine_tags(t *testing.T) {
 	var sm sfn.DescribeStateMachineOutput
 	resourceName := "aws_sfn_state_machine.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -205,7 +205,7 @@ func TestAccSFNStateMachine_tags(t *testing.T) {
 func TestAccSFNStateMachine_tracing(t *testing.T) {
 	var sm sfn.DescribeStateMachineOutput
 	resourceName := "aws_sfn_state_machine.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -241,7 +241,7 @@ func TestAccSFNStateMachine_tracing(t *testing.T) {
 func TestAccSFNStateMachine_disappears(t *testing.T) {
 	var sm sfn.DescribeStateMachineOutput
 	resourceName := "aws_sfn_state_machine.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -264,7 +264,7 @@ func TestAccSFNStateMachine_disappears(t *testing.T) {
 func TestAccSFNStateMachine_expressLogging(t *testing.T) {
 	var sm sfn.DescribeStateMachineOutput
 	resourceName := "aws_sfn_state_machine.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

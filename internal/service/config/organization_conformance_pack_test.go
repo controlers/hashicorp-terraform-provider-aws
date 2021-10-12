@@ -18,7 +18,7 @@ import (
 
 func testAccConfigOrganizationConformancePack_basic(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_organization_conformance_pack.test"
 
 	resource.Test(t, resource.TestCase{
@@ -51,7 +51,7 @@ func testAccConfigOrganizationConformancePack_basic(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_disappears(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_organization_conformance_pack.test"
 
 	resource.Test(t, resource.TestCase{
@@ -74,7 +74,7 @@ func testAccConfigOrganizationConformancePack_disappears(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_excludedAccounts(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_organization_conformance_pack.test"
 
 	resource.Test(t, resource.TestCase{
@@ -122,7 +122,7 @@ func testAccConfigOrganizationConformancePack_excludedAccounts(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_forceNew(t *testing.T) {
 	var before, after configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-update")
 	resourceName := "aws_config_organization_conformance_pack.test"
 
@@ -163,7 +163,7 @@ func testAccConfigOrganizationConformancePack_forceNew(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_inputParameters(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	pKey := "ParamKey"
 	pValue := "ParamValue"
 	resourceName := "aws_config_organization_conformance_pack.test"
@@ -197,7 +197,7 @@ func testAccConfigOrganizationConformancePack_inputParameters(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_S3Delivery(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	bucketName := sdkacctest.RandomWithPrefix("awsconfigconforms")
 	resourceName := "aws_config_organization_conformance_pack.test"
 
@@ -227,7 +227,7 @@ func testAccConfigOrganizationConformancePack_S3Delivery(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_S3Template(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_organization_conformance_pack.test"
 
 	resource.Test(t, resource.TestCase{
@@ -260,7 +260,7 @@ func testAccConfigOrganizationConformancePack_S3Template(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_updateInputParameters(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_organization_conformance_pack.test"
 
 	resource.Test(t, resource.TestCase{
@@ -309,7 +309,7 @@ func testAccConfigOrganizationConformancePack_updateInputParameters(t *testing.T
 
 func testAccConfigOrganizationConformancePack_updateS3Delivery(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	bucketName := sdkacctest.RandomWithPrefix("awsconfigconforms")
 	updatedBucketName := fmt.Sprintf("%s-update", bucketName)
 	resourceName := "aws_config_organization_conformance_pack.test"
@@ -348,8 +348,8 @@ func testAccConfigOrganizationConformancePack_updateS3Delivery(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_updateS3Template(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_organization_conformance_pack.test"
 
 	resource.Test(t, resource.TestCase{
@@ -382,7 +382,7 @@ func testAccConfigOrganizationConformancePack_updateS3Template(t *testing.T) {
 
 func testAccConfigOrganizationConformancePack_updateTemplateBody(t *testing.T) {
 	var pack configservice.OrganizationConformancePack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_organization_conformance_pack.test"
 
 	resource.Test(t, resource.TestCase{

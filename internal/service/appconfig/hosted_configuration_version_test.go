@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccAppConfigHostedConfigurationVersion_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_hosted_configuration_version.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -49,7 +49,7 @@ func TestAccAppConfigHostedConfigurationVersion_basic(t *testing.T) {
 }
 
 func TestAccAppConfigHostedConfigurationVersion_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_hosted_configuration_version.test"
 
 	resource.ParallelTest(t, resource.TestCase{

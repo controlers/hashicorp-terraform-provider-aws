@@ -17,7 +17,7 @@ import (
 
 func TestAccGlueCatalogDatabase_full(t *testing.T) {
 	resourceName := "aws_glue_catalog_database.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -72,7 +72,7 @@ func TestAccGlueCatalogDatabase_full(t *testing.T) {
 
 func TestAccGlueCatalogDatabase_targetDatabase(t *testing.T) {
 	resourceName := "aws_glue_catalog_database.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -111,7 +111,7 @@ func TestAccGlueCatalogDatabase_targetDatabase(t *testing.T) {
 
 func TestAccGlueCatalogDatabase_disappears(t *testing.T) {
 	resourceName := "aws_glue_catalog_database.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -17,7 +17,7 @@ import (
 
 func TestAccNeptuneClusterSnapshot_basic(t *testing.T) {
 	var dbClusterSnapshot neptune.DBClusterSnapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_neptune_cluster_snapshot.test"
 
 	resource.ParallelTest(t, resource.TestCase{

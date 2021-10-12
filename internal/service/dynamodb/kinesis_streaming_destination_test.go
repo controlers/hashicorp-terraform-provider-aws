@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccDynamoDBKinesisStreamingDestination_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dynamodb_kinesis_streaming_destination.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -44,7 +44,7 @@ func TestAccDynamoDBKinesisStreamingDestination_basic(t *testing.T) {
 }
 
 func TestAccDynamoDBKinesisStreamingDestination_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dynamodb_kinesis_streaming_destination.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -66,7 +66,7 @@ func TestAccDynamoDBKinesisStreamingDestination_disappears(t *testing.T) {
 }
 
 func TestAccDynamoDBKinesisStreamingDestination_Disappears_dynamoDBTable(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_dynamodb_kinesis_streaming_destination.test"
 	tableResourceName := "aws_dynamodb_table.test"

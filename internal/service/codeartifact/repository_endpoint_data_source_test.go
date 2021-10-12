@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCodeArtifactRepositoryEndpointDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_codeartifact_repository_endpoint.test"
 
 	resource.Test(t, resource.TestCase{
@@ -52,7 +52,7 @@ func TestAccCodeArtifactRepositoryEndpointDataSource_basic(t *testing.T) {
 }
 
 func TestAccCodeArtifactRepositoryEndpointDataSource_owner(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_codeartifact_repository_endpoint.test"
 
 	resource.Test(t, resource.TestCase{

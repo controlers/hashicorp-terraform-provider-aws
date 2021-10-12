@@ -17,7 +17,7 @@ import (
 
 func TestAccEC2ManagedPrefixList_basic(t *testing.T) {
 	resourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -59,7 +59,7 @@ func TestAccEC2ManagedPrefixList_basic(t *testing.T) {
 
 func TestAccEC2ManagedPrefixList_disappears(t *testing.T) {
 	resourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -81,7 +81,7 @@ func TestAccEC2ManagedPrefixList_disappears(t *testing.T) {
 
 func TestAccEC2ManagedPrefixList_AddressFamily_ipv6(t *testing.T) {
 	resourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -108,7 +108,7 @@ func TestAccEC2ManagedPrefixList_AddressFamily_ipv6(t *testing.T) {
 
 func TestAccEC2ManagedPrefixList_Entry_cidr(t *testing.T) {
 	resourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -166,7 +166,7 @@ func TestAccEC2ManagedPrefixList_Entry_cidr(t *testing.T) {
 
 func TestAccEC2ManagedPrefixList_Entry_description(t *testing.T) {
 	resourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -219,8 +219,8 @@ func TestAccEC2ManagedPrefixList_Entry_description(t *testing.T) {
 
 func TestAccEC2ManagedPrefixList_name(t *testing.T) {
 	resourceName := "aws_ec2_managed_prefix_list.test"
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -257,7 +257,7 @@ func TestAccEC2ManagedPrefixList_name(t *testing.T) {
 
 func TestAccEC2ManagedPrefixList_tags(t *testing.T) {
 	resourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },

@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccSESConfigurationSet_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_configuration_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -50,7 +50,7 @@ func TestAccSESConfigurationSet_basic(t *testing.T) {
 }
 
 func TestAccSESConfigurationSet_sendingEnabled(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_configuration_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -96,7 +96,7 @@ func TestAccSESConfigurationSet_sendingEnabled(t *testing.T) {
 }
 
 func TestAccSESConfigurationSet_reputationMetricsEnabled(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_configuration_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -139,7 +139,7 @@ func TestAccSESConfigurationSet_reputationMetricsEnabled(t *testing.T) {
 }
 
 func TestAccSESConfigurationSet_deliveryOptions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_configuration_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -169,7 +169,7 @@ func TestAccSESConfigurationSet_deliveryOptions(t *testing.T) {
 }
 
 func TestAccSESConfigurationSet_Update_deliveryOptions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_configuration_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -225,7 +225,7 @@ func TestAccSESConfigurationSet_Update_deliveryOptions(t *testing.T) {
 }
 
 func TestAccSESConfigurationSet_emptyDeliveryOptions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_configuration_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -255,7 +255,7 @@ func TestAccSESConfigurationSet_emptyDeliveryOptions(t *testing.T) {
 }
 
 func TestAccSESConfigurationSet_Update_emptyDeliveryOptions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_configuration_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -304,7 +304,7 @@ func TestAccSESConfigurationSet_Update_emptyDeliveryOptions(t *testing.T) {
 }
 
 func TestAccSESConfigurationSet_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_configuration_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -127,7 +127,7 @@ func TestAccIAMServiceLinkedRole_basic(t *testing.T) {
 func TestAccIAMServiceLinkedRole_customSuffix(t *testing.T) {
 	resourceName := "aws_iam_service_linked_role.test"
 	awsServiceName := "autoscaling.amazonaws.com"
-	customSuffix := sdkacctest.RandomWithPrefix("tf-acc-test")
+	customSuffix := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	name := fmt.Sprintf("AWSServiceRoleForAutoScaling_%s", customSuffix)
 	path := fmt.Sprintf("/aws-service-role/%s/", awsServiceName)
 
@@ -187,7 +187,7 @@ func TestAccIAMServiceLinkedRole_CustomSuffix_diffSuppressFunc(t *testing.T) {
 func TestAccIAMServiceLinkedRole_description(t *testing.T) {
 	resourceName := "aws_iam_service_linked_role.test"
 	awsServiceName := "autoscaling.amazonaws.com"
-	customSuffix := sdkacctest.RandomWithPrefix("tf-acc-test")
+	customSuffix := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

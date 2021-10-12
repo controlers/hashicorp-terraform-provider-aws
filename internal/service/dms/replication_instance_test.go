@@ -20,7 +20,7 @@ func TestAccDMSReplicationInstance_basic(t *testing.T) {
 	// NOTE: Using larger dms.c4.large here for AWS GovCloud (US) support
 	replicationInstanceClass := "dms.c4.large"
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -59,7 +59,7 @@ func TestAccDMSReplicationInstance_basic(t *testing.T) {
 
 func TestAccDMSReplicationInstance_allocatedStorage(t *testing.T) {
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -93,7 +93,7 @@ func TestAccDMSReplicationInstance_allocatedStorage(t *testing.T) {
 
 func TestAccDMSReplicationInstance_autoMinorVersionUpgrade(t *testing.T) {
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -135,7 +135,7 @@ func TestAccDMSReplicationInstance_autoMinorVersionUpgrade(t *testing.T) {
 func TestAccDMSReplicationInstance_availabilityZone(t *testing.T) {
 	dataSourceName := "data.aws_availability_zones.available"
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -162,7 +162,7 @@ func TestAccDMSReplicationInstance_availabilityZone(t *testing.T) {
 
 func TestAccDMSReplicationInstance_engineVersion(t *testing.T) {
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	// This acceptance test is designed to test engine version upgrades.
 	// Over time, DMS replication instance engine versions are deprecated
@@ -214,7 +214,7 @@ func TestAccDMSReplicationInstance_engineVersion(t *testing.T) {
 func TestAccDMSReplicationInstance_kmsKeyARN(t *testing.T) {
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -241,7 +241,7 @@ func TestAccDMSReplicationInstance_kmsKeyARN(t *testing.T) {
 
 func TestAccDMSReplicationInstance_multiAz(t *testing.T) {
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -282,7 +282,7 @@ func TestAccDMSReplicationInstance_multiAz(t *testing.T) {
 
 func TestAccDMSReplicationInstance_preferredMaintenanceWindow(t *testing.T) {
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -316,7 +316,7 @@ func TestAccDMSReplicationInstance_preferredMaintenanceWindow(t *testing.T) {
 
 func TestAccDMSReplicationInstance_publiclyAccessible(t *testing.T) {
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -347,7 +347,7 @@ func TestAccDMSReplicationInstance_replicationInstanceClass(t *testing.T) {
 	replicationInstanceClass1 := "dms.c4.large"
 	replicationInstanceClass2 := "dms.c4.xlarge"
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -382,7 +382,7 @@ func TestAccDMSReplicationInstance_replicationInstanceClass(t *testing.T) {
 func TestAccDMSReplicationInstance_replicationSubnetGroupID(t *testing.T) {
 	dmsReplicationSubnetGroupResourceName := "aws_dms_replication_subnet_group.test"
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -409,7 +409,7 @@ func TestAccDMSReplicationInstance_replicationSubnetGroupID(t *testing.T) {
 
 func TestAccDMSReplicationInstance_tags(t *testing.T) {
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -454,7 +454,7 @@ func TestAccDMSReplicationInstance_tags(t *testing.T) {
 
 func TestAccDMSReplicationInstance_vpcSecurityGroupIDs(t *testing.T) {
 	resourceName := "aws_dms_replication_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

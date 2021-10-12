@@ -19,7 +19,7 @@ func TestAccIAMServerCertificate_basic(t *testing.T) {
 	var cert iam.ServerCertificate
 
 	resourceName := "aws_iam_server_certificate.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
@@ -58,7 +58,7 @@ func TestAccIAMServerCertificate_tags(t *testing.T) {
 	var cert iam.ServerCertificate
 
 	resourceName := "aws_iam_server_certificate.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
@@ -196,7 +196,7 @@ func TestAccIAMServerCertificate_path(t *testing.T) {
 	var cert iam.ServerCertificate
 
 	resourceName := "aws_iam_server_certificate.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")

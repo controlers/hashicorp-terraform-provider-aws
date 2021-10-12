@@ -18,7 +18,7 @@ import (
 func TestAccGlueWorkflow_basic(t *testing.T) {
 	var workflow glue.Workflow
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -48,7 +48,7 @@ func TestAccGlueWorkflow_basic(t *testing.T) {
 func TestAccGlueWorkflow_maxConcurrentRuns(t *testing.T) {
 	var workflow glue.Workflow
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -90,7 +90,7 @@ func TestAccGlueWorkflow_maxConcurrentRuns(t *testing.T) {
 func TestAccGlueWorkflow_defaultRunProperties(t *testing.T) {
 	var workflow glue.Workflow
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -120,7 +120,7 @@ func TestAccGlueWorkflow_defaultRunProperties(t *testing.T) {
 func TestAccGlueWorkflow_description(t *testing.T) {
 	var workflow glue.Workflow
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -154,7 +154,7 @@ func TestAccGlueWorkflow_description(t *testing.T) {
 
 func TestAccGlueWorkflow_tags(t *testing.T) {
 	var workflow glue.Workflow
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -200,7 +200,7 @@ func TestAccGlueWorkflow_tags(t *testing.T) {
 func TestAccGlueWorkflow_disappears(t *testing.T) {
 	var workflow glue.Workflow
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_workflow.test"
 
 	resource.ParallelTest(t, resource.TestCase{

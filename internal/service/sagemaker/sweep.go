@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/sagemaker"
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
@@ -354,7 +355,7 @@ func sweepEndpointConfigurations(region string) error {
 	var sweeperErrs *multierror.Error
 
 	req := &sagemaker.ListEndpointConfigsInput{
-		NameContains: aws.String("tf-acc-test"),
+		NameContains: aws.String(acctest.ResourcePrefix),
 	}
 	err = conn.ListEndpointConfigsPages(req, func(page *sagemaker.ListEndpointConfigsOutput, lastPage bool) bool {
 		for _, endpointConfig := range page.EndpointConfigs {
@@ -393,7 +394,7 @@ func sweepEndpoints(region string) error {
 	conn := client.(*conns.AWSClient).SageMakerConn
 
 	req := &sagemaker.ListEndpointsInput{
-		NameContains: aws.String("tf-acc-test"),
+		NameContains: aws.String(acctest.ResourcePrefix),
 	}
 	resp, err := conn.ListEndpoints(req)
 	if err != nil {
@@ -655,7 +656,7 @@ func sweepNotebookInstanceLifecycleConfiguration(region string) error {
 		}
 		for _, lifecycleConfig := range page.NotebookInstanceLifecycleConfigs {
 			name := aws.StringValue(lifecycleConfig.NotebookInstanceLifecycleConfigName)
-			if !strings.HasPrefix(name, "tf-acc-test") {
+			if !strings.HasPrefix(name, acctest.ResourcePrefix) {
 				log.Printf("[INFO] Skipping SageMaker Notebook Instance Lifecycle Configuration: %s", name)
 				continue
 			}

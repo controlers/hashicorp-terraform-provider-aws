@@ -31,7 +31,7 @@ func TestAccEC2SpotDatafeedSubscription_serial(t *testing.T) {
 func testAccSpotDatafeedSubscription_basic(t *testing.T) {
 	var subscription ec2.SpotDatafeedSubscription
 	resourceName := "aws_spot_datafeed_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckSpotDatafeedSubscription(t) },
@@ -81,7 +81,7 @@ func testAccCheckSpotDatafeedSubscriptionDisappears(subscription *ec2.SpotDatafe
 func testAccSpotDatafeedSubscription_disappears(t *testing.T) {
 	var subscription ec2.SpotDatafeedSubscription
 	resourceName := "aws_spot_datafeed_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckSpotDatafeedSubscription(t) },

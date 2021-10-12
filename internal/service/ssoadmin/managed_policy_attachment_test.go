@@ -18,7 +18,7 @@ import (
 func TestAccSSOAdminManagedPolicyAttachment_basic(t *testing.T) {
 	resourceName := "aws_ssoadmin_managed_policy_attachment.test"
 	permissionSetResourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -49,7 +49,7 @@ func TestAccSSOAdminManagedPolicyAttachment_basic(t *testing.T) {
 func TestAccSSOAdminManagedPolicyAttachment_forceNew(t *testing.T) {
 	resourceName := "aws_ssoadmin_managed_policy_attachment.test"
 	permissionSetResourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -85,7 +85,7 @@ func TestAccSSOAdminManagedPolicyAttachment_forceNew(t *testing.T) {
 
 func TestAccSSOAdminManagedPolicyAttachment_disappears(t *testing.T) {
 	resourceName := "aws_ssoadmin_managed_policy_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -108,7 +108,7 @@ func TestAccSSOAdminManagedPolicyAttachment_disappears(t *testing.T) {
 func TestAccSSOAdminManagedPolicyAttachment_Disappears_permissionSet(t *testing.T) {
 	resourceName := "aws_ssoadmin_managed_policy_attachment.test"
 	permissionSetResourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -132,7 +132,7 @@ func TestAccSSOAdminManagedPolicyAttachment_multipleManagedPolicies(t *testing.T
 	resourceName := "aws_ssoadmin_managed_policy_attachment.test"
 	otherResourceName := "aws_ssoadmin_managed_policy_attachment.other"
 	permissionSetResourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },

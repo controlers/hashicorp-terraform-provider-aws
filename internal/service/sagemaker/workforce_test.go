@@ -17,7 +17,7 @@ import (
 
 func testAccWorkforce_cognitoConfig(t *testing.T) {
 	var workforce sagemaker.Workforce
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workforce.test"
 
 	resource.Test(t, resource.TestCase{
@@ -52,7 +52,7 @@ func testAccWorkforce_cognitoConfig(t *testing.T) {
 
 func testAccWorkforce_oidcConfig(t *testing.T) {
 	var workforce sagemaker.Workforce
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workforce.test"
 	endpoint1 := "https://example.com"
 	endpoint2 := "https://test.example.com"
@@ -116,7 +116,7 @@ func testAccWorkforce_oidcConfig(t *testing.T) {
 }
 func testAccWorkforce_sourceIPConfig(t *testing.T) {
 	var workforce sagemaker.Workforce
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workforce.test"
 
 	resource.Test(t, resource.TestCase{
@@ -163,7 +163,7 @@ func testAccWorkforce_sourceIPConfig(t *testing.T) {
 
 func testAccWorkforce_disappears(t *testing.T) {
 	var workforce sagemaker.Workforce
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_workforce.test"
 
 	resource.Test(t, resource.TestCase{

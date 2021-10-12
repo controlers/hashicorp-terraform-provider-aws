@@ -18,7 +18,7 @@ import (
 func TestAccConfigConfigurationAggregator_account(t *testing.T) {
 	var ca configservice.ConfigurationAggregator
 	//Name is upper case on purpose to test https://github.com/hashicorp/terraform-provider-aws/issues/8432
-	rName := sdkacctest.RandomWithPrefix("Tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_configuration_aggregator.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -53,7 +53,7 @@ func TestAccConfigConfigurationAggregator_account(t *testing.T) {
 
 func TestAccConfigConfigurationAggregator_organization(t *testing.T) {
 	var ca configservice.ConfigurationAggregator
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_configuration_aggregator.test"
 
 	resource.Test(t, resource.TestCase{
@@ -83,7 +83,7 @@ func TestAccConfigConfigurationAggregator_organization(t *testing.T) {
 }
 
 func TestAccConfigConfigurationAggregator_switch(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_configuration_aggregator.test"
 
 	resource.Test(t, resource.TestCase{
@@ -112,7 +112,7 @@ func TestAccConfigConfigurationAggregator_switch(t *testing.T) {
 
 func TestAccConfigConfigurationAggregator_tags(t *testing.T) {
 	var ca configservice.ConfigurationAggregator
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_configuration_aggregator.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -160,7 +160,7 @@ func TestAccConfigConfigurationAggregator_tags(t *testing.T) {
 
 func TestAccConfigConfigurationAggregator_disappears(t *testing.T) {
 	var ca configservice.ConfigurationAggregator
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_configuration_aggregator.test"
 
 	resource.ParallelTest(t, resource.TestCase{

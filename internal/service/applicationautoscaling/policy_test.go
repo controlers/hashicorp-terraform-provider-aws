@@ -84,7 +84,7 @@ func TestAccApplicationAutoScalingPolicy_basic(t *testing.T) {
 	var policy applicationautoscaling.ScalingPolicy
 	appAutoscalingTargetResourceName := "aws_appautoscaling_target.test"
 	resourceName := "aws_appautoscaling_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -124,7 +124,7 @@ func TestAccApplicationAutoScalingPolicy_basic(t *testing.T) {
 func TestAccApplicationAutoScalingPolicy_disappears(t *testing.T) {
 	var policy applicationautoscaling.ScalingPolicy
 	resourceName := "aws_appautoscaling_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -291,7 +291,7 @@ func TestAccApplicationAutoScalingPolicy_DynamoDB_table(t *testing.T) {
 
 func TestAccApplicationAutoScalingPolicy_DynamoDB_index(t *testing.T) {
 	var policy applicationautoscaling.ScalingPolicy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	appautoscalingTargetResourceName := "aws_appautoscaling_target.test"
 	resourceName := "aws_appautoscaling_policy.test"
 
@@ -405,7 +405,7 @@ func TestAccApplicationAutoScalingPolicy_ResourceID_forceNew(t *testing.T) {
 	var policy applicationautoscaling.ScalingPolicy
 	appAutoscalingTargetResourceName := "aws_appautoscaling_target.test"
 	resourceName := "aws_appautoscaling_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

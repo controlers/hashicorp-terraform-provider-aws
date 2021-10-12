@@ -20,7 +20,7 @@ import (
 
 func TestAccEKSCluster_basic(t *testing.T) {
 	var cluster eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -67,7 +67,7 @@ func TestAccEKSCluster_basic(t *testing.T) {
 
 func TestAccEKSCluster_disappears(t *testing.T) {
 	var cluster eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -90,7 +90,7 @@ func TestAccEKSCluster_disappears(t *testing.T) {
 
 func TestAccEKSCluster_Encryption_create(t *testing.T) {
 	var cluster eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 	kmsKeyResourceName := "aws_kms_key.test"
 
@@ -121,7 +121,7 @@ func TestAccEKSCluster_Encryption_create(t *testing.T) {
 
 func TestAccEKSCluster_Encryption_update(t *testing.T) {
 	var cluster1, cluster2 eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 	kmsKeyResourceName := "aws_kms_key.test"
 
@@ -161,7 +161,7 @@ func TestAccEKSCluster_Encryption_update(t *testing.T) {
 // https://github.com/hashicorp/terraform-provider-aws/issues/19968.
 func TestAccEKSCluster_Encryption_versionUpdate(t *testing.T) {
 	var cluster1, cluster2 eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 	kmsKeyResourceName := "aws_kms_key.test"
 
@@ -205,7 +205,7 @@ func TestAccEKSCluster_Encryption_versionUpdate(t *testing.T) {
 
 func TestAccEKSCluster_version(t *testing.T) {
 	var cluster1, cluster2 eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -240,7 +240,7 @@ func TestAccEKSCluster_version(t *testing.T) {
 
 func TestAccEKSCluster_logging(t *testing.T) {
 	var cluster1, cluster2 eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -287,7 +287,7 @@ func TestAccEKSCluster_logging(t *testing.T) {
 
 func TestAccEKSCluster_tags(t *testing.T) {
 	var cluster1, cluster2, cluster3 eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -332,7 +332,7 @@ func TestAccEKSCluster_tags(t *testing.T) {
 
 func TestAccEKSCluster_VPC_securityGroupIDs(t *testing.T) {
 	var cluster eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -360,7 +360,7 @@ func TestAccEKSCluster_VPC_securityGroupIDs(t *testing.T) {
 
 func TestAccEKSCluster_VPC_endpointPrivateAccess(t *testing.T) {
 	var cluster1, cluster2, cluster3 eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -406,7 +406,7 @@ func TestAccEKSCluster_VPC_endpointPrivateAccess(t *testing.T) {
 
 func TestAccEKSCluster_VPC_endpointPublicAccess(t *testing.T) {
 	var cluster1, cluster2, cluster3 eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -452,7 +452,7 @@ func TestAccEKSCluster_VPC_endpointPublicAccess(t *testing.T) {
 
 func TestAccEKSCluster_VPC_publicAccessCIDRs(t *testing.T) {
 	var cluster eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -488,7 +488,7 @@ func TestAccEKSCluster_VPC_publicAccessCIDRs(t *testing.T) {
 
 func TestAccEKSCluster_Network_serviceIPv4CIDR(t *testing.T) {
 	var cluster1, cluster2 eks.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{

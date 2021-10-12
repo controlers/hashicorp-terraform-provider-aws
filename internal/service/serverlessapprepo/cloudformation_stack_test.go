@@ -25,7 +25,7 @@ import (
 
 func TestAccServerlessAppRepoCloudFormationStack_basic(t *testing.T) {
 	var stack cloudformation.Stack
-	stackName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	stackName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	appARN := testAccCloudFormationApplicationID()
 	resourceName := "aws_serverlessapplicationrepository_cloudformation_stack.postgres-rotator"
 
@@ -76,7 +76,7 @@ func TestAccServerlessAppRepoCloudFormationStack_basic(t *testing.T) {
 
 func TestAccServerlessAppRepoCloudFormationStack_disappears(t *testing.T) {
 	var stack cloudformation.Stack
-	stackName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	stackName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	appARN := testAccCloudFormationApplicationID()
 	resourceName := "aws_serverlessapplicationrepository_cloudformation_stack.postgres-rotator"
 
@@ -100,7 +100,7 @@ func TestAccServerlessAppRepoCloudFormationStack_disappears(t *testing.T) {
 
 func TestAccServerlessAppRepoCloudFormationStack_versioned(t *testing.T) {
 	var stack1, stack2, stack3 cloudformation.Stack
-	stackName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	stackName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	appARN := testAccCloudFormationApplicationID()
 	resourceName := "aws_serverlessapplicationrepository_cloudformation_stack.postgres-rotator"
 
@@ -157,7 +157,7 @@ func TestAccServerlessAppRepoCloudFormationStack_versioned(t *testing.T) {
 
 func TestAccServerlessAppRepoCloudFormationStack_paired(t *testing.T) {
 	var stack cloudformation.Stack
-	stackName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	stackName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	appARN := testAccCloudFormationApplicationID()
 	resourceName := "aws_serverlessapplicationrepository_cloudformation_stack.postgres-rotator"
 
@@ -185,7 +185,7 @@ func TestAccServerlessAppRepoCloudFormationStack_paired(t *testing.T) {
 
 func TestAccServerlessAppRepoCloudFormationStack_tags(t *testing.T) {
 	var stack cloudformation.Stack
-	stackName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	stackName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	appARN := testAccCloudFormationApplicationID()
 	resourceName := "aws_serverlessapplicationrepository_cloudformation_stack.postgres-rotator"
 
@@ -230,7 +230,7 @@ func TestAccServerlessAppRepoCloudFormationStack_tags(t *testing.T) {
 
 func TestAccServerlessAppRepoCloudFormationStack_update(t *testing.T) {
 	var stack cloudformation.Stack
-	stackName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	stackName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	initialName := sdkacctest.RandomWithPrefix("FuncName1")
 	updatedName := sdkacctest.RandomWithPrefix("FuncName2")
 	appARN := testAccCloudFormationApplicationID()

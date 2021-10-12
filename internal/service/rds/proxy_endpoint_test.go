@@ -18,7 +18,7 @@ import (
 func TestAccRDSProxyEndpoint_basic(t *testing.T) {
 	var v rds.DBProxyEndpoint
 	resourceName := "aws_db_proxy_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyEndpointPreCheck(t) },
@@ -56,7 +56,7 @@ func TestAccRDSProxyEndpoint_basic(t *testing.T) {
 func TestAccRDSProxyEndpoint_targetRole(t *testing.T) {
 	var v rds.DBProxyEndpoint
 	resourceName := "aws_db_proxy_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyEndpointPreCheck(t) },
@@ -83,7 +83,7 @@ func TestAccRDSProxyEndpoint_targetRole(t *testing.T) {
 func TestAccRDSProxyEndpoint_vpcSecurityGroupIDs(t *testing.T) {
 	var dbProxy rds.DBProxyEndpoint
 	resourceName := "aws_db_proxy_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyEndpointPreCheck(t) },
@@ -120,7 +120,7 @@ func TestAccRDSProxyEndpoint_vpcSecurityGroupIDs(t *testing.T) {
 func TestAccRDSProxyEndpoint_tags(t *testing.T) {
 	var dbProxy rds.DBProxyEndpoint
 	resourceName := "aws_db_proxy_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyEndpointPreCheck(t) },
@@ -165,7 +165,7 @@ func TestAccRDSProxyEndpoint_tags(t *testing.T) {
 func TestAccRDSProxyEndpoint_disappears(t *testing.T) {
 	var v rds.DBProxyEndpoint
 	resourceName := "aws_db_proxy_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyEndpointPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
@@ -187,7 +187,7 @@ func TestAccRDSProxyEndpoint_disappears(t *testing.T) {
 func TestAccRDSProxyEndpoint_Disappears_proxy(t *testing.T) {
 	var v rds.DBProxyEndpoint
 	resourceName := "aws_db_proxy_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyEndpointPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),

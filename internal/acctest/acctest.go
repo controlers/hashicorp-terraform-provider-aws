@@ -1932,7 +1932,7 @@ const DefaultEmailAddress = "no-reply@hashicorp.com"
 // RandomEmailAddress generates a random email address in the form
 // "tf-acc-test-<random>@<domain>"
 func RandomEmailAddress(domainName string) string {
-	return fmt.Sprintf("%s@%s", sdkacctest.RandomWithPrefix("tf-acc-test"), domainName)
+	return fmt.Sprintf("%s@%s", sdkacctest.RandomWithPrefix(ResourcePrefix), domainName)
 }
 
 func PreCheckOutpostsOutposts(t *testing.T) {

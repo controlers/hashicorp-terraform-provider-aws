@@ -21,7 +21,7 @@ func TestAccAPIGatewayV2Stage_basicWebSocket(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -67,7 +67,7 @@ func TestAccAPIGatewayV2Stage_basicHTTP(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -113,7 +113,7 @@ func TestAccAPIGatewayV2Stage_defaultHTTPStage(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -159,7 +159,7 @@ func TestAccAPIGatewayV2Stage_autoDeployHTTP(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -231,7 +231,7 @@ func TestAccAPIGatewayV2Stage_disappears(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -256,7 +256,7 @@ func TestAccAPIGatewayV2Stage_accessLogSettings(t *testing.T) {
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
 	cloudWatchResourceName := "aws_cloudwatch_log_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAPIGatewayAccountCloudWatchRoleARN(t) },
@@ -328,7 +328,7 @@ func TestAccAPIGatewayV2Stage_clientCertificateIdAndDescription(t *testing.T) {
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
 	certificateResourceName := "aws_api_gateway_client_certificate.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -398,7 +398,7 @@ func TestAccAPIGatewayV2Stage_defaultRouteSettingsWebSocket(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAPIGatewayAccountCloudWatchRoleARN(t) },
@@ -489,7 +489,7 @@ func TestAccAPIGatewayV2Stage_defaultRouteSettingsHTTP(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -581,7 +581,7 @@ func TestAccAPIGatewayV2Stage_deployment(t *testing.T) {
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
 	deploymentResourceName := "aws_apigatewayv2_deployment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -627,7 +627,7 @@ func TestAccAPIGatewayV2Stage_routeSettingsWebSocket(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAPIGatewayAccountCloudWatchRoleARN(t) },
@@ -755,7 +755,7 @@ func TestAccAPIGatewayV2Stage_routeSettingsHTTP(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -860,7 +860,7 @@ func TestAccAPIGatewayV2Stage_RouteSettingsHTTP_withRoute(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -944,7 +944,7 @@ func TestAccAPIGatewayV2Stage_stageVariables(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1013,7 +1013,7 @@ func TestAccAPIGatewayV2Stage_tags(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetStageOutput
 	resourceName := "aws_apigatewayv2_stage.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

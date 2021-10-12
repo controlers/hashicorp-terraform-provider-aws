@@ -18,8 +18,8 @@ import (
 func testAccVirtualGateway_basic(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -63,8 +63,8 @@ func testAccVirtualGateway_basic(t *testing.T) {
 func testAccVirtualGateway_disappears(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -87,8 +87,8 @@ func testAccVirtualGateway_disappears(t *testing.T) {
 func testAccVirtualGateway_BackendDefaults(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -180,8 +180,8 @@ func testAccVirtualGateway_BackendDefaults(t *testing.T) {
 func testAccVirtualGateway_BackendDefaultsCertificate(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -244,8 +244,8 @@ func testAccVirtualGateway_BackendDefaultsCertificate(t *testing.T) {
 func testAccVirtualGateway_ListenerConnectionPool(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -321,8 +321,8 @@ func testAccVirtualGateway_ListenerConnectionPool(t *testing.T) {
 func testAccVirtualGateway_ListenerHealthChecks(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -407,8 +407,8 @@ func testAccVirtualGateway_ListenerTLS(t *testing.T) {
 	acmCAResourceName := "aws_acmpca_certificate_authority.test"
 	acmCertificateResourceName := "aws_acm_certificate.test"
 
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := acctest.RandomDomainName()
 
 	resource.Test(t, resource.TestCase{
@@ -512,8 +512,8 @@ func testAccVirtualGateway_ListenerTLS(t *testing.T) {
 func testAccVirtualGateway_ListenerValidation(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -610,8 +610,8 @@ func testAccVirtualGateway_ListenerValidation(t *testing.T) {
 func testAccVirtualGateway_Logging(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -682,8 +682,8 @@ func testAccVirtualGateway_Logging(t *testing.T) {
 func testAccVirtualGateway_Tags(t *testing.T) {
 	var v appmesh.VirtualGatewayData
 	resourceName := "aws_appmesh_virtual_gateway.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },

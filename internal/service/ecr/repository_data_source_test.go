@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccECRRepositoryDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository.test"
 	dataSourceName := "data.aws_ecr_repository.test"
 
@@ -38,7 +38,7 @@ func TestAccECRRepositoryDataSource_basic(t *testing.T) {
 }
 
 func TestAccECRRepositoryDataSource_encryption(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository.test"
 	dataSourceName := "data.aws_ecr_repository.test"
 

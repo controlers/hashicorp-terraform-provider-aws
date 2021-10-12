@@ -17,7 +17,7 @@ import (
 func TestAccBackupVaultNotifications_Notification_basic(t *testing.T) {
 	var vault backup.GetBackupVaultNotificationsOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_backup_vault_notifications.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -44,7 +44,7 @@ func TestAccBackupVaultNotifications_Notification_basic(t *testing.T) {
 func TestAccBackupVaultNotifications_Notification_disappears(t *testing.T) {
 	var vault backup.GetBackupVaultNotificationsOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_backup_vault_notifications.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

@@ -16,7 +16,7 @@ import (
 
 func TestAccSESReceiptFilter_basic(t *testing.T) {
 	resourceName := "aws_ses_receipt_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t); testAccPreCheckSESReceiptRule(t) },
@@ -45,7 +45,7 @@ func TestAccSESReceiptFilter_basic(t *testing.T) {
 
 func TestAccSESReceiptFilter_disappears(t *testing.T) {
 	resourceName := "aws_ses_receipt_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t); testAccPreCheckSESReceiptRule(t) },

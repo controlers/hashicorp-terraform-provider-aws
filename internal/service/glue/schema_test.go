@@ -18,7 +18,7 @@ import (
 func TestAccGlueSchema_basic(t *testing.T) {
 	var schema glue.GetSchemaOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_schema.test"
 	registryResourceName := "aws_glue_registry.test"
 
@@ -58,7 +58,7 @@ func TestAccGlueSchema_basic(t *testing.T) {
 func TestAccGlueSchema_description(t *testing.T) {
 	var schema glue.GetSchemaOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -93,7 +93,7 @@ func TestAccGlueSchema_description(t *testing.T) {
 func TestAccGlueSchema_compatibility(t *testing.T) {
 	var schema glue.GetSchemaOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -127,7 +127,7 @@ func TestAccGlueSchema_compatibility(t *testing.T) {
 
 func TestAccGlueSchema_tags(t *testing.T) {
 	var schema glue.GetSchemaOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -173,7 +173,7 @@ func TestAccGlueSchema_tags(t *testing.T) {
 func TestAccGlueSchema_schemaDefUpdated(t *testing.T) {
 	var schema glue.GetSchemaOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -212,7 +212,7 @@ func TestAccGlueSchema_schemaDefUpdated(t *testing.T) {
 func TestAccGlueSchema_disappears(t *testing.T) {
 	var schema glue.GetSchemaOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -236,7 +236,7 @@ func TestAccGlueSchema_disappears(t *testing.T) {
 func TestAccGlueSchema_Disappears_registry(t *testing.T) {
 	var schema glue.GetSchemaOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{

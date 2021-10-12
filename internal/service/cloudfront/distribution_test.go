@@ -387,7 +387,7 @@ func TestAccCloudFrontDistribution_Origin_emptyOriginID(t *testing.T) {
 func TestAccCloudFrontDistribution_Origin_connectionAttempts(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rInt := sdkacctest.RandInt()
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService("cloudfront", t) },
@@ -418,7 +418,7 @@ func TestAccCloudFrontDistribution_Origin_connectionAttempts(t *testing.T) {
 func TestAccCloudFrontDistribution_Origin_connectionTimeout(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rInt := sdkacctest.RandInt()
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService("cloudfront", t) },
@@ -449,7 +449,7 @@ func TestAccCloudFrontDistribution_Origin_connectionTimeout(t *testing.T) {
 func TestAccCloudFrontDistribution_Origin_originShield(t *testing.T) {
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rInt := sdkacctest.RandInt()
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService("cloudfront", t) },
@@ -760,7 +760,7 @@ func TestAccCloudFrontDistribution_DefaultCacheBehavior_trustedKeyGroups(t *test
 	var distribution cloudfront.Distribution
 	resourceName := "aws_cloudfront_distribution.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -832,7 +832,7 @@ func TestAccCloudFrontDistribution_DefaultCacheBehavior_trustedSigners(t *testin
 
 func TestAccCloudFrontDistribution_DefaultCacheBehavior_realtimeLogARN(t *testing.T) {
 	var distribution cloudfront.Distribution
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudfront_distribution.test"
 	realtimeLogConfigResourceName := "aws_cloudfront_realtime_log_config.test"
 	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()
@@ -866,7 +866,7 @@ func TestAccCloudFrontDistribution_DefaultCacheBehavior_realtimeLogARN(t *testin
 
 func TestAccCloudFrontDistribution_OrderedCacheBehavior_realtimeLogARN(t *testing.T) {
 	var distribution cloudfront.Distribution
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudfront_distribution.test"
 	realtimeLogConfigResourceName := "aws_cloudfront_realtime_log_config.test"
 	retainOnDelete := testAccDistributionRetainOnDeleteFromEnv()

@@ -137,7 +137,7 @@ func TestAccAutoScalingLaunchConfiguration_withBlockDevices(t *testing.T) {
 
 func TestAccAutoScalingLaunchConfiguration_withInstanceStoreAMI(t *testing.T) {
 	var conf autoscaling.LaunchConfiguration
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -167,7 +167,7 @@ func TestAccAutoScalingLaunchConfiguration_RootBlockDevice_amiDisappears(t *test
 	var conf autoscaling.LaunchConfiguration
 	amiCopyResourceName := "aws_ami_copy.test"
 	resourceName := "aws_launch_configuration.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -197,7 +197,7 @@ func TestAccAutoScalingLaunchConfiguration_RootBlockDevice_amiDisappears(t *test
 func TestAccAutoScalingLaunchConfiguration_RootBlockDevice_volumeSize(t *testing.T) {
 	var conf autoscaling.LaunchConfiguration
 	resourceName := "aws_launch_configuration.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -440,7 +440,7 @@ func TestAccAutoScalingLaunchConfiguration_updateEBSBlockDevices(t *testing.T) {
 
 func TestAccAutoScalingLaunchConfiguration_metadataOptions(t *testing.T) {
 	var conf autoscaling.LaunchConfiguration
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{

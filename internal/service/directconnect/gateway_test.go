@@ -16,7 +16,7 @@ import (
 
 func TestAccDirectConnectGateway_basic(t *testing.T) {
 	var v directconnect.Gateway
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	resourceName := "aws_dx_gateway.test"
 
@@ -44,7 +44,7 @@ func TestAccDirectConnectGateway_basic(t *testing.T) {
 
 func TestAccDirectConnectGateway_disappears(t *testing.T) {
 	var v directconnect.Gateway
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	resourceName := "aws_dx_gateway.test"
 
@@ -68,7 +68,7 @@ func TestAccDirectConnectGateway_disappears(t *testing.T) {
 
 func TestAccDirectConnectGateway_complex(t *testing.T) {
 	var v directconnect.Gateway
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	resourceName := "aws_dx_gateway.test"
 

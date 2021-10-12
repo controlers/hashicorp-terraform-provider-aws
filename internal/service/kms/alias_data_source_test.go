@@ -34,7 +34,7 @@ func TestAccKMSAliasDataSource_awsService(t *testing.T) {
 }
 
 func TestAccKMSAliasDataSource_cmk(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	aliasResourceName := "aws_kms_alias.test"
 	datasourceAliasResourceName := "data.aws_kms_alias.test"
 

@@ -71,7 +71,7 @@ func TestAccIAMRolePolicyAttachment_basic(t *testing.T) {
 func TestAccIAMRolePolicyAttachment_disappears(t *testing.T) {
 	var attachedRolePolicies iam.ListAttachedRolePoliciesOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role_policy_attachment.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -96,7 +96,7 @@ func TestAccIAMRolePolicyAttachment_Disappears_role(t *testing.T) {
 	var attachedRolePolicies iam.ListAttachedRolePoliciesOutput
 	var role iam.Role
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_iam_role_policy_attachment.test"
 

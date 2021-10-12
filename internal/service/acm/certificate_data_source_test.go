@@ -198,7 +198,7 @@ func TestAccACMCertificateDataSource_keyTypes(t *testing.T) {
 	dataSourceName := "data.aws_acm_certificate.test"
 	key := acctest.TLSRSAPrivateKeyPEM(4096)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

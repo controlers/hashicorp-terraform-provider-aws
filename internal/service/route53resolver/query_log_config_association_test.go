@@ -16,7 +16,7 @@ import (
 
 func TestAccRoute53ResolverQueryLogConfigAssociation_basic(t *testing.T) {
 	var v route53resolver.ResolverQueryLogConfigAssociation
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_query_log_config_association.test"
 	queryLogConfigResourceName := "aws_route53_resolver_query_log_config.test"
 	vpcResourceName := "aws_vpc.test"
@@ -46,7 +46,7 @@ func TestAccRoute53ResolverQueryLogConfigAssociation_basic(t *testing.T) {
 
 func TestAccRoute53ResolverQueryLogConfigAssociation_disappears(t *testing.T) {
 	var v route53resolver.ResolverQueryLogConfigAssociation
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_query_log_config_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{

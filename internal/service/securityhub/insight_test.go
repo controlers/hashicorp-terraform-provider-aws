@@ -18,7 +18,7 @@ import (
 )
 
 func testAccInsight_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{
@@ -52,7 +52,7 @@ func testAccInsight_basic(t *testing.T) {
 }
 
 func testAccInsight_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{
@@ -74,7 +74,7 @@ func testAccInsight_disappears(t *testing.T) {
 }
 
 func testAccInsight_DateFilters(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	endDate := time.Now().Add(5 * time.Minute).Format(time.RFC1123)
@@ -126,7 +126,7 @@ func testAccInsight_DateFilters(t *testing.T) {
 }
 
 func testAccInsight_IPFilters(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{
@@ -156,7 +156,7 @@ func testAccInsight_IPFilters(t *testing.T) {
 }
 
 func testAccInsight_KeywordFilters(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{
@@ -186,7 +186,7 @@ func testAccInsight_KeywordFilters(t *testing.T) {
 }
 
 func testAccInsight_MapFilters(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{
@@ -218,7 +218,7 @@ func testAccInsight_MapFilters(t *testing.T) {
 }
 
 func testAccInsight_MultipleFilters(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{
@@ -276,7 +276,7 @@ func testAccInsight_MultipleFilters(t *testing.T) {
 }
 
 func testAccInsight_Name(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-update")
 
 	resourceName := "aws_securityhub_insight.test"
@@ -313,7 +313,7 @@ func testAccInsight_Name(t *testing.T) {
 }
 
 func testAccInsight_NumberFilters(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{
@@ -370,7 +370,7 @@ func testAccInsight_NumberFilters(t *testing.T) {
 }
 
 func testAccInsight_GroupByAttribute(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{
@@ -405,7 +405,7 @@ func testAccInsight_GroupByAttribute(t *testing.T) {
 }
 
 func testAccInsight_WorkflowStatus(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_securityhub_insight.test"
 
 	resource.Test(t, resource.TestCase{

@@ -544,7 +544,7 @@ func TestAccSSMParameter_secure(t *testing.T) {
 
 func TestAccSSMParameter_DataType_awsEC2Image(t *testing.T) {
 	var param ssm.Parameter
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_parameter.test"
 
 	resource.ParallelTest(t, resource.TestCase{

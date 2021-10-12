@@ -14,7 +14,7 @@ import (
 func TestAccGlueConnectionDataSource_basic(t *testing.T) {
 	resourceName := "aws_glue_connection.test"
 	datasourceName := "data.aws_glue_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	jdbcConnectionUrl := fmt.Sprintf("jdbc:mysql://%s/testdatabase", acctest.RandomDomainName())
 

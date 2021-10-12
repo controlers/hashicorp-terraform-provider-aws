@@ -16,7 +16,7 @@ import (
 
 func TestAccSecretsManagerSecretRotation_basic(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_rotation.test"
 	lambdaFunctionResourceName := "aws_lambda_function.test1"
 

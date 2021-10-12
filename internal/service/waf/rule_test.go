@@ -180,7 +180,7 @@ func TestAccWAFRule_geoMatchSetPredicate(t *testing.T) {
 // retry behavior when removed from a WebACL
 func TestAccWAFRule_webACL(t *testing.T) {
 	var rule waf.Rule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -22,7 +22,7 @@ import (
 func TestAccEC2LaunchTemplate_basic(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -109,7 +109,7 @@ func TestAccEC2LaunchTemplate_Name_prefix(t *testing.T) {
 func TestAccEC2LaunchTemplate_disappears(t *testing.T) {
 	var launchTemplate ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -131,7 +131,7 @@ func TestAccEC2LaunchTemplate_disappears(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_BlockDeviceMappings_ebs(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -162,7 +162,7 @@ func TestAccEC2LaunchTemplate_BlockDeviceMappings_ebs(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_BlockDeviceMappingsEBS_deleteOnTermination(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -204,7 +204,7 @@ func TestAccEC2LaunchTemplate_BlockDeviceMappingsEBS_deleteOnTermination(t *test
 
 func TestAccEC2LaunchTemplate_BlockDeviceMappingsEBS_gp3(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -237,7 +237,7 @@ func TestAccEC2LaunchTemplate_BlockDeviceMappingsEBS_gp3(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_ebsOptimized(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -292,7 +292,7 @@ func TestAccEC2LaunchTemplate_ebsOptimized(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_elasticInferenceAccelerator(t *testing.T) {
 	var template1 ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -328,7 +328,7 @@ func TestAccEC2LaunchTemplate_elasticInferenceAccelerator(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_NetworkInterfaces_deleteOnTermination(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -385,7 +385,7 @@ func TestAccEC2LaunchTemplate_NetworkInterfaces_deleteOnTermination(t *testing.T
 func TestAccEC2LaunchTemplate_data(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -430,7 +430,7 @@ func TestAccEC2LaunchTemplate_data(t *testing.T) {
 func TestAccEC2LaunchTemplate_description(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -505,7 +505,7 @@ func TestAccEC2LaunchTemplate_update(t *testing.T) {
 func TestAccEC2LaunchTemplate_tags(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -550,7 +550,7 @@ func TestAccEC2LaunchTemplate_tags(t *testing.T) {
 func TestAccEC2LaunchTemplate_CapacityReservation_preference(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -576,7 +576,7 @@ func TestAccEC2LaunchTemplate_CapacityReservation_preference(t *testing.T) {
 func TestAccEC2LaunchTemplate_CapacityReservation_target(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -602,7 +602,7 @@ func TestAccEC2LaunchTemplate_CapacityReservation_target(t *testing.T) {
 func TestAccEC2LaunchTemplate_cpuOptions(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -622,7 +622,7 @@ func TestAccEC2LaunchTemplate_cpuOptions(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_CreditSpecification_nonBurstable(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -649,7 +649,7 @@ func TestAccEC2LaunchTemplate_CreditSpecification_nonBurstable(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_CreditSpecification_t2(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -677,7 +677,7 @@ func TestAccEC2LaunchTemplate_CreditSpecification_t2(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_CreditSpecification_t3(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -706,7 +706,7 @@ func TestAccEC2LaunchTemplate_CreditSpecification_t3(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/6757
 func TestAccEC2LaunchTemplate_IAMInstanceProfile_emptyBlock(t *testing.T) {
 	var template1 ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -728,7 +728,7 @@ func TestAccEC2LaunchTemplate_IAMInstanceProfile_emptyBlock(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_networkInterface(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -760,7 +760,7 @@ func TestAccEC2LaunchTemplate_networkInterface(t *testing.T) {
 func TestAccEC2LaunchTemplate_networkInterfaceAddresses(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -790,7 +790,7 @@ func TestAccEC2LaunchTemplate_networkInterfaceAddresses(t *testing.T) {
 func TestAccEC2LaunchTemplate_networkInterfaceType(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -817,7 +817,7 @@ func TestAccEC2LaunchTemplate_networkInterfaceType(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_associatePublicIPAddress(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -867,7 +867,7 @@ func TestAccEC2LaunchTemplate_associatePublicIPAddress(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_associateCarrierIPAddress(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -918,7 +918,7 @@ func TestAccEC2LaunchTemplate_associateCarrierIPAddress(t *testing.T) {
 func TestAccEC2LaunchTemplate_Placement_hostResourceGroupARN(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -945,7 +945,7 @@ func TestAccEC2LaunchTemplate_Placement_hostResourceGroupARN(t *testing.T) {
 func TestAccEC2LaunchTemplate_Placement_partitionNum(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -978,7 +978,7 @@ func TestAccEC2LaunchTemplate_Placement_partitionNum(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_NetworkInterface_ipv6Addresses(t *testing.T) {
 	var template ec2.LaunchTemplate
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_launch_template.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1007,7 +1007,7 @@ func TestAccEC2LaunchTemplate_NetworkInterface_ipv6Addresses(t *testing.T) {
 func TestAccEC2LaunchTemplate_NetworkInterface_ipv6AddressCount(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1079,7 +1079,7 @@ func TestAccEC2LaunchTemplate_instanceMarketOptions(t *testing.T) {
 func TestAccEC2LaunchTemplate_licenseSpecification(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1106,7 +1106,7 @@ func TestAccEC2LaunchTemplate_licenseSpecification(t *testing.T) {
 func TestAccEC2LaunchTemplate_metadataOptions(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1148,7 +1148,7 @@ func TestAccEC2LaunchTemplate_metadataOptions(t *testing.T) {
 func TestAccEC2LaunchTemplate_enclaveOptions(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1189,7 +1189,7 @@ func TestAccEC2LaunchTemplate_enclaveOptions(t *testing.T) {
 func TestAccEC2LaunchTemplate_hibernation(t *testing.T) {
 	var template ec2.LaunchTemplate
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1229,7 +1229,7 @@ func TestAccEC2LaunchTemplate_hibernation(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_defaultVersion(t *testing.T) {
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Test Description 1"
 	descriptionNew := "Test Description 2"
 
@@ -1275,7 +1275,7 @@ func TestAccEC2LaunchTemplate_defaultVersion(t *testing.T) {
 
 func TestAccEC2LaunchTemplate_updateDefaultVersion(t *testing.T) {
 	resourceName := "aws_launch_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Test Description 1"
 	descriptionNew := "Test Description 2"
 

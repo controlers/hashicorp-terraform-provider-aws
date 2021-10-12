@@ -190,7 +190,7 @@ func TestDiffUsers(t *testing.T) {
 
 func TestAccMQBroker_basic(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -263,7 +263,7 @@ func TestAccMQBroker_basic(t *testing.T) {
 
 func TestAccMQBroker_throughputOptimized(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -329,7 +329,7 @@ func TestAccMQBroker_throughputOptimized(t *testing.T) {
 
 func TestAccMQBroker_allFieldsDefaultVPC(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-updated")
 	resourceName := "aws_mq_broker.test"
 
@@ -453,7 +453,7 @@ func TestAccMQBroker_allFieldsDefaultVPC(t *testing.T) {
 
 func TestAccMQBroker_allFieldsCustomVPC(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-updated")
 	resourceName := "aws_mq_broker.test"
 
@@ -577,7 +577,7 @@ func TestAccMQBroker_allFieldsCustomVPC(t *testing.T) {
 
 func TestAccMQBroker_EncryptionOptions_kmsKeyID(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_mq_broker.test"
 
@@ -612,7 +612,7 @@ func TestAccMQBroker_EncryptionOptions_kmsKeyID(t *testing.T) {
 
 func TestAccMQBroker_EncryptionOptionsUseAwsOwnedKey_disabled(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -645,7 +645,7 @@ func TestAccMQBroker_EncryptionOptionsUseAwsOwnedKey_disabled(t *testing.T) {
 
 func TestAccMQBroker_EncryptionOptionsUseAwsOwnedKey_enabled(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -678,7 +678,7 @@ func TestAccMQBroker_EncryptionOptionsUseAwsOwnedKey_enabled(t *testing.T) {
 
 func TestAccMQBroker_updateUsers(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -751,7 +751,7 @@ func TestAccMQBroker_updateUsers(t *testing.T) {
 
 func TestAccMQBroker_tags(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -801,7 +801,7 @@ func TestAccMQBroker_tags(t *testing.T) {
 
 func TestAccMQBroker_updateSecurityGroup(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -854,7 +854,7 @@ func TestAccMQBroker_updateSecurityGroup(t *testing.T) {
 
 func TestAccMQBroker_updateEngineVersion(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -893,7 +893,7 @@ func TestAccMQBroker_updateEngineVersion(t *testing.T) {
 
 func TestAccMQBroker_disappears(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -920,7 +920,7 @@ func TestAccMQBroker_disappears(t *testing.T) {
 
 func TestAccMQBroker_rabbitMQ(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -961,7 +961,7 @@ func TestAccMQBroker_rabbitMQ(t *testing.T) {
 
 func TestAccMQBroker_RabbitMQ_logs(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1002,7 +1002,7 @@ func TestAccMQBroker_RabbitMQ_logs(t *testing.T) {
 
 func TestAccMQBroker_RabbitMQValidation_auditLog(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1036,7 +1036,7 @@ func TestAccMQBroker_RabbitMQValidation_auditLog(t *testing.T) {
 
 func TestAccMQBroker_clusterRabbitMQ(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1098,7 +1098,7 @@ func TestAccMQBroker_clusterRabbitMQ(t *testing.T) {
 
 func TestAccMQBroker_ldap(t *testing.T) {
 	var broker mq.DescribeBrokerResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	resource.ParallelTest(t, resource.TestCase{

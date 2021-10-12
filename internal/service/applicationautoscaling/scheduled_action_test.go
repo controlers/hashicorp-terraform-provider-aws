@@ -18,7 +18,7 @@ import (
 
 func TestAccApplicationAutoScalingScheduledAction_dynamoDB(t *testing.T) {
 	var sa1, sa2 applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	schedule1 := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
 	schedule2 := time.Now().AddDate(0, 0, 2).Format("2006-01-02T15:04:05")
 	updatedTimezone := "Pacific/Tahiti"
@@ -74,7 +74,7 @@ func TestAccApplicationAutoScalingScheduledAction_dynamoDB(t *testing.T) {
 
 func TestAccApplicationAutoScalingScheduledAction_ecs(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ts := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
 	resourceName := "aws_appautoscaling_scheduled_action.test"
 	autoscalingTargetResourceName := "aws_appautoscaling_target.test"
@@ -107,7 +107,7 @@ func TestAccApplicationAutoScalingScheduledAction_ecs(t *testing.T) {
 
 func TestAccApplicationAutoScalingScheduledAction_emr(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ts := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
 	resourceName := "aws_appautoscaling_scheduled_action.test"
 	autoscalingTargetResourceName := "aws_appautoscaling_target.test"
@@ -142,7 +142,7 @@ func TestAccApplicationAutoScalingScheduledAction_Name_duplicate(t *testing.T) {
 	var sa1, sa2 applicationautoscaling.ScheduledAction
 	resourceName := "aws_appautoscaling_scheduled_action.test"
 	resourceName2 := "aws_appautoscaling_scheduled_action.test2"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -163,7 +163,7 @@ func TestAccApplicationAutoScalingScheduledAction_Name_duplicate(t *testing.T) {
 
 func TestAccApplicationAutoScalingScheduledAction_spotFleet(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ts := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
 	validUntil := time.Now().UTC().Add(24 * time.Hour).Format(time.RFC3339)
 	resourceName := "aws_appautoscaling_scheduled_action.test"
@@ -197,7 +197,7 @@ func TestAccApplicationAutoScalingScheduledAction_spotFleet(t *testing.T) {
 
 func TestAccApplicationAutoScalingScheduledAction_ScheduleAtExpression_timezone(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ts := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
 	at := fmt.Sprintf("at(%s)", ts)
 	timezone := "Pacific/Tahiti"
@@ -236,7 +236,7 @@ func TestAccApplicationAutoScalingScheduledAction_ScheduleAtExpression_timezone(
 
 func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_basic(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cron := "cron(0 17 * * ? *)"
 	resourceName := "aws_appautoscaling_scheduled_action.test"
 	autoscalingTargetResourceName := "aws_appautoscaling_target.test"
@@ -271,7 +271,7 @@ func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_basic(t
 
 func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_timezone(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cron := "cron(0 17 * * ? *)"
 	timezone := "Pacific/Tahiti"
 	startTime := time.Now().AddDate(0, 0, 2).Format("2006-01-02T15:04:05Z")
@@ -309,7 +309,7 @@ func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_timezon
 
 func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_startEndTimeTimezone(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cron := "cron(0 17 * * ? *)"
 	scheduleTimezone := "Etc/GMT+9"                                    // Z-09:00 (IANA and RFC3339 have inverted signs)
 	startTimezone, _ := time.LoadLocation("Antarctica/DumontDUrville") // Z+10:00
@@ -369,7 +369,7 @@ func TestAccApplicationAutoScalingScheduledAction_ScheduleCronExpression_startEn
 
 func TestAccApplicationAutoScalingScheduledAction_ScheduleRateExpression_basic(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rate := "rate(1 day)"
 	resourceName := "aws_appautoscaling_scheduled_action.test"
 	autoscalingTargetResourceName := "aws_appautoscaling_target.test"
@@ -404,7 +404,7 @@ func TestAccApplicationAutoScalingScheduledAction_ScheduleRateExpression_basic(t
 
 func TestAccApplicationAutoScalingScheduledAction_ScheduleRateExpression_timezone(t *testing.T) {
 	var sa applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rate := "rate(1 day)"
 	timezone := "Pacific/Tahiti"
 	startTime := time.Now().AddDate(0, 0, 2).Format("2006-01-02T15:04:05Z")
@@ -442,7 +442,7 @@ func TestAccApplicationAutoScalingScheduledAction_ScheduleRateExpression_timezon
 
 func TestAccApplicationAutoScalingScheduledAction_minCapacity(t *testing.T) {
 	var sa1, sa2 applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	schedule := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
 	resourceName := "aws_appautoscaling_scheduled_action.test"
 	autoscalingTargetResourceName := "aws_appautoscaling_target.test"
@@ -497,7 +497,7 @@ func TestAccApplicationAutoScalingScheduledAction_minCapacity(t *testing.T) {
 
 func TestAccApplicationAutoScalingScheduledAction_maxCapacity(t *testing.T) {
 	var sa1, sa2 applicationautoscaling.ScheduledAction
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	schedule := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05")
 	resourceName := "aws_appautoscaling_scheduled_action.test"
 	autoscalingTargetResourceName := "aws_appautoscaling_target.test"

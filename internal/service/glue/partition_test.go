@@ -15,7 +15,7 @@ import (
 )
 
 func TestAccGluePartition_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	parValue := sdkacctest.RandString(10)
 	resourceName := "aws_glue_partition.test"
 
@@ -47,7 +47,7 @@ func TestAccGluePartition_basic(t *testing.T) {
 }
 
 func TestAccGluePartition_multipleValues(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	parValue := sdkacctest.RandString(10)
 	parValue2 := sdkacctest.RandString(11)
 	resourceName := "aws_glue_partition.test"
@@ -77,7 +77,7 @@ func TestAccGluePartition_multipleValues(t *testing.T) {
 }
 
 func TestAccGluePartition_parameters(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	parValue := sdkacctest.RandString(10)
 	resourceName := "aws_glue_partition.test"
 
@@ -122,7 +122,7 @@ func TestAccGluePartition_parameters(t *testing.T) {
 }
 
 func TestAccGluePartition_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	parValue := sdkacctest.RandString(10)
 	resourceName := "aws_glue_partition.test"
 
@@ -145,7 +145,7 @@ func TestAccGluePartition_disappears(t *testing.T) {
 }
 
 func TestAccGluePartition_Disappears_table(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	parValue := sdkacctest.RandString(10)
 	resourceName := "aws_glue_partition.test"
 

@@ -13,7 +13,7 @@ import (
 func TestAccEC2EIPDataSource_filter(t *testing.T) {
 	dataSourceName := "data.aws_eip.test"
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -99,7 +99,7 @@ func TestAccEC2EIPDataSource_PublicIP_vpc(t *testing.T) {
 func TestAccEC2EIPDataSource_tags(t *testing.T) {
 	dataSourceName := "data.aws_eip.test"
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -165,7 +165,7 @@ func TestAccEC2EIPDataSource_instance(t *testing.T) {
 func TestAccEC2EIPDataSource_carrierIP(t *testing.T) {
 	dataSourceName := "data.aws_eip.test"
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },

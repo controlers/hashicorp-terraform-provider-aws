@@ -16,7 +16,7 @@ import (
 
 func TestAccCloudWatchEventsArchive_basic(t *testing.T) {
 	var v1 events.DescribeArchiveOutput
-	archiveName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	archiveName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_archive.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -48,7 +48,7 @@ func TestAccCloudWatchEventsArchive_basic(t *testing.T) {
 func TestAccCloudWatchEventsArchive_update(t *testing.T) {
 	var v1 events.DescribeArchiveOutput
 	resourceName := "aws_cloudwatch_event_archive.test"
-	archiveName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	archiveName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -77,7 +77,7 @@ func TestAccCloudWatchEventsArchive_update(t *testing.T) {
 
 func TestAccCloudWatchEventsArchive_disappears(t *testing.T) {
 	var v events.DescribeArchiveOutput
-	archiveName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	archiveName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_archive.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -149,7 +149,7 @@ func testAccCheckCloudWatchEventArchiveExists(n string, v *events.DescribeArchiv
 
 func TestAccCloudWatchEventsArchive_retentionSetOnCreation(t *testing.T) {
 	var v1 events.DescribeArchiveOutput
-	archiveName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	archiveName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_archive.test"
 
 	resource.ParallelTest(t, resource.TestCase{

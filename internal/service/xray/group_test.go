@@ -19,7 +19,7 @@ import (
 func TestAccXRayGroup_basic(t *testing.T) {
 	var Group xray.Group
 	resourceName := "aws_xray_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -57,7 +57,7 @@ func TestAccXRayGroup_basic(t *testing.T) {
 func TestAccXRayGroup_tags(t *testing.T) {
 	var Group xray.Group
 	resourceName := "aws_xray_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -101,7 +101,7 @@ func TestAccXRayGroup_tags(t *testing.T) {
 func TestAccXRayGroup_disappears(t *testing.T) {
 	var Group xray.Group
 	resourceName := "aws_xray_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -17,7 +17,7 @@ import (
 
 func TestAccWAFSQLInjectionMatchSet_basic(t *testing.T) {
 	var v waf.SqlInjectionMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_sql_injection_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccWAFSQLInjectionMatchSet_basic(t *testing.T) {
 
 func TestAccWAFSQLInjectionMatchSet_changeNameForceNew(t *testing.T) {
 	var before, after waf.SqlInjectionMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameNew := sdkacctest.RandomWithPrefix("tf-acc-test-new")
 	resourceName := "aws_waf_sql_injection_match_set.test"
 
@@ -88,7 +88,7 @@ func TestAccWAFSQLInjectionMatchSet_changeNameForceNew(t *testing.T) {
 
 func TestAccWAFSQLInjectionMatchSet_disappears(t *testing.T) {
 	var v waf.SqlInjectionMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_sql_injection_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -111,7 +111,7 @@ func TestAccWAFSQLInjectionMatchSet_disappears(t *testing.T) {
 
 func TestAccWAFSQLInjectionMatchSet_changeTuples(t *testing.T) {
 	var before, after waf.SqlInjectionMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_sql_injection_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -153,7 +153,7 @@ func TestAccWAFSQLInjectionMatchSet_changeTuples(t *testing.T) {
 
 func TestAccWAFSQLInjectionMatchSet_noTuples(t *testing.T) {
 	var sqlSet waf.SqlInjectionMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_sql_injection_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{

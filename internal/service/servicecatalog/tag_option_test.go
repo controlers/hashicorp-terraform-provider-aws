@@ -19,7 +19,7 @@ import (
 
 func TestAccServiceCatalogTagOption_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_tag_option.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -48,7 +48,7 @@ func TestAccServiceCatalogTagOption_basic(t *testing.T) {
 
 func TestAccServiceCatalogTagOption_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_tag_option.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -70,8 +70,8 @@ func TestAccServiceCatalogTagOption_disappears(t *testing.T) {
 
 func TestAccServiceCatalogTagOption_update(t *testing.T) {
 	resourceName := "aws_servicecatalog_tag_option.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	// UpdateTagOption() is very particular about what it receives. Only fields that change should
 	// be included or it will throw servicecatalog.ErrCodeDuplicateResourceException, "already exists"
@@ -133,7 +133,7 @@ func TestAccServiceCatalogTagOption_update(t *testing.T) {
 
 func TestAccServiceCatalogTagOption_notActive(t *testing.T) {
 	resourceName := "aws_servicecatalog_tag_option.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

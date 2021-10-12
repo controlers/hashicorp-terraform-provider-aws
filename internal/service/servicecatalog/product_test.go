@@ -21,7 +21,7 @@ import (
 func TestAccServiceCatalogProduct_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_product.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -73,7 +73,7 @@ func TestAccServiceCatalogProduct_basic(t *testing.T) {
 func TestAccServiceCatalogProduct_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_product.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -97,7 +97,7 @@ func TestAccServiceCatalogProduct_disappears(t *testing.T) {
 func TestAccServiceCatalogProduct_update(t *testing.T) {
 	resourceName := "aws_servicecatalog_product.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -133,7 +133,7 @@ func TestAccServiceCatalogProduct_update(t *testing.T) {
 func TestAccServiceCatalogProduct_updateTags(t *testing.T) {
 	resourceName := "aws_servicecatalog_product.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -166,7 +166,7 @@ func TestAccServiceCatalogProduct_updateTags(t *testing.T) {
 func TestAccServiceCatalogProduct_physicalID(t *testing.T) {
 	resourceName := "aws_servicecatalog_product.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{

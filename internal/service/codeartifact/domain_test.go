@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccCodeArtifactDomain_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codeartifact_domain.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -50,7 +50,7 @@ func TestAccCodeArtifactDomain_basic(t *testing.T) {
 }
 
 func TestAccCodeArtifactDomain_defaultEncryptionKey(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codeartifact_domain.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -82,7 +82,7 @@ func TestAccCodeArtifactDomain_defaultEncryptionKey(t *testing.T) {
 }
 
 func TestAccCodeArtifactDomain_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codeartifact_domain.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -125,7 +125,7 @@ func TestAccCodeArtifactDomain_tags(t *testing.T) {
 }
 
 func TestAccCodeArtifactDomain_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codeartifact_domain.test"
 
 	resource.ParallelTest(t, resource.TestCase{

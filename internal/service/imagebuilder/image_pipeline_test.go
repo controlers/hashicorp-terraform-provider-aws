@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccImageBuilderImagePipeline_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	imageRecipeResourceName := "aws_imagebuilder_image_recipe.test"
 	infrastructureConfigurationResourceName := "aws_imagebuilder_infrastructure_configuration.test"
 	resourceName := "aws_imagebuilder_image_pipeline.test"
@@ -61,7 +61,7 @@ func TestAccImageBuilderImagePipeline_basic(t *testing.T) {
 }
 
 func TestAccImageBuilderImagePipeline_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -83,7 +83,7 @@ func TestAccImageBuilderImagePipeline_disappears(t *testing.T) {
 }
 
 func TestAccImageBuilderImagePipeline_description(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -116,7 +116,7 @@ func TestAccImageBuilderImagePipeline_description(t *testing.T) {
 }
 
 func TestAccImageBuilderImagePipeline_distributionARN(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	distributionConfigurationResourceName := "aws_imagebuilder_distribution_configuration.test"
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
@@ -150,7 +150,7 @@ func TestAccImageBuilderImagePipeline_distributionARN(t *testing.T) {
 }
 
 func TestAccImageBuilderImagePipeline_enhancedImageMetadataEnabled(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -183,7 +183,7 @@ func TestAccImageBuilderImagePipeline_enhancedImageMetadataEnabled(t *testing.T)
 }
 
 func TestAccImageBuilderImagePipeline_imageRecipeARN(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	imageRecipeResourceName := "aws_imagebuilder_image_recipe.test"
 	imageRecipeResourceName2 := "aws_imagebuilder_image_recipe.test2"
 	resourceName := "aws_imagebuilder_image_pipeline.test"
@@ -218,7 +218,7 @@ func TestAccImageBuilderImagePipeline_imageRecipeARN(t *testing.T) {
 }
 
 func TestAccImageBuilderImagePipeline_ImageTests_imageTestsEnabled(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -253,7 +253,7 @@ func TestAccImageBuilderImagePipeline_ImageTests_imageTestsEnabled(t *testing.T)
 }
 
 func TestAccImageBuilderImagePipeline_ImageTests_timeoutMinutes(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -288,7 +288,7 @@ func TestAccImageBuilderImagePipeline_ImageTests_timeoutMinutes(t *testing.T) {
 }
 
 func TestAccImageBuilderImagePipeline_infrastructureARN(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	infrastructureConfigurationResourceName := "aws_imagebuilder_infrastructure_configuration.test"
 	infrastructureConfigurationResourceName2 := "aws_imagebuilder_infrastructure_configuration.test2"
 	resourceName := "aws_imagebuilder_image_pipeline.test"
@@ -323,7 +323,7 @@ func TestAccImageBuilderImagePipeline_infrastructureARN(t *testing.T) {
 }
 
 func TestAccImageBuilderImagePipeline_Schedule_pipelineExecutionStartCondition(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -358,7 +358,7 @@ func TestAccImageBuilderImagePipeline_Schedule_pipelineExecutionStartCondition(t
 }
 
 func TestAccImageBuilderImagePipeline_Schedule_scheduleExpression(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -393,7 +393,7 @@ func TestAccImageBuilderImagePipeline_Schedule_scheduleExpression(t *testing.T) 
 }
 
 func TestAccImageBuilderImagePipeline_status(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -426,7 +426,7 @@ func TestAccImageBuilderImagePipeline_status(t *testing.T) {
 }
 
 func TestAccImageBuilderImagePipeline_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -13,7 +13,7 @@ import (
 )
 
 func TestAccDynamoDBTag_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dynamodb_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -40,7 +40,7 @@ func TestAccDynamoDBTag_basic(t *testing.T) {
 }
 
 func TestAccDynamoDBTag_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dynamodb_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -64,7 +64,7 @@ func TestAccDynamoDBTag_disappears(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/13725
 func TestAccDynamoDBTag_ResourceARN_tableReplica(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dynamodb_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -93,7 +93,7 @@ func TestAccDynamoDBTag_ResourceARN_tableReplica(t *testing.T) {
 }
 
 func TestAccDynamoDBTag_value(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dynamodb_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{

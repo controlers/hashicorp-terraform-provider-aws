@@ -18,7 +18,7 @@ import (
 )
 
 func TestAccS3ControlBucketLifecycleConfiguration_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_basic(t *testing.T) {
 }
 
 func TestAccS3ControlBucketLifecycleConfiguration_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -73,7 +73,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_disappears(t *testing.T) {
 }
 
 func TestAccS3ControlBucketLifecycleConfiguration_RuleAbortIncompleteMultipartUpload_daysAfterInitiation(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -114,7 +114,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_RuleAbortIncompleteMultipartUp
 }
 
 func TestAccS3ControlBucketLifecycleConfiguration_RuleExpiration_date(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 	date1 := time.Now().AddDate(0, 0, 1).Format("2006-01-02")
 	date2 := time.Now().AddDate(0, 0, 2).Format("2006-01-02")
@@ -157,7 +157,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_RuleExpiration_date(t *testing
 }
 
 func TestAccS3ControlBucketLifecycleConfiguration_RuleExpiration_days(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -199,7 +199,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_RuleExpiration_days(t *testing
 
 func TestAccS3ControlBucketLifecycleConfiguration_RuleExpiration_expiredObjectDeleteMarker(t *testing.T) {
 	acctest.Skip(t, "S3 on Outposts does not error or save it in the API when receiving this parameter")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -240,7 +240,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_RuleExpiration_expiredObjectDe
 }
 
 func TestAccS3ControlBucketLifecycleConfiguration_RuleFilter_prefix(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -281,7 +281,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_RuleFilter_prefix(t *testing.T
 }
 
 func TestAccS3ControlBucketLifecycleConfiguration_RuleFilter_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -340,7 +340,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_RuleFilter_tags(t *testing.T) 
 }
 
 func TestAccS3ControlBucketLifecycleConfiguration_Rule_id(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -379,7 +379,7 @@ func TestAccS3ControlBucketLifecycleConfiguration_Rule_id(t *testing.T) {
 }
 
 func TestAccS3ControlBucketLifecycleConfiguration_Rule_status(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{

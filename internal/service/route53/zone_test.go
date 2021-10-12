@@ -332,7 +332,7 @@ func TestAccRoute53Zone_tags(t *testing.T) {
 func TestAccRoute53Zone_VPC_single(t *testing.T) {
 	var zone route53.GetHostedZoneOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_zone.test"
 	vpcResourceName := "aws_vpc.test1"
 	zoneName := acctest.RandomDomainName()
@@ -364,7 +364,7 @@ func TestAccRoute53Zone_VPC_single(t *testing.T) {
 func TestAccRoute53Zone_VPC_multiple(t *testing.T) {
 	var zone route53.GetHostedZoneOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_zone.test"
 	vpcResourceName1 := "aws_vpc.test1"
 	vpcResourceName2 := "aws_vpc.test2"
@@ -398,7 +398,7 @@ func TestAccRoute53Zone_VPC_multiple(t *testing.T) {
 func TestAccRoute53Zone_VPC_updates(t *testing.T) {
 	var zone route53.GetHostedZoneOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_zone.test"
 	vpcResourceName1 := "aws_vpc.test1"
 	vpcResourceName2 := "aws_vpc.test2"

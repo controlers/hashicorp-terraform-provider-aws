@@ -15,7 +15,7 @@ import (
 )
 
 func testAccCluster_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoverycontrolconfig_cluster.test"
 
 	resource.Test(t, resource.TestCase{
@@ -44,7 +44,7 @@ func testAccCluster_basic(t *testing.T) {
 }
 
 func testAccCluster_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoverycontrolconfig_cluster.test"
 
 	resource.Test(t, resource.TestCase{

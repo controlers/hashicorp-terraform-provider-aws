@@ -12,11 +12,11 @@ func TestAccCloudWatchEventsConnectionDataSource_Connection_basic(t *testing.T) 
 	dataSourceName := "data.aws_cloudwatch_event_connection.test"
 	resourceName := "aws_cloudwatch_event_connection.api_key"
 
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	authorizationType := "API_KEY"
-	description := sdkacctest.RandomWithPrefix("tf-acc-test")
-	key := sdkacctest.RandomWithPrefix("tf-acc-test")
-	value := sdkacctest.RandomWithPrefix("tf-acc-test")
+	description := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	key := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	value := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

@@ -17,7 +17,7 @@ import (
 
 func TestAccCodeStarNotificationsNotificationRule_basic(t *testing.T) {
 	resourceName := "aws_codestarnotifications_notification_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarnotifications.EndpointsID, t) },
@@ -48,7 +48,7 @@ func TestAccCodeStarNotificationsNotificationRule_basic(t *testing.T) {
 
 func TestAccCodeStarNotificationsNotificationRule_status(t *testing.T) {
 	resourceName := "aws_codestarnotifications_notification_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarnotifications.EndpointsID, t) },
@@ -85,7 +85,7 @@ func TestAccCodeStarNotificationsNotificationRule_status(t *testing.T) {
 
 func TestAccCodeStarNotificationsNotificationRule_targets(t *testing.T) {
 	resourceName := "aws_codestarnotifications_notification_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarnotifications.EndpointsID, t) },
@@ -122,7 +122,7 @@ func TestAccCodeStarNotificationsNotificationRule_targets(t *testing.T) {
 
 func TestAccCodeStarNotificationsNotificationRule_tags(t *testing.T) {
 	resourceName := "aws_codestarnotifications_notification_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarnotifications.EndpointsID, t) },
@@ -165,7 +165,7 @@ func TestAccCodeStarNotificationsNotificationRule_tags(t *testing.T) {
 
 func TestAccCodeStarNotificationsNotificationRule_eventTypeIDs(t *testing.T) {
 	resourceName := "aws_codestarnotifications_notification_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarnotifications.EndpointsID, t) },

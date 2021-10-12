@@ -22,7 +22,7 @@ func TestAccRAMResourceShareAccepter_basic(t *testing.T) {
 	var providers []*schema.Provider
 	resourceName := "aws_ram_resource_share_accepter.test"
 	principalAssociationResourceName := "aws_ram_principal_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -60,7 +60,7 @@ func TestAccRAMResourceShareAccepter_basic(t *testing.T) {
 func TestAccRAMResourceShareAccepter_disappears(t *testing.T) {
 	var providers []*schema.Provider
 	resourceName := "aws_ram_resource_share_accepter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -87,7 +87,7 @@ func TestAccRAMResourceShareAccepter_resourceAssociation(t *testing.T) {
 	var providers []*schema.Provider
 	resourceName := "aws_ram_resource_share_accepter.test"
 	principalAssociationResourceName := "aws_ram_principal_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {

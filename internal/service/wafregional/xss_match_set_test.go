@@ -18,7 +18,7 @@ import (
 
 func TestAccWAFRegionalXSSMatchSet_basic(t *testing.T) {
 	var v waf.XssMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafregional_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -58,8 +58,8 @@ func TestAccWAFRegionalXSSMatchSet_basic(t *testing.T) {
 
 func TestAccWAFRegionalXSSMatchSet_changeNameForceNew(t *testing.T) {
 	var before, after waf.XssMatchSet
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafregional_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -95,7 +95,7 @@ func TestAccWAFRegionalXSSMatchSet_changeNameForceNew(t *testing.T) {
 
 func TestAccWAFRegionalXSSMatchSet_disappears(t *testing.T) {
 	var v waf.XssMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafregional_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -118,7 +118,7 @@ func TestAccWAFRegionalXSSMatchSet_disappears(t *testing.T) {
 
 func TestAccWAFRegionalXSSMatchSet_changeTuples(t *testing.T) {
 	var before, after waf.XssMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafregional_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -178,7 +178,7 @@ func TestAccWAFRegionalXSSMatchSet_changeTuples(t *testing.T) {
 
 func TestAccWAFRegionalXSSMatchSet_noTuples(t *testing.T) {
 	var ipset waf.XssMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafregional_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{

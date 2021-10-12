@@ -18,7 +18,7 @@ import (
 func TestAccOpsWorksApplication_basic(t *testing.T) {
 	var opsapp opsworks.App
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_opsworks_application.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -18,7 +18,7 @@ import (
 
 func TestAccECRRepository_basic(t *testing.T) {
 	var v ecr.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccECRRepository_basic(t *testing.T) {
 
 func TestAccECRRepository_tags(t *testing.T) {
 	var v1, v2 ecr.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -84,7 +84,7 @@ func TestAccECRRepository_tags(t *testing.T) {
 
 func TestAccECRRepository_immutability(t *testing.T) {
 	var v ecr.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -112,7 +112,7 @@ func TestAccECRRepository_immutability(t *testing.T) {
 
 func TestAccECRRepository_Image_scanning(t *testing.T) {
 	var v1, v2 ecr.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -162,7 +162,7 @@ func TestAccECRRepository_Image_scanning(t *testing.T) {
 
 func TestAccECRRepository_Encryption_kms(t *testing.T) {
 	var v1, v2 ecr.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository.test"
 	kmsKeyDataSourceName := "aws_kms_key.test"
 
@@ -208,7 +208,7 @@ func TestAccECRRepository_Encryption_kms(t *testing.T) {
 
 func TestAccECRRepository_Encryption_aes256(t *testing.T) {
 	var v1, v2 ecr.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{

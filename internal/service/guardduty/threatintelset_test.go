@@ -60,7 +60,7 @@ func testAccThreatintelset_basic(t *testing.T) {
 }
 
 func testAccThreatintelset_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_guardduty_threatintelset.test"
 
 	resource.Test(t, resource.TestCase{

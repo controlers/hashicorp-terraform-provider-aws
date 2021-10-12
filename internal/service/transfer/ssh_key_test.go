@@ -17,7 +17,7 @@ import (
 
 func testAccSSHKey_basic(t *testing.T) {
 	var conf transfer.SshPublicKey
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_transfer_ssh_key.test"
 

@@ -18,7 +18,7 @@ import (
 )
 
 func testAccPolicyAttachment_Account(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy_attachment.test"
 	policyIdResourceName := "aws_organizations_policy.test"
 	targetIdResourceName := "aws_organizations_organization.test"
@@ -58,7 +58,7 @@ func testAccPolicyAttachment_Account(t *testing.T) {
 }
 
 func testAccPolicyAttachment_OrganizationalUnit(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy_attachment.test"
 	policyIdResourceName := "aws_organizations_policy.test"
 	targetIdResourceName := "aws_organizations_organizational_unit.test"
@@ -87,7 +87,7 @@ func testAccPolicyAttachment_OrganizationalUnit(t *testing.T) {
 }
 
 func testAccPolicyAttachment_Root(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy_attachment.test"
 	policyIdResourceName := "aws_organizations_policy.test"
 	targetIdResourceName := "aws_organizations_organization.test"

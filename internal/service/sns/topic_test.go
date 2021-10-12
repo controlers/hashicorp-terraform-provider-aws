@@ -63,7 +63,7 @@ func TestAccSNSTopic_basic(t *testing.T) {
 func TestAccSNSTopic_name(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -289,7 +289,7 @@ func TestAccSNSTopic_NameGenerated_fifoTopic(t *testing.T) {
 func TestAccSNSTopic_Name_fifoTopic(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test") + tfsns.FIFOTopicNameSuffix
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix) + tfsns.FIFOTopicNameSuffix
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -398,7 +398,7 @@ func TestAccSNSTopic_fifoExpectContentBasedDeduplicationError(t *testing.T) {
 func TestAccSNSTopic_encryption(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

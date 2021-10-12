@@ -20,7 +20,7 @@ import (
 
 func TestAccS3BucketAnalyticsConfiguration_basic(t *testing.T) {
 	var ac s3.AnalyticsConfiguration
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_analytics_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -50,7 +50,7 @@ func TestAccS3BucketAnalyticsConfiguration_basic(t *testing.T) {
 
 func TestAccS3BucketAnalyticsConfiguration_removed(t *testing.T) {
 	var ac s3.AnalyticsConfiguration
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_analytics_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -77,10 +77,10 @@ func TestAccS3BucketAnalyticsConfiguration_removed(t *testing.T) {
 
 func TestAccS3BucketAnalyticsConfiguration_updateBasic(t *testing.T) {
 	var ac s3.AnalyticsConfiguration
-	originalACName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	originalBucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	updatedACName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	updatedBucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	originalACName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	originalBucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	updatedACName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	updatedBucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_analytics_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -131,7 +131,7 @@ func TestAccS3BucketAnalyticsConfiguration_updateBasic(t *testing.T) {
 }
 
 func TestAccS3BucketAnalyticsConfiguration_WithFilter_empty(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -368,7 +368,7 @@ func TestAccS3BucketAnalyticsConfiguration_WithFilter_remove(t *testing.T) {
 }
 
 func TestAccS3BucketAnalyticsConfiguration_WithStorageClassAnalysis_empty(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -388,7 +388,7 @@ func TestAccS3BucketAnalyticsConfiguration_WithStorageClassAnalysis_default(t *t
 	var ac s3.AnalyticsConfiguration
 	resourceName := "aws_s3_bucket_analytics_configuration.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

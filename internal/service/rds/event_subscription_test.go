@@ -17,7 +17,7 @@ import (
 
 func TestAccRDSEventSubscription_basic(t *testing.T) {
 	var v rds.EventSubscription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_event_subscription.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -52,7 +52,7 @@ func TestAccRDSEventSubscription_basic(t *testing.T) {
 
 func TestAccRDSEventSubscription_disappears(t *testing.T) {
 	var eventSubscription rds.EventSubscription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_event_subscription.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -75,7 +75,7 @@ func TestAccRDSEventSubscription_disappears(t *testing.T) {
 
 func TestAccRDSEventSubscription_Name_generated(t *testing.T) {
 	var v rds.EventSubscription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_event_subscription.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -103,7 +103,7 @@ func TestAccRDSEventSubscription_Name_generated(t *testing.T) {
 
 func TestAccRDSEventSubscription_namePrefix(t *testing.T) {
 	var v rds.EventSubscription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_event_subscription.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -131,7 +131,7 @@ func TestAccRDSEventSubscription_namePrefix(t *testing.T) {
 
 func TestAccRDSEventSubscription_tags(t *testing.T) {
 	var eventSubscription rds.EventSubscription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_event_subscription.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -176,7 +176,7 @@ func TestAccRDSEventSubscription_tags(t *testing.T) {
 
 func TestAccRDSEventSubscription_categories(t *testing.T) {
 	var v rds.EventSubscription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_event_subscription.test"
 	snsTopicResourceName := "aws_sns_topic.test"
 
@@ -235,7 +235,7 @@ func TestAccRDSEventSubscription_categories(t *testing.T) {
 
 func TestAccRDSEventSubscription_sourceIDs(t *testing.T) {
 	var v rds.EventSubscription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_event_subscription.test"
 	paramGroup1ResourceName := "aws_db_parameter_group.test1"
 	paramGroup2ResourceName := "aws_db_parameter_group.test2"

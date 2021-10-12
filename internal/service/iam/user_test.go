@@ -61,7 +61,7 @@ func TestAccIAMUser_basic(t *testing.T) {
 func TestAccIAMUser_disappears(t *testing.T) {
 	var user iam.GetUserOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_user.user"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -85,7 +85,7 @@ func TestAccIAMUser_disappears(t *testing.T) {
 func TestAccIAMUser_ForceDestroy_accessKey(t *testing.T) {
 	var user iam.GetUserOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_user.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -115,7 +115,7 @@ func TestAccIAMUser_ForceDestroy_accessKey(t *testing.T) {
 func TestAccIAMUser_ForceDestroy_loginProfile(t *testing.T) {
 	var user iam.GetUserOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_user.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -145,7 +145,7 @@ func TestAccIAMUser_ForceDestroy_loginProfile(t *testing.T) {
 func TestAccIAMUser_ForceDestroy_mfaDevice(t *testing.T) {
 	var user iam.GetUserOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_user.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -175,7 +175,7 @@ func TestAccIAMUser_ForceDestroy_mfaDevice(t *testing.T) {
 func TestAccIAMUser_ForceDestroy_sshKey(t *testing.T) {
 	var user iam.GetUserOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_user.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -204,7 +204,7 @@ func TestAccIAMUser_ForceDestroy_sshKey(t *testing.T) {
 func TestAccIAMUser_ForceDestroy_signingCertificate(t *testing.T) {
 	var user iam.GetUserOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_user.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -308,7 +308,7 @@ func TestAccIAMUser_pathChange(t *testing.T) {
 func TestAccIAMUser_permissionsBoundary(t *testing.T) {
 	var user iam.GetUserOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_user.user"
 
 	permissionsBoundary1 := fmt.Sprintf("arn:%s:iam::aws:policy/AdministratorAccess", acctest.Partition())
@@ -386,7 +386,7 @@ func TestAccIAMUser_permissionsBoundary(t *testing.T) {
 func TestAccIAMUser_tags(t *testing.T) {
 	var user iam.GetUserOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_user.test"
 
 	resource.ParallelTest(t, resource.TestCase{

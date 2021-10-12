@@ -14,7 +14,7 @@ import (
 )
 
 func TestAccECSTag_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -41,7 +41,7 @@ func TestAccECSTag_basic(t *testing.T) {
 }
 
 func TestAccECSTag_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -64,7 +64,7 @@ func TestAccECSTag_disappears(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11951
 func TestAccECSTag_ResourceARN_batchComputeEnvironment(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -89,7 +89,7 @@ func TestAccECSTag_ResourceARN_batchComputeEnvironment(t *testing.T) {
 }
 
 func TestAccECSTag_value(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_tag.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -19,7 +19,7 @@ import (
 
 func TestAccCloudFormationStackSet_basic(t *testing.T) {
 	var stackSet1 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_cloudformation_stack_set.test"
 
@@ -61,7 +61,7 @@ func TestAccCloudFormationStackSet_basic(t *testing.T) {
 
 func TestAccCloudFormationStackSet_disappears(t *testing.T) {
 	var stackSet1 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -84,7 +84,7 @@ func TestAccCloudFormationStackSet_disappears(t *testing.T) {
 
 func TestAccCloudFormationStackSet_administrationRoleARN(t *testing.T) {
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamRoleResourceName1 := "aws_iam_role.test1"
 	iamRoleResourceName2 := "aws_iam_role.test2"
 	resourceName := "aws_cloudformation_stack_set.test"
@@ -124,7 +124,7 @@ func TestAccCloudFormationStackSet_administrationRoleARN(t *testing.T) {
 
 func TestAccCloudFormationStackSet_description(t *testing.T) {
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -162,7 +162,7 @@ func TestAccCloudFormationStackSet_description(t *testing.T) {
 
 func TestAccCloudFormationStackSet_executionRoleName(t *testing.T) {
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -200,8 +200,8 @@ func TestAccCloudFormationStackSet_executionRoleName(t *testing.T) {
 
 func TestAccCloudFormationStackSet_name(t *testing.T) {
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -255,7 +255,7 @@ func TestAccCloudFormationStackSet_name(t *testing.T) {
 
 func TestAccCloudFormationStackSet_parameters(t *testing.T) {
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -315,7 +315,7 @@ func TestAccCloudFormationStackSet_Parameters_default(t *testing.T) {
 	//  * https://github.com/hashicorp/terraform/issues/18863
 
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -367,7 +367,7 @@ func TestAccCloudFormationStackSet_Parameters_noEcho(t *testing.T) {
 	//  * https://github.com/hashicorp/terraform-provider-aws/issues/55
 
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -409,7 +409,7 @@ func TestAccCloudFormationStackSet_PermissionModel_serviceManaged(t *testing.T) 
 	acctest.Skip(t, "API does not support enabling Organizations access (in particular, creating the Stack Sets IAM Service-Linked Role)")
 
 	var stackSet1 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -448,7 +448,7 @@ func TestAccCloudFormationStackSet_PermissionModel_serviceManaged(t *testing.T) 
 
 func TestAccCloudFormationStackSet_tags(t *testing.T) {
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -504,7 +504,7 @@ func TestAccCloudFormationStackSet_tags(t *testing.T) {
 
 func TestAccCloudFormationStackSet_templateBody(t *testing.T) {
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -542,7 +542,7 @@ func TestAccCloudFormationStackSet_templateBody(t *testing.T) {
 
 func TestAccCloudFormationStackSet_templateURL(t *testing.T) {
 	var stackSet1, stackSet2 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{

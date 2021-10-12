@@ -15,7 +15,7 @@ import (
 )
 
 func TestAccElastiCacheSecurityGroup_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elasticache_security_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

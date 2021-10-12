@@ -136,7 +136,7 @@ func TestAccLambdaFunction_unpublishedCodeUpdate(t *testing.T) {
 func TestAccLambdaFunction_disappears(t *testing.T) {
 	var function lambda.GetFunctionOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -408,7 +408,7 @@ func TestAccLambdaFunction_envVariables(t *testing.T) {
 
 func TestAccLambdaFunction_EnvironmentVariables_noValue(t *testing.T) {
 	var conf lambda.GetFunctionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1178,7 +1178,7 @@ func TestAccLambdaFunction_tracing(t *testing.T) {
 func TestAccLambdaFunction_KMSKeyARN_noEnvironmentVariables(t *testing.T) {
 	var function1 lambda.GetFunctionOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1332,7 +1332,7 @@ func TestAccLambdaFunction_vpc(t *testing.T) {
 func TestAccLambdaFunction_vpcRemoval(t *testing.T) {
 	var conf lambda.GetFunctionOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1539,7 +1539,7 @@ func TestAccLambdaFunction_VPCPublishHas_changes(t *testing.T) {
 func TestAccLambdaFunction_VPC_properIAMDependencies(t *testing.T) {
 	var function lambda.GetFunctionOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function.test"
 	vpcResourceName := "aws_vpc.test"
 
@@ -1945,7 +1945,7 @@ func TestAccLambdaFunction_tags(t *testing.T) {
 func TestAccLambdaFunction_runtimes(t *testing.T) {
 	var v lambda.GetFunctionOutput
 	resourceName := "aws_lambda_function.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	steps := []resource.TestStep{
 		{

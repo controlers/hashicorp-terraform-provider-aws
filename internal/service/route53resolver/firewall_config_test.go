@@ -18,7 +18,7 @@ import (
 func TestAccRoute53ResolverFirewallConfig_basic(t *testing.T) {
 	var v route53resolver.FirewallConfig
 	resourceName := "aws_route53_resolver_firewall_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -46,7 +46,7 @@ func TestAccRoute53ResolverFirewallConfig_basic(t *testing.T) {
 func TestAccRoute53ResolverFirewallConfig_disappears(t *testing.T) {
 	var v route53resolver.FirewallConfig
 	resourceName := "aws_route53_resolver_firewall_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccRoute53ResolverEndpointDataSource_basic(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rInt := sdkacctest.RandInt()
 	direction := "INBOUND"
 	resourceName := "aws_route53_resolver_endpoint.foo"
@@ -41,7 +41,7 @@ func TestAccRoute53ResolverEndpointDataSource_basic(t *testing.T) {
 }
 
 func TestAccRoute53ResolverEndpointDataSource_filter(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rInt := sdkacctest.RandInt()
 	direction := "OUTBOUND"
 	resourceName := "aws_route53_resolver_endpoint.foo"

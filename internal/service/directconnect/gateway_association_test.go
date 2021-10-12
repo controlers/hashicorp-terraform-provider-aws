@@ -20,7 +20,7 @@ import (
 // V0 state upgrade testing must be done via acceptance testing due to API call
 func TestAccDirectConnectGatewayAssociation_v0StateUpgrade(t *testing.T) {
 	resourceName := "aws_dx_gateway_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga directconnect.GatewayAssociation
 	var gap directconnect.GatewayAssociationProposal
@@ -46,7 +46,7 @@ func TestAccDirectConnectGatewayAssociation_basicVPNGatewaySingleAccount(t *test
 	resourceName := "aws_dx_gateway_association.test"
 	resourceNameDxGw := "aws_dx_gateway.test"
 	resourceNameVgw := "aws_vpn_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga directconnect.GatewayAssociation
 	var gap directconnect.GatewayAssociationProposal
@@ -86,7 +86,7 @@ func TestAccDirectConnectGatewayAssociation_basicVPNGatewayCrossAccount(t *testi
 	resourceName := "aws_dx_gateway_association.test"
 	resourceNameDxGw := "aws_dx_gateway.test"
 	resourceNameVgw := "aws_vpn_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga directconnect.GatewayAssociation
 	var gap directconnect.GatewayAssociationProposal
@@ -120,7 +120,7 @@ func TestAccDirectConnectGatewayAssociation_basicTransitGatewaySingleAccount(t *
 	resourceName := "aws_dx_gateway_association.test"
 	resourceNameDxGw := "aws_dx_gateway.test"
 	resourceNameTgw := "aws_ec2_transit_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga directconnect.GatewayAssociation
 	var gap directconnect.GatewayAssociationProposal
@@ -161,7 +161,7 @@ func TestAccDirectConnectGatewayAssociation_basicTransitGatewayCrossAccount(t *t
 	resourceName := "aws_dx_gateway_association.test"
 	resourceNameDxGw := "aws_dx_gateway.test"
 	resourceNameTgw := "aws_ec2_transit_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga directconnect.GatewayAssociation
 	var gap directconnect.GatewayAssociationProposal
@@ -195,7 +195,7 @@ func TestAccDirectConnectGatewayAssociation_basicTransitGatewayCrossAccount(t *t
 func TestAccDirectConnectGatewayAssociation_multiVPNGatewaysSingleAccount(t *testing.T) {
 	resourceName1 := "aws_dx_gateway_association.test.0"
 	resourceName2 := "aws_dx_gateway_association.test.1"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga directconnect.GatewayAssociation
 	var gap directconnect.GatewayAssociationProposal
@@ -227,7 +227,7 @@ func TestAccDirectConnectGatewayAssociation_allowedPrefixesVPNGatewaySingleAccou
 	resourceName := "aws_dx_gateway_association.test"
 	resourceNameDxGw := "aws_dx_gateway.test"
 	resourceNameVgw := "aws_vpn_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga directconnect.GatewayAssociation
 	var gap directconnect.GatewayAssociationProposal
@@ -273,7 +273,7 @@ func TestAccDirectConnectGatewayAssociation_allowedPrefixesVPNGatewayCrossAccoun
 	resourceName := "aws_dx_gateway_association.test"
 	resourceNameDxGw := "aws_dx_gateway.test"
 	resourceNameVgw := "aws_vpn_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga directconnect.GatewayAssociation
 	var gap directconnect.GatewayAssociationProposal
@@ -316,7 +316,7 @@ func TestAccDirectConnectGatewayAssociation_allowedPrefixesVPNGatewayCrossAccoun
 func TestAccDirectConnectGatewayAssociation_recreateProposal(t *testing.T) {
 	var providers []*schema.Provider
 	resourceName := "aws_dx_gateway_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBgpAsn := sdkacctest.RandIntRange(64512, 65534)
 	var ga1, ga2 directconnect.GatewayAssociation
 	var gap1, gap2 directconnect.GatewayAssociationProposal

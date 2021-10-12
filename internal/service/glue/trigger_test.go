@@ -18,7 +18,7 @@ import (
 func TestAccGlueTrigger_basic(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -58,7 +58,7 @@ func TestAccGlueTrigger_basic(t *testing.T) {
 func TestAccGlueTrigger_crawler(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test_trigger"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -106,7 +106,7 @@ func TestAccGlueTrigger_crawler(t *testing.T) {
 func TestAccGlueTrigger_description(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -142,7 +142,7 @@ func TestAccGlueTrigger_description(t *testing.T) {
 func TestAccGlueTrigger_enabled(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -185,7 +185,7 @@ func TestAccGlueTrigger_enabled(t *testing.T) {
 func TestAccGlueTrigger_predicate(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -229,7 +229,7 @@ func TestAccGlueTrigger_predicate(t *testing.T) {
 func TestAccGlueTrigger_schedule(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -265,7 +265,7 @@ func TestAccGlueTrigger_schedule(t *testing.T) {
 func TestAccGlueTrigger_tags(t *testing.T) {
 	var trigger1, trigger2, trigger3 glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -312,7 +312,7 @@ func TestAccGlueTrigger_tags(t *testing.T) {
 func TestAccGlueTrigger_workflowName(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -341,7 +341,7 @@ func TestAccGlueTrigger_workflowName(t *testing.T) {
 func TestAccGlueTrigger_Actions_notify(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -393,7 +393,7 @@ func TestAccGlueTrigger_Actions_notify(t *testing.T) {
 func TestAccGlueTrigger_Actions_security(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -424,7 +424,7 @@ func TestAccGlueTrigger_Actions_security(t *testing.T) {
 func TestAccGlueTrigger_onDemandDisable(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -470,7 +470,7 @@ func TestAccGlueTrigger_onDemandDisable(t *testing.T) {
 func TestAccGlueTrigger_disappears(t *testing.T) {
 	var trigger glue.Trigger
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -17,9 +17,9 @@ import (
 func testAccVirtualService_virtualNode(t *testing.T) {
 	var vs appmesh.VirtualServiceData
 	resourceName := "aws_appmesh_virtual_service.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	vsName := fmt.Sprintf("tf-acc-test-%d.mesh.local", sdkacctest.RandInt())
 
 	resource.Test(t, resource.TestCase{
@@ -71,9 +71,9 @@ func testAccVirtualService_virtualNode(t *testing.T) {
 func testAccVirtualService_virtualRouter(t *testing.T) {
 	var vs appmesh.VirtualServiceData
 	resourceName := "aws_appmesh_virtual_service.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vrName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vrName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vrName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vrName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	vsName := fmt.Sprintf("tf-acc-test-%d.mesh.local", sdkacctest.RandInt())
 
 	resource.Test(t, resource.TestCase{
@@ -118,9 +118,9 @@ func testAccVirtualService_virtualRouter(t *testing.T) {
 func testAccVirtualService_tags(t *testing.T) {
 	var vs appmesh.VirtualServiceData
 	resourceName := "aws_appmesh_virtual_service.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	vsName := fmt.Sprintf("tf-acc-test-%d.mesh.local", sdkacctest.RandInt())
 
 	resource.Test(t, resource.TestCase{

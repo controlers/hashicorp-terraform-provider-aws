@@ -27,7 +27,7 @@ func TestAccRoute53QueryLog_basic(t *testing.T) {
 	resourceName := "aws_route53_query_log.test"
 	route53ZoneResourceName := "aws_route53_zone.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domainName := acctest.RandomDomainName()
 
 	var queryLoggingConfig route53.QueryLoggingConfig
@@ -58,7 +58,7 @@ func TestAccRoute53QueryLog_basic(t *testing.T) {
 func TestAccRoute53QueryLog_disappears(t *testing.T) {
 	resourceName := "aws_route53_query_log.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domainName := acctest.RandomDomainName()
 
 	var queryLoggingConfig route53.QueryLoggingConfig
@@ -84,7 +84,7 @@ func TestAccRoute53QueryLog_Disappears_hostedZone(t *testing.T) {
 	resourceName := "aws_route53_query_log.test"
 	route53ZoneResourceName := "aws_route53_zone.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domainName := acctest.RandomDomainName()
 
 	var queryLoggingConfig route53.QueryLoggingConfig

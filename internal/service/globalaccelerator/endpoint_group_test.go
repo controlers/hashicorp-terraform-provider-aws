@@ -22,7 +22,7 @@ import (
 func TestAccGlobalAcceleratorEndpointGroup_basic(t *testing.T) {
 	var v globalaccelerator.EndpointGroup
 	resourceName := "aws_globalaccelerator_endpoint_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -59,7 +59,7 @@ func TestAccGlobalAcceleratorEndpointGroup_basic(t *testing.T) {
 func TestAccGlobalAcceleratorEndpointGroup_disappears(t *testing.T) {
 	var v globalaccelerator.EndpointGroup
 	resourceName := "aws_globalaccelerator_endpoint_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -85,7 +85,7 @@ func TestAccGlobalAcceleratorEndpointGroup_ALBEndpoint_clientIP(t *testing.T) {
 	resourceName := "aws_globalaccelerator_endpoint_group.test"
 	albResourceName := "aws_lb.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -159,7 +159,7 @@ func TestAccGlobalAcceleratorEndpointGroup_instanceEndpoint(t *testing.T) {
 	resourceName := "aws_globalaccelerator_endpoint_group.test"
 	instanceResourceName := "aws_instance.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -210,7 +210,7 @@ func TestAccGlobalAcceleratorEndpointGroup_multiRegion(t *testing.T) {
 	var v globalaccelerator.EndpointGroup
 	resourceName := "aws_globalaccelerator_endpoint_group.test"
 	eipResourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckMultipleRegion(t, 2); testAccPreCheckGlobalAccelerator(t) },
@@ -252,7 +252,7 @@ func TestAccGlobalAcceleratorEndpointGroup_multiRegion(t *testing.T) {
 func TestAccGlobalAcceleratorEndpointGroup_portOverrides(t *testing.T) {
 	var v globalaccelerator.EndpointGroup
 	resourceName := "aws_globalaccelerator_endpoint_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -319,7 +319,7 @@ func TestAccGlobalAcceleratorEndpointGroup_tcpHealthCheckProtocol(t *testing.T) 
 	var v globalaccelerator.EndpointGroup
 	resourceName := "aws_globalaccelerator_endpoint_group.test"
 	eipResourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -362,7 +362,7 @@ func TestAccGlobalAcceleratorEndpointGroup_update(t *testing.T) {
 	var v globalaccelerator.EndpointGroup
 	resourceName := "aws_globalaccelerator_endpoint_group.test"
 	eipResourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },

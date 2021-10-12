@@ -18,7 +18,7 @@ import (
 func TestAccGlueRegistry_basic(t *testing.T) {
 	var registry glue.GetRegistryOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_registry.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -49,7 +49,7 @@ func TestAccGlueRegistry_basic(t *testing.T) {
 func TestAccGlueRegistry_description(t *testing.T) {
 	var registry glue.GetRegistryOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_registry.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -83,7 +83,7 @@ func TestAccGlueRegistry_description(t *testing.T) {
 
 func TestAccGlueRegistry_tags(t *testing.T) {
 	var registry glue.GetRegistryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_registry.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -129,7 +129,7 @@ func TestAccGlueRegistry_tags(t *testing.T) {
 func TestAccGlueRegistry_disappears(t *testing.T) {
 	var registry glue.GetRegistryOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_registry.test"
 
 	resource.ParallelTest(t, resource.TestCase{

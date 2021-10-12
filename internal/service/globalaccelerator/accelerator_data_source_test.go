@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccGlobalAcceleratorAcceleratorDataSource_Data_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_globalaccelerator_accelerator.test"
 	dataSourceName := "data.aws_globalaccelerator_accelerator.test_by_arn"
 	dataSourceName2 := "data.aws_globalaccelerator_accelerator.test_by_name"

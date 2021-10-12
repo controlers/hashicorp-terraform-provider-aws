@@ -38,7 +38,7 @@ func TestAccSageMakerFeatureGroup_serial(t *testing.T) {
 
 func testAccFeatureGroup_basic(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 
 	resource.Test(t, resource.TestCase{
@@ -74,7 +74,7 @@ func testAccFeatureGroup_basic(t *testing.T) {
 
 func testAccFeatureGroup_description(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 
 	resource.Test(t, resource.TestCase{
@@ -102,7 +102,7 @@ func testAccFeatureGroup_description(t *testing.T) {
 
 func testAccFeatureGroup_tags(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 
 	resource.Test(t, resource.TestCase{
@@ -150,7 +150,7 @@ func testAccFeatureGroup_tags(t *testing.T) {
 
 func testAccFeatureGroup_multipleFeatures(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 
 	resource.Test(t, resource.TestCase{
@@ -182,7 +182,7 @@ func testAccFeatureGroup_multipleFeatures(t *testing.T) {
 
 func testAccFeatureGroup_onlineConfigSecurityConfig(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 
 	resource.Test(t, resource.TestCase{
@@ -213,7 +213,7 @@ func testAccFeatureGroup_onlineConfigSecurityConfig(t *testing.T) {
 
 func testAccFeatureGroup_offlineConfig_basic(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 
 	resource.Test(t, resource.TestCase{
@@ -245,7 +245,7 @@ func testAccFeatureGroup_offlineConfig_basic(t *testing.T) {
 
 func testAccFeatureGroup_offlineConfig_createCatalog(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 
 	resource.Test(t, resource.TestCase{
@@ -280,7 +280,7 @@ func testAccFeatureGroup_offlineConfig_createCatalog(t *testing.T) {
 
 func TestAccSageMakerFeatureGroup_Offline_providedCatalog(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 	glueTableResourceName := "aws_glue_catalog_table.test"
 
@@ -316,7 +316,7 @@ func TestAccSageMakerFeatureGroup_Offline_providedCatalog(t *testing.T) {
 
 func TestAccSageMakerFeatureGroup_disappears(t *testing.T) {
 	var featureGroup sagemaker.DescribeFeatureGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_feature_group.test"
 
 	resource.Test(t, resource.TestCase{

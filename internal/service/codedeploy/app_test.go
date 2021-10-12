@@ -18,7 +18,7 @@ import (
 
 func TestAccCodeDeployApp_basic(t *testing.T) {
 	var application1 codedeploy.ApplicationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codedeploy_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -58,7 +58,7 @@ func TestAccCodeDeployApp_basic(t *testing.T) {
 
 func TestAccCodeDeployApp_computePlatform(t *testing.T) {
 	var application1, application2 codedeploy.ApplicationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codedeploy_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -88,7 +88,7 @@ func TestAccCodeDeployApp_computePlatform(t *testing.T) {
 
 func TestAccCodeDeployApp_ComputePlatform_ecs(t *testing.T) {
 	var application1 codedeploy.ApplicationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codedeploy_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -115,7 +115,7 @@ func TestAccCodeDeployApp_ComputePlatform_ecs(t *testing.T) {
 
 func TestAccCodeDeployApp_ComputePlatform_lambda(t *testing.T) {
 	var application1 codedeploy.ApplicationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codedeploy_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -142,8 +142,8 @@ func TestAccCodeDeployApp_ComputePlatform_lambda(t *testing.T) {
 
 func TestAccCodeDeployApp_name(t *testing.T) {
 	var application1, application2 codedeploy.ApplicationInfo
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codedeploy_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -177,7 +177,7 @@ func TestAccCodeDeployApp_name(t *testing.T) {
 
 func TestAccCodeDeployApp_tags(t *testing.T) {
 	var application codedeploy.ApplicationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codedeploy_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -222,7 +222,7 @@ func TestAccCodeDeployApp_tags(t *testing.T) {
 
 func TestAccCodeDeployApp_disappears(t *testing.T) {
 	var application1 codedeploy.ApplicationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codedeploy_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{

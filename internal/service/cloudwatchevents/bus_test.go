@@ -18,8 +18,8 @@ import (
 
 func TestAccCloudWatchEventsBus_basic(t *testing.T) {
 	var v1, v2, v3 events.DescribeEventBusOutput
-	busName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	busNameModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	busName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	busNameModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cloudwatch_event_bus.test"
 
@@ -70,7 +70,7 @@ func TestAccCloudWatchEventsBus_basic(t *testing.T) {
 
 func TestAccCloudWatchEventsBus_tags(t *testing.T) {
 	var v1, v2, v3, v4 events.DescribeEventBusOutput
-	busName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	busName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cloudwatch_event_bus.test"
 
@@ -141,7 +141,7 @@ func TestAccCloudWatchEventsBus_default(t *testing.T) {
 
 func TestAccCloudWatchEventsBus_disappears(t *testing.T) {
 	var v events.DescribeEventBusOutput
-	busName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	busName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cloudwatch_event_bus.test"
 

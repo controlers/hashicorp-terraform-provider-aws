@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccEC2LaunchTemplateDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 
@@ -37,7 +37,7 @@ func TestAccEC2LaunchTemplateDataSource_basic(t *testing.T) {
 }
 
 func TestAccEC2LaunchTemplateDataSource_ID_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 
@@ -62,7 +62,7 @@ func TestAccEC2LaunchTemplateDataSource_ID_basic(t *testing.T) {
 }
 
 func TestAccEC2LaunchTemplateDataSource_Filter_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 
@@ -108,7 +108,7 @@ func TestAccEC2LaunchTemplateDataSource_Filter_basic(t *testing.T) {
 
 func TestAccEC2LaunchTemplateDataSource_Filter_tags(t *testing.T) {
 	rInt := sdkacctest.RandInt()
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 
@@ -133,7 +133,7 @@ func TestAccEC2LaunchTemplateDataSource_Filter_tags(t *testing.T) {
 }
 
 func TestAccEC2LaunchTemplateDataSource_metadataOptions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 
@@ -158,7 +158,7 @@ func TestAccEC2LaunchTemplateDataSource_metadataOptions(t *testing.T) {
 }
 
 func TestAccEC2LaunchTemplateDataSource_enclaveOptions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 
@@ -180,7 +180,7 @@ func TestAccEC2LaunchTemplateDataSource_enclaveOptions(t *testing.T) {
 }
 
 func TestAccEC2LaunchTemplateDataSource_associatePublicIPAddress(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 
@@ -216,7 +216,7 @@ func TestAccEC2LaunchTemplateDataSource_associatePublicIPAddress(t *testing.T) {
 }
 
 func TestAccEC2LaunchTemplateDataSource_associateCarrierIPAddress(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 
@@ -252,7 +252,7 @@ func TestAccEC2LaunchTemplateDataSource_associateCarrierIPAddress(t *testing.T) 
 }
 
 func TestAccEC2LaunchTemplateDataSource_NetworkInterfaces_deleteOnTermination(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_launch_template.test"
 	resourceName := "aws_launch_template.test"
 

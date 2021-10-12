@@ -17,7 +17,7 @@ import (
 func TestAccRAMResourceShare_basic(t *testing.T) {
 	var resourceShare ram.ResourceShare
 	resourceName := "aws_ram_resource_share.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -47,7 +47,7 @@ func TestAccRAMResourceShare_basic(t *testing.T) {
 func TestAccRAMResourceShare_allowExternalPrincipals(t *testing.T) {
 	var resourceShare1, resourceShare2 ram.ResourceShare
 	resourceName := "aws_ram_resource_share.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -81,8 +81,8 @@ func TestAccRAMResourceShare_allowExternalPrincipals(t *testing.T) {
 func TestAccRAMResourceShare_name(t *testing.T) {
 	var resourceShare1, resourceShare2 ram.ResourceShare
 	resourceName := "aws_ram_resource_share.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -116,7 +116,7 @@ func TestAccRAMResourceShare_name(t *testing.T) {
 func TestAccRAMResourceShare_tags(t *testing.T) {
 	var resourceShare1, resourceShare2, resourceShare3 ram.ResourceShare
 	resourceName := "aws_ram_resource_share.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

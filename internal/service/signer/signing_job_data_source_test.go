@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccSignerSigningJobDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_signer_signing_job.test"
 	resourceName := "aws_signer_signing_job.test"
 

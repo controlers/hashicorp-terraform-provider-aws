@@ -18,7 +18,7 @@ import (
 
 func TestAccGlacierVault_basic(t *testing.T) {
 	var vault glacier.DescribeVaultOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glacier_vault.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -49,7 +49,7 @@ func TestAccGlacierVault_basic(t *testing.T) {
 
 func TestAccGlacierVault_notification(t *testing.T) {
 	var vault glacier.DescribeVaultOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glacier_vault.test"
 	snsResourceName := "aws_sns_topic.test"
 
@@ -96,7 +96,7 @@ func TestAccGlacierVault_notification(t *testing.T) {
 
 func TestAccGlacierVault_policy(t *testing.T) {
 	var vault glacier.DescribeVaultOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glacier_vault.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -141,7 +141,7 @@ func TestAccGlacierVault_policy(t *testing.T) {
 
 func TestAccGlacierVault_tags(t *testing.T) {
 	var vault glacier.DescribeVaultOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glacier_vault.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -186,7 +186,7 @@ func TestAccGlacierVault_tags(t *testing.T) {
 
 func TestAccGlacierVault_disappears(t *testing.T) {
 	var vault glacier.DescribeVaultOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glacier_vault.test"
 
 	resource.ParallelTest(t, resource.TestCase{

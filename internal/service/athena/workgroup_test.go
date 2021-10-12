@@ -16,7 +16,7 @@ import (
 
 func TestAccAthenaWorkGroup_basic(t *testing.T) {
 	var workgroup1 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -52,7 +52,7 @@ func TestAccAthenaWorkGroup_basic(t *testing.T) {
 
 func TestAccAthenaWorkGroup_disappears(t *testing.T) {
 	var workgroup1 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -75,7 +75,7 @@ func TestAccAthenaWorkGroup_disappears(t *testing.T) {
 
 func TestAccAthenaWorkGroup_bytesScannedCutoffPerQuery(t *testing.T) {
 	var workgroup1, workgroup2 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -112,7 +112,7 @@ func TestAccAthenaWorkGroup_bytesScannedCutoffPerQuery(t *testing.T) {
 
 func TestAccAthenaWorkGroup_enforceWorkGroup(t *testing.T) {
 	var workgroup1, workgroup2 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -149,7 +149,7 @@ func TestAccAthenaWorkGroup_enforceWorkGroup(t *testing.T) {
 
 func TestAccAthenaWorkGroup_publishCloudWatchMetricsEnabled(t *testing.T) {
 	var workgroup1, workgroup2 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -186,7 +186,7 @@ func TestAccAthenaWorkGroup_publishCloudWatchMetricsEnabled(t *testing.T) {
 
 func TestAccAthenaWorkGroup_ResultEncryption_sseS3(t *testing.T) {
 	var workgroup1 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -217,7 +217,7 @@ func TestAccAthenaWorkGroup_ResultEncryption_sseS3(t *testing.T) {
 
 func TestAccAthenaWorkGroup_ResultEncryption_kms(t *testing.T) {
 	var workgroup1, workgroup2 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 	rEncryption := athena.EncryptionOptionSseKms
 	rEncryption2 := athena.EncryptionOptionCseKms
@@ -260,7 +260,7 @@ func TestAccAthenaWorkGroup_ResultEncryption_kms(t *testing.T) {
 
 func TestAccAthenaWorkGroup_Result_outputLocation(t *testing.T) {
 	var workgroup1, workgroup2 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 	rOutputLocation1 := fmt.Sprintf("%s-1", rName)
 	rOutputLocation2 := fmt.Sprintf("%s-2", rName)
@@ -301,7 +301,7 @@ func TestAccAthenaWorkGroup_Result_outputLocation(t *testing.T) {
 
 func TestAccAthenaWorkGroup_requesterPaysEnabled(t *testing.T) {
 	var workgroup1 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -340,7 +340,7 @@ func TestAccAthenaWorkGroup_requesterPaysEnabled(t *testing.T) {
 
 func TestAccAthenaWorkGroup_ResultOutputLocation_forceDestroy(t *testing.T) {
 	var workgroup1, workgroup2 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 	rOutputLocation1 := fmt.Sprintf("%s-1", rName)
 	rOutputLocation2 := fmt.Sprintf("%s-2", rName)
@@ -381,7 +381,7 @@ func TestAccAthenaWorkGroup_ResultOutputLocation_forceDestroy(t *testing.T) {
 
 func TestAccAthenaWorkGroup_description(t *testing.T) {
 	var workgroup1, workgroup2 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 	rDescription := sdkacctest.RandString(20)
 	rDescriptionUpdate := sdkacctest.RandString(20)
@@ -418,7 +418,7 @@ func TestAccAthenaWorkGroup_description(t *testing.T) {
 
 func TestAccAthenaWorkGroup_state(t *testing.T) {
 	var workgroup1, workgroup2, workgroup3 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -460,7 +460,7 @@ func TestAccAthenaWorkGroup_state(t *testing.T) {
 
 func TestAccAthenaWorkGroup_forceDestroy(t *testing.T) {
 	var workgroup athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbName := sdkacctest.RandString(5)
 	queryName1 := sdkacctest.RandomWithPrefix("tf-athena-named-query-")
 	queryName2 := sdkacctest.RandomWithPrefix("tf-athena-named-query-")
@@ -492,7 +492,7 @@ func TestAccAthenaWorkGroup_forceDestroy(t *testing.T) {
 
 func TestAccAthenaWorkGroup_tags(t *testing.T) {
 	var workgroup1, workgroup2, workgroup3 athena.WorkGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_athena_workgroup.test"
 
 	resource.ParallelTest(t, resource.TestCase{

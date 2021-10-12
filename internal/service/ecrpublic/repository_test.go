@@ -18,7 +18,7 @@ import (
 
 func TestAccECRPublicRepository_basic(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccECRPublicRepository_basic(t *testing.T) {
 
 func TestAccECRPublicRepository_CatalogData_aboutText(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -83,7 +83,7 @@ func TestAccECRPublicRepository_CatalogData_aboutText(t *testing.T) {
 
 func TestAccECRPublicRepository_CatalogData_architectures(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -119,7 +119,7 @@ func TestAccECRPublicRepository_CatalogData_architectures(t *testing.T) {
 
 func TestAccECRPublicRepository_CatalogData_description(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -155,7 +155,7 @@ func TestAccECRPublicRepository_CatalogData_description(t *testing.T) {
 
 func TestAccECRPublicRepository_CatalogData_operatingSystems(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -191,7 +191,7 @@ func TestAccECRPublicRepository_CatalogData_operatingSystems(t *testing.T) {
 
 func TestAccECRPublicRepository_CatalogData_usageText(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -227,7 +227,7 @@ func TestAccECRPublicRepository_CatalogData_usageText(t *testing.T) {
 
 func TestAccECRPublicRepository_CatalogData_logoImageBlob(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -256,7 +256,7 @@ func TestAccECRPublicRepository_CatalogData_logoImageBlob(t *testing.T) {
 
 func TestAccECRPublicRepository_Basic_forceDestroy(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -286,7 +286,7 @@ func TestAccECRPublicRepository_Basic_forceDestroy(t *testing.T) {
 
 func TestAccECRPublicRepository_disappears(t *testing.T) {
 	var v ecrpublic.Repository
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecrpublic_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{

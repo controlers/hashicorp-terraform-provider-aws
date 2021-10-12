@@ -16,7 +16,7 @@ import (
 
 func TestAccEC2AMILaunchPermission_basic(t *testing.T) {
 	resourceName := "aws_ami_launch_permission.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -42,7 +42,7 @@ func TestAccEC2AMILaunchPermission_basic(t *testing.T) {
 
 func TestAccEC2AMILaunchPermission_Disappears_launchPermission(t *testing.T) {
 	resourceName := "aws_ami_launch_permission.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -66,7 +66,7 @@ func TestAccEC2AMILaunchPermission_Disappears_launchPermission(t *testing.T) {
 // Images with <group>all</group> will not have <userId> and can cause a panic
 func TestAccEC2AMILaunchPermission_DisappearsLaunchPermission_public(t *testing.T) {
 	resourceName := "aws_ami_launch_permission.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -90,7 +90,7 @@ func TestAccEC2AMILaunchPermission_DisappearsLaunchPermission_public(t *testing.
 func TestAccEC2AMILaunchPermission_Disappears_ami(t *testing.T) {
 	imageID := ""
 	resourceName := "aws_ami_launch_permission.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

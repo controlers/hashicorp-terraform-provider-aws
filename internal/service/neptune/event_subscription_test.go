@@ -37,7 +37,7 @@ func TestAccNeptuneEventSubscription_basic(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "source_type", "db-instance"),
 					resource.TestCheckResourceAttr(resourceName, "name", rName),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
-					resource.TestCheckResourceAttr(resourceName, "tags.Name", "tf-acc-test"),
+					resource.TestCheckResourceAttr(resourceName, "tags.Name", acctest.ResourcePrefix),
 				),
 			},
 			{

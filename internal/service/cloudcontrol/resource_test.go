@@ -28,7 +28,7 @@ func testAccErrorCheckSkipCloudControlAPI(t *testing.T) resource.ErrorCheckFunc 
 }
 
 func TestAccCloudControlResource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -49,7 +49,7 @@ func TestAccCloudControlResource_basic(t *testing.T) {
 }
 
 func TestAccCloudControlResource_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -70,7 +70,7 @@ func TestAccCloudControlResource_disappears(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_booleanValueAdded(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -96,7 +96,7 @@ func TestAccCloudControlResource_DesiredState_booleanValueAdded(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_booleanValueRemoved(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -122,7 +122,7 @@ func TestAccCloudControlResource_DesiredState_booleanValueRemoved(t *testing.T) 
 }
 
 func TestAccCloudControlResource_DesiredState_booleanValueUpdate(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -148,8 +148,8 @@ func TestAccCloudControlResource_DesiredState_booleanValueUpdate(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_createOnly(t *testing.T) {
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -175,7 +175,7 @@ func TestAccCloudControlResource_DesiredState_createOnly(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_integerValueAdded(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -201,7 +201,7 @@ func TestAccCloudControlResource_DesiredState_integerValueAdded(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_integerValueRemoved(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -227,7 +227,7 @@ func TestAccCloudControlResource_DesiredState_integerValueRemoved(t *testing.T) 
 }
 
 func TestAccCloudControlResource_DesiredState_integerValueUpdate(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -253,7 +253,7 @@ func TestAccCloudControlResource_DesiredState_integerValueUpdate(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_invalidPropertyName(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -270,7 +270,7 @@ func TestAccCloudControlResource_DesiredState_invalidPropertyName(t *testing.T) 
 }
 
 func TestAccCloudControlResource_DesiredState_invalidPropertyValue(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -287,7 +287,7 @@ func TestAccCloudControlResource_DesiredState_invalidPropertyValue(t *testing.T)
 }
 
 func TestAccCloudControlResource_DesiredState_objectValueAdded(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -313,7 +313,7 @@ func TestAccCloudControlResource_DesiredState_objectValueAdded(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_objectValueRemoved(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -339,7 +339,7 @@ func TestAccCloudControlResource_DesiredState_objectValueRemoved(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_objectValueUpdate(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -371,7 +371,7 @@ func TestAccCloudControlResource_DesiredState_objectValueUpdate(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_stringValueAdded(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -397,7 +397,7 @@ func TestAccCloudControlResource_DesiredState_stringValueAdded(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_stringValueRemoved(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -423,7 +423,7 @@ func TestAccCloudControlResource_DesiredState_stringValueRemoved(t *testing.T) {
 }
 
 func TestAccCloudControlResource_DesiredState_stringValueUpdate(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -449,7 +449,7 @@ func TestAccCloudControlResource_DesiredState_stringValueUpdate(t *testing.T) {
 }
 
 func TestAccCloudControlResource_resourceSchema(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudcontrolapi_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{

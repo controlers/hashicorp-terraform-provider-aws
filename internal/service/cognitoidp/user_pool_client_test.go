@@ -19,7 +19,7 @@ import (
 
 func TestAccCognitoIDPUserPoolClient_basic(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccCognitoIDPUserPoolClient_basic(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_enableRevocation(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cognito_user_pool_client.test"
 
@@ -97,7 +97,7 @@ func TestAccCognitoIDPUserPoolClient_enableRevocation(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_refreshTokenValidity(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -132,7 +132,7 @@ func TestAccCognitoIDPUserPoolClient_refreshTokenValidity(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_accessTokenValidity(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -167,7 +167,7 @@ func TestAccCognitoIDPUserPoolClient_accessTokenValidity(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_idTokenValidity(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -202,7 +202,7 @@ func TestAccCognitoIDPUserPoolClient_idTokenValidity(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_tokenValidityUnits(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -243,7 +243,7 @@ func TestAccCognitoIDPUserPoolClient_tokenValidityUnits(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_tokenValidityUnitsWTokenValidity(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -286,7 +286,7 @@ func TestAccCognitoIDPUserPoolClient_tokenValidityUnitsWTokenValidity(t *testing
 
 func TestAccCognitoIDPUserPoolClient_name(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -321,7 +321,7 @@ func TestAccCognitoIDPUserPoolClient_name(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_allFields(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -377,7 +377,7 @@ func TestAccCognitoIDPUserPoolClient_allFields(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_allFieldsUpdatingOneField(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -436,7 +436,7 @@ func TestAccCognitoIDPUserPoolClient_allFieldsUpdatingOneField(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_analytics(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 	pinpointResourceName := "aws_pinpoint_app.test"
 
@@ -489,7 +489,7 @@ func TestAccCognitoIDPUserPoolClient_analytics(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_analyticsWithARN(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -524,7 +524,7 @@ func TestAccCognitoIDPUserPoolClient_analyticsWithARN(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_disappears(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -547,7 +547,7 @@ func TestAccCognitoIDPUserPoolClient_disappears(t *testing.T) {
 
 func TestAccCognitoIDPUserPoolClient_Disappears_userPool(t *testing.T) {
 	var client cognitoidentityprovider.UserPoolClientType
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_client.test"
 
 	resource.ParallelTest(t, resource.TestCase{

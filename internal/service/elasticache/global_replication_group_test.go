@@ -22,8 +22,8 @@ func TestAccElastiCacheGlobalReplicationGroup_basic(t *testing.T) {
 	var globalReplicationGroup elasticache.GlobalReplicationGroup
 	var primaryReplicationGroup elasticache.ReplicationGroup
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	primaryReplicationGroupId := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	primaryReplicationGroupId := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_elasticache_global_replication_group.test"
 	primaryReplicationGroupResourceName := "aws_elasticache_replication_group.test"
@@ -65,8 +65,8 @@ func TestAccElastiCacheGlobalReplicationGroup_basic(t *testing.T) {
 
 func TestAccElastiCacheGlobalReplicationGroup_description(t *testing.T) {
 	var globalReplicationGroup elasticache.GlobalReplicationGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	primaryReplicationGroupId := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	primaryReplicationGroupId := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description1 := sdkacctest.RandString(10)
 	description2 := sdkacctest.RandString(10)
 	resourceName := "aws_elasticache_global_replication_group.test"
@@ -102,8 +102,8 @@ func TestAccElastiCacheGlobalReplicationGroup_description(t *testing.T) {
 
 func TestAccElastiCacheGlobalReplicationGroup_disappears(t *testing.T) {
 	var globalReplicationGroup elasticache.GlobalReplicationGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	primaryReplicationGroupId := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	primaryReplicationGroupId := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elasticache_global_replication_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -127,7 +127,7 @@ func TestAccElastiCacheGlobalReplicationGroup_disappears(t *testing.T) {
 func TestAccElastiCacheGlobalReplicationGroup_multipleSecondaries(t *testing.T) {
 	var providers []*schema.Provider
 	var globalReplcationGroup elasticache.GlobalReplicationGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elasticache_global_replication_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -152,7 +152,7 @@ func TestAccElastiCacheGlobalReplicationGroup_multipleSecondaries(t *testing.T) 
 func TestAccElastiCacheGlobalReplicationGroup_ReplaceSecondary_differentRegion(t *testing.T) {
 	var providers []*schema.Provider
 	var globalReplcationGroup elasticache.GlobalReplicationGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elasticache_global_replication_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -184,7 +184,7 @@ func TestAccElastiCacheGlobalReplicationGroup_clusterMode(t *testing.T) {
 	var globalReplicationGroup elasticache.GlobalReplicationGroup
 	var primaryReplicationGroup elasticache.ReplicationGroup
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_elasticache_global_replication_group.test"
 	primaryReplicationGroupResourceName := "aws_elasticache_replication_group.test"

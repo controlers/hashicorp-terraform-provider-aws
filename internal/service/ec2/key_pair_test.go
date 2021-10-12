@@ -20,7 +20,7 @@ import (
 func TestAccEC2KeyPair_basic(t *testing.T) {
 	var keyPair ec2.KeyPairInfo
 	resourceName := "aws_key_pair.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	publicKey, _, err := sdkacctest.RandSSHKeyPair(acctest.DefaultEmailAddress)
 	if err != nil {
@@ -56,7 +56,7 @@ func TestAccEC2KeyPair_basic(t *testing.T) {
 func TestAccEC2KeyPair_tags(t *testing.T) {
 	var keyPair ec2.KeyPairInfo
 	resourceName := "aws_key_pair.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	publicKey, _, err := sdkacctest.RandSSHKeyPair(acctest.DefaultEmailAddress)
 	if err != nil {
@@ -173,7 +173,7 @@ func TestAccEC2KeyPair_namePrefix(t *testing.T) {
 func TestAccEC2KeyPair_disappears(t *testing.T) {
 	var keyPair ec2.KeyPairInfo
 	resourceName := "aws_key_pair.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	publicKey, _, err := sdkacctest.RandSSHKeyPair(acctest.DefaultEmailAddress)
 	if err != nil {

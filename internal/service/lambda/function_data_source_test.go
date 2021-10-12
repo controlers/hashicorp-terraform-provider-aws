@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccLambdaFunctionDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
 
@@ -53,7 +53,7 @@ func TestAccLambdaFunctionDataSource_basic(t *testing.T) {
 }
 
 func TestAccLambdaFunctionDataSource_version(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
 
@@ -76,7 +76,7 @@ func TestAccLambdaFunctionDataSource_version(t *testing.T) {
 }
 
 func TestAccLambdaFunctionDataSource_alias(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	lambdaAliasResourceName := "aws_lambda_alias.test"
 	resourceName := "aws_lambda_function.test"
@@ -100,7 +100,7 @@ func TestAccLambdaFunctionDataSource_alias(t *testing.T) {
 }
 
 func TestAccLambdaFunctionDataSource_layers(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
 
@@ -121,7 +121,7 @@ func TestAccLambdaFunctionDataSource_layers(t *testing.T) {
 }
 
 func TestAccLambdaFunctionDataSource_vpc(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
 
@@ -144,7 +144,7 @@ func TestAccLambdaFunctionDataSource_vpc(t *testing.T) {
 }
 
 func TestAccLambdaFunctionDataSource_environment(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
 
@@ -168,7 +168,7 @@ func TestAccLambdaFunctionDataSource_environment(t *testing.T) {
 }
 
 func TestAccLambdaFunctionDataSource_fileSystem(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
 
@@ -191,7 +191,7 @@ func TestAccLambdaFunctionDataSource_fileSystem(t *testing.T) {
 }
 
 func TestAccLambdaFunctionDataSource_image(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
 
@@ -213,7 +213,7 @@ func TestAccLambdaFunctionDataSource_image(t *testing.T) {
 }
 
 func TestAccLambdaFunctionDataSource_architectures(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lambda_function.test"
 	resourceName := "aws_lambda_function.test"
 

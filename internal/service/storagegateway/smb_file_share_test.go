@@ -17,7 +17,7 @@ import (
 
 func TestAccStorageGatewaySMBFileShare_Authentication_activeDirectory(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 	gatewayResourceName := "aws_storagegateway_gateway.test"
 	bucketResourceName := "aws_s3_bucket.test"
@@ -67,7 +67,7 @@ func TestAccStorageGatewaySMBFileShare_Authentication_activeDirectory(t *testing
 
 func TestAccStorageGatewaySMBFileShare_Authentication_guestAccess(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 	gatewayResourceName := "aws_storagegateway_gateway.test"
 	bucketResourceName := "aws_s3_bucket.test"
@@ -117,7 +117,7 @@ func TestAccStorageGatewaySMBFileShare_Authentication_guestAccess(t *testing.T) 
 
 func TestAccStorageGatewaySMBFileShare_accessBasedEnumeration(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -158,7 +158,7 @@ func TestAccStorageGatewaySMBFileShare_accessBasedEnumeration(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_notificationPolicy(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -199,7 +199,7 @@ func TestAccStorageGatewaySMBFileShare_notificationPolicy(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_defaultStorageClass(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -233,7 +233,7 @@ func TestAccStorageGatewaySMBFileShare_defaultStorageClass(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_fileShareName(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -267,7 +267,7 @@ func TestAccStorageGatewaySMBFileShare_fileShareName(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_tags(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -312,7 +312,7 @@ func TestAccStorageGatewaySMBFileShare_tags(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_guessMIMETypeEnabled(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -364,7 +364,7 @@ Currently failing when enabling oplocks:
 
 func TestAccStorageGatewaySMBFileShare_opLocksEnabled(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -399,7 +399,7 @@ func TestAccStorageGatewaySMBFileShare_opLocksEnabled(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_invalidUserList(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 	domainName := acctest.RandomDomainName()
 
@@ -441,7 +441,7 @@ func TestAccStorageGatewaySMBFileShare_invalidUserList(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_kmsEncrypted(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -472,7 +472,7 @@ func TestAccStorageGatewaySMBFileShare_kmsEncrypted(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_kmsKeyARN(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 	keyName := "aws_kms_key.test.0"
 	keyUpdatedName := "aws_kms_key.test.1"
@@ -517,7 +517,7 @@ func TestAccStorageGatewaySMBFileShare_kmsKeyARN(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_objectACL(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -551,7 +551,7 @@ func TestAccStorageGatewaySMBFileShare_objectACL(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_readOnly(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -585,7 +585,7 @@ func TestAccStorageGatewaySMBFileShare_readOnly(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_requesterPays(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -619,7 +619,7 @@ func TestAccStorageGatewaySMBFileShare_requesterPays(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_validUserList(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 	domainName := acctest.RandomDomainName()
 
@@ -661,7 +661,7 @@ func TestAccStorageGatewaySMBFileShare_validUserList(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_SMB_acl(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 	domainName := acctest.RandomDomainName()
 
@@ -703,7 +703,7 @@ func TestAccStorageGatewaySMBFileShare_SMB_acl(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_audit(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 	logResourceName := "aws_cloudwatch_log_group.test"
 	logResourceNameSecond := "aws_cloudwatch_log_group.test2"
@@ -739,7 +739,7 @@ func TestAccStorageGatewaySMBFileShare_audit(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_cacheAttributes(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -783,7 +783,7 @@ func TestAccStorageGatewaySMBFileShare_cacheAttributes(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_caseSensitivity(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -824,7 +824,7 @@ func TestAccStorageGatewaySMBFileShare_caseSensitivity(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_disappears(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -847,7 +847,7 @@ func TestAccStorageGatewaySMBFileShare_disappears(t *testing.T) {
 
 func TestAccStorageGatewaySMBFileShare_adminUserList(t *testing.T) {
 	var smbFileShare storagegateway.SMBFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_smb_file_share.test"
 	domainName := acctest.RandomDomainName()
 

@@ -18,7 +18,7 @@ import (
 
 func TestAccAPIGatewayRestAPI_basic(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -59,7 +59,7 @@ func TestAccAPIGatewayRestAPI_basic(t *testing.T) {
 func TestAccAPIGatewayRestAPI_tags(t *testing.T) {
 	var conf apigateway.RestApi
 	resourceName := "aws_api_gateway_rest_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },
@@ -109,7 +109,7 @@ func TestAccAPIGatewayRestAPI_tags(t *testing.T) {
 func TestAccAPIGatewayRestAPI_disappears(t *testing.T) {
 	var restApi apigateway.RestApi
 	resourceName := "aws_api_gateway_rest_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },
@@ -131,7 +131,7 @@ func TestAccAPIGatewayRestAPI_disappears(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_endpoint(t *testing.T) {
 	var restApi apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -207,7 +207,7 @@ func TestAccAPIGatewayRestAPI_endpoint(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_Endpoint_private(t *testing.T) {
 	var restApi apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -260,7 +260,7 @@ func TestAccAPIGatewayRestAPI_Endpoint_private(t *testing.T) {
 }
 
 func TestAccAPIGatewayRestAPI_apiKeySource(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -298,7 +298,7 @@ func TestAccAPIGatewayRestAPI_apiKeySource(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_APIKeySource_overrideBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -342,7 +342,7 @@ func TestAccAPIGatewayRestAPI_APIKeySource_overrideBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_APIKeySource_setByBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -370,7 +370,7 @@ func TestAccAPIGatewayRestAPI_APIKeySource_setByBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_binaryMediaTypes(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -407,7 +407,7 @@ func TestAccAPIGatewayRestAPI_binaryMediaTypes(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_BinaryMediaTypes_overrideBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -454,7 +454,7 @@ func TestAccAPIGatewayRestAPI_BinaryMediaTypes_overrideBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_BinaryMediaTypes_setByBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -483,7 +483,7 @@ func TestAccAPIGatewayRestAPI_BinaryMediaTypes_setByBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_body(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -527,7 +527,7 @@ func TestAccAPIGatewayRestAPI_body(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_description(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -562,7 +562,7 @@ func TestAccAPIGatewayRestAPI_description(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_Description_overrideBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -606,7 +606,7 @@ func TestAccAPIGatewayRestAPI_Description_overrideBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_Description_setByBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -633,7 +633,7 @@ func TestAccAPIGatewayRestAPI_Description_setByBody(t *testing.T) {
 }
 
 func TestAccAPIGatewayRestAPI_disableExecuteAPIEndpoint(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -671,7 +671,7 @@ func TestAccAPIGatewayRestAPI_disableExecuteAPIEndpoint(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_DisableExecuteAPIEndpoint_overrideBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -715,7 +715,7 @@ func TestAccAPIGatewayRestAPI_DisableExecuteAPIEndpoint_overrideBody(t *testing.
 
 func TestAccAPIGatewayRestAPI_DisableExecuteAPIEndpoint_setByBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -743,7 +743,7 @@ func TestAccAPIGatewayRestAPI_DisableExecuteAPIEndpoint_setByBody(t *testing.T) 
 
 func TestAccAPIGatewayRestAPI_Endpoint_vpcEndpointIDs(t *testing.T) {
 	var restApi apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 	vpcEndpointResourceName1 := "aws_vpc_endpoint.test"
 	vpcEndpointResourceName2 := "aws_vpc_endpoint.test2"
@@ -800,7 +800,7 @@ func TestAccAPIGatewayRestAPI_Endpoint_vpcEndpointIDs(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_EndpointVPCEndpointIDs_overrideBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 	vpcEndpointResourceName1 := "aws_vpc_endpoint.test.0"
 	vpcEndpointResourceName2 := "aws_vpc_endpoint.test.1"
@@ -853,7 +853,7 @@ func TestAccAPIGatewayRestAPI_EndpointVPCEndpointIDs_overrideBody(t *testing.T) 
 
 func TestAccAPIGatewayRestAPI_EndpointVPCEndpointIDs_setByBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 	vpcEndpointResourceName := "aws_vpc_endpoint.test"
 
@@ -884,7 +884,7 @@ func TestAccAPIGatewayRestAPI_EndpointVPCEndpointIDs_setByBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_minimumCompressionSize(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -926,7 +926,7 @@ func TestAccAPIGatewayRestAPI_minimumCompressionSize(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_MinimumCompressionSize_overrideBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -970,7 +970,7 @@ func TestAccAPIGatewayRestAPI_MinimumCompressionSize_overrideBody(t *testing.T) 
 
 func TestAccAPIGatewayRestAPI_MinimumCompressionSize_setByBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1000,8 +1000,8 @@ func TestAccAPIGatewayRestAPI_MinimumCompressionSize_setByBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_Name_overrideBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1045,7 +1045,7 @@ func TestAccAPIGatewayRestAPI_Name_overrideBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_parameters(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1082,7 +1082,7 @@ func TestAccAPIGatewayRestAPI_policy(t *testing.T) {
 	resourceName := "aws_api_gateway_rest_api.test"
 	expectedPolicyText := `{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"*"},"Action":"execute-api:Invoke","Resource":"*","Condition":{"IpAddress":{"aws:SourceIp":"123.123.123.123/32"}}}]}`
 	expectedUpdatePolicyText := `{"Version":"2012-10-17","Statement":[{"Effect":"Deny","Principal":{"AWS":"*"},"Action":"execute-api:Invoke","Resource":"*"}]}`
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },
@@ -1113,7 +1113,7 @@ func TestAccAPIGatewayRestAPI_policy(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_Policy_overrideBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1160,7 +1160,7 @@ func TestAccAPIGatewayRestAPI_Policy_overrideBody(t *testing.T) {
 
 func TestAccAPIGatewayRestAPI_Policy_setByBody(t *testing.T) {
 	var conf apigateway.RestApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_rest_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -21,7 +21,7 @@ func TestAccEC2RouteTableDataSource_basic(t *testing.T) {
 	datasource3Name := "data.aws_route_table.by_subnet"
 	datasource4Name := "data.aws_route_table.by_id"
 	datasource5Name := "data.aws_route_table.by_gateway"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -99,7 +99,7 @@ func TestAccEC2RouteTableDataSource_basic(t *testing.T) {
 
 func TestAccEC2RouteTableDataSource_main(t *testing.T) {
 	datasourceName := "data.aws_route_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

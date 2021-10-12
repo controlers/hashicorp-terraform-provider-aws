@@ -32,7 +32,7 @@ func testAccServer_basic(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
 	iamRoleResourceName := "aws_iam_role.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -184,7 +184,7 @@ func testAccServer_vpc(t *testing.T) {
 	defaultSecurityGroupResourceName := "aws_default_security_group.test"
 	subnetResourceName := "aws_subnet.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -253,7 +253,7 @@ func testAccServer_vpcAddressAllocationIDs(t *testing.T) {
 	defaultSecurityGroupResourceName := "aws_default_security_group.test"
 	subnetResourceName := "aws_subnet.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -323,7 +323,7 @@ func testAccServer_vpcSecurityGroupIDs(t *testing.T) {
 	securityGroup1ResourceName := "aws_security_group.test"
 	securityGroup2ResourceName := "aws_security_group.test2"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -378,7 +378,7 @@ func testAccServer_vpcAddressAllocationIds_securityGroupIDs(t *testing.T) {
 	securityGroup2ResourceName := "aws_security_group.test2"
 	subnetResourceName := "aws_subnet.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -431,7 +431,7 @@ func testAccServer_vpcAddressAllocationIds_securityGroupIDs(t *testing.T) {
 func testAccServer_updateEndpointType_publicToVPC(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -468,7 +468,7 @@ func testAccServer_updateEndpointType_publicToVPC(t *testing.T) {
 func testAccServer_updateEndpointType_publicToVPC_addressAllocationIDs(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -505,7 +505,7 @@ func testAccServer_updateEndpointType_publicToVPC_addressAllocationIDs(t *testin
 func testAccServer_updateEndpointType_vpcEndpointToVPC(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -542,7 +542,7 @@ func testAccServer_updateEndpointType_vpcEndpointToVPC(t *testing.T) {
 func testAccServer_updateEndpointType_vpcEndpointToVPC_addressAllocationIDs(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -579,7 +579,7 @@ func testAccServer_updateEndpointType_vpcEndpointToVPC_addressAllocationIDs(t *t
 func testAccServer_updateEndpointType_vpcEndpointToVPC_securityGroupIDs(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -616,7 +616,7 @@ func testAccServer_updateEndpointType_vpcEndpointToVPC_securityGroupIDs(t *testi
 func testAccServer_updateEndpointType_vpcToPublic(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -656,7 +656,7 @@ func testAccServer_protocols(t *testing.T) {
 	resourceName := "aws_transfer_server.test"
 	acmCAResourceName := "aws_acmpca_certificate_authority.test"
 	acmCertificateResourceName := "aws_acm_certificate.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t); testAccPreCheck(t) },
@@ -716,7 +716,7 @@ func testAccServer_protocols(t *testing.T) {
 func testAccServer_apiGateway(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t); testAccPreCheck(t) },
@@ -745,7 +745,7 @@ func testAccServer_apiGateway(t *testing.T) {
 func testAccServer_apiGateway_forceDestroy(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t); testAccPreCheck(t) },
@@ -774,7 +774,7 @@ func testAccServer_apiGateway_forceDestroy(t *testing.T) {
 func testAccServer_directoryService(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
@@ -811,7 +811,7 @@ func testAccServer_forceDestroy(t *testing.T) {
 	resourceName := "aws_transfer_server.test"
 	userResourceName := "aws_transfer_user.test"
 	sshKeyResourceName := "aws_transfer_ssh_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	publicKey, _, err := sdkacctest.RandSSHKeyPair(acctest.DefaultEmailAddress)
 	if err != nil {
@@ -875,7 +875,7 @@ func testAccServer_vpcEndpointID(t *testing.T) {
 	var conf transfer.DescribedServer
 	resourceName := "aws_transfer_server.test"
 	vpcEndpointResourceName := "aws_vpc_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	if acctest.Partition() == "aws-us-gov" {
 		t.Skip("Transfer Server VPC_ENDPOINT endpoint type is not supported in GovCloud partition")

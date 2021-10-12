@@ -21,7 +21,7 @@ import (
 func TestAccAutoScalingPlansScalingPlan_basicDynamicScaling(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -77,7 +77,7 @@ func TestAccAutoScalingPlansScalingPlan_basicDynamicScaling(t *testing.T) {
 func TestAccAutoScalingPlansScalingPlan_basicPredictiveScaling(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -139,8 +139,8 @@ func TestAccAutoScalingPlansScalingPlan_basicPredictiveScaling(t *testing.T) {
 func TestAccAutoScalingPlansScalingPlan_basicUpdate(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rNameUpdated := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -235,7 +235,7 @@ func TestAccAutoScalingPlansScalingPlan_basicUpdate(t *testing.T) {
 func TestAccAutoScalingPlansScalingPlan_disappears(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -258,7 +258,7 @@ func TestAccAutoScalingPlansScalingPlan_disappears(t *testing.T) {
 func TestAccAutoScalingPlansScalingPlan_DynamicScaling_customizedScalingMetricSpecification(t *testing.T) {
 	var scalingPlan autoscalingplans.ScalingPlan
 	resourceName := "aws_autoscalingplans_scaling_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

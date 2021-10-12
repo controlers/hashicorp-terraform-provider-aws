@@ -17,7 +17,7 @@ import (
 
 func TestAccSSOAdminPermissionSet_basic(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -44,7 +44,7 @@ func TestAccSSOAdminPermissionSet_basic(t *testing.T) {
 
 func TestAccSSOAdminPermissionSet_tags(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -98,7 +98,7 @@ func TestAccSSOAdminPermissionSet_tags(t *testing.T) {
 
 func TestAccSSOAdminPermissionSet_updateDescription(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -131,7 +131,7 @@ func TestAccSSOAdminPermissionSet_updateDescription(t *testing.T) {
 
 func TestAccSSOAdminPermissionSet_updateRelayState(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -164,7 +164,7 @@ func TestAccSSOAdminPermissionSet_updateRelayState(t *testing.T) {
 
 func TestAccSSOAdminPermissionSet_updateSessionDuration(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -199,7 +199,7 @@ func TestAccSSOAdminPermissionSet_updateSessionDuration(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/17411
 func TestAccSSOAdminPermissionSet_RelayState_updateSessionDuration(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },
@@ -238,7 +238,7 @@ func TestAccSSOAdminPermissionSet_RelayState_updateSessionDuration(t *testing.T)
 
 func TestAccSSOAdminPermissionSet_mixedPolicyAttachments(t *testing.T) {
 	resourceName := "aws_ssoadmin_permission_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckInstances(t) },

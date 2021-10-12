@@ -195,7 +195,7 @@ func TestAccDirectoryServiceDirectory_connector(t *testing.T) {
 
 func TestAccDirectoryServiceDirectory_withAliasAndSSO(t *testing.T) {
 	var ds directoryservice.DirectoryDescription
-	alias := sdkacctest.RandomWithPrefix("tf-acc-test")
+	alias := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_directory_service_directory.test"
 
 	resource.ParallelTest(t, resource.TestCase{

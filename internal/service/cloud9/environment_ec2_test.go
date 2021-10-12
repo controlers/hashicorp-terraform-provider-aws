@@ -19,7 +19,7 @@ import (
 func TestAccCloud9EnvironmentEC2_basic(t *testing.T) {
 	var conf cloud9.Environment
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-updated")
 	resourceName := "aws_cloud9_environment_ec2.test"
 
@@ -64,7 +64,7 @@ func TestAccCloud9EnvironmentEC2_basic(t *testing.T) {
 func TestAccCloud9EnvironmentEC2_allFields(t *testing.T) {
 	var conf cloud9.Environment
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-updated")
 	description := sdkacctest.RandomWithPrefix("Tf Acc Test")
 	uDescription := sdkacctest.RandomWithPrefix("Tf Acc Test Updated")
@@ -112,7 +112,7 @@ func TestAccCloud9EnvironmentEC2_allFields(t *testing.T) {
 func TestAccCloud9EnvironmentEC2_tags(t *testing.T) {
 	var conf cloud9.Environment
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloud9_environment_ec2.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -159,7 +159,7 @@ func TestAccCloud9EnvironmentEC2_tags(t *testing.T) {
 func TestAccCloud9EnvironmentEC2_disappears(t *testing.T) {
 	var conf cloud9.Environment
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloud9_environment_ec2.test"
 
 	resource.ParallelTest(t, resource.TestCase{

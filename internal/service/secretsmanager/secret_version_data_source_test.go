@@ -13,7 +13,7 @@ import (
 )
 
 func TestAccSecretsManagerSecretVersionDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_version.test"
 	datasourceName := "data.aws_secretsmanager_secret_version.test"
 
@@ -37,7 +37,7 @@ func TestAccSecretsManagerSecretVersionDataSource_basic(t *testing.T) {
 }
 
 func TestAccSecretsManagerSecretVersionDataSource_versionID(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_version.test"
 	datasourceName := "data.aws_secretsmanager_secret_version.test"
 
@@ -57,7 +57,7 @@ func TestAccSecretsManagerSecretVersionDataSource_versionID(t *testing.T) {
 }
 
 func TestAccSecretsManagerSecretVersionDataSource_versionStage(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_version.test"
 	datasourceName := "data.aws_secretsmanager_secret_version.test"
 

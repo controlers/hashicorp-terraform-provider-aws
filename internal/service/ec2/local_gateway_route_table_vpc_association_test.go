@@ -15,7 +15,7 @@ import (
 )
 
 func TestAccEC2LocalGatewayRouteTableVPCAssociation_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	localGatewayRouteTableDataSourceName := "data.aws_ec2_local_gateway_route_table.test"
 	resourceName := "aws_ec2_local_gateway_route_table_vpc_association.test"
 	vpcResourceName := "aws_vpc.test"
@@ -46,7 +46,7 @@ func TestAccEC2LocalGatewayRouteTableVPCAssociation_basic(t *testing.T) {
 }
 
 func TestAccEC2LocalGatewayRouteTableVPCAssociation_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ec2_local_gateway_route_table_vpc_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -68,7 +68,7 @@ func TestAccEC2LocalGatewayRouteTableVPCAssociation_disappears(t *testing.T) {
 }
 
 func TestAccEC2LocalGatewayRouteTableVPCAssociation_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ec2_local_gateway_route_table_vpc_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{

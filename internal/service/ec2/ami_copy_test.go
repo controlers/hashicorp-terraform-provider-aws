@@ -16,7 +16,7 @@ import (
 
 func TestAccEC2AMICopy_basic(t *testing.T) {
 	var image ec2.Image
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ami_copy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -44,7 +44,7 @@ func TestAccEC2AMICopy_basic(t *testing.T) {
 
 func TestAccEC2AMICopy_description(t *testing.T) {
 	var image ec2.Image
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ami_copy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -73,7 +73,7 @@ func TestAccEC2AMICopy_description(t *testing.T) {
 
 func TestAccEC2AMICopy_enaSupport(t *testing.T) {
 	var image ec2.Image
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ami_copy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -95,7 +95,7 @@ func TestAccEC2AMICopy_enaSupport(t *testing.T) {
 
 func TestAccEC2AMICopy_destinationOutpost(t *testing.T) {
 	var image ec2.Image
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	outpostDataSourceName := "data.aws_outposts_outpost.test"
 	resourceName := "aws_ami_copy.test"
 
@@ -119,7 +119,7 @@ func TestAccEC2AMICopy_destinationOutpost(t *testing.T) {
 func TestAccEC2AMICopy_tags(t *testing.T) {
 	var ami ec2.Image
 	resourceName := "aws_ami_copy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

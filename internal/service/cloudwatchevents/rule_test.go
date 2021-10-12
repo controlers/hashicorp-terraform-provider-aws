@@ -32,8 +32,8 @@ func testAccErrorCheckSkipEvents(t *testing.T) resource.ErrorCheckFunc {
 
 func TestAccCloudWatchEventsRule_basic(t *testing.T) {
 	var v1, v2, v3 events.DescribeRuleOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -152,7 +152,7 @@ func TestAccCloudWatchEventsRule_eventBusName(t *testing.T) {
 
 func TestAccCloudWatchEventsRule_role(t *testing.T) {
 	var v events.DescribeRuleOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cloudwatch_event_rule.test"
 	iamRoleResourceName := "aws_iam_role.test"
@@ -182,7 +182,7 @@ func TestAccCloudWatchEventsRule_role(t *testing.T) {
 
 func TestAccCloudWatchEventsRule_description(t *testing.T) {
 	var v1, v2 events.DescribeRuleOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -218,7 +218,7 @@ func TestAccCloudWatchEventsRule_description(t *testing.T) {
 
 func TestAccCloudWatchEventsRule_pattern(t *testing.T) {
 	var v1, v2 events.DescribeRuleOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -255,7 +255,7 @@ func TestAccCloudWatchEventsRule_pattern(t *testing.T) {
 
 func TestAccCloudWatchEventsRule_scheduleAndPattern(t *testing.T) {
 	var v events.DescribeRuleOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -339,7 +339,7 @@ func TestAccCloudWatchEventsRule_Name_generated(t *testing.T) {
 
 func TestAccCloudWatchEventsRule_tags(t *testing.T) {
 	var v1, v2, v3 events.DescribeRuleOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -391,7 +391,7 @@ func TestAccCloudWatchEventsRule_tags(t *testing.T) {
 
 func TestAccCloudWatchEventsRule_isEnabled(t *testing.T) {
 	var v1, v2, v3 events.DescribeRuleOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -478,7 +478,7 @@ func TestAccCloudWatchEventsRule_eventBusARN(t *testing.T) {
 	var v events.DescribeRuleOutput
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test-rule")
 	resourceName := "aws_cloudwatch_event_rule.test"
-	eventBusName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	eventBusName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

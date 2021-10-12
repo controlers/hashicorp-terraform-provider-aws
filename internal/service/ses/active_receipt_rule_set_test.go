@@ -32,7 +32,7 @@ func TestAccSESActiveReceiptRuleSet_serial(t *testing.T) {
 }
 
 func testAccActiveReceiptRuleSet_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_active_receipt_rule_set.test"
 
 	resource.Test(t, resource.TestCase{
@@ -57,7 +57,7 @@ func testAccActiveReceiptRuleSet_basic(t *testing.T) {
 }
 
 func testAccActiveReceiptRuleSet_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_active_receipt_rule_set.test"
 
 	resource.Test(t, resource.TestCase{

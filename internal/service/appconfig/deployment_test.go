@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccAppConfigDeployment_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_deployment.test"
 	appResourceName := "aws_appconfig_application.test"
 	confProfResourceName := "aws_appconfig_configuration_profile.test"
@@ -58,7 +58,7 @@ func TestAccAppConfigDeployment_basic(t *testing.T) {
 }
 
 func TestAccAppConfigDeployment_predefinedStrategy(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_deployment.test"
 	strategy := "AppConfig.Linear50PercentEvery30Seconds"
 
@@ -87,7 +87,7 @@ func TestAccAppConfigDeployment_predefinedStrategy(t *testing.T) {
 }
 
 func TestAccAppConfigDeployment_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_deployment.test"
 
 	resource.ParallelTest(t, resource.TestCase{

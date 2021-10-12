@@ -170,7 +170,7 @@ func TestAccDMSEndpoint_dynamoDB(t *testing.T) {
 
 func TestAccDMSEndpoint_elasticSearch(t *testing.T) {
 	resourceName := "aws_dms_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -204,7 +204,7 @@ func TestAccDMSEndpoint_elasticSearch(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/8009
 func TestAccDMSEndpoint_ElasticSearch_extraConnectionAttributes(t *testing.T) {
 	resourceName := "aws_dms_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -231,7 +231,7 @@ func TestAccDMSEndpoint_ElasticSearch_extraConnectionAttributes(t *testing.T) {
 
 func TestAccDMSEndpoint_ElasticSearch_errorRetryDuration(t *testing.T) {
 	resourceName := "aws_dms_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -269,7 +269,7 @@ func TestAccDMSEndpoint_ElasticSearch_errorRetryDuration(t *testing.T) {
 
 func TestAccDMSEndpoint_ElasticSearch_fullLoadErrorPercentage(t *testing.T) {
 	resourceName := "aws_dms_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -307,7 +307,7 @@ func TestAccDMSEndpoint_ElasticSearch_fullLoadErrorPercentage(t *testing.T) {
 
 func TestAccDMSEndpoint_kafka(t *testing.T) {
 	domainName := acctest.RandomSubdomain()
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dms_endpoint.test"
 
 	resource.ParallelTest(t, resource.TestCase{

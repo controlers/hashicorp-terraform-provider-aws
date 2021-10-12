@@ -254,7 +254,7 @@ func TestAccRDSClusterInstance_disappears(t *testing.T) {
 
 func TestAccRDSClusterInstance_publiclyAccessible(t *testing.T) {
 	var dbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -331,7 +331,7 @@ func TestAccRDSClusterInstance_copyTagsToSnapshot(t *testing.T) {
 func TestAccRDSClusterInstance_monitoringInterval(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -384,7 +384,7 @@ func TestAccRDSClusterInstance_MonitoringRoleARN_enabledToDisabled(t *testing.T)
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -423,7 +423,7 @@ func TestAccRDSClusterInstance_MonitoringRoleARN_enabledToRemoved(t *testing.T) 
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -461,7 +461,7 @@ func TestAccRDSClusterInstance_MonitoringRoleARN_removedToEnabled(t *testing.T) 
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -498,7 +498,7 @@ func TestAccRDSClusterInstance_MonitoringRoleARN_removedToEnabled(t *testing.T) 
 func TestAccRDSClusterInstance_PerformanceInsightsEnabled_auroraMySQL1(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -530,7 +530,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsEnabled_auroraMySQL1(t *testin
 func TestAccRDSClusterInstance_PerformanceInsightsEnabled_auroraMySQL2(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora-mysql"
 	engineVersion := "5.7.mysql_aurora.2.04.2"
 
@@ -563,7 +563,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsEnabled_auroraMySQL2(t *testin
 func TestAccRDSClusterInstance_PerformanceInsightsEnabled_auroraPostgresql(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora-postgresql"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -596,7 +596,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraMySQL1(t *testi
 	var dbInstance rds.DBInstance
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -629,7 +629,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraMySQL1(t *testi
 func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyIDAuroraMySQL1_defaultKeyToCustomKey(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -666,7 +666,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraMySQL2(t *testi
 	var dbInstance rds.DBInstance
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora-mysql"
 	engineVersion := "5.7.mysql_aurora.2.04.2"
 
@@ -700,7 +700,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraMySQL2(t *testi
 func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyIDAuroraMySQL2_defaultKeyToCustomKey(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora-mysql"
 	engineVersion := "5.7.mysql_aurora.2.04.2"
 
@@ -738,7 +738,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraPostgresql(t *t
 	var dbInstance rds.DBInstance
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora-postgresql"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -771,7 +771,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyID_auroraPostgresql(t *t
 func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyIDAuroraPostgresql_defaultKeyToCustomKey(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_rds_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	engine := "aurora-postgresql"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -806,7 +806,7 @@ func TestAccRDSClusterInstance_PerformanceInsightsKMSKeyIDAuroraPostgresql_defau
 
 func TestAccRDSClusterInstance_caCertificateIdentifier(t *testing.T) {
 	var dbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster_instance.test"
 	dataSourceName := "data.aws_rds_certificate.latest"
 

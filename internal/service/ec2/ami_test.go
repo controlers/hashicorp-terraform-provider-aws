@@ -22,7 +22,7 @@ func TestAccEC2AMI_basic(t *testing.T) {
 	var ami ec2.Image
 	resourceName := "aws_ami.test"
 	snapshotResourceName := "aws_ebs_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -82,7 +82,7 @@ func TestAccEC2AMI_description(t *testing.T) {
 	var ami ec2.Image
 	resourceName := "aws_ami.test"
 	snapshotResourceName := "aws_ebs_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	desc := sdkacctest.RandomWithPrefix("desc")
 	descUpdated := sdkacctest.RandomWithPrefix("desc-updated")
 
@@ -169,7 +169,7 @@ func TestAccEC2AMI_description(t *testing.T) {
 func TestAccEC2AMI_disappears(t *testing.T) {
 	var ami ec2.Image
 	resourceName := "aws_ami.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -193,7 +193,7 @@ func TestAccEC2AMI_ephemeralBlockDevices(t *testing.T) {
 	var ami ec2.Image
 	resourceName := "aws_ami.test"
 	snapshotResourceName := "aws_ebs_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -255,7 +255,7 @@ func TestAccEC2AMI_gp3BlockDevice(t *testing.T) {
 	var ami ec2.Image
 	resourceName := "aws_ami.test"
 	snapshotResourceName := "aws_ebs_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -318,7 +318,7 @@ func TestAccEC2AMI_gp3BlockDevice(t *testing.T) {
 func TestAccEC2AMI_tags(t *testing.T) {
 	var ami ec2.Image
 	resourceName := "aws_ami.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

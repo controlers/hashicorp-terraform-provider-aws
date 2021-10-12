@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccCloudFormationTypeDataSource_ARN_private(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	typeName := fmt.Sprintf("HashiCorp::TerraformAwsProvider::TfAccTest%s", sdkacctest.RandString(8))
 	zipPath := testAccTypeZipGenerator(t, typeName)
 	resourceName := "aws_cloudformation_type.test"
@@ -77,7 +77,7 @@ func TestAccCloudFormationTypeDataSource_ARN_public(t *testing.T) {
 }
 
 func TestAccCloudFormationTypeDataSource_TypeName_private(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	typeName := fmt.Sprintf("HashiCorp::TerraformAwsProvider::TfAccTest%s", sdkacctest.RandString(8))
 	zipPath := testAccTypeZipGenerator(t, typeName)
 	resourceName := "aws_cloudformation_type.test"

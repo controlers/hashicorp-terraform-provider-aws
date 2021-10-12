@@ -18,7 +18,7 @@ import (
 
 func TestAccSecretsManagerSecretVersion_basicString(t *testing.T) {
 	var version secretsmanager.GetSecretValueOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_version.test"
 	secretResourceName := "aws_secretsmanager_secret.test"
 
@@ -50,7 +50,7 @@ func TestAccSecretsManagerSecretVersion_basicString(t *testing.T) {
 
 func TestAccSecretsManagerSecretVersion_base64Binary(t *testing.T) {
 	var version secretsmanager.GetSecretValueOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_version.test"
 	secretResourceName := "aws_secretsmanager_secret.test"
 
@@ -82,7 +82,7 @@ func TestAccSecretsManagerSecretVersion_base64Binary(t *testing.T) {
 
 func TestAccSecretsManagerSecretVersion_versionStages(t *testing.T) {
 	var version secretsmanager.GetSecretValueOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_version.test"
 
 	resource.ParallelTest(t, resource.TestCase{

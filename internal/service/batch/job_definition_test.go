@@ -20,7 +20,7 @@ import (
 
 func TestAccBatchJobDefinition_basic(t *testing.T) {
 	var jd batch.JobDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -57,7 +57,7 @@ func TestAccBatchJobDefinition_basic(t *testing.T) {
 
 func TestAccBatchJobDefinition_disappears(t *testing.T) {
 	var jd batch.JobDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -80,7 +80,7 @@ func TestAccBatchJobDefinition_disappears(t *testing.T) {
 
 func TestAccBatchJobDefinition_PlatformCapabilities_ec2(t *testing.T) {
 	var jd batch.JobDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -118,7 +118,7 @@ func TestAccBatchJobDefinition_PlatformCapabilities_ec2(t *testing.T) {
 
 func TestAccBatchJobDefinition_PlatformCapabilitiesFargate_containerPropertiesDefaults(t *testing.T) {
 	var jd batch.JobDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -156,7 +156,7 @@ func TestAccBatchJobDefinition_PlatformCapabilitiesFargate_containerPropertiesDe
 
 func TestAccBatchJobDefinition_PlatformCapabilities_fargate(t *testing.T) {
 	var jd batch.JobDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -233,7 +233,7 @@ func TestAccBatchJobDefinition_ContainerProperties_advanced(t *testing.T) {
 			},
 		},
 	}
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -260,7 +260,7 @@ func TestAccBatchJobDefinition_ContainerProperties_advanced(t *testing.T) {
 
 func TestAccBatchJobDefinition_updateForcesNewResource(t *testing.T) {
 	var before, after batch.JobDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -294,7 +294,7 @@ func TestAccBatchJobDefinition_updateForcesNewResource(t *testing.T) {
 
 func TestAccBatchJobDefinition_tags(t *testing.T) {
 	var jd batch.JobDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -339,7 +339,7 @@ func TestAccBatchJobDefinition_tags(t *testing.T) {
 
 func TestAccBatchJobDefinition_propagateTags(t *testing.T) {
 	var jd batch.JobDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_batch_job_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{

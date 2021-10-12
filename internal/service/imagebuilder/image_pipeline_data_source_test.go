@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccImageBuilderImagePipelineDataSource_arn(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_imagebuilder_image_pipeline.test"
 	resourceName := "aws_imagebuilder_image_pipeline.test"
 

@@ -189,7 +189,7 @@ func testAccWorkspace_workspaceProperties(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/13558
 func testAccWorkspace_workspaceProperties_runningModeAlwaysOn(t *testing.T) {
 	var v1 workspaces.Workspace
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_workspaces_workspace.test"
 	domain := acctest.RandomDomainName()
 

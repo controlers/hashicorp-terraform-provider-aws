@@ -45,7 +45,7 @@ func TestAccEC2NetworkACL_basic(t *testing.T) {
 
 func TestAccEC2NetworkACL_tags(t *testing.T) {
 	resourceName := "aws_network_acl.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var networkAcl ec2.NetworkAcl
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -566,7 +566,7 @@ func TestAccEC2NetworkACL_ipv6Rules(t *testing.T) {
 
 func TestAccEC2NetworkACL_ipv6ICMPRules(t *testing.T) {
 	var networkAcl ec2.NetworkAcl
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_network_acl.test"
 
 	resource.ParallelTest(t, resource.TestCase{

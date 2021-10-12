@@ -16,7 +16,7 @@ import (
 
 func TestAccRedshiftSnapshotCopyGrant_basic(t *testing.T) {
 	resourceName := "aws_redshift_snapshot_copy_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -44,7 +44,7 @@ func TestAccRedshiftSnapshotCopyGrant_basic(t *testing.T) {
 
 func TestAccRedshiftSnapshotCopyGrant_update(t *testing.T) {
 	resourceName := "aws_redshift_snapshot_copy_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -88,7 +88,7 @@ func TestAccRedshiftSnapshotCopyGrant_update(t *testing.T) {
 
 func TestAccRedshiftSnapshotCopyGrant_disappears(t *testing.T) {
 	resourceName := "aws_redshift_snapshot_copy_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

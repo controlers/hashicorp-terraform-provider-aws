@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccQuickSightGroupMembership_basic(t *testing.T) {
-	groupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	groupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	memberName := "tfacctest" + sdkacctest.RandString(10)
 	resourceName := "aws_quicksight_group_membership.default"
 
@@ -42,7 +42,7 @@ func TestAccQuickSightGroupMembership_basic(t *testing.T) {
 }
 
 func TestAccQuickSightGroupMembership_disappears(t *testing.T) {
-	groupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	groupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	memberName := "tfacctest" + sdkacctest.RandString(10)
 	resourceName := "aws_quicksight_group_membership.default"
 

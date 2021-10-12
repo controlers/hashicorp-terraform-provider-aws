@@ -60,7 +60,7 @@ func testAccIPSet_basic(t *testing.T) {
 }
 
 func testAccIPSet_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_guardduty_ipset.test"
 
 	resource.Test(t, resource.TestCase{

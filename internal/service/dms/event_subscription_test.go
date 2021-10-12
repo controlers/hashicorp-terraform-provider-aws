@@ -20,7 +20,7 @@ func TestAccDMSEventSubscription_basic(t *testing.T) {
 	var eventSubscription dms.EventSubscription
 	resourceName := "aws_dms_event_subscription.test"
 	snsTopicResourceName := "aws_sns_topic.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -54,7 +54,7 @@ func TestAccDMSEventSubscription_basic(t *testing.T) {
 func TestAccDMSEventSubscription_disappears(t *testing.T) {
 	var eventSubscription dms.EventSubscription
 	resourceName := "aws_dms_event_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -77,7 +77,7 @@ func TestAccDMSEventSubscription_disappears(t *testing.T) {
 func TestAccDMSEventSubscription_enabled(t *testing.T) {
 	var eventSubscription dms.EventSubscription
 	resourceName := "aws_dms_event_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -118,7 +118,7 @@ func TestAccDMSEventSubscription_enabled(t *testing.T) {
 func TestAccDMSEventSubscription_eventCategories(t *testing.T) {
 	var eventSubscription dms.EventSubscription
 	resourceName := "aws_dms_event_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -155,7 +155,7 @@ func TestAccDMSEventSubscription_eventCategories(t *testing.T) {
 
 func TestAccDMSEventSubscription_tags(t *testing.T) {
 	var eventSubscription dms.EventSubscription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dms_event_subscription.test"
 
 	resource.ParallelTest(t, resource.TestCase{

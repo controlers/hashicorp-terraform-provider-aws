@@ -17,7 +17,7 @@ import (
 
 func TestAccStorageGatewayGateway_GatewayType_cached(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -59,7 +59,7 @@ func TestAccStorageGatewayGateway_GatewayType_cached(t *testing.T) {
 
 func TestAccStorageGatewayGateway_GatewayType_fileFSxSMB(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -100,7 +100,7 @@ func TestAccStorageGatewayGateway_GatewayType_fileFSxSMB(t *testing.T) {
 
 func TestAccStorageGatewayGateway_GatewayType_fileS3(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -141,7 +141,7 @@ func TestAccStorageGatewayGateway_GatewayType_fileS3(t *testing.T) {
 
 func TestAccStorageGatewayGateway_GatewayType_stored(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -182,7 +182,7 @@ func TestAccStorageGatewayGateway_GatewayType_stored(t *testing.T) {
 
 func TestAccStorageGatewayGateway_GatewayType_vtl(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -221,7 +221,7 @@ func TestAccStorageGatewayGateway_GatewayType_vtl(t *testing.T) {
 
 func TestAccStorageGatewayGateway_tags(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -268,8 +268,8 @@ func TestAccStorageGatewayGateway_tags(t *testing.T) {
 
 func TestAccStorageGatewayGateway_gatewayName(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -304,7 +304,7 @@ func TestAccStorageGatewayGateway_gatewayName(t *testing.T) {
 
 func TestAccStorageGatewayGateway_cloudWatchLogs(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 	resourceName2 := "aws_cloudwatch_log_group.test"
 
@@ -333,7 +333,7 @@ func TestAccStorageGatewayGateway_cloudWatchLogs(t *testing.T) {
 
 func TestAccStorageGatewayGateway_gatewayTimezone(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -368,7 +368,7 @@ func TestAccStorageGatewayGateway_gatewayTimezone(t *testing.T) {
 
 func TestAccStorageGatewayGateway_gatewayVPCEndpoint(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 	vpcEndpointResourceName := "aws_vpc_endpoint.test"
 
@@ -397,7 +397,7 @@ func TestAccStorageGatewayGateway_gatewayVPCEndpoint(t *testing.T) {
 
 func TestAccStorageGatewayGateway_smbActiveDirectorySettings(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 	domainName := acctest.RandomDomainName()
 
@@ -429,7 +429,7 @@ func TestAccStorageGatewayGateway_smbActiveDirectorySettings(t *testing.T) {
 
 func TestAccStorageGatewayGateway_SMBActiveDirectorySettings_timeout(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 	domainName := acctest.RandomDomainName()
 
@@ -460,7 +460,7 @@ func TestAccStorageGatewayGateway_SMBActiveDirectorySettings_timeout(t *testing.
 
 func TestAccStorageGatewayGateway_smbMicrosoftActiveDirectorySettings(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 	domainName := acctest.RandomDomainName()
 	username := "Admin"
@@ -493,7 +493,7 @@ func TestAccStorageGatewayGateway_smbMicrosoftActiveDirectorySettings(t *testing
 
 func TestAccStorageGatewayGateway_SMBMicrosoftActiveDirectorySettings_timeout(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 	domainName := acctest.RandomDomainName()
 
@@ -524,7 +524,7 @@ func TestAccStorageGatewayGateway_SMBMicrosoftActiveDirectorySettings_timeout(t 
 
 func TestAccStorageGatewayGateway_smbGuestPassword(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -559,7 +559,7 @@ func TestAccStorageGatewayGateway_smbGuestPassword(t *testing.T) {
 
 func TestAccStorageGatewayGateway_smbSecurityStrategy(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -595,7 +595,7 @@ func TestAccStorageGatewayGateway_smbSecurityStrategy(t *testing.T) {
 
 func TestAccStorageGatewayGateway_smbVisibility(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -637,7 +637,7 @@ func TestAccStorageGatewayGateway_smbVisibility(t *testing.T) {
 
 func TestAccStorageGatewayGateway_disappears(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -660,7 +660,7 @@ func TestAccStorageGatewayGateway_disappears(t *testing.T) {
 
 func TestAccStorageGatewayGateway_bandwidthUpload(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -702,7 +702,7 @@ func TestAccStorageGatewayGateway_bandwidthUpload(t *testing.T) {
 
 func TestAccStorageGatewayGateway_bandwidthDownload(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -744,7 +744,7 @@ func TestAccStorageGatewayGateway_bandwidthDownload(t *testing.T) {
 
 func TestAccStorageGatewayGateway_bandwidthAll(t *testing.T) {
 	var gateway storagegateway.DescribeGatewayInformationOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_gateway.test"
 
 	resource.ParallelTest(t, resource.TestCase{

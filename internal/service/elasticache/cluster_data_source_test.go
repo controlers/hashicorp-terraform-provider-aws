@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccElastiCacheClusterDataSource_Data_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elasticache_cluster.test"
 	dataSourceName := "data.aws_elasticache_cluster.test"
 

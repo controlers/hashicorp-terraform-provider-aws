@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccNetworkFirewallFirewall_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall.test"
 	policyResourceName := "aws_networkfirewall_firewall_policy.test"
 	subnetResourceName := "aws_subnet.test"
@@ -62,7 +62,7 @@ func TestAccNetworkFirewallFirewall_basic(t *testing.T) {
 }
 
 func TestAccNetworkFirewallFirewall_description(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -102,7 +102,7 @@ func TestAccNetworkFirewallFirewall_description(t *testing.T) {
 }
 
 func TestAccNetworkFirewallFirewall_deleteProtection(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -143,7 +143,7 @@ func TestAccNetworkFirewallFirewall_deleteProtection(t *testing.T) {
 }
 
 func TestAccNetworkFirewallFirewall_SubnetMappings_updateSubnet(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall.test"
 	subnetResourceName := "aws_subnet.test"
 	updateSubnetResourceName := "aws_subnet.example"
@@ -188,7 +188,7 @@ func TestAccNetworkFirewallFirewall_SubnetMappings_updateSubnet(t *testing.T) {
 }
 
 func TestAccNetworkFirewallFirewall_SubnetMappings_updateMultipleSubnets(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall.test"
 	subnetResourceName := "aws_subnet.test"
 	updateSubnetResourceName := "aws_subnet.example"
@@ -247,7 +247,7 @@ func TestAccNetworkFirewallFirewall_SubnetMappings_updateMultipleSubnets(t *test
 }
 
 func TestAccNetworkFirewallFirewall_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -289,7 +289,7 @@ func TestAccNetworkFirewallFirewall_tags(t *testing.T) {
 }
 
 func TestAccNetworkFirewallFirewall_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall.test"
 
 	resource.ParallelTest(t, resource.TestCase{

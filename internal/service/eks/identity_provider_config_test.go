@@ -18,7 +18,7 @@ import (
 
 func TestAccEKSIdentityProviderConfig_basic(t *testing.T) {
 	var config eks.OidcIdentityProviderConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	eksClusterResourceName := "aws_eks_cluster.test"
 	resourceName := "aws_eks_identity_provider_config.test"
 	ctx := context.TODO()
@@ -62,7 +62,7 @@ func TestAccEKSIdentityProviderConfig_basic(t *testing.T) {
 
 func TestAccEKSIdentityProviderConfig_disappears(t *testing.T) {
 	var config eks.OidcIdentityProviderConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_identity_provider_config.test"
 	ctx := context.TODO()
 
@@ -86,7 +86,7 @@ func TestAccEKSIdentityProviderConfig_disappears(t *testing.T) {
 
 func TestAccEKSIdentityProviderConfig_allOIDCOptions(t *testing.T) {
 	var config eks.OidcIdentityProviderConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_identity_provider_config.test"
 	ctx := context.TODO()
 
@@ -124,7 +124,7 @@ func TestAccEKSIdentityProviderConfig_allOIDCOptions(t *testing.T) {
 
 func TestAccEKSIdentityProviderConfig_tags(t *testing.T) {
 	var config eks.OidcIdentityProviderConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_identity_provider_config.test"
 	ctx := context.TODO()
 

@@ -21,7 +21,7 @@ import (
 // These tests need to be serialized, else resources get orphaned after "TooManyRequests" errors.
 func TestAccAPIGatewayV2APIMapping_basic(t *testing.T) {
 	var certificateArn string
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	// Create an ACM certificate to be used by all the tests.
 	// It is created outside the Terraform configurations because deletion

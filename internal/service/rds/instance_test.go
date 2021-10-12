@@ -272,7 +272,7 @@ func TestAccRDSInstance_iamAuth(t *testing.T) {
 func TestAccRDSInstance_allowMajorVersionUpgrade(t *testing.T) {
 	var dbInstance1 rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -315,7 +315,7 @@ func TestAccRDSInstance_dbSubnetGroupName(t *testing.T) {
 	var dbInstance rds.DBInstance
 	var dbSubnetGroup rds.DBSubnetGroup
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	resourceName := "aws_db_instance.test"
 
@@ -342,7 +342,7 @@ func TestAccRDSInstance_DBSubnetGroupName_ramShared(t *testing.T) {
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	resourceName := "aws_db_instance.test"
 
@@ -372,7 +372,7 @@ func TestAccRDSInstance_DBSubnetGroupName_vpcSecurityGroupIDs(t *testing.T) {
 	var dbInstance rds.DBInstance
 	var dbSubnetGroup rds.DBSubnetGroup
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	resourceName := "aws_db_instance.test"
 
@@ -397,7 +397,7 @@ func TestAccRDSInstance_DBSubnetGroupName_vpcSecurityGroupIDs(t *testing.T) {
 func TestAccRDSInstance_deletionProtection(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -480,7 +480,7 @@ func TestAccRDSInstance_FinalSnapshotIdentifier_skipFinalSnapshot(t *testing.T) 
 func TestAccRDSInstance_isAlreadyBeingDeleted(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -518,7 +518,7 @@ func TestAccRDSInstance_isAlreadyBeingDeleted(t *testing.T) {
 func TestAccRDSInstance_maxAllocatedStorage(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -562,7 +562,7 @@ func TestAccRDSInstance_maxAllocatedStorage(t *testing.T) {
 func TestAccRDSInstance_password(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -601,7 +601,7 @@ func TestAccRDSInstance_password(t *testing.T) {
 func TestAccRDSInstance_replicateSourceDB(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -626,7 +626,7 @@ func TestAccRDSInstance_replicateSourceDB(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_allocatedStorage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -652,7 +652,7 @@ func TestAccRDSInstance_ReplicateSourceDB_allocatedStorage(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_iops(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -678,7 +678,7 @@ func TestAccRDSInstance_ReplicateSourceDB_iops(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_allocatedStorageAndIops(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -705,7 +705,7 @@ func TestAccRDSInstance_ReplicateSourceDB_allocatedStorageAndIops(t *testing.T) 
 func TestAccRDSInstance_ReplicateSourceDB_allowMajorVersionUpgrade(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -731,7 +731,7 @@ func TestAccRDSInstance_ReplicateSourceDB_allowMajorVersionUpgrade(t *testing.T)
 func TestAccRDSInstance_ReplicateSourceDB_autoMinorVersionUpgrade(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -757,7 +757,7 @@ func TestAccRDSInstance_ReplicateSourceDB_autoMinorVersionUpgrade(t *testing.T) 
 func TestAccRDSInstance_ReplicateSourceDB_availabilityZone(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -782,7 +782,7 @@ func TestAccRDSInstance_ReplicateSourceDB_availabilityZone(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_backupRetentionPeriod(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -808,7 +808,7 @@ func TestAccRDSInstance_ReplicateSourceDB_backupRetentionPeriod(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_backupWindow(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -836,7 +836,7 @@ func TestAccRDSInstance_ReplicateSourceDB_dbSubnetGroupName(t *testing.T) {
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	resourceName := "aws_db_instance.test"
 
@@ -866,7 +866,7 @@ func TestAccRDSInstance_ReplicateSourceDBDBSubnetGroupName_ramShared(t *testing.
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	resourceName := "aws_db_instance.test"
 
@@ -898,7 +898,7 @@ func TestAccRDSInstance_ReplicateSourceDBDBSubnetGroupName_vpcSecurityGroupIDs(t
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	resourceName := "aws_db_instance.test"
 
@@ -938,7 +938,7 @@ func TestAccRDSInstance_ReplicateSourceDB_deletionProtection(t *testing.T) {
 
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -974,7 +974,7 @@ func TestAccRDSInstance_ReplicateSourceDB_deletionProtection(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_iamDatabaseAuthenticationEnabled(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1000,7 +1000,7 @@ func TestAccRDSInstance_ReplicateSourceDB_iamDatabaseAuthenticationEnabled(t *te
 func TestAccRDSInstance_ReplicateSourceDB_maintenanceWindow(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1026,7 +1026,7 @@ func TestAccRDSInstance_ReplicateSourceDB_maintenanceWindow(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_maxAllocatedStorage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1052,7 +1052,7 @@ func TestAccRDSInstance_ReplicateSourceDB_maxAllocatedStorage(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_monitoring(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1078,7 +1078,7 @@ func TestAccRDSInstance_ReplicateSourceDB_monitoring(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_multiAZ(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1104,7 +1104,7 @@ func TestAccRDSInstance_ReplicateSourceDB_multiAZ(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_parameterGroupName(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1131,7 +1131,7 @@ func TestAccRDSInstance_ReplicateSourceDB_parameterGroupName(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_port(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1157,7 +1157,7 @@ func TestAccRDSInstance_ReplicateSourceDB_port(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_vpcSecurityGroupIDs(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1183,7 +1183,7 @@ func TestAccRDSInstance_ReplicateSourceDB_vpcSecurityGroupIDs(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_caCertificateIdentifier(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 	dataSourceName := "data.aws_rds_certificate.latest"
@@ -1211,7 +1211,7 @@ func TestAccRDSInstance_ReplicateSourceDB_caCertificateIdentifier(t *testing.T) 
 func TestAccRDSInstance_ReplicateSourceDB_replicaMode(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
 
@@ -1236,7 +1236,7 @@ func TestAccRDSInstance_ReplicateSourceDB_replicaMode(t *testing.T) {
 
 func TestAccRDSInstance_s3Import(t *testing.T) {
 	var snap rds.DBInstance
-	bucket := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucket := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	uniqueId := sdkacctest.RandomWithPrefix("tf-acc-s3-import-test")
 	bucketPrefix := sdkacctest.RandString(5)
 
@@ -1260,7 +1260,7 @@ func TestAccRDSInstance_snapshotIdentifier(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1286,7 +1286,7 @@ func TestAccRDSInstance_snapshotIdentifier(t *testing.T) {
 func TestAccRDSInstance_snapshotIdentifierRemoved(t *testing.T) {
 	var dbInstance1, dbInstance2 rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1316,7 +1316,7 @@ func TestAccRDSInstance_SnapshotIdentifier_allocatedStorage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1344,7 +1344,7 @@ func TestAccRDSInstance_SnapshotIdentifier_io1Storage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1372,7 +1372,7 @@ func TestAccRDSInstance_SnapshotIdentifier_allowMajorVersionUpgrade(t *testing.T
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1400,7 +1400,7 @@ func TestAccRDSInstance_SnapshotIdentifier_autoMinorVersionUpgrade(t *testing.T)
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1428,7 +1428,7 @@ func TestAccRDSInstance_SnapshotIdentifier_availabilityZone(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1455,7 +1455,7 @@ func TestAccRDSInstance_SnapshotIdentifier_backupRetentionPeriod(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1483,7 +1483,7 @@ func TestAccRDSInstance_SnapshotIdentifierBackupRetentionPeriod_unset(t *testing
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1511,7 +1511,7 @@ func TestAccRDSInstance_SnapshotIdentifier_backupWindow(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1540,7 +1540,7 @@ func TestAccRDSInstance_SnapshotIdentifier_dbSubnetGroupName(t *testing.T) {
 	var dbSnapshot rds.DBSnapshot
 	var dbSubnetGroup rds.DBSubnetGroup
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
@@ -1572,7 +1572,7 @@ func TestAccRDSInstance_SnapshotIdentifierDBSubnetGroupName_ramShared(t *testing
 	var dbSubnetGroup rds.DBSubnetGroup
 	var providers []*schema.Provider
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
@@ -1607,7 +1607,7 @@ func TestAccRDSInstance_SnapshotIdentifierDBSubnetGroupName_vpcSecurityGroupIDs(
 	var dbSnapshot rds.DBSnapshot
 	var dbSubnetGroup rds.DBSubnetGroup
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbSubnetGroupResourceName := "aws_db_subnet_group.test"
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
@@ -1637,7 +1637,7 @@ func TestAccRDSInstance_SnapshotIdentifier_deletionProtection(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1675,7 +1675,7 @@ func TestAccRDSInstance_SnapshotIdentifier_iamDatabaseAuthenticationEnabled(t *t
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1703,7 +1703,7 @@ func TestAccRDSInstance_SnapshotIdentifier_maintenanceWindow(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1731,7 +1731,7 @@ func TestAccRDSInstance_SnapshotIdentifier_maxAllocatedStorage(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1759,7 +1759,7 @@ func TestAccRDSInstance_SnapshotIdentifier_monitoring(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1787,7 +1787,7 @@ func TestAccRDSInstance_SnapshotIdentifier_multiAZ(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1815,7 +1815,7 @@ func TestAccRDSInstance_SnapshotIdentifierMultiAZ_sqlServer(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1843,7 +1843,7 @@ func TestAccRDSInstance_SnapshotIdentifier_parameterGroupName(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1872,7 +1872,7 @@ func TestAccRDSInstance_SnapshotIdentifier_port(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1900,7 +1900,7 @@ func TestAccRDSInstance_SnapshotIdentifier_tags(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1933,7 +1933,7 @@ func TestAccRDSInstance_SnapshotIdentifierTags_unset(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1961,7 +1961,7 @@ func TestAccRDSInstance_SnapshotIdentifier_vpcSecurityGroupIDs(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -1992,7 +1992,7 @@ func TestAccRDSInstance_SnapshotIdentifierVPCSecurityGroupIDs_tags(t *testing.T)
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.test"
@@ -2020,7 +2020,7 @@ func TestAccRDSInstance_SnapshotIdentifierVPCSecurityGroupIDs_tags(t *testing.T)
 func TestAccRDSInstance_monitoringInterval(t *testing.T) {
 	var dbInstance rds.DBInstance
 	resourceName := "aws_db_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2075,7 +2075,7 @@ func TestAccRDSInstance_MonitoringRoleARN_enabledToDisabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_db_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2116,7 +2116,7 @@ func TestAccRDSInstance_MonitoringRoleARN_enabledToRemoved(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_db_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2156,7 +2156,7 @@ func TestAccRDSInstance_MonitoringRoleARN_removedToEnabled(t *testing.T) {
 	var dbInstance rds.DBInstance
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_db_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2297,7 +2297,7 @@ func TestAccRDSInstance_MSSQL_tz(t *testing.T) {
 func TestAccRDSInstance_MSSQL_domain(t *testing.T) {
 	var vBefore, vAfter rds.DBInstance
 	resourceName := "aws_db_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := acctest.RandomDomain()
 	directory1 := domain.RandomSubdomain().String()
@@ -2335,7 +2335,7 @@ func TestAccRDSInstance_MSSQL_domainSnapshotRestore(t *testing.T) {
 	var v, vRestoredInstance rds.DBInstance
 	resourceName := "aws_db_instance.test"
 	originResourceName := "aws_db_instance.origin"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := acctest.RandomDomainName()
 
@@ -2509,7 +2509,7 @@ func TestAccRDSInstance_EnabledCloudWatchLogsExports_mySQL(t *testing.T) {
 func TestAccRDSInstance_EnabledCloudWatchLogsExports_msSQL(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2543,7 +2543,7 @@ func TestAccRDSInstance_EnabledCloudWatchLogsExports_msSQL(t *testing.T) {
 func TestAccRDSInstance_EnabledCloudWatchLogsExports_oracle(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2578,7 +2578,7 @@ func TestAccRDSInstance_EnabledCloudWatchLogsExports_oracle(t *testing.T) {
 func TestAccRDSInstance_EnabledCloudWatchLogsExports_postgresql(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2964,7 +2964,7 @@ func testAccCheckInstanceEC2ClassicExists(resourceName string, v *rds.DBInstance
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/8792
 func TestAccRDSInstance_PerformanceInsightsEnabled_disabledToEnabled(t *testing.T) {
 	var dbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -3003,7 +3003,7 @@ func TestAccRDSInstance_PerformanceInsightsEnabled_disabledToEnabled(t *testing.
 
 func TestAccRDSInstance_PerformanceInsightsEnabled_enabledToDisabled(t *testing.T) {
 	var dbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -3042,7 +3042,7 @@ func TestAccRDSInstance_PerformanceInsightsEnabled_enabledToDisabled(t *testing.
 
 func TestAccRDSInstance_performanceInsightsKMSKeyID(t *testing.T) {
 	var dbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_db_instance.test"
 
@@ -3092,7 +3092,7 @@ func TestAccRDSInstance_performanceInsightsKMSKeyID(t *testing.T) {
 
 func TestAccRDSInstance_performanceInsightsRetentionPeriod(t *testing.T) {
 	var dbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -3134,7 +3134,7 @@ func TestAccRDSInstance_performanceInsightsRetentionPeriod(t *testing.T) {
 func TestAccRDSInstance_ReplicateSourceDB_performanceInsightsEnabled(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	sourceResourceName := "aws_db_instance.source"
 	resourceName := "aws_db_instance.test"
@@ -3164,7 +3164,7 @@ func TestAccRDSInstance_SnapshotIdentifier_performanceInsightsEnabled(t *testing
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	sourceDbResourceName := "aws_db_instance.source"
 	snapshotResourceName := "aws_db_snapshot.test"
@@ -3289,7 +3289,7 @@ func TestAccRDSInstance_RestoreToPointInTime_sourceResourceID(t *testing.T) {
 func TestAccRDSInstance_NationalCharacterSet_oracle(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -3324,7 +3324,7 @@ func TestAccRDSInstance_NationalCharacterSet_oracle(t *testing.T) {
 func TestAccRDSInstance_NoNationalCharacterSet_oracle(t *testing.T) {
 	var dbInstance rds.DBInstance
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -3358,7 +3358,7 @@ func TestAccRDSInstance_NoNationalCharacterSet_oracle(t *testing.T) {
 
 func TestAccRDSInstance_coIPEnabled(t *testing.T) {
 	var v rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -3382,7 +3382,7 @@ func TestAccRDSInstance_coIPEnabled(t *testing.T) {
 
 func TestAccRDSInstance_CoIPEnabled_disabledToEnabled(t *testing.T) {
 	var dbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -3421,7 +3421,7 @@ func TestAccRDSInstance_CoIPEnabled_disabledToEnabled(t *testing.T) {
 
 func TestAccRDSInstance_CoIPEnabled_enabledToDisabled(t *testing.T) {
 	var dbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -3460,7 +3460,7 @@ func TestAccRDSInstance_CoIPEnabled_enabledToDisabled(t *testing.T) {
 
 func TestAccRDSInstance_CoIPEnabled_restoreToPointInTime(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceName := "aws_db_instance.test"
 	resourceName := "aws_db_instance.restore"
 
@@ -3500,7 +3500,7 @@ func TestAccRDSInstance_CoIPEnabled_snapshotIdentifier(t *testing.T) {
 	var dbInstance, sourceDbInstance rds.DBInstance
 	var dbSnapshot rds.DBSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_db_instance.test"
 	snapshotResourceName := "aws_db_snapshot.test"
 	resourceName := "aws_db_instance.restore"
@@ -3526,7 +3526,7 @@ func TestAccRDSInstance_CoIPEnabled_snapshotIdentifier(t *testing.T) {
 
 func TestAccRDSInstance_license(t *testing.T) {
 	var dbInstance1 rds.DBInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{

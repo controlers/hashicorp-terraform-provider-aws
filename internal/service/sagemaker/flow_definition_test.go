@@ -16,7 +16,7 @@ import (
 
 func testAccFlowDefinition_basic(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_flow_definition.test"
 
 	resource.Test(t, resource.TestCase{
@@ -58,7 +58,7 @@ func testAccFlowDefinition_basic(t *testing.T) {
 
 func testAccFlowDefinition_humanLoopConfig_publicWorkforce(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_flow_definition.test"
 
 	resource.Test(t, resource.TestCase{
@@ -90,7 +90,7 @@ func testAccFlowDefinition_humanLoopConfig_publicWorkforce(t *testing.T) {
 
 func testAccFlowDefinition_humanLoopRequestSource(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_flow_definition.test"
 
 	resource.Test(t, resource.TestCase{
@@ -122,7 +122,7 @@ func testAccFlowDefinition_humanLoopRequestSource(t *testing.T) {
 
 func testAccFlowDefinition_tags(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_flow_definition.test"
 
 	resource.Test(t, resource.TestCase{
@@ -167,7 +167,7 @@ func testAccFlowDefinition_tags(t *testing.T) {
 
 func testAccFlowDefinition_disappears(t *testing.T) {
 	var flowDefinition sagemaker.DescribeFlowDefinitionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_flow_definition.test"
 
 	resource.Test(t, resource.TestCase{

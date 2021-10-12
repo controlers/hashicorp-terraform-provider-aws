@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccRAMResourceShareDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ram_resource_share.test"
 	datasourceName := "data.aws_ram_resource_share.test"
 
@@ -38,7 +38,7 @@ func TestAccRAMResourceShareDataSource_basic(t *testing.T) {
 }
 
 func TestAccRAMResourceShareDataSource_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ram_resource_share.test"
 	datasourceName := "data.aws_ram_resource_share.test"
 

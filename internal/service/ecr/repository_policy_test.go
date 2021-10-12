@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccECRRepositoryPolicy_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -55,7 +55,7 @@ func TestAccECRRepositoryPolicy_basic(t *testing.T) {
 }
 
 func TestAccECRRepositoryPolicy_iam(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -82,7 +82,7 @@ func TestAccECRRepositoryPolicy_iam(t *testing.T) {
 }
 
 func TestAccECRRepositoryPolicy_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -104,7 +104,7 @@ func TestAccECRRepositoryPolicy_disappears(t *testing.T) {
 }
 
 func TestAccECRRepositoryPolicy_Disappears_repository(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecr_repository_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

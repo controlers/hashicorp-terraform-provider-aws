@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccBudgetsBudgetAction_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_budgets_budget_action.test"
 	var conf budgets.Action
 
@@ -56,7 +56,7 @@ func TestAccBudgetsBudgetAction_basic(t *testing.T) {
 }
 
 func TestAccBudgetsBudgetAction_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_budgets_budget_action.test"
 	var conf budgets.Action
 

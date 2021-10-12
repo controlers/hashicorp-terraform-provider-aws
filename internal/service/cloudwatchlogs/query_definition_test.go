@@ -21,7 +21,7 @@ import (
 func TestAccCloudWatchLogsQueryDefinition_basic(t *testing.T) {
 	var v cloudwatchlogs.QueryDefinition
 	resourceName := "aws_cloudwatch_query_definition.test"
-	queryName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	queryName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	expectedQueryString := `fields @timestamp, @message
 | sort @timestamp desc
@@ -71,7 +71,7 @@ func testAccQueryDefinitionImportStateID(v *cloudwatchlogs.QueryDefinition) reso
 func TestAccCloudWatchLogsQueryDefinition_disappears(t *testing.T) {
 	var v cloudwatchlogs.QueryDefinition
 	resourceName := "aws_cloudwatch_query_definition.test"
-	queryName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	queryName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -94,8 +94,8 @@ func TestAccCloudWatchLogsQueryDefinition_disappears(t *testing.T) {
 func TestAccCloudWatchLogsQueryDefinition_rename(t *testing.T) {
 	var v1, v2 cloudwatchlogs.QueryDefinition
 	resourceName := "aws_cloudwatch_query_definition.test"
-	queryName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	updatedQueryName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	queryName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	updatedQueryName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -130,7 +130,7 @@ func TestAccCloudWatchLogsQueryDefinition_rename(t *testing.T) {
 func TestAccCloudWatchLogsQueryDefinition_logGroups(t *testing.T) {
 	var v1, v2 cloudwatchlogs.QueryDefinition
 	resourceName := "aws_cloudwatch_query_definition.test"
-	queryName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	queryName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },

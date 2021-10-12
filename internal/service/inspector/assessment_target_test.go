@@ -16,7 +16,7 @@ import (
 
 func TestAccInspectorAssessmentTarget_basic(t *testing.T) {
 	var assessmentTarget1 inspector.AssessmentTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_inspector_assessment_target.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -45,7 +45,7 @@ func TestAccInspectorAssessmentTarget_basic(t *testing.T) {
 
 func TestAccInspectorAssessmentTarget_disappears(t *testing.T) {
 	var assessmentTarget1 inspector.AssessmentTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_inspector_assessment_target.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -68,8 +68,8 @@ func TestAccInspectorAssessmentTarget_disappears(t *testing.T) {
 
 func TestAccInspectorAssessmentTarget_name(t *testing.T) {
 	var assessmentTarget1, assessmentTarget2 inspector.AssessmentTarget
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_inspector_assessment_target.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -103,7 +103,7 @@ func TestAccInspectorAssessmentTarget_name(t *testing.T) {
 
 func TestAccInspectorAssessmentTarget_resourceGroupARN(t *testing.T) {
 	var assessmentTarget1, assessmentTarget2, assessmentTarget3, assessmentTarget4 inspector.AssessmentTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	inspectorResourceGroupResourceName1 := "aws_inspector_resource_group.test1"
 	inspectorResourceGroupResourceName2 := "aws_inspector_resource_group.test2"
 	resourceName := "aws_inspector_assessment_target.test"

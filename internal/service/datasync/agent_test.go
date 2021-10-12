@@ -19,7 +19,7 @@ import (
 
 func TestAccDataSyncAgent_basic(t *testing.T) {
 	var agent1 datasync.DescribeAgentOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_agent.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -53,7 +53,7 @@ func TestAccDataSyncAgent_basic(t *testing.T) {
 
 func TestAccDataSyncAgent_disappears(t *testing.T) {
 	var agent1 datasync.DescribeAgentOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_agent.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -76,8 +76,8 @@ func TestAccDataSyncAgent_disappears(t *testing.T) {
 
 func TestAccDataSyncAgent_agentName(t *testing.T) {
 	var agent1, agent2 datasync.DescribeAgentOutput
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_agent.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -112,7 +112,7 @@ func TestAccDataSyncAgent_agentName(t *testing.T) {
 
 func TestAccDataSyncAgent_tags(t *testing.T) {
 	var agent1, agent2, agent3 datasync.DescribeAgentOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_agent.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -160,7 +160,7 @@ func TestAccDataSyncAgent_tags(t *testing.T) {
 
 func TestAccDataSyncAgent_vpcEndpointID(t *testing.T) {
 	var agent datasync.DescribeAgentOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_agent.test"
 	securityGroupResourceName := "aws_security_group.test"
 	subnetResourceName := "aws_subnet.test"

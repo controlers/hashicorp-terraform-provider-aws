@@ -16,7 +16,7 @@ import (
 
 func TestAccRoute53ResolverQueryLogConfig_basic(t *testing.T) {
 	var v route53resolver.ResolverQueryLogConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_query_log_config.test"
 	s3BucketResourceName := "aws_s3_bucket.test"
 
@@ -48,7 +48,7 @@ func TestAccRoute53ResolverQueryLogConfig_basic(t *testing.T) {
 
 func TestAccRoute53ResolverQueryLogConfig_disappears(t *testing.T) {
 	var v route53resolver.ResolverQueryLogConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_query_log_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -71,7 +71,7 @@ func TestAccRoute53ResolverQueryLogConfig_disappears(t *testing.T) {
 
 func TestAccRoute53ResolverQueryLogConfig_tags(t *testing.T) {
 	var v route53resolver.ResolverQueryLogConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_query_log_config.test"
 	cwLogGroupResourceName := "aws_cloudwatch_log_group.test"
 

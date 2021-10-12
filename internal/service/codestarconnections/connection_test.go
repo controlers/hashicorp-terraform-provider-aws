@@ -20,7 +20,7 @@ import (
 func TestAccCodeStarConnectionsConnection_basic(t *testing.T) {
 	var v codestarconnections.Connection
 	resourceName := "aws_codestarconnections_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarconnections.EndpointsID, t) },
@@ -51,7 +51,7 @@ func TestAccCodeStarConnectionsConnection_basic(t *testing.T) {
 func TestAccCodeStarConnectionsConnection_hostARN(t *testing.T) {
 	var v codestarconnections.Connection
 	resourceName := "aws_codestarconnections_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarconnections.EndpointsID, t) },
@@ -83,7 +83,7 @@ func TestAccCodeStarConnectionsConnection_hostARN(t *testing.T) {
 func TestAccCodeStarConnectionsConnection_disappears(t *testing.T) {
 	var v codestarconnections.Connection
 	resourceName := "aws_codestarconnections_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarconnections.EndpointsID, t) },
@@ -106,7 +106,7 @@ func TestAccCodeStarConnectionsConnection_disappears(t *testing.T) {
 func TestAccCodeStarConnectionsConnection_tags(t *testing.T) {
 	var v codestarconnections.Connection
 	resourceName := "aws_codestarconnections_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarconnections.EndpointsID, t) },

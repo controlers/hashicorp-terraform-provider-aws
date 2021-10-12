@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccLambdaFunctionEventInvokeConfig_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaFunctionResourceName := "aws_lambda_function.test"
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
@@ -48,7 +48,7 @@ func TestAccLambdaFunctionEventInvokeConfig_basic(t *testing.T) {
 
 func TestAccLambdaFunctionEventInvokeConfig_Disappears_lambdaFunction(t *testing.T) {
 	var function lambda.GetFunctionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaFunctionResourceName := "aws_lambda_function.test"
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
@@ -72,7 +72,7 @@ func TestAccLambdaFunctionEventInvokeConfig_Disappears_lambdaFunction(t *testing
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_Disappears_lambdaFunctionEventInvoke(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -94,7 +94,7 @@ func TestAccLambdaFunctionEventInvokeConfig_Disappears_lambdaFunctionEventInvoke
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_DestinationOnFailure_destination(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 	sqsQueueResourceName := "aws_sqs_queue.test"
 	snsTopicResourceName := "aws_sns_topic.test"
@@ -133,7 +133,7 @@ func TestAccLambdaFunctionEventInvokeConfig_DestinationOnFailure_destination(t *
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_DestinationOnSuccess_destination(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 	sqsQueueResourceName := "aws_sqs_queue.test"
 	snsTopicResourceName := "aws_sns_topic.test"
@@ -172,7 +172,7 @@ func TestAccLambdaFunctionEventInvokeConfig_DestinationOnSuccess_destination(t *
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_Destination_remove(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 	sqsQueueResourceName := "aws_sqs_queue.test"
 
@@ -208,7 +208,7 @@ func TestAccLambdaFunctionEventInvokeConfig_Destination_remove(t *testing.T) {
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_Destination_swap(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 	sqsQueueResourceName := "aws_sqs_queue.test"
 
@@ -246,7 +246,7 @@ func TestAccLambdaFunctionEventInvokeConfig_Destination_swap(t *testing.T) {
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_FunctionName_arn(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaFunctionResourceName := "aws_lambda_function.test"
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
@@ -274,7 +274,7 @@ func TestAccLambdaFunctionEventInvokeConfig_FunctionName_arn(t *testing.T) {
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_QualifierFunctionName_arn(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaFunctionResourceName := "aws_lambda_function.test"
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
@@ -302,7 +302,7 @@ func TestAccLambdaFunctionEventInvokeConfig_QualifierFunctionName_arn(t *testing
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_maximumEventAgeInSeconds(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -335,7 +335,7 @@ func TestAccLambdaFunctionEventInvokeConfig_maximumEventAgeInSeconds(t *testing.
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_maximumRetryAttempts(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -375,7 +375,7 @@ func TestAccLambdaFunctionEventInvokeConfig_maximumRetryAttempts(t *testing.T) {
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_Qualifier_aliasName(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaAliasResourceName := "aws_lambda_alias.test"
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
@@ -402,7 +402,7 @@ func TestAccLambdaFunctionEventInvokeConfig_Qualifier_aliasName(t *testing.T) {
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_Qualifier_functionVersion(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaFunctionResourceName := "aws_lambda_function.test"
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
@@ -430,7 +430,7 @@ func TestAccLambdaFunctionEventInvokeConfig_Qualifier_functionVersion(t *testing
 }
 
 func TestAccLambdaFunctionEventInvokeConfig_Qualifier_latest(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_function_event_invoke_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{

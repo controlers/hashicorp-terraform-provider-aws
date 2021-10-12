@@ -19,7 +19,7 @@ func TestAccAPIGatewayV2IntegrationResponse_basic(t *testing.T) {
 	var v apigatewayv2.GetIntegrationResponseOutput
 	resourceName := "aws_apigatewayv2_integration_response.test"
 	integrationResourceName := "aws_apigatewayv2_integration.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -52,7 +52,7 @@ func TestAccAPIGatewayV2IntegrationResponse_disappears(t *testing.T) {
 	var apiId, integrationId string
 	var v apigatewayv2.GetIntegrationResponseOutput
 	resourceName := "aws_apigatewayv2_integration_response.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -77,7 +77,7 @@ func TestAccAPIGatewayV2IntegrationResponse_allAttributes(t *testing.T) {
 	var v apigatewayv2.GetIntegrationResponseOutput
 	resourceName := "aws_apigatewayv2_integration_response.test"
 	integrationResourceName := "aws_apigatewayv2_integration.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

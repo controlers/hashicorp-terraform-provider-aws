@@ -17,7 +17,7 @@ import (
 
 func TestAccSageMakerCodeRepository_basic(t *testing.T) {
 	var notebook sagemaker.DescribeCodeRepositoryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_code_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccSageMakerCodeRepository_basic(t *testing.T) {
 
 func TestAccSageMakerCodeRepository_Git_branch(t *testing.T) {
 	var notebook sagemaker.DescribeCodeRepositoryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_code_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -78,7 +78,7 @@ func TestAccSageMakerCodeRepository_Git_branch(t *testing.T) {
 
 func TestAccSageMakerCodeRepository_Git_secret(t *testing.T) {
 	var notebook sagemaker.DescribeCodeRepositoryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_code_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -120,7 +120,7 @@ func TestAccSageMakerCodeRepository_Git_secret(t *testing.T) {
 
 func TestAccSageMakerCodeRepository_disappears(t *testing.T) {
 	var notebook sagemaker.DescribeCodeRepositoryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_code_repository.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -209,7 +209,7 @@ func TestAccEC2Instance_basic(t *testing.T) {
 func TestAccEC2Instance_atLeastOneOtherEBSVolume(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -309,7 +309,7 @@ func TestAccEC2Instance_RootBlockDevice_kmsKeyARN(t *testing.T) {
 	var instance ec2.Instance
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -338,7 +338,7 @@ func TestAccEC2Instance_RootBlockDevice_kmsKeyARN(t *testing.T) {
 func TestAccEC2Instance_userDataBase64(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1081,7 +1081,7 @@ func TestAccEC2Instance_BlockDeviceTags_withAttachedVolume(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
 	ebsVolumeName := "aws_ebs_volume.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1129,7 +1129,7 @@ func TestAccEC2Instance_BlockDeviceTags_withAttachedVolume(t *testing.T) {
 func TestAccEC2Instance_BlockDeviceTags_ebsAndRoot(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1281,7 +1281,7 @@ func TestAccEC2Instance_withIAMInstanceProfile(t *testing.T) {
 func TestAccEC2Instance_withIAMInstanceProfilePath(t *testing.T) {
 	var instance ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1450,7 +1450,7 @@ func TestAccEC2Instance_keyPairCheck(t *testing.T) {
 func TestAccEC2Instance_rootBlockDeviceMismatch(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckRegion(t, endpoints.UsWest2RegionID) },
@@ -1522,7 +1522,7 @@ func TestAccEC2Instance_changeInstanceType(t *testing.T) {
 	var before ec2.Instance
 	var after ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2181,7 +2181,7 @@ func TestAccEC2Instance_addSecurityGroupNetworkInterface(t *testing.T) {
 func TestAccEC2Instance_NewNetworkInterface_publicIPAndSecondaryPrivateIPs(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2220,7 +2220,7 @@ func TestAccEC2Instance_NewNetworkInterface_publicIPAndSecondaryPrivateIPs(t *te
 func TestAccEC2Instance_NewNetworkInterface_emptyPrivateIPAndSecondaryPrivateIPs(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	secondaryIPs := fmt.Sprintf("%q, %q", "10.1.1.42", "10.1.1.43")
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2250,7 +2250,7 @@ func TestAccEC2Instance_NewNetworkInterface_emptyPrivateIPAndSecondaryPrivateIPs
 func TestAccEC2Instance_NewNetworkInterface_emptyPrivateIPAndSecondaryPrivateIPsUpdate(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	secondaryIP := fmt.Sprintf("%q", "10.1.1.42")
 	secondaryIPs := fmt.Sprintf("%s, %q", secondaryIP, "10.1.1.43")
 
@@ -2297,7 +2297,7 @@ func TestAccEC2Instance_NewNetworkInterface_emptyPrivateIPAndSecondaryPrivateIPs
 func TestAccEC2Instance_NewNetworkInterface_privateIPAndSecondaryPrivateIPs(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	privateIP := "10.1.1.42"
 	secondaryIPs := fmt.Sprintf("%q, %q", "10.1.1.43", "10.1.1.44")
 
@@ -2328,7 +2328,7 @@ func TestAccEC2Instance_NewNetworkInterface_privateIPAndSecondaryPrivateIPs(t *t
 func TestAccEC2Instance_NewNetworkInterface_privateIPAndSecondaryPrivateIPsUpdate(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	privateIP := "10.1.1.42"
 	secondaryIP := fmt.Sprintf("%q", "10.1.1.43")
 	secondaryIPs := fmt.Sprintf("%s, %q", secondaryIP, "10.1.1.44")
@@ -2553,7 +2553,7 @@ func TestAccEC2Instance_LaunchTemplate_basic(t *testing.T) {
 	amiDataSourceName := "data.aws_ami.amzn-ami-minimal-hvm-ebs"
 	instanceTypeDataSourceName := "data.aws_ec2_instance_type_offering.available"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2583,7 +2583,7 @@ func TestAccEC2Instance_LaunchTemplate_overrideTemplate(t *testing.T) {
 	amiDataSourceName := "data.aws_ami.amzn-ami-minimal-hvm-ebs"
 	instanceTypeDataSourceName := "data.aws_ec2_instance_type_offering.small"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2609,7 +2609,7 @@ func TestAccEC2Instance_LaunchTemplate_setSpecificVersion(t *testing.T) {
 	resourceName := "aws_instance.test"
 	launchTemplateResourceName := "aws_launch_template.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2643,7 +2643,7 @@ func TestAccEC2Instance_LaunchTemplateModifyTemplate_defaultVersion(t *testing.T
 	resourceName := "aws_instance.test"
 	launchTemplateResourceName := "aws_launch_template.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2677,7 +2677,7 @@ func TestAccEC2Instance_LaunchTemplate_updateTemplateVersion(t *testing.T) {
 	resourceName := "aws_instance.test"
 	launchTemplateResourceName := "aws_launch_template.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2711,7 +2711,7 @@ func TestAccEC2Instance_LaunchTemplate_swapIDAndName(t *testing.T) {
 	resourceName := "aws_instance.test"
 	launchTemplateResourceName := "aws_launch_template.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -3454,7 +3454,7 @@ func TestAccEC2Instance_hibernation(t *testing.T) {
 func TestAccEC2Instance_metadataOptions(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -3530,7 +3530,7 @@ func TestAccEC2Instance_enclaveOptions(t *testing.T) {
 func TestAccEC2Instance_CapacityReservation_unspecifiedDefaultsToOpen(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -3564,7 +3564,7 @@ func TestAccEC2Instance_CapacityReservation_unspecifiedDefaultsToOpen(t *testing
 func TestAccEC2Instance_CapacityReservationPreference_open(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -3592,7 +3592,7 @@ func TestAccEC2Instance_CapacityReservationPreference_open(t *testing.T) {
 func TestAccEC2Instance_CapacityReservationPreference_none(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -3620,7 +3620,7 @@ func TestAccEC2Instance_CapacityReservationPreference_none(t *testing.T) {
 func TestAccEC2Instance_CapacityReservation_targetID(t *testing.T) {
 	var v ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -3649,7 +3649,7 @@ func TestAccEC2Instance_CapacityReservation_modifyPreference(t *testing.T) {
 	var original ec2.Instance
 	var updated ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -3687,7 +3687,7 @@ func TestAccEC2Instance_CapacityReservation_modifyTarget(t *testing.T) {
 	var original ec2.Instance
 	var updated ec2.Instance
 	resourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

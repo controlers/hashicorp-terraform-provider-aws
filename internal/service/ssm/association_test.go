@@ -42,7 +42,7 @@ func TestAccSSMAssociation_basic(t *testing.T) {
 }
 
 func TestAccSSMAssociation_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{

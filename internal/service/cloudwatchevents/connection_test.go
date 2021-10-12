@@ -19,16 +19,16 @@ import (
 
 func TestAccCloudWatchEventsConnection_apiKey(t *testing.T) {
 	var v1, v2, v3 events.DescribeConnectionOutput
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	authorizationType := "API_KEY"
-	description := sdkacctest.RandomWithPrefix("tf-acc-test")
-	key := sdkacctest.RandomWithPrefix("tf-acc-test")
-	value := sdkacctest.RandomWithPrefix("tf-acc-test")
+	description := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	key := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	value := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
-	nameModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	descriptionModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	keyModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	valueModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	nameModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	descriptionModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	keyModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	valueModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cloudwatch_event_connection.api_key"
 
@@ -101,16 +101,16 @@ func TestAccCloudWatchEventsConnection_apiKey(t *testing.T) {
 
 func TestAccCloudWatchEventsConnection_basic(t *testing.T) {
 	var v1, v2, v3 events.DescribeConnectionOutput
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	authorizationType := "BASIC"
-	description := sdkacctest.RandomWithPrefix("tf-acc-test")
-	username := sdkacctest.RandomWithPrefix("tf-acc-test")
-	password := sdkacctest.RandomWithPrefix("tf-acc-test")
+	description := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	username := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	password := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
-	nameModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	descriptionModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	usernameModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	passwordModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	nameModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	descriptionModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	usernameModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	passwordModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cloudwatch_event_connection.basic"
 
@@ -183,52 +183,52 @@ func TestAccCloudWatchEventsConnection_basic(t *testing.T) {
 
 func TestAccCloudWatchEventsConnection_oAuth(t *testing.T) {
 	var v1, v2, v3 events.DescribeConnectionOutput
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	authorizationType := "OAUTH_CLIENT_CREDENTIALS"
-	description := sdkacctest.RandomWithPrefix("tf-acc-test")
+	description := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	// oauth
 	authorizationEndpoint := "https://www.hashicorp.com/products/terraform"
 	httpMethod := "POST"
 
 	// client_parameters
-	clientID := sdkacctest.RandomWithPrefix("tf-acc-test")
-	clientSecret := sdkacctest.RandomWithPrefix("tf-acc-test")
+	clientID := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	clientSecret := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	// oauth_http_parameters
-	bodyKey := sdkacctest.RandomWithPrefix("tf-acc-test")
-	bodyValue := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bodyKey := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	bodyValue := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	bodyIsSecretValue := true
 
-	headerKey := sdkacctest.RandomWithPrefix("tf-acc-test")
-	headerValue := sdkacctest.RandomWithPrefix("tf-acc-test")
+	headerKey := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	headerValue := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	headerIsSecretValue := true
 
-	queryStringKey := sdkacctest.RandomWithPrefix("tf-acc-test")
-	queryStringValue := sdkacctest.RandomWithPrefix("tf-acc-test")
+	queryStringKey := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	queryStringValue := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	queryStringIsSecretValue := true
 
 	// modified
-	nameModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	descriptionModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	nameModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	descriptionModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	// oauth
 	authorizationEndpointModified := "https://www.hashicorp.com/"
 	httpMethodModified := "GET"
 
 	// client_parameters
-	clientIDModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	clientSecretModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	clientIDModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	clientSecretModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	// oauth_http_parameters modified
-	bodyKeyModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	bodyValueModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bodyKeyModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	bodyValueModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	bodyIsSecretValueModified := false
 
-	headerKeyModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	headerValueModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	headerKeyModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	headerValueModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	headerIsSecretValueModified := false
 
-	queryStringKeyModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	queryStringValueModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	queryStringKeyModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	queryStringValueModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	queryStringIsSecretValueModified := false
 
 	resourceName := "aws_cloudwatch_event_connection.oauth"
@@ -364,36 +364,36 @@ func TestAccCloudWatchEventsConnection_oAuth(t *testing.T) {
 
 func TestAccCloudWatchEventsConnection_invocationHTTPParameters(t *testing.T) {
 	var v1, v2, v3 events.DescribeConnectionOutput
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	authorizationType := "API_KEY"
-	description := sdkacctest.RandomWithPrefix("tf-acc-test")
-	key := sdkacctest.RandomWithPrefix("tf-acc-test")
-	value := sdkacctest.RandomWithPrefix("tf-acc-test")
+	description := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	key := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	value := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	// invocation_http_parameters
-	bodyKey := sdkacctest.RandomWithPrefix("tf-acc-test")
-	bodyValue := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bodyKey := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	bodyValue := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	bodyIsSecretValue := true
 
-	headerKey := sdkacctest.RandomWithPrefix("tf-acc-test")
-	headerValue := sdkacctest.RandomWithPrefix("tf-acc-test")
+	headerKey := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	headerValue := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	headerIsSecretValue := true
 
-	queryStringKey := sdkacctest.RandomWithPrefix("tf-acc-test")
-	queryStringValue := sdkacctest.RandomWithPrefix("tf-acc-test")
+	queryStringKey := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	queryStringValue := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	queryStringIsSecretValue := true
 
 	// invocation_http_parameters modified
-	bodyKeyModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	bodyValueModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bodyKeyModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	bodyValueModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	bodyIsSecretValueModified := false
 
-	headerKeyModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	headerValueModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	headerKeyModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	headerValueModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	headerIsSecretValueModified := false
 
-	queryStringKeyModified := sdkacctest.RandomWithPrefix("tf-acc-test")
-	queryStringValueModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	queryStringKeyModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	queryStringValueModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	queryStringIsSecretValueModified := false
 
 	resourceName := "aws_cloudwatch_event_connection.invocation_http_parameters"
@@ -537,11 +537,11 @@ func TestAccCloudWatchEventsConnection_invocationHTTPParameters(t *testing.T) {
 
 func TestAccCloudWatchEventsConnection_disappears(t *testing.T) {
 	var v events.DescribeConnectionOutput
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	authorizationType := "API_KEY"
-	description := sdkacctest.RandomWithPrefix("tf-acc-test")
-	key := sdkacctest.RandomWithPrefix("tf-acc-test")
-	value := sdkacctest.RandomWithPrefix("tf-acc-test")
+	description := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	key := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	value := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_connection.api_key"
 
 	resource.ParallelTest(t, resource.TestCase{

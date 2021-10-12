@@ -18,7 +18,7 @@ import (
 func TestAccCloudWatchMetricAlarm_basic(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -59,7 +59,7 @@ func TestAccCloudWatchMetricAlarm_basic(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_AlarmActions_ec2Automate(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -107,7 +107,7 @@ func TestAccCloudWatchMetricAlarm_AlarmActions_ec2Automate(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_AlarmActions_snsTopic(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -134,7 +134,7 @@ func TestAccCloudWatchMetricAlarm_AlarmActions_snsTopic(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_AlarmActions_swfAction(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -161,7 +161,7 @@ func TestAccCloudWatchMetricAlarm_AlarmActions_swfAction(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_dataPointsToAlarm(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -183,7 +183,7 @@ func TestAccCloudWatchMetricAlarm_dataPointsToAlarm(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_treatMissingData(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -212,7 +212,7 @@ func TestAccCloudWatchMetricAlarm_treatMissingData(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_evaluateLowSampleCountPercentiles(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -241,7 +241,7 @@ func TestAccCloudWatchMetricAlarm_evaluateLowSampleCountPercentiles(t *testing.T
 func TestAccCloudWatchMetricAlarm_extendedStatistic(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -263,7 +263,7 @@ func TestAccCloudWatchMetricAlarm_extendedStatistic(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_expression(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -327,7 +327,7 @@ func TestAccCloudWatchMetricAlarm_expression(t *testing.T) {
 }
 
 func TestAccCloudWatchMetricAlarm_missingStatistic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, cloudwatch.EndpointsID),
@@ -345,7 +345,7 @@ func TestAccCloudWatchMetricAlarm_missingStatistic(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_tags(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -390,7 +390,7 @@ func TestAccCloudWatchMetricAlarm_tags(t *testing.T) {
 func TestAccCloudWatchMetricAlarm_disappears(t *testing.T) {
 	var alarm cloudwatch.MetricAlarm
 	resourceName := "aws_cloudwatch_metric_alarm.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -52,7 +52,7 @@ func testAccGitHubSourceLocationFromEnv() string {
 
 func TestAccCodeBuildProject_basic(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_codebuild_project.test"
 	roleResourceName := "aws_iam_role.test"
@@ -108,7 +108,7 @@ func TestAccCodeBuildProject_basic(t *testing.T) {
 
 func TestAccCodeBuildProject_badgeEnabled(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -136,7 +136,7 @@ func TestAccCodeBuildProject_badgeEnabled(t *testing.T) {
 
 func TestAccCodeBuildProject_buildTimeout(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -170,7 +170,7 @@ func TestAccCodeBuildProject_buildTimeout(t *testing.T) {
 
 func TestAccCodeBuildProject_queuedTimeout(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -204,7 +204,7 @@ func TestAccCodeBuildProject_queuedTimeout(t *testing.T) {
 
 func TestAccCodeBuildProject_cache(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 	s3Location1 := rName + "-1"
 	s3Location2 := rName + "-2"
@@ -281,7 +281,7 @@ func TestAccCodeBuildProject_cache(t *testing.T) {
 
 func TestAccCodeBuildProject_description(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -315,7 +315,7 @@ func TestAccCodeBuildProject_description(t *testing.T) {
 
 func TestAccCodeBuildProject_fileSystemLocations(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -365,7 +365,7 @@ func TestAccCodeBuildProject_fileSystemLocations(t *testing.T) {
 
 func TestAccCodeBuildProject_sourceVersion(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -387,7 +387,7 @@ func TestAccCodeBuildProject_sourceVersion(t *testing.T) {
 
 func TestAccCodeBuildProject_encryptionKey(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -414,7 +414,7 @@ func TestAccCodeBuildProject_encryptionKey(t *testing.T) {
 
 func TestAccCodeBuildProject_Environment_environmentVariable(t *testing.T) {
 	var project1, project2, project3 codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -463,7 +463,7 @@ func TestAccCodeBuildProject_Environment_environmentVariable(t *testing.T) {
 
 func TestAccCodeBuildProject_EnvironmentEnvironmentVariable_type(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -507,7 +507,7 @@ func TestAccCodeBuildProject_EnvironmentEnvironmentVariable_type(t *testing.T) {
 
 func TestAccCodeBuildProject_EnvironmentEnvironmentVariable_value(t *testing.T) {
 	var project1, project2, project3 codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -555,7 +555,7 @@ func TestAccCodeBuildProject_EnvironmentEnvironmentVariable_value(t *testing.T) 
 
 func TestAccCodeBuildProject_Environment_certificate(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	oName := "certificate.pem"
 	resourceName := "aws_codebuild_project.test"
 
@@ -583,7 +583,7 @@ func TestAccCodeBuildProject_Environment_certificate(t *testing.T) {
 
 func TestAccCodeBuildProject_Logs_cloudWatchLogs(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -628,7 +628,7 @@ func TestAccCodeBuildProject_Logs_cloudWatchLogs(t *testing.T) {
 
 func TestAccCodeBuildProject_Logs_s3Logs(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -673,7 +673,7 @@ func TestAccCodeBuildProject_Logs_s3Logs(t *testing.T) {
 
 func TestAccCodeBuildProject_buildBatch(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	if acctest.Partition() == "aws-us-gov" {
@@ -721,7 +721,7 @@ func TestAccCodeBuildProject_buildBatch(t *testing.T) {
 
 func TestAccCodeBuildProject_Source_gitCloneDepth(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -755,7 +755,7 @@ func TestAccCodeBuildProject_Source_gitCloneDepth(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceGitSubmodules_codeCommit(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -791,7 +791,7 @@ func TestAccCodeBuildProject_SourceGitSubmodules_codeCommit(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceGitSubmodules_gitHub(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -823,7 +823,7 @@ func TestAccCodeBuildProject_SourceGitSubmodules_gitHub(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceGitSubmodules_gitHubEnterprise(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -855,7 +855,7 @@ func TestAccCodeBuildProject_SourceGitSubmodules_gitHubEnterprise(t *testing.T) 
 
 func TestAccCodeBuildProject_SecondarySourcesGitSubmodules_codeCommit(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -916,7 +916,7 @@ func TestAccCodeBuildProject_SecondarySourcesGitSubmodules_codeCommit(t *testing
 
 func TestAccCodeBuildProject_SecondarySourcesGitSubmodules_gitHub(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -948,7 +948,7 @@ func TestAccCodeBuildProject_SecondarySourcesGitSubmodules_gitHub(t *testing.T) 
 
 func TestAccCodeBuildProject_SecondarySourcesGitSubmodules_gitHubEnterprise(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -980,7 +980,7 @@ func TestAccCodeBuildProject_SecondarySourcesGitSubmodules_gitHubEnterprise(t *t
 
 func TestAccCodeBuildProject_SourceBuildStatus_gitHubEnterprise(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	if acctest.Partition() == "aws-us-gov" {
@@ -1010,7 +1010,7 @@ func TestAccCodeBuildProject_SourceBuildStatus_gitHubEnterprise(t *testing.T) {
 
 func TestAccCodeBuildProject_Source_insecureSSL(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1044,7 +1044,7 @@ func TestAccCodeBuildProject_Source_insecureSSL(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceReportBuildStatus_bitbucket(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	sourceLocation := testAccBitbucketSourceLocationFromEnv()
@@ -1080,7 +1080,7 @@ func TestAccCodeBuildProject_SourceReportBuildStatus_bitbucket(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceReportBuildStatus_gitHub(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1114,7 +1114,7 @@ func TestAccCodeBuildProject_SourceReportBuildStatus_gitHub(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceReportBuildStatus_gitHubEnterprise(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1148,7 +1148,7 @@ func TestAccCodeBuildProject_SourceReportBuildStatus_gitHubEnterprise(t *testing
 
 func TestAccCodeBuildProject_SourceType_bitbucket(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	sourceLocation := testAccBitbucketSourceLocationFromEnv()
@@ -1178,7 +1178,7 @@ func TestAccCodeBuildProject_SourceType_bitbucket(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceType_codeCommit(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1205,7 +1205,7 @@ func TestAccCodeBuildProject_SourceType_codeCommit(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceType_codePipeline(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1232,7 +1232,7 @@ func TestAccCodeBuildProject_SourceType_codePipeline(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceType_gitHubEnterprise(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1259,7 +1259,7 @@ func TestAccCodeBuildProject_SourceType_gitHubEnterprise(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceType_s3(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1285,7 +1285,7 @@ func TestAccCodeBuildProject_SourceType_s3(t *testing.T) {
 
 func TestAccCodeBuildProject_SourceType_noSource(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 	rBuildspec := `
 version: 0.2
@@ -1318,7 +1318,7 @@ phases:
 }
 
 func TestAccCodeBuildProject_SourceType_noSourceInvalid(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rBuildspec := `
 version: 0.2
 phases:
@@ -1347,7 +1347,7 @@ phases:
 
 func TestAccCodeBuildProject_tags(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1385,7 +1385,7 @@ func TestAccCodeBuildProject_tags(t *testing.T) {
 
 func TestAccCodeBuildProject_vpc(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1432,7 +1432,7 @@ func TestAccCodeBuildProject_vpc(t *testing.T) {
 
 func TestAccCodeBuildProject_windowsServer2019Container(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1465,7 +1465,7 @@ func TestAccCodeBuildProject_windowsServer2019Container(t *testing.T) {
 
 func TestAccCodeBuildProject_armContainer(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1491,7 +1491,7 @@ func TestAccCodeBuildProject_armContainer(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_artifactIdentifier(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	artifactIdentifier1 := "artifactIdentifier1"
@@ -1530,7 +1530,7 @@ func TestAccCodeBuildProject_Artifacts_artifactIdentifier(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_encryptionDisabled(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1566,8 +1566,8 @@ func TestAccCodeBuildProject_Artifacts_encryptionDisabled(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_location(t *testing.T) {
 	var project codebuild.Project
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1603,7 +1603,7 @@ func TestAccCodeBuildProject_Artifacts_location(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_name(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	name1 := "name1"
@@ -1642,7 +1642,7 @@ func TestAccCodeBuildProject_Artifacts_name(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_namespaceType(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1678,7 +1678,7 @@ func TestAccCodeBuildProject_Artifacts_namespaceType(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_overrideArtifactName(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1714,7 +1714,7 @@ func TestAccCodeBuildProject_Artifacts_overrideArtifactName(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_packaging(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1750,7 +1750,7 @@ func TestAccCodeBuildProject_Artifacts_packaging(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_path(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1786,7 +1786,7 @@ func TestAccCodeBuildProject_Artifacts_path(t *testing.T) {
 
 func TestAccCodeBuildProject_Artifacts_type(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	type1 := codebuild.ArtifactsTypeS3
@@ -1825,7 +1825,7 @@ func TestAccCodeBuildProject_Artifacts_type(t *testing.T) {
 
 func TestAccCodeBuildProject_secondaryArtifacts(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1859,7 +1859,7 @@ func TestAccCodeBuildProject_secondaryArtifacts(t *testing.T) {
 
 func TestAccCodeBuildProject_SecondaryArtifacts_artifactIdentifier(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	artifactIdentifier1 := "artifactIdentifier1"
@@ -1902,7 +1902,7 @@ func TestAccCodeBuildProject_SecondaryArtifacts_artifactIdentifier(t *testing.T)
 
 func TestAccCodeBuildProject_SecondaryArtifacts_overrideArtifactName(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1942,7 +1942,7 @@ func TestAccCodeBuildProject_SecondaryArtifacts_overrideArtifactName(t *testing.
 
 func TestAccCodeBuildProject_SecondaryArtifacts_encryptionDisabled(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1982,8 +1982,8 @@ func TestAccCodeBuildProject_SecondaryArtifacts_encryptionDisabled(t *testing.T)
 
 func TestAccCodeBuildProject_SecondaryArtifacts_location(t *testing.T) {
 	var project codebuild.Project
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2025,7 +2025,7 @@ func TestAccCodeBuildProject_SecondaryArtifacts_name(t *testing.T) {
 	acctest.Skip(t, "Currently no solution to allow updates on name attribute")
 
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	name1 := "name1"
@@ -2068,7 +2068,7 @@ func TestAccCodeBuildProject_SecondaryArtifacts_name(t *testing.T) {
 
 func TestAccCodeBuildProject_SecondaryArtifacts_namespaceType(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2108,7 +2108,7 @@ func TestAccCodeBuildProject_SecondaryArtifacts_namespaceType(t *testing.T) {
 
 func TestAccCodeBuildProject_SecondaryArtifacts_packaging(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2148,7 +2148,7 @@ func TestAccCodeBuildProject_SecondaryArtifacts_packaging(t *testing.T) {
 
 func TestAccCodeBuildProject_SecondaryArtifacts_path(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	path1 := "path1"
@@ -2191,7 +2191,7 @@ func TestAccCodeBuildProject_SecondaryArtifacts_path(t *testing.T) {
 
 func TestAccCodeBuildProject_SecondaryArtifacts_type(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2221,7 +2221,7 @@ func TestAccCodeBuildProject_SecondaryArtifacts_type(t *testing.T) {
 
 func TestAccCodeBuildProject_SecondarySources_codeCommit(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2275,7 +2275,7 @@ func TestProject_nameValidation(t *testing.T) {
 
 func TestAccCodeBuildProject_concurrentBuildLimit(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2309,7 +2309,7 @@ func TestAccCodeBuildProject_concurrentBuildLimit(t *testing.T) {
 
 func TestAccCodeBuildProject_Environment_registryCredential(t *testing.T) {
 	var project codebuild.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -38,7 +38,7 @@ func testAccCheckLambdaInvocationResult(name, expectedResult string) resource.Te
 }
 
 func TestAccLambdaInvocationDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	testData := "value3"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -57,7 +57,7 @@ func TestAccLambdaInvocationDataSource_basic(t *testing.T) {
 }
 
 func TestAccLambdaInvocationDataSource_qualifier(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	testData := "value3"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -76,7 +76,7 @@ func TestAccLambdaInvocationDataSource_qualifier(t *testing.T) {
 }
 
 func TestAccLambdaInvocationDataSource_complex(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	testData := "value3"
 
 	resource.ParallelTest(t, resource.TestCase{

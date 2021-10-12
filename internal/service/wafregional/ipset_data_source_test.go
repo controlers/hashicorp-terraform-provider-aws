@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccWAFRegionalIPSetDataSource_basic(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafregional_ipset.ipset"
 	datasourceName := "data.aws_wafregional_ipset.ipset"
 

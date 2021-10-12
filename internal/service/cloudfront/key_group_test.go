@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccCloudFrontKeyGroup_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudfront_key_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccCloudFrontKeyGroup_basic(t *testing.T) {
 }
 
 func TestAccCloudFrontKeyGroup_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudfront_key_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -68,7 +68,7 @@ func TestAccCloudFrontKeyGroup_disappears(t *testing.T) {
 }
 
 func TestAccCloudFrontKeyGroup_comment(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudfront_key_group.test"
 
 	firstComment := "first comment"
@@ -104,7 +104,7 @@ func TestAccCloudFrontKeyGroup_comment(t *testing.T) {
 }
 
 func TestAccCloudFrontKeyGroup_items(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudfront_key_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -324,7 +324,7 @@ func TestAccCodePipeline_MultiRegion_basic(t *testing.T) {
 	})
 }
 
-func TestAccCodePipeline_MultiRegion_update(t *testing.T) {
+func TestAcc_multiregion_Update(t *testing.T) {
 	var p1, p2 codepipeline.PipelineDeclaration
 	resourceName := "aws_codepipeline.test"
 	var providers []*schema.Provider

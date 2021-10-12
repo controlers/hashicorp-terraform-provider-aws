@@ -18,7 +18,7 @@ import (
 func TestAccInspectorAssessmentTemplate_basic(t *testing.T) {
 	var v inspector.AssessmentTemplate
 	resourceName := "aws_inspector_assessment_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -50,7 +50,7 @@ func TestAccInspectorAssessmentTemplate_basic(t *testing.T) {
 func TestAccInspectorAssessmentTemplate_disappears(t *testing.T) {
 	var v inspector.AssessmentTemplate
 	resourceName := "aws_inspector_assessment_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -73,7 +73,7 @@ func TestAccInspectorAssessmentTemplate_disappears(t *testing.T) {
 func TestAccInspectorAssessmentTemplate_tags(t *testing.T) {
 	var v inspector.AssessmentTemplate
 	resourceName := "aws_inspector_assessment_template.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -19,7 +19,7 @@ func TestAccCloudWatchLogsSubscriptionFilter_basic(t *testing.T) {
 	lambdaFunctionResourceName := "aws_lambda_function.test"
 	logGroupResourceName := "aws_cloudwatch_log_group.test"
 	resourceName := "aws_cloudwatch_log_subscription_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -52,7 +52,7 @@ func TestAccCloudWatchLogsSubscriptionFilter_disappears(t *testing.T) {
 	var filter cloudwatchlogs.SubscriptionFilter
 
 	resourceName := "aws_cloudwatch_log_subscription_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -78,7 +78,7 @@ func TestAccCloudWatchLogsSubscriptionFilter_Disappears_logGroup(t *testing.T) {
 
 	logGroupResourceName := "aws_cloudwatch_log_group.test"
 	resourceName := "aws_cloudwatch_log_subscription_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -104,7 +104,7 @@ func TestAccCloudWatchLogsSubscriptionFilter_DestinationARN_kinesisDataFirehose(
 
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
 	resourceName := "aws_cloudwatch_log_subscription_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -134,7 +134,7 @@ func TestAccCloudWatchLogsSubscriptionFilter_DestinationARN_kinesisStream(t *tes
 
 	kinesisStream := "aws_kinesis_stream.test"
 	resourceName := "aws_cloudwatch_log_subscription_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -163,7 +163,7 @@ func TestAccCloudWatchLogsSubscriptionFilter_distribution(t *testing.T) {
 	var filter cloudwatchlogs.SubscriptionFilter
 
 	resourceName := "aws_cloudwatch_log_subscription_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -201,7 +201,7 @@ func TestAccCloudWatchLogsSubscriptionFilter_roleARN(t *testing.T) {
 	iamRoleResourceName1 := "aws_iam_role.test"
 	iamRoleResourceName2 := "aws_iam_role.test2"
 	resourceName := "aws_cloudwatch_log_subscription_filter.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

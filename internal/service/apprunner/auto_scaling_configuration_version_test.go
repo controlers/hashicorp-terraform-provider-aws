@@ -18,7 +18,7 @@ import (
 )
 
 func TestAccAppRunnerAutoScalingConfigurationVersion_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_auto_scaling_configuration_version.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccAppRunnerAutoScalingConfigurationVersion_basic(t *testing.T) {
 }
 
 func TestAccAppRunnerAutoScalingConfigurationVersion_complex(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_auto_scaling_configuration_version.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -119,7 +119,7 @@ func TestAccAppRunnerAutoScalingConfigurationVersion_complex(t *testing.T) {
 }
 
 func TestAccAppRunnerAutoScalingConfigurationVersion_multipleVersions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_auto_scaling_configuration_version.test"
 	otherResourceName := "aws_apprunner_auto_scaling_configuration_version.other"
 
@@ -177,7 +177,7 @@ func TestAccAppRunnerAutoScalingConfigurationVersion_multipleVersions(t *testing
 }
 
 func TestAccAppRunnerAutoScalingConfigurationVersion_updateMultipleVersions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_auto_scaling_configuration_version.test"
 	otherResourceName := "aws_apprunner_auto_scaling_configuration_version.other"
 
@@ -232,7 +232,7 @@ func TestAccAppRunnerAutoScalingConfigurationVersion_updateMultipleVersions(t *t
 }
 
 func TestAccAppRunnerAutoScalingConfigurationVersion_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_auto_scaling_configuration_version.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -254,7 +254,7 @@ func TestAccAppRunnerAutoScalingConfigurationVersion_disappears(t *testing.T) {
 }
 
 func TestAccAppRunnerAutoScalingConfigurationVersion_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_auto_scaling_configuration_version.test"
 
 	resource.ParallelTest(t, resource.TestCase{

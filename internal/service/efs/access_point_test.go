@@ -18,7 +18,7 @@ import (
 
 func TestAccEFSAccessPoint_basic(t *testing.T) {
 	var ap efs.AccessPointDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_efs_access_point.test"
 	fsResourceName := "aws_efs_file_system.test"
 
@@ -53,7 +53,7 @@ func TestAccEFSAccessPoint_basic(t *testing.T) {
 
 func TestAccEFSAccessPoint_Root_directory(t *testing.T) {
 	var ap efs.AccessPointDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_efs_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -82,7 +82,7 @@ func TestAccEFSAccessPoint_Root_directory(t *testing.T) {
 
 func TestAccEFSAccessPoint_RootDirectoryCreation_info(t *testing.T) {
 	var ap efs.AccessPointDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_efs_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -114,7 +114,7 @@ func TestAccEFSAccessPoint_RootDirectoryCreation_info(t *testing.T) {
 
 func TestAccEFSAccessPoint_POSIX_user(t *testing.T) {
 	var ap efs.AccessPointDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_efs_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -144,7 +144,7 @@ func TestAccEFSAccessPoint_POSIX_user(t *testing.T) {
 
 func TestAccEFSAccessPoint_POSIXUserSecondary_gids(t *testing.T) {
 	var ap efs.AccessPointDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_efs_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -173,7 +173,7 @@ func TestAccEFSAccessPoint_POSIXUserSecondary_gids(t *testing.T) {
 
 func TestAccEFSAccessPoint_tags(t *testing.T) {
 	var ap efs.AccessPointDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_efs_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -219,7 +219,7 @@ func TestAccEFSAccessPoint_tags(t *testing.T) {
 func TestAccEFSAccessPoint_disappears(t *testing.T) {
 	var ap efs.AccessPointDescription
 	resourceName := "aws_efs_access_point.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

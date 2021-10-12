@@ -19,7 +19,7 @@ import (
 func TestAccSESReceiptRule_basic(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -65,7 +65,7 @@ func TestAccSESReceiptRule_basic(t *testing.T) {
 func TestAccSESReceiptRule_s3Action(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -102,7 +102,7 @@ func TestAccSESReceiptRule_s3Action(t *testing.T) {
 func TestAccSESReceiptRule_snsAction(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -139,7 +139,7 @@ func TestAccSESReceiptRule_snsAction(t *testing.T) {
 func TestAccSESReceiptRule_snsActionEncoding(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -176,7 +176,7 @@ func TestAccSESReceiptRule_snsActionEncoding(t *testing.T) {
 func TestAccSESReceiptRule_lambdaAction(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -213,7 +213,7 @@ func TestAccSESReceiptRule_lambdaAction(t *testing.T) {
 func TestAccSESReceiptRule_stopAction(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -249,7 +249,7 @@ func TestAccSESReceiptRule_stopAction(t *testing.T) {
 func TestAccSESReceiptRule_order(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -282,7 +282,7 @@ func TestAccSESReceiptRule_order(t *testing.T) {
 func TestAccSESReceiptRule_actions(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -323,7 +323,7 @@ func TestAccSESReceiptRule_actions(t *testing.T) {
 func TestAccSESReceiptRule_disappears(t *testing.T) {
 	var rule ses.ReceiptRule
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ses_receipt_rule.test"
 
 	ruleSetResourceName := "aws_ses_receipt_rule_set.test"

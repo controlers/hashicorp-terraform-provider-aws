@@ -18,7 +18,7 @@ import (
 
 func TestAccStorageGatewayStorediSCSIVolume_basic(t *testing.T) {
 	var storedIscsiVolume storagegateway.StorediSCSIVolume
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_stored_iscsi_volume.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -59,7 +59,7 @@ func TestAccStorageGatewayStorediSCSIVolume_basic(t *testing.T) {
 
 func TestAccStorageGatewayStorediSCSIVolume_kms(t *testing.T) {
 	var storedIscsiVolume storagegateway.StorediSCSIVolume
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_stored_iscsi_volume.test"
 	keyResourceName := "aws_kms_key.test"
 
@@ -88,7 +88,7 @@ func TestAccStorageGatewayStorediSCSIVolume_kms(t *testing.T) {
 
 func TestAccStorageGatewayStorediSCSIVolume_tags(t *testing.T) {
 	var storedIscsiVolume storagegateway.StorediSCSIVolume
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_stored_iscsi_volume.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -136,7 +136,7 @@ func TestAccStorageGatewayStorediSCSIVolume_tags(t *testing.T) {
 
 func TestAccStorageGatewayStorediSCSIVolume_snapshotID(t *testing.T) {
 	var storedIscsiVolume storagegateway.StorediSCSIVolume
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_stored_iscsi_volume.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -173,7 +173,7 @@ func TestAccStorageGatewayStorediSCSIVolume_snapshotID(t *testing.T) {
 
 func TestAccStorageGatewayStorediSCSIVolume_disappears(t *testing.T) {
 	var storedIscsiVolume storagegateway.StorediSCSIVolume
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_stored_iscsi_volume.test"
 
 	resource.ParallelTest(t, resource.TestCase{

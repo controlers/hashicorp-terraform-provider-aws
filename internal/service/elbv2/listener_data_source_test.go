@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccELBV2ListenerDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lb_listener.test"
 	dataSourceName2 := "data.aws_lb_listener.from_lb_and_port"
 
@@ -46,7 +46,7 @@ func TestAccELBV2ListenerDataSource_basic(t *testing.T) {
 }
 
 func TestAccELBV2ListenerDataSource_backwardsCompatibility(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_alb_listener.test"
 	dataSourceName2 := "data.aws_alb_listener.from_lb_and_port"
 
@@ -79,7 +79,7 @@ func TestAccELBV2ListenerDataSource_backwardsCompatibility(t *testing.T) {
 }
 
 func TestAccELBV2ListenerDataSource_https(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
 	dataSourceName := "data.aws_lb_listener.test"
@@ -118,7 +118,7 @@ func TestAccELBV2ListenerDataSource_https(t *testing.T) {
 }
 
 func TestAccELBV2ListenerDataSource_DefaultAction_forward(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lb_listener.test"
 	resourceName := "aws_lb_listener.test"
 

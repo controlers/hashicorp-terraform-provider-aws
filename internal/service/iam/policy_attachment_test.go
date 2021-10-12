@@ -84,7 +84,7 @@ func TestAccIAMPolicyAttachment_paginatedEntities(t *testing.T) {
 func TestAccIAMPolicyAttachment_Groups_renamedGroup(t *testing.T) {
 	var out iam.ListEntitiesForPolicyOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	groupName1 := fmt.Sprintf("%s-1", rName)
 	groupName2 := fmt.Sprintf("%s-2", rName)
 	resourceName := "aws_iam_policy_attachment.test"
@@ -116,7 +116,7 @@ func TestAccIAMPolicyAttachment_Groups_renamedGroup(t *testing.T) {
 func TestAccIAMPolicyAttachment_Roles_renamedRole(t *testing.T) {
 	var out iam.ListEntitiesForPolicyOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	roleName1 := fmt.Sprintf("%s-1", rName)
 	roleName2 := fmt.Sprintf("%s-2", rName)
 	resourceName := "aws_iam_policy_attachment.test"
@@ -148,7 +148,7 @@ func TestAccIAMPolicyAttachment_Roles_renamedRole(t *testing.T) {
 func TestAccIAMPolicyAttachment_Users_renamedUser(t *testing.T) {
 	var out iam.ListEntitiesForPolicyOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	userName1 := fmt.Sprintf("%s-1", rName)
 	userName2 := fmt.Sprintf("%s-2", rName)
 	resourceName := "aws_iam_policy_attachment.test"

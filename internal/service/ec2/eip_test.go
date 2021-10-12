@@ -106,7 +106,7 @@ func TestAccEC2EIP_instance(t *testing.T) {
 func TestAccEC2EIP_Instance_reassociate(t *testing.T) {
 	instanceResourceName := "aws_instance.test"
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -136,7 +136,7 @@ func TestAccEC2EIP_Instance_reassociate(t *testing.T) {
 func TestAccEC2EIP_Instance_associatedUserPrivateIP(t *testing.T) {
 	var one ec2.Address
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -237,7 +237,7 @@ func TestAccEC2EIP_Instance_ec2Classic(t *testing.T) {
 func TestAccEC2EIP_networkInterface(t *testing.T) {
 	var conf ec2.Address
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -268,7 +268,7 @@ func TestAccEC2EIP_NetworkInterface_twoEIPsOneInterface(t *testing.T) {
 	var one, two ec2.Address
 	resourceName := "aws_eip.test"
 	resourceName2 := "aws_eip.test2"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -303,8 +303,8 @@ func TestAccEC2EIP_NetworkInterface_twoEIPsOneInterface(t *testing.T) {
 func TestAccEC2EIP_TagsEC2VPC_withVPCTrue(t *testing.T) {
 	var conf ec2.Address
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckEC2VPCOnly(t) },
@@ -346,8 +346,8 @@ func TestAccEC2EIP_TagsEC2VPC_withVPCTrue(t *testing.T) {
 func TestAccEC2EIP_TagsEC2VPC_withoutVPCTrue(t *testing.T) {
 	var conf ec2.Address
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckEC2VPCOnly(t) },
@@ -388,8 +388,8 @@ func TestAccEC2EIP_TagsEC2VPC_withoutVPCTrue(t *testing.T) {
 func TestAccEC2EIP_TagsEC2Classic_withVPCTrue(t *testing.T) {
 	var conf ec2.Address
 	resourceName := "aws_eip.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckEC2Classic(t) },
@@ -428,7 +428,7 @@ func TestAccEC2EIP_TagsEC2Classic_withVPCTrue(t *testing.T) {
 }
 
 func TestAccEC2EIP_TagsEC2Classic_withoutVPCTrue(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckEC2Classic(t) },
@@ -563,7 +563,7 @@ func TestAccEC2EIP_networkBorderGroup(t *testing.T) {
 
 func TestAccEC2EIP_carrierIP(t *testing.T) {
 	var conf ec2.Address
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eip.test"
 
 	resource.ParallelTest(t, resource.TestCase{

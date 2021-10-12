@@ -19,7 +19,7 @@ import (
 
 func TestAccServiceCatalogServiceAction_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_service_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -52,7 +52,7 @@ func TestAccServiceCatalogServiceAction_basic(t *testing.T) {
 
 func TestAccServiceCatalogServiceAction_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_service_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -74,8 +74,8 @@ func TestAccServiceCatalogServiceAction_disappears(t *testing.T) {
 
 func TestAccServiceCatalogServiceAction_update(t *testing.T) {
 	resourceName := "aws_servicecatalog_service_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

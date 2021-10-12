@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/redshift"
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
@@ -239,7 +240,7 @@ func sweepSnapshotSchedules(region string) error {
 	var errs *multierror.Error
 
 	input := &redshift.DescribeSnapshotSchedulesInput{}
-	prefixesToSweep := []string{"tf-acc-test"}
+	prefixesToSweep := []string{acctest.ResourcePrefix}
 
 	err = conn.DescribeSnapshotSchedulesPages(input, func(page *redshift.DescribeSnapshotSchedulesOutput, lastPage bool) bool {
 		if page == nil {

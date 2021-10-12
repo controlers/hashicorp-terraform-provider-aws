@@ -18,7 +18,7 @@ import (
 )
 
 func TestAccS3ControlBucket_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -49,7 +49,7 @@ func TestAccS3ControlBucket_basic(t *testing.T) {
 }
 
 func TestAccS3ControlBucket_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -73,7 +73,7 @@ func TestAccS3ControlBucket_disappears(t *testing.T) {
 func TestAccS3ControlBucket_tags(t *testing.T) {
 	acctest.Skip(t, "S3 Control Bucket resource tagging requires additional eventual consistency handling, see also: https://github.com/hashicorp/terraform-provider-aws/issues/15572")
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket.test"
 
 	resource.ParallelTest(t, resource.TestCase{

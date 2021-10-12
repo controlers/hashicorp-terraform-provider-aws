@@ -16,7 +16,7 @@ import (
 
 func TestAccOpsWorksNodejsAppLayer_basic(t *testing.T) {
 	var opslayer opsworks.Layer
-	stackName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	stackName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_opsworks_nodejs_app_layer.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(opsworks.EndpointsID, t) },
@@ -36,7 +36,7 @@ func TestAccOpsWorksNodejsAppLayer_basic(t *testing.T) {
 
 func TestAccOpsWorksNodejsAppLayer_tags(t *testing.T) {
 	var opslayer opsworks.Layer
-	stackName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	stackName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_opsworks_nodejs_app_layer.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(opsworks.EndpointsID, t) },

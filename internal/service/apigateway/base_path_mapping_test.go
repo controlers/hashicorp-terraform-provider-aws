@@ -81,7 +81,7 @@ func TestAccAPIGatewayBasePathMapping_basic(t *testing.T) {
 		CheckDestroy: testAccCheckBasePathDestroy(name),
 		Steps: []resource.TestStep{
 			{
-				Config: testAccBasePathBasePathConfig(name, key, certificate, "tf-acc-test"),
+				Config: testAccBasePathBasePathConfig(name, key, certificate, acctest.ResourcePrefix),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckBasePathExists("aws_api_gateway_base_path_mapping.test", &conf),
 				),
@@ -191,7 +191,7 @@ func TestAccAPIGatewayBasePathMapping_disappears(t *testing.T) {
 		CheckDestroy: testAccCheckBasePathDestroy(name),
 		Steps: []resource.TestStep{
 			{
-				Config: testAccBasePathBasePathConfig(name, key, certificate, "tf-acc-test"),
+				Config: testAccBasePathBasePathConfig(name, key, certificate, acctest.ResourcePrefix),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckBasePathExists(resourceName, &conf),
 					acctest.CheckResourceDisappears(acctest.Provider, tfapigateway.ResourceBasePathMapping(), resourceName),

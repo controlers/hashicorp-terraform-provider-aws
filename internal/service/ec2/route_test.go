@@ -22,7 +22,7 @@ func TestAccEC2Route_basic(t *testing.T) {
 	resourceName := "aws_route.test"
 	igwResourceName := "aws_internet_gateway.test"
 	rtResourceName := "aws_route_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -68,7 +68,7 @@ func TestAccEC2Route_basic(t *testing.T) {
 func TestAccEC2Route_disappears(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -93,7 +93,7 @@ func TestAccEC2Route_Disappears_routeTable(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	rtResourceName := "aws_route_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -118,7 +118,7 @@ func TestAccEC2Route_ipv6ToEgressOnlyInternetGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	eoigwResourceName := "aws_egress_only_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "::/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -168,7 +168,7 @@ func TestAccEC2Route_ipv6ToInternetGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	igwResourceName := "aws_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "::/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -213,7 +213,7 @@ func TestAccEC2Route_ipv6ToInstance(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	instanceResourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "::/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -258,7 +258,7 @@ func TestAccEC2Route_IPv6ToNetworkInterface_unattached(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	eniResourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "::/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -303,7 +303,7 @@ func TestAccEC2Route_ipv6ToVPCPeeringConnection(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	pcxResourceName := "aws_vpc_peering_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "::/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -348,7 +348,7 @@ func TestAccEC2Route_ipv6ToVPNGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	vgwResourceName := "aws_vpn_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "::/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -393,7 +393,7 @@ func TestAccEC2Route_ipv4ToVPNGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	vgwResourceName := "aws_vpn_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -438,7 +438,7 @@ func TestAccEC2Route_ipv4ToInstance(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	instanceResourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -483,7 +483,7 @@ func TestAccEC2Route_IPv4ToNetworkInterface_unattached(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	eniResourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -529,7 +529,7 @@ func TestAccEC2Route_IPv4ToNetworkInterface_attached(t *testing.T) {
 	resourceName := "aws_route.test"
 	eniResourceName := "aws_network_interface.test"
 	instanceResourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -576,7 +576,7 @@ func TestAccEC2Route_IPv4ToNetworkInterface_twoAttachments(t *testing.T) {
 	eni1ResourceName := "aws_network_interface.test1"
 	eni2ResourceName := "aws_network_interface.test2"
 	instanceResourceName := "aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -643,7 +643,7 @@ func TestAccEC2Route_ipv4ToVPCPeeringConnection(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	pcxResourceName := "aws_vpc_peering_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -688,7 +688,7 @@ func TestAccEC2Route_ipv4ToNatGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	ngwResourceName := "aws_nat_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -734,7 +734,7 @@ func TestAccEC2Route_doesNotCrashWithVPCEndpoint(t *testing.T) {
 	var routeTable ec2.RouteTable
 	resourceName := "aws_route.test"
 	rtResourceName := "aws_route_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -764,7 +764,7 @@ func TestAccEC2Route_ipv4ToTransitGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	tgwResourceName := "aws_ec2_transit_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -809,7 +809,7 @@ func TestAccEC2Route_ipv6ToTransitGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	tgwResourceName := "aws_ec2_transit_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "::/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -854,7 +854,7 @@ func TestAccEC2Route_ipv4ToCarrierGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	cgwResourceName := "aws_ec2_carrier_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "172.16.1.0/24"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -899,7 +899,7 @@ func TestAccEC2Route_ipv4ToLocalGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	localGatewayDataSourceName := "data.aws_ec2_local_gateway.first"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "172.16.1.0/24"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -944,7 +944,7 @@ func TestAccEC2Route_ipv6ToLocalGateway(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
 	localGatewayDataSourceName := "data.aws_ec2_local_gateway.first"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "2002:bc9:1234:1a00::/56"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -988,7 +988,7 @@ func TestAccEC2Route_ipv6ToLocalGateway(t *testing.T) {
 func TestAccEC2Route_conditionalCIDRBlock(t *testing.T) {
 	var route ec2.Route
 	resourceName := "aws_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.2.0.0/16"
 	destinationIpv6Cidr := "::/0"
 
@@ -1035,7 +1035,7 @@ func TestAccEC2Route_IPv4Update_target(t *testing.T) {
 	ngwResourceName := "aws_nat_gateway.test"
 	tgwResourceName := "aws_ec2_transit_gateway.test"
 	vpcEndpointResourceName := "aws_vpc_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.3.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1240,7 +1240,7 @@ func TestAccEC2Route_IPv6Update_target(t *testing.T) {
 	eniResourceName := "aws_network_interface.test"
 	pcxResourceName := "aws_vpc_peering_connection.test"
 	eoigwResourceName := "aws_egress_only_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "::/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1393,7 +1393,7 @@ func TestAccEC2Route_IPv6Update_target(t *testing.T) {
 
 func TestAccEC2Route_ipv4ToVPCEndpoint(t *testing.T) {
 	var route ec2.Route
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route.test"
 	vpcEndpointResourceName := "aws_vpc_endpoint.test"
 	destinationCidr := "172.16.1.0/24"
@@ -1443,7 +1443,7 @@ func TestAccEC2Route_localRoute(t *testing.T) {
 	resourceName := "aws_route.test"
 	rtResourceName := "aws_route_table.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1481,7 +1481,7 @@ func TestAccEC2Route_prefixListToInternetGateway(t *testing.T) {
 	resourceName := "aws_route.test"
 	igwResourceName := "aws_internet_gateway.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -1526,7 +1526,7 @@ func TestAccEC2Route_prefixListToVPNGateway(t *testing.T) {
 	resourceName := "aws_route.test"
 	vgwResourceName := "aws_vpn_gateway.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -1571,7 +1571,7 @@ func TestAccEC2Route_prefixListToInstance(t *testing.T) {
 	resourceName := "aws_route.test"
 	instanceResourceName := "aws_instance.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -1616,7 +1616,7 @@ func TestAccEC2Route_PrefixListToNetworkInterface_unattached(t *testing.T) {
 	resourceName := "aws_route.test"
 	eniResourceName := "aws_network_interface.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -1662,7 +1662,7 @@ func TestAccEC2Route_PrefixListToNetworkInterface_attached(t *testing.T) {
 	eniResourceName := "aws_network_interface.test"
 	instanceResourceName := "aws_instance.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -1707,7 +1707,7 @@ func TestAccEC2Route_prefixListToVPCPeeringConnection(t *testing.T) {
 	resourceName := "aws_route.test"
 	pcxResourceName := "aws_vpc_peering_connection.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -1752,7 +1752,7 @@ func TestAccEC2Route_prefixListToNatGateway(t *testing.T) {
 	resourceName := "aws_route.test"
 	ngwResourceName := "aws_nat_gateway.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -1797,7 +1797,7 @@ func TestAccEC2Route_prefixListToTransitGateway(t *testing.T) {
 	resourceName := "aws_route.test"
 	tgwResourceName := "aws_ec2_transit_gateway.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -1842,7 +1842,7 @@ func TestAccEC2Route_prefixListToCarrierGateway(t *testing.T) {
 	resourceName := "aws_route.test"
 	cgwResourceName := "aws_ec2_carrier_gateway.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -1891,7 +1891,7 @@ func TestAccEC2Route_prefixListToLocalGateway(t *testing.T) {
 	resourceName := "aws_route.test"
 	localGatewayDataSourceName := "data.aws_ec2_local_gateway.first"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -1940,7 +1940,7 @@ func TestAccEC2Route_prefixListToEgressOnlyInternetGateway(t *testing.T) {
 	resourceName := "aws_route.test"
 	eoigwResourceName := "aws_egress_only_internet_gateway.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },

@@ -84,7 +84,7 @@ func TestAccAPIGatewayStage_basic(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/12756
 func TestAccAPIGatewayStage_Disappears_referencingDeployment(t *testing.T) {
 	var stage apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_stage.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -111,7 +111,7 @@ func TestAccAPIGatewayStage_Disappears_referencingDeployment(t *testing.T) {
 
 func TestAccAPIGatewayStage_disappears(t *testing.T) {
 	var stage apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_stage.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -15,7 +15,7 @@ func TestAccServiceCatalogLaunchPathsDataSource_basic(t *testing.T) {
 	resourceNameProduct := "aws_servicecatalog_product.test"
 	resourceNamePortfolio := "aws_servicecatalog_portfolio.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{

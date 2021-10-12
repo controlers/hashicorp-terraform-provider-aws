@@ -23,7 +23,7 @@ func TestAccSageMakerImageVersion_basic(t *testing.T) {
 	}
 
 	var image sagemaker.DescribeImageVersionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_image_version.test"
 	baseImage := os.Getenv("SAGEMAKER_IMAGE_VERSION_BASE_IMAGE")
 
@@ -61,7 +61,7 @@ func TestAccSageMakerImageVersion_disappears(t *testing.T) {
 	}
 
 	var image sagemaker.DescribeImageVersionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_image_version.test"
 	baseImage := os.Getenv("SAGEMAKER_IMAGE_VERSION_BASE_IMAGE")
 
@@ -90,7 +90,7 @@ func TestAccSageMakerImageVersion_Disappears_image(t *testing.T) {
 	}
 
 	var image sagemaker.DescribeImageVersionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_image_version.test"
 	baseImage := os.Getenv("SAGEMAKER_IMAGE_VERSION_BASE_IMAGE")
 

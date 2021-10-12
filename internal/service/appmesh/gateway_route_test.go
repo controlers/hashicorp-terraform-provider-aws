@@ -18,9 +18,9 @@ func testAccGatewayRoute_basic(t *testing.T) {
 	var v appmesh.GatewayRouteData
 	resourceName := "aws_appmesh_gateway_route.test"
 	vsResourceName := "aws_appmesh_virtual_service.test.0"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	grName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	grName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -65,9 +65,9 @@ func testAccGatewayRoute_basic(t *testing.T) {
 func testAccGatewayRoute_disappears(t *testing.T) {
 	var v appmesh.GatewayRouteData
 	resourceName := "aws_appmesh_gateway_route.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	grName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	grName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -92,9 +92,9 @@ func testAccGatewayRoute_GRPCRoute(t *testing.T) {
 	resourceName := "aws_appmesh_gateway_route.test"
 	vs1ResourceName := "aws_appmesh_virtual_service.test.0"
 	vs2ResourceName := "aws_appmesh_virtual_service.test.1"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	grName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	grName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -165,9 +165,9 @@ func testAccGatewayRoute_HTTPRoute(t *testing.T) {
 	resourceName := "aws_appmesh_gateway_route.test"
 	vs1ResourceName := "aws_appmesh_virtual_service.test.0"
 	vs2ResourceName := "aws_appmesh_virtual_service.test.1"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	grName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	grName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -238,9 +238,9 @@ func testAccGatewayRoute_HTTP2Route(t *testing.T) {
 	resourceName := "aws_appmesh_gateway_route.test"
 	vs1ResourceName := "aws_appmesh_virtual_service.test.0"
 	vs2ResourceName := "aws_appmesh_virtual_service.test.1"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	grName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	grName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -309,9 +309,9 @@ func testAccGatewayRoute_HTTP2Route(t *testing.T) {
 func testAccGatewayRoute_Tags(t *testing.T) {
 	var v appmesh.GatewayRouteData
 	resourceName := "aws_appmesh_gateway_route.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vgName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	grName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vgName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	grName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },

@@ -17,7 +17,7 @@ import (
 
 func TestAccBackupVaultPolicy_basic(t *testing.T) {
 	var vault backup.GetBackupVaultAccessPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_backup_vault_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccBackupVaultPolicy_basic(t *testing.T) {
 
 func TestAccBackupVaultPolicy_disappears(t *testing.T) {
 	var vault backup.GetBackupVaultAccessPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_backup_vault_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -74,7 +74,7 @@ func TestAccBackupVaultPolicy_disappears(t *testing.T) {
 
 func TestAccBackupVaultPolicy_Disappears_vault(t *testing.T) {
 	var vault backup.GetBackupVaultAccessPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_backup_vault_policy.test"
 	vaultResourceName := "aws_backup_vault.test"
 

@@ -16,7 +16,7 @@ import (
 
 func TestAccElasticBeanstalkApplication_BeanstalkApp_basic(t *testing.T) {
 	var app elasticbeanstalk.ApplicationDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elastic_beanstalk_application.tftest"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -42,7 +42,7 @@ func TestAccElasticBeanstalkApplication_BeanstalkApp_basic(t *testing.T) {
 
 func TestAccElasticBeanstalkApplication_BeanstalkApp_appVersionLifecycle(t *testing.T) {
 	var app elasticbeanstalk.ApplicationDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -102,7 +102,7 @@ func TestAccElasticBeanstalkApplication_BeanstalkApp_appVersionLifecycle(t *test
 
 func TestAccElasticBeanstalkApplication_BeanstalkApp_tags(t *testing.T) {
 	var app elasticbeanstalk.ApplicationDescription
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elastic_beanstalk_application.tftest"
 
 	resource.ParallelTest(t, resource.TestCase{

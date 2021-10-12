@@ -133,7 +133,7 @@ func TestAccFSxLustreFileSystem_dataCompression(t *testing.T) {
 func TestAccFSxLustreFileSystem_exportPath(t *testing.T) {
 	var filesystem1, filesystem2 fsx.FileSystem
 	resourceName := "aws_fsx_lustre_file_system.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(fsx.EndpointsID, t) },
@@ -172,7 +172,7 @@ func TestAccFSxLustreFileSystem_exportPath(t *testing.T) {
 func TestAccFSxLustreFileSystem_importPath(t *testing.T) {
 	var filesystem1, filesystem2 fsx.FileSystem
 	resourceName := "aws_fsx_lustre_file_system.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(fsx.EndpointsID, t) },
@@ -209,7 +209,7 @@ func TestAccFSxLustreFileSystem_importPath(t *testing.T) {
 func TestAccFSxLustreFileSystem_importedFileChunkSize(t *testing.T) {
 	var filesystem1, filesystem2 fsx.FileSystem
 	resourceName := "aws_fsx_lustre_file_system.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(fsx.EndpointsID, t) },
@@ -730,7 +730,7 @@ func TestAccFSxLustreFileSystem_copyTagsToBackups(t *testing.T) {
 func TestAccFSxLustreFileSystem_autoImportPolicy(t *testing.T) {
 	var filesystem fsx.FileSystem
 	resourceName := "aws_fsx_lustre_file_system.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(fsx.EndpointsID, t) },

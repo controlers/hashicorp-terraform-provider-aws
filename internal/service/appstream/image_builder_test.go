@@ -18,7 +18,7 @@ import (
 func TestAccAppStreamImageBuilder_basic(t *testing.T) {
 	resourceName := "aws_appstream_image_builder.test"
 	instanceType := "stream.standard.small"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -48,7 +48,7 @@ func TestAccAppStreamImageBuilder_basic(t *testing.T) {
 func TestAccAppStreamImageBuilder_disappears(t *testing.T) {
 	resourceName := "aws_appstream_image_builder.test"
 	instanceType := "stream.standard.medium"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -70,7 +70,7 @@ func TestAccAppStreamImageBuilder_disappears(t *testing.T) {
 
 func TestAccAppStreamImageBuilder_complete(t *testing.T) {
 	resourceName := "aws_appstream_image_builder.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Description of a test"
 	descriptionUpdated := "Updated Description of a test"
 	instanceType := "stream.standard.small"
@@ -122,7 +122,7 @@ func TestAccAppStreamImageBuilder_complete(t *testing.T) {
 
 func TestAccAppStreamImageBuilder_tags(t *testing.T) {
 	resourceName := "aws_appstream_image_builder.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	instanceType := "stream.standard.small"
 
 	resource.ParallelTest(t, resource.TestCase{

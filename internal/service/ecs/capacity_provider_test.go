@@ -16,7 +16,7 @@ import (
 
 func TestAccECSCapacityProvider_basic(t *testing.T) {
 	var provider ecs.CapacityProvider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_capacity_provider.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -54,7 +54,7 @@ func TestAccECSCapacityProvider_basic(t *testing.T) {
 
 func TestAccECSCapacityProvider_disappears(t *testing.T) {
 	var provider ecs.CapacityProvider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_capacity_provider.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -77,7 +77,7 @@ func TestAccECSCapacityProvider_disappears(t *testing.T) {
 
 func TestAccECSCapacityProvider_managedScaling(t *testing.T) {
 	var provider ecs.CapacityProvider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_capacity_provider.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -126,7 +126,7 @@ func TestAccECSCapacityProvider_managedScaling(t *testing.T) {
 
 func TestAccECSCapacityProvider_managedScalingPartial(t *testing.T) {
 	var provider ecs.CapacityProvider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_capacity_provider.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -161,7 +161,7 @@ func TestAccECSCapacityProvider_managedScalingPartial(t *testing.T) {
 
 func TestAccECSCapacityProvider_tags(t *testing.T) {
 	var provider ecs.CapacityProvider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_capacity_provider.test"
 
 	resource.ParallelTest(t, resource.TestCase{

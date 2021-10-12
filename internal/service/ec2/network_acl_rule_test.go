@@ -153,7 +153,7 @@ func TestAccEC2NetworkACLRule_ipv6(t *testing.T) {
 }
 
 func TestAccEC2NetworkACLRule_ipv6ICMP(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_network_acl_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{

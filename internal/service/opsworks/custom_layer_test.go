@@ -62,7 +62,7 @@ func TestAccOpsWorksCustomLayer_basic(t *testing.T) {
 }
 
 func TestAccOpsWorksCustomLayer_tags(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var opslayer opsworks.Layer
 	resourceName := "aws_opsworks_custom_layer.test"
 

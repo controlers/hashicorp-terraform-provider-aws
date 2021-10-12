@@ -18,7 +18,7 @@ import (
 
 func TestAccWAFV2RegexPatternSet_basic(t *testing.T) {
 	var v wafv2.RegexPatternSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_regex_pattern_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -78,7 +78,7 @@ func TestAccWAFV2RegexPatternSet_basic(t *testing.T) {
 
 func TestAccWAFV2RegexPatternSet_disappears(t *testing.T) {
 	var v wafv2.RegexPatternSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_regex_pattern_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -101,7 +101,7 @@ func TestAccWAFV2RegexPatternSet_disappears(t *testing.T) {
 
 func TestAccWAFV2RegexPatternSet_minimal(t *testing.T) {
 	var v wafv2.RegexPatternSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_regex_pattern_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -127,7 +127,7 @@ func TestAccWAFV2RegexPatternSet_minimal(t *testing.T) {
 
 func TestAccWAFV2RegexPatternSet_changeNameForceNew(t *testing.T) {
 	var before, after wafv2.RegexPatternSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNewName := fmt.Sprintf("regex-pattern-set-%s", sdkacctest.RandString(5))
 	resourceName := "aws_wafv2_regex_pattern_set.test"
 
@@ -165,7 +165,7 @@ func TestAccWAFV2RegexPatternSet_changeNameForceNew(t *testing.T) {
 
 func TestAccWAFV2RegexPatternSet_tags(t *testing.T) {
 	var v wafv2.RegexPatternSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_regex_pattern_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{

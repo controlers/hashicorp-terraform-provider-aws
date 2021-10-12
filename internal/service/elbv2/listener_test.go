@@ -20,7 +20,7 @@ import (
 func TestAccELBV2Listener_basic(t *testing.T) {
 	var conf elbv2.Listener
 	resourceName := "aws_lb_listener.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -57,7 +57,7 @@ func TestAccELBV2Listener_basic(t *testing.T) {
 func TestAccELBV2Listener_tags(t *testing.T) {
 	var conf elbv2.Listener
 	resourceName := "aws_lb_listener.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -102,8 +102,8 @@ func TestAccELBV2Listener_tags(t *testing.T) {
 func TestAccELBV2Listener_forwardWeighted(t *testing.T) {
 	var conf elbv2.Listener
 	resourceName := "aws_lb_listener.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -182,7 +182,7 @@ func TestAccELBV2Listener_forwardWeighted(t *testing.T) {
 func TestAccELBV2Listener_basicUdp(t *testing.T) {
 	var conf elbv2.Listener
 	resourceName := "aws_lb_listener.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -218,7 +218,7 @@ func TestAccELBV2Listener_basicUdp(t *testing.T) {
 func TestAccELBV2Listener_backwardsCompatibility(t *testing.T) {
 	var conf elbv2.Listener
 	resourceName := "aws_alb_listener.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -256,7 +256,7 @@ func TestAccELBV2Listener_https(t *testing.T) {
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	resourceName := "aws_lb_listener.test"
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -293,7 +293,7 @@ func TestAccELBV2Listener_https(t *testing.T) {
 
 func TestAccELBV2Listener_LoadBalancerARN_gatewayLoadBalancer(t *testing.T) {
 	var conf elbv2.Listener
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lbResourceName := "aws_lb.test"
 	resourceName := "aws_lb_listener.test"
 
@@ -320,7 +320,7 @@ func TestAccELBV2Listener_Protocol_tls(t *testing.T) {
 	var listener1 elbv2.Listener
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_listener.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -349,7 +349,7 @@ func TestAccELBV2Listener_Protocol_tls(t *testing.T) {
 func TestAccELBV2Listener_redirect(t *testing.T) {
 	var conf elbv2.Listener
 	resourceName := "aws_lb_listener.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -391,7 +391,7 @@ func TestAccELBV2Listener_redirect(t *testing.T) {
 func TestAccELBV2Listener_fixedResponse(t *testing.T) {
 	var conf elbv2.Listener
 	resourceName := "aws_lb_listener.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -432,7 +432,7 @@ func TestAccELBV2Listener_cognito(t *testing.T) {
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	resourceName := "aws_lb_listener.test"
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -476,7 +476,7 @@ func TestAccELBV2Listener_oidc(t *testing.T) {
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	resourceName := "aws_lb_listener.test"
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -523,7 +523,7 @@ func TestAccELBV2Listener_DefaultAction_order(t *testing.T) {
 	var listener elbv2.Listener
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_listener.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -556,7 +556,7 @@ func TestAccELBV2Listener_DefaultActionOrder_recreates(t *testing.T) {
 	var listener elbv2.Listener
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_listener.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -45,7 +45,7 @@ func TestAccImageBuilderImageDataSource_ARN_aws(t *testing.T) {
 
 // Verify additional fields returned by Self owned Images
 func TestAccImageBuilderImageDataSource_ARN_self(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_imagebuilder_image.test"
 	resourceName := "aws_imagebuilder_image.test"
 

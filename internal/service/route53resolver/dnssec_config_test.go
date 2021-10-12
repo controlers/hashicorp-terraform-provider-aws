@@ -18,7 +18,7 @@ import (
 
 func TestAccRoute53ResolverDNSSECConfig_basic(t *testing.T) {
 	resourceName := "aws_route53_resolver_dnssec_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -48,7 +48,7 @@ func TestAccRoute53ResolverDNSSECConfig_basic(t *testing.T) {
 
 func TestAccRoute53ResolverDNSSECConfig_disappear(t *testing.T) {
 	resourceName := "aws_route53_resolver_dnssec_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

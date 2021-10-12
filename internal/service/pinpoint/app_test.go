@@ -42,7 +42,7 @@ func TestAccPinpointApp_basic(t *testing.T) {
 
 func TestAccPinpointApp_campaignHookLambda(t *testing.T) {
 	var application pinpoint.ApplicationResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_pinpoint_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -70,7 +70,7 @@ func TestAccPinpointApp_campaignHookLambda(t *testing.T) {
 
 func TestAccPinpointApp_limits(t *testing.T) {
 	var application pinpoint.ApplicationResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_pinpoint_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -98,7 +98,7 @@ func TestAccPinpointApp_limits(t *testing.T) {
 
 func TestAccPinpointApp_quietTime(t *testing.T) {
 	var application pinpoint.ApplicationResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_pinpoint_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -126,7 +126,7 @@ func TestAccPinpointApp_quietTime(t *testing.T) {
 
 func TestAccPinpointApp_tags(t *testing.T) {
 	var application pinpoint.ApplicationResponse
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_pinpoint_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{

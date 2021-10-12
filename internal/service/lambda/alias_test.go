@@ -60,7 +60,7 @@ func TestAccLambdaAlias_FunctionName_name(t *testing.T) {
 	var conf lambda.AliasConfiguration
 
 	resourceName := "aws_lambda_alias.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

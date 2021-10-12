@@ -16,7 +16,7 @@ import (
 
 func TestAccSageMakerHumanTaskUI_basic(t *testing.T) {
 	var humanTaskUi sagemaker.DescribeHumanTaskUiOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_human_task_ui.test"
 
 	resource.Test(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccSageMakerHumanTaskUI_basic(t *testing.T) {
 
 func TestAccSageMakerHumanTaskUI_tags(t *testing.T) {
 	var humanTaskUi sagemaker.DescribeHumanTaskUiOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_human_task_ui.test"
 
 	resource.Test(t, resource.TestCase{
@@ -93,7 +93,7 @@ func TestAccSageMakerHumanTaskUI_tags(t *testing.T) {
 
 func TestAccSageMakerHumanTaskUI_disappears(t *testing.T) {
 	var humanTaskUi sagemaker.DescribeHumanTaskUiOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_human_task_ui.test"
 
 	resource.Test(t, resource.TestCase{

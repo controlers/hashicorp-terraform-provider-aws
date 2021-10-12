@@ -311,7 +311,7 @@ func TestUpdateDynamoDbDiffGSI(t *testing.T) {
 func TestAccDynamoDBTable_basic(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -346,7 +346,7 @@ func TestAccDynamoDBTable_basic(t *testing.T) {
 func TestAccDynamoDBTable_disappears(t *testing.T) {
 	var table1 dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -369,7 +369,7 @@ func TestAccDynamoDBTable_disappears(t *testing.T) {
 func TestAccDynamoDBTable_Disappears_payPerRequestWithGSI(t *testing.T) {
 	var table1, table2 dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -403,7 +403,7 @@ func TestAccDynamoDBTable_Disappears_payPerRequestWithGSI(t *testing.T) {
 func TestAccDynamoDBTable_extended(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -477,7 +477,7 @@ func TestAccDynamoDBTable_extended(t *testing.T) {
 func TestAccDynamoDBTable_enablePITR(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -512,7 +512,7 @@ func TestAccDynamoDBTable_enablePITR(t *testing.T) {
 func TestAccDynamoDBTable_BillingMode_payPerRequestToProvisioned(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -546,7 +546,7 @@ func TestAccDynamoDBTable_BillingMode_payPerRequestToProvisioned(t *testing.T) {
 func TestAccDynamoDBTable_BillingMode_provisionedToPayPerRequest(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -580,7 +580,7 @@ func TestAccDynamoDBTable_BillingMode_provisionedToPayPerRequest(t *testing.T) {
 func TestAccDynamoDBTable_BillingModeGSI_payPerRequestToProvisioned(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -614,7 +614,7 @@ func TestAccDynamoDBTable_BillingModeGSI_payPerRequestToProvisioned(t *testing.T
 func TestAccDynamoDBTable_BillingModeGSI_provisionedToPayPerRequest(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -648,7 +648,7 @@ func TestAccDynamoDBTable_BillingModeGSI_provisionedToPayPerRequest(t *testing.T
 func TestAccDynamoDBTable_streamSpecification(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -703,7 +703,7 @@ func TestAccDynamoDBTable_streamSpecificationValidation(t *testing.T) {
 func TestAccDynamoDBTable_tags(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -732,7 +732,7 @@ func TestAccDynamoDBTable_tags(t *testing.T) {
 func TestAccDynamoDBTable_gsiUpdateCapacity(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -796,7 +796,7 @@ func TestAccDynamoDBTable_gsiUpdateCapacity(t *testing.T) {
 func TestAccDynamoDBTable_gsiUpdateOtherAttributes(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -886,7 +886,7 @@ func TestAccDynamoDBTable_gsiUpdateOtherAttributes(t *testing.T) {
 func TestAccDynamoDBTable_lsiNonKeyAttributes(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -921,7 +921,7 @@ func TestAccDynamoDBTable_lsiNonKeyAttributes(t *testing.T) {
 func TestAccDynamoDBTable_gsiUpdateNonKeyAttributes(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1012,7 +1012,7 @@ func TestAccDynamoDBTable_gsiUpdateNonKeyAttributes(t *testing.T) {
 func TestAccDynamoDBTable_GsiUpdateNonKeyAttributes_emptyPlan(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	attributes := fmt.Sprintf("%q, %q", "AnotherAttribute", "RandomAttribute")
 	reorderedAttributes := fmt.Sprintf("%q, %q", "RandomAttribute", "AnotherAttribute")
 
@@ -1058,7 +1058,7 @@ func TestAccDynamoDBTable_GsiUpdateNonKeyAttributes_emptyPlan(t *testing.T) {
 func TestAccDynamoDBTable_TTL_enabled(t *testing.T) {
 	var table dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1088,7 +1088,7 @@ func TestAccDynamoDBTable_TTL_enabled(t *testing.T) {
 func TestAccDynamoDBTable_TTL_disabled(t *testing.T) {
 	var table dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1124,7 +1124,7 @@ func TestAccDynamoDBTable_TTL_disabled(t *testing.T) {
 func TestAccDynamoDBTable_attributeUpdate(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1168,7 +1168,7 @@ func TestAccDynamoDBTable_attributeUpdate(t *testing.T) {
 func TestAccDynamoDBTable_lsiUpdate(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1198,7 +1198,7 @@ func TestAccDynamoDBTable_lsiUpdate(t *testing.T) {
 }
 
 func TestAccDynamoDBTable_attributeUpdateValidation(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1225,7 +1225,7 @@ func TestAccDynamoDBTable_attributeUpdateValidation(t *testing.T) {
 func TestAccDynamoDBTable_encryption(t *testing.T) {
 	var confBYOK, confEncEnabled, confEncDisabled dynamodb.DescribeTableOutput
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	kmsAliasDatasourceName := "data.aws_kms_alias.dynamodb"
 
@@ -1285,7 +1285,7 @@ func TestAccDynamoDBTable_Replica_multiple(t *testing.T) {
 	var table dynamodb.DescribeTableOutput
 	var providers []*schema.Provider
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -1331,7 +1331,7 @@ func TestAccDynamoDBTable_Replica_single(t *testing.T) {
 	var conf dynamodb.DescribeTableOutput
 	var providers []*schema.Provider
 	resourceName := "aws_dynamodb_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -1381,7 +1381,7 @@ func TestAccDynamoDBTable_Replica_singleWithCMK(t *testing.T) {
 	// kmsAliasDatasourceName := "data.aws_kms_alias.master"
 	kmsKeyReplicaResourceName := "aws_kms_key.alt_test"
 	// kmsAliasReplicaDatasourceName := "data.aws_kms_alias.replica"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {

@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccS3BucketOwnershipControls_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_ownership_controls.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -44,7 +44,7 @@ func TestAccS3BucketOwnershipControls_basic(t *testing.T) {
 }
 
 func TestAccS3BucketOwnershipControls_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_ownership_controls.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -66,7 +66,7 @@ func TestAccS3BucketOwnershipControls_disappears(t *testing.T) {
 }
 
 func TestAccS3BucketOwnershipControls_Disappears_bucket(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_ownership_controls.test"
 	s3BucketResourceName := "aws_s3_bucket.test"
 
@@ -89,7 +89,7 @@ func TestAccS3BucketOwnershipControls_Disappears_bucket(t *testing.T) {
 }
 
 func TestAccS3BucketOwnershipControls_Rule_objectOwnership(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_ownership_controls.test"
 
 	resource.ParallelTest(t, resource.TestCase{

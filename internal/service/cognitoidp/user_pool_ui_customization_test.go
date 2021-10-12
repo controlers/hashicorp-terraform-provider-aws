@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccCognitoIDPUserPoolUICustomization_AllClients_cSS(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 	userPoolResourceName := "aws_cognito_user_pool.test"
 
@@ -68,7 +68,7 @@ func TestAccCognitoIDPUserPoolUICustomization_AllClients_cSS(t *testing.T) {
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_AllClients_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 
 	css := ".label-customizable {font-weight: 400;}"
@@ -92,7 +92,7 @@ func TestAccCognitoIDPUserPoolUICustomization_AllClients_disappears(t *testing.T
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_AllClients_imageFile(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 	userPoolResourceName := "aws_cognito_user_pool.test"
 
@@ -144,7 +144,7 @@ func TestAccCognitoIDPUserPoolUICustomization_AllClients_imageFile(t *testing.T)
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_AllClients_cSSAndImageFile(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 	userPoolResourceName := "aws_cognito_user_pool.test"
 
@@ -211,7 +211,7 @@ func TestAccCognitoIDPUserPoolUICustomization_AllClients_cSSAndImageFile(t *test
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_Client_cSS(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 	clientResourceName := "aws_cognito_user_pool_client.test"
 	userPoolResourceName := "aws_cognito_user_pool.test"
@@ -264,7 +264,7 @@ func TestAccCognitoIDPUserPoolUICustomization_Client_cSS(t *testing.T) {
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_Client_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 
 	css := ".label-customizable {font-weight: 400;}"
@@ -288,7 +288,7 @@ func TestAccCognitoIDPUserPoolUICustomization_Client_disappears(t *testing.T) {
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_Client_image(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 	clientResourceName := "aws_cognito_user_pool_client.test"
 	userPoolResourceName := "aws_cognito_user_pool.test"
@@ -341,7 +341,7 @@ func TestAccCognitoIDPUserPoolUICustomization_Client_image(t *testing.T) {
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_ClientAndAll_cSS(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.ui_all"
 	clientUIResourceName := "aws_cognito_user_pool_ui_customization.ui_client"
 
@@ -416,7 +416,7 @@ func TestAccCognitoIDPUserPoolUICustomization_ClientAndAll_cSS(t *testing.T) {
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_UpdateClientToAll_cSS(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 	clientResourceName := "aws_cognito_user_pool_client.test"
 
@@ -455,7 +455,7 @@ func TestAccCognitoIDPUserPoolUICustomization_UpdateClientToAll_cSS(t *testing.T
 }
 
 func TestAccCognitoIDPUserPoolUICustomization_UpdateAllToClient_cSS(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cognito_user_pool_ui_customization.test"
 	clientResourceName := "aws_cognito_user_pool_client.test"
 

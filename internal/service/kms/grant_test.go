@@ -16,7 +16,7 @@ import (
 
 func TestAccKMSGrant_basic(t *testing.T) {
 	resourceName := "aws_kms_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -48,7 +48,7 @@ func TestAccKMSGrant_basic(t *testing.T) {
 
 func TestAccKMSGrant_withConstraints(t *testing.T) {
 	resourceName := "aws_kms_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -96,7 +96,7 @@ func TestAccKMSGrant_withConstraints(t *testing.T) {
 
 func TestAccKMSGrant_withRetiringPrincipal(t *testing.T) {
 	resourceName := "aws_kms_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -123,7 +123,7 @@ func TestAccKMSGrant_withRetiringPrincipal(t *testing.T) {
 
 func TestAccKMSGrant_bare(t *testing.T) {
 	resourceName := "aws_kms_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -152,7 +152,7 @@ func TestAccKMSGrant_bare(t *testing.T) {
 
 func TestAccKMSGrant_arn(t *testing.T) {
 	resourceName := "aws_kms_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -184,7 +184,7 @@ func TestAccKMSGrant_arn(t *testing.T) {
 
 func TestAccKMSGrant_asymmetricKey(t *testing.T) {
 	resourceName := "aws_kms_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -210,7 +210,7 @@ func TestAccKMSGrant_asymmetricKey(t *testing.T) {
 
 func TestAccKMSGrant_disappears(t *testing.T) {
 	resourceName := "aws_kms_grant.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -143,8 +143,8 @@ func TestAccCloudWatchEventsTarget_eventBusARN(t *testing.T) {
 	var target events.Target
 	ruleName := sdkacctest.RandomWithPrefix("tf-acc-test-rule")
 	targetID := sdkacctest.RandomWithPrefix("tf-acc-test-target")
-	originEventBusName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	destinationEventBusName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	originEventBusName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	destinationEventBusName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -278,7 +278,7 @@ func TestAccCloudWatchEventsTarget_full(t *testing.T) {
 func TestAccCloudWatchEventsTarget_disappears(t *testing.T) {
 	var v events.Target
 
-	ruleName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	snsTopicName := sdkacctest.RandomWithPrefix("tf-acc-test-sns")
 	targetID := sdkacctest.RandomWithPrefix("tf-acc-test-target")
 
@@ -706,7 +706,7 @@ func TestAccCloudWatchEventsTarget_Input_transformer(t *testing.T) {
 
 func TestAccCloudWatchEventsTarget_inputTransformerJSONString(t *testing.T) {
 	var target events.Target
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cloudwatch_event_target.test"
 
@@ -738,7 +738,7 @@ func TestAccCloudWatchEventsTarget_partnerEventBus(t *testing.T) {
 	}
 
 	var target events.Target
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudwatch_event_target.test"
 	snsTopicResourceName := "aws_sns_topic.test"
 

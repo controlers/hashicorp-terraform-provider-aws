@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccEFSAccessPointDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_efs_access_point.test"
 	resourceName := "aws_efs_access_point.test"
 

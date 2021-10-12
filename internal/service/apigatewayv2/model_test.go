@@ -19,7 +19,7 @@ func TestAccAPIGatewayV2Model_basic(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetModelOutput
 	resourceName := "aws_apigatewayv2_model.test"
-	rName := strings.ReplaceAll(sdkacctest.RandomWithPrefix("tf-acc-test"), "-", "")
+	rName := strings.ReplaceAll(sdkacctest.RandomWithPrefix(acctest.ResourcePrefix), "-", "")
 
 	schema := `
 {
@@ -64,7 +64,7 @@ func TestAccAPIGatewayV2Model_disappears(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetModelOutput
 	resourceName := "aws_apigatewayv2_model.test"
-	rName := strings.ReplaceAll(sdkacctest.RandomWithPrefix("tf-acc-test"), "-", "")
+	rName := strings.ReplaceAll(sdkacctest.RandomWithPrefix(acctest.ResourcePrefix), "-", "")
 
 	schema := `
 {
@@ -101,7 +101,7 @@ func TestAccAPIGatewayV2Model_allAttributes(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetModelOutput
 	resourceName := "aws_apigatewayv2_model.test"
-	rName := strings.ReplaceAll(sdkacctest.RandomWithPrefix("tf-acc-test"), "-", "")
+	rName := strings.ReplaceAll(sdkacctest.RandomWithPrefix(acctest.ResourcePrefix), "-", "")
 
 	schema1 := `
 {

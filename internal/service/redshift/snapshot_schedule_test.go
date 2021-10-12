@@ -17,7 +17,7 @@ import (
 
 func TestAccRedshiftSnapshotSchedule_basic(t *testing.T) {
 	var v redshift.SnapshotSchedule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_redshift_snapshot_schedule.default"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -54,7 +54,7 @@ func TestAccRedshiftSnapshotSchedule_basic(t *testing.T) {
 
 func TestAccRedshiftSnapshotSchedule_withMultipleDefinition(t *testing.T) {
 	var v redshift.SnapshotSchedule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_redshift_snapshot_schedule.default"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -121,7 +121,7 @@ func TestAccRedshiftSnapshotSchedule_withIdentifierPrefix(t *testing.T) {
 
 func TestAccRedshiftSnapshotSchedule_withDescription(t *testing.T) {
 	var v redshift.SnapshotSchedule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_redshift_snapshot_schedule.default"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -152,7 +152,7 @@ func TestAccRedshiftSnapshotSchedule_withDescription(t *testing.T) {
 
 func TestAccRedshiftSnapshotSchedule_withTags(t *testing.T) {
 	var v redshift.SnapshotSchedule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_redshift_snapshot_schedule.default"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -195,7 +195,7 @@ func TestAccRedshiftSnapshotSchedule_withForceDestroy(t *testing.T) {
 	var snapshotSchedule redshift.SnapshotSchedule
 	var cluster redshift.Cluster
 	rInt := sdkacctest.RandInt()
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_redshift_snapshot_schedule.default"
 	clusterResourceName := "aws_redshift_cluster.default"
 

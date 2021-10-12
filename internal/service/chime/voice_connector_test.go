@@ -17,7 +17,7 @@ import (
 func TestAccChimeVoiceConnector_basic(t *testing.T) {
 	var voiceConnector *chime.VoiceConnector
 
-	vcName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	vcName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccChimeVoiceConnector_basic(t *testing.T) {
 func TestAccChimeVoiceConnector_disappears(t *testing.T) {
 	var voiceConnector *chime.VoiceConnector
 
-	vcName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	vcName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -71,7 +71,7 @@ func TestAccChimeVoiceConnector_disappears(t *testing.T) {
 func TestAccChimeVoiceConnector_update(t *testing.T) {
 	var voiceConnector *chime.VoiceConnector
 
-	vcName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	vcName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector.test"
 
 	resource.ParallelTest(t, resource.TestCase{

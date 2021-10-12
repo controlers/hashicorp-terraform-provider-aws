@@ -18,7 +18,7 @@ import (
 
 func testAccApp_basic(t *testing.T) {
 	var app sagemaker.DescribeAppOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app.test"
 
 	resource.Test(t, resource.TestCase{
@@ -52,7 +52,7 @@ func testAccApp_basic(t *testing.T) {
 
 func testAccApp_resourceSpec(t *testing.T) {
 	var app sagemaker.DescribeAppOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app.test"
 
 	resource.Test(t, resource.TestCase{
@@ -82,7 +82,7 @@ func testAccApp_resourceSpec(t *testing.T) {
 
 func testAccApp_tags(t *testing.T) {
 	var app sagemaker.DescribeAppOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app.test"
 
 	resource.Test(t, resource.TestCase{
@@ -127,7 +127,7 @@ func testAccApp_tags(t *testing.T) {
 
 func testAccApp_disappears(t *testing.T) {
 	var app sagemaker.DescribeAppOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app.test"
 
 	resource.Test(t, resource.TestCase{

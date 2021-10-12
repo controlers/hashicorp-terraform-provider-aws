@@ -21,7 +21,7 @@ import (
 
 func TestAccWAFIPSet_basic(t *testing.T) {
 	var v waf.IPSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_ipset.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -53,7 +53,7 @@ func TestAccWAFIPSet_basic(t *testing.T) {
 
 func TestAccWAFIPSet_disappears(t *testing.T) {
 	var v waf.IPSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_ipset.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -76,7 +76,7 @@ func TestAccWAFIPSet_disappears(t *testing.T) {
 
 func TestAccWAFIPSet_changeNameForceNew(t *testing.T) {
 	var before, after waf.IPSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	uName := sdkacctest.RandomWithPrefix("tf-acc-test-updated")
 	resourceName := "aws_waf_ipset.test"
 
@@ -119,7 +119,7 @@ func TestAccWAFIPSet_changeNameForceNew(t *testing.T) {
 
 func TestAccWAFIPSet_changeDescriptors(t *testing.T) {
 	var before, after waf.IPSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_ipset.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -163,7 +163,7 @@ func TestAccWAFIPSet_changeDescriptors(t *testing.T) {
 
 func TestAccWAFIPSet_noDescriptors(t *testing.T) {
 	var ipset waf.IPSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_ipset.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -191,7 +191,7 @@ func TestAccWAFIPSet_noDescriptors(t *testing.T) {
 
 func TestAccWAFIPSet_IPSetDescriptors_1000UpdateLimit(t *testing.T) {
 	var ipset waf.IPSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_ipset.test"
 
 	incrementIP := func(ip net.IP) {
@@ -342,7 +342,7 @@ func TestDiffWafIpSetDescriptors(t *testing.T) {
 
 func TestAccWAFIPSet_ipv6(t *testing.T) {
 	var v waf.IPSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_ipset.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -18,7 +18,7 @@ import (
 func TestAccRDSSnapshot_basic(t *testing.T) {
 	var v rds.DBSnapshot
 	resourceName := "aws_db_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -46,7 +46,7 @@ func TestAccRDSSnapshot_basic(t *testing.T) {
 func TestAccRDSSnapshot_tags(t *testing.T) {
 	var v rds.DBSnapshot
 	resourceName := "aws_db_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -90,7 +90,7 @@ func TestAccRDSSnapshot_tags(t *testing.T) {
 
 func TestAccRDSSnapshot_disappears(t *testing.T) {
 	var v rds.DBSnapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_snapshot.test"
 
 	resource.ParallelTest(t, resource.TestCase{

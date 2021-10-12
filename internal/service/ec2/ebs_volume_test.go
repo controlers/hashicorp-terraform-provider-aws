@@ -354,7 +354,7 @@ func TestAccEC2EBSVolume_withTags(t *testing.T) {
 func TestAccEC2EBSVolume_multiAttach(t *testing.T) {
 	var v ec2.Volume
 	resourceName := "aws_ebs_volume.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -409,7 +409,7 @@ func TestAccEC2EBSVolume_outpost(t *testing.T) {
 func TestAccEC2EBSVolume_GP3_basic(t *testing.T) {
 	var v ec2.Volume
 	resourceName := "aws_ebs_volume.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -447,7 +447,7 @@ func TestAccEC2EBSVolume_GP3_basic(t *testing.T) {
 func TestAccEC2EBSVolume_GP3_iops(t *testing.T) {
 	var v ec2.Volume
 	resourceName := "aws_ebs_volume.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -503,7 +503,7 @@ func TestAccEC2EBSVolume_GP3_iops(t *testing.T) {
 func TestAccEC2EBSVolume_GP3_throughput(t *testing.T) {
 	var v ec2.Volume
 	resourceName := "aws_ebs_volume.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -559,7 +559,7 @@ func TestAccEC2EBSVolume_GP3_throughput(t *testing.T) {
 func TestAccEC2EBSVolume_gp3ToGP2(t *testing.T) {
 	var v ec2.Volume
 	resourceName := "aws_ebs_volume.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -616,7 +616,7 @@ func TestAccEC2EBSVolume_snapshotID(t *testing.T) {
 	var v ec2.Volume
 	resourceName := "aws_ebs_volume.test"
 	snapshotResourceName := "aws_ebs_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -655,7 +655,7 @@ func TestAccEC2EBSVolume_snapshotIDAndSize(t *testing.T) {
 	var v ec2.Volume
 	resourceName := "aws_ebs_volume.test"
 	snapshotResourceName := "aws_ebs_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -19,7 +19,7 @@ import (
 
 func TestAccRDSGlobalCluster_basic(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -53,7 +53,7 @@ func TestAccRDSGlobalCluster_basic(t *testing.T) {
 
 func TestAccRDSGlobalCluster_disappears(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -76,7 +76,7 @@ func TestAccRDSGlobalCluster_disappears(t *testing.T) {
 
 func TestAccRDSGlobalCluster_databaseName(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -111,7 +111,7 @@ func TestAccRDSGlobalCluster_databaseName(t *testing.T) {
 
 func TestAccRDSGlobalCluster_deletionProtection(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -146,7 +146,7 @@ func TestAccRDSGlobalCluster_deletionProtection(t *testing.T) {
 
 func TestAccRDSGlobalCluster_Engine_aurora(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -173,7 +173,7 @@ func TestAccRDSGlobalCluster_Engine_aurora(t *testing.T) {
 
 func TestAccRDSGlobalCluster_EngineVersion_aurora(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -200,7 +200,7 @@ func TestAccRDSGlobalCluster_EngineVersion_aurora(t *testing.T) {
 
 func TestAccRDSGlobalCluster_engineVersionUpdateMinor(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -234,7 +234,7 @@ func TestAccRDSGlobalCluster_engineVersionUpdateMinor(t *testing.T) {
 
 func TestAccRDSGlobalCluster_engineVersionUpdateMajor(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -269,7 +269,7 @@ func TestAccRDSGlobalCluster_engineVersionUpdateMajor(t *testing.T) {
 
 func TestAccRDSGlobalCluster_EngineVersion_auroraMySQL(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -296,7 +296,7 @@ func TestAccRDSGlobalCluster_EngineVersion_auroraMySQL(t *testing.T) {
 
 func TestAccRDSGlobalCluster_EngineVersion_auroraPostgresql(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -323,7 +323,7 @@ func TestAccRDSGlobalCluster_EngineVersion_auroraPostgresql(t *testing.T) {
 
 func TestAccRDSGlobalCluster_sourceDBClusterIdentifier(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	clusterResourceName := "aws_rds_cluster.test"
 	resourceName := "aws_rds_global_cluster.test"
 
@@ -352,7 +352,7 @@ func TestAccRDSGlobalCluster_sourceDBClusterIdentifier(t *testing.T) {
 
 func TestAccRDSGlobalCluster_SourceDBClusterIdentifier_storageEncrypted(t *testing.T) {
 	var globalCluster1 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	clusterResourceName := "aws_rds_cluster.test"
 	resourceName := "aws_rds_global_cluster.test"
 
@@ -381,7 +381,7 @@ func TestAccRDSGlobalCluster_SourceDBClusterIdentifier_storageEncrypted(t *testi
 
 func TestAccRDSGlobalCluster_storageEncrypted(t *testing.T) {
 	var globalCluster1, globalCluster2 rds.GlobalCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_global_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{

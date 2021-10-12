@@ -16,8 +16,8 @@ import (
 )
 
 func TestAccLakeFormationResource_basic(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	roleName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	roleName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceAddr := "aws_lakeformation_resource.test"
 	bucketAddr := "aws_s3_bucket.test"
 	roleAddr := "aws_iam_role.test"
@@ -41,7 +41,7 @@ func TestAccLakeFormationResource_basic(t *testing.T) {
 }
 
 func TestAccLakeFormationResource_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_resource.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -63,7 +63,7 @@ func TestAccLakeFormationResource_disappears(t *testing.T) {
 }
 
 func TestAccLakeFormationResource_serviceLinkedRole(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceAddr := "aws_lakeformation_resource.test"
 	bucketAddr := "aws_s3_bucket.test"
 
@@ -90,9 +90,9 @@ func TestAccLakeFormationResource_serviceLinkedRole(t *testing.T) {
 }
 
 func TestAccLakeFormationResource_updateRoleToRole(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	roleName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	roleName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	roleName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	roleName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceAddr := "aws_lakeformation_resource.test"
 	bucketAddr := "aws_s3_bucket.test"
 	roleAddr := "aws_iam_role.test"
@@ -124,8 +124,8 @@ func TestAccLakeFormationResource_updateRoleToRole(t *testing.T) {
 }
 
 func TestAccLakeFormationResource_updateSLRToRole(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	roleName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	roleName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceAddr := "aws_lakeformation_resource.test"
 	bucketAddr := "aws_s3_bucket.test"
 	roleAddr := "aws_iam_role.test"

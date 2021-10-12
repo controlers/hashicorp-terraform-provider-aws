@@ -18,7 +18,7 @@ import (
 func TestAccMWAAEnvironment_basic(t *testing.T) {
 	var environment mwaa.GetEnvironmentOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mwaa_environment.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -80,7 +80,7 @@ func TestAccMWAAEnvironment_basic(t *testing.T) {
 func TestAccMWAAEnvironment_disappears(t *testing.T) {
 	var environment mwaa.GetEnvironmentOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mwaa_environment.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -104,7 +104,7 @@ func TestAccMWAAEnvironment_disappears(t *testing.T) {
 func TestAccMWAAEnvironment_airflowOptions(t *testing.T) {
 	var environment mwaa.GetEnvironmentOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mwaa_environment.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -150,7 +150,7 @@ func TestAccMWAAEnvironment_airflowOptions(t *testing.T) {
 func TestAccMWAAEnvironment_log(t *testing.T) {
 	var environment mwaa.GetEnvironmentOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mwaa_environment.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -235,7 +235,7 @@ func TestAccMWAAEnvironment_log(t *testing.T) {
 func TestAccMWAAEnvironment_full(t *testing.T) {
 	var environment mwaa.GetEnvironmentOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mwaa_environment.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -309,7 +309,7 @@ func TestAccMWAAEnvironment_full(t *testing.T) {
 func TestAccMWAAEnvironment_pluginsS3ObjectVersion(t *testing.T) {
 	var environment mwaa.GetEnvironmentOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mwaa_environment.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.plugins"
 

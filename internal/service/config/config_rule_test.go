@@ -16,7 +16,7 @@ import (
 
 func testAccConfigConfigRule_basic(t *testing.T) {
 	var cr configservice.ConfigRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_config_rule.test"
 
 	resource.Test(t, resource.TestCase{
@@ -42,7 +42,7 @@ func testAccConfigConfigRule_basic(t *testing.T) {
 
 func testAccConfigConfigRule_ownerAws(t *testing.T) {
 	var cr configservice.ConfigRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_config_rule.test"
 
 	resource.Test(t, resource.TestCase{
@@ -118,7 +118,7 @@ func testAccConfigConfigRule_customlambda(t *testing.T) {
 
 func testAccConfigConfigRule_importAws(t *testing.T) {
 	resourceName := "aws_config_config_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -166,7 +166,7 @@ func testAccConfigConfigRule_importLambda(t *testing.T) {
 
 func testAccConfigConfigRule_Scope_TagKey(t *testing.T) {
 	var configRule configservice.ConfigRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_config_rule.test"
 
 	resource.Test(t, resource.TestCase{
@@ -197,7 +197,7 @@ func testAccConfigConfigRule_Scope_TagKey(t *testing.T) {
 
 func testAccConfigConfigRule_Scope_TagKey_Empty(t *testing.T) {
 	var configRule configservice.ConfigRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_config_rule.test"
 
 	resource.Test(t, resource.TestCase{
@@ -218,7 +218,7 @@ func testAccConfigConfigRule_Scope_TagKey_Empty(t *testing.T) {
 
 func testAccConfigConfigRule_Scope_TagValue(t *testing.T) {
 	var configRule configservice.ConfigRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_config_config_rule.test"
 
 	resource.Test(t, resource.TestCase{
@@ -250,7 +250,7 @@ func testAccConfigConfigRule_Scope_TagValue(t *testing.T) {
 func testAccConfigConfigRule_tags(t *testing.T) {
 	var cr configservice.ConfigRule
 	resourceName := "aws_config_config_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

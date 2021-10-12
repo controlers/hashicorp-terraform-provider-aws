@@ -21,7 +21,7 @@ func TestAccEC2DefaultRouteTable_basic(t *testing.T) {
 	var routeTable ec2.RouteTable
 	resourceName := "aws_default_route_table.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -66,7 +66,7 @@ func TestAccEC2DefaultRouteTable_Disappears_vpc(t *testing.T) {
 	var vpc ec2.Vpc
 	resourceName := "aws_default_route_table.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -91,7 +91,7 @@ func TestAccEC2DefaultRouteTable_Route_mode(t *testing.T) {
 	var routeTable ec2.RouteTable
 	resourceName := "aws_default_route_table.test"
 	igwResourceName := "aws_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.2.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -160,7 +160,7 @@ func TestAccEC2DefaultRouteTable_swap(t *testing.T) {
 	resourceName := "aws_default_route_table.test"
 	igwResourceName := "aws_internet_gateway.test"
 	rtResourceName := "aws_route_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr1 := "10.2.0.0/16"
 	destinationCidr2 := "10.3.0.0/16"
 
@@ -227,7 +227,7 @@ func TestAccEC2DefaultRouteTable_ipv4ToTransitGateway(t *testing.T) {
 	var routeTable ec2.RouteTable
 	resourceName := "aws_default_route_table.test"
 	tgwResourceName := "aws_ec2_transit_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.2.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -259,7 +259,7 @@ func TestAccEC2DefaultRouteTable_ipv4ToVPCEndpoint(t *testing.T) {
 	var routeTable ec2.RouteTable
 	resourceName := "aws_default_route_table.test"
 	vpceResourceName := "aws_vpc_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "0.0.0.0/0"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -300,7 +300,7 @@ func TestAccEC2DefaultRouteTable_vpcEndpointAssociation(t *testing.T) {
 	var routeTable ec2.RouteTable
 	resourceName := "aws_default_route_table.test"
 	igwResourceName := "aws_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.2.0.0/16"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -331,7 +331,7 @@ func TestAccEC2DefaultRouteTable_vpcEndpointAssociation(t *testing.T) {
 func TestAccEC2DefaultRouteTable_tags(t *testing.T) {
 	var routeTable ec2.RouteTable
 	resourceName := "aws_default_route_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -372,7 +372,7 @@ func TestAccEC2DefaultRouteTable_conditionalCIDRBlock(t *testing.T) {
 	var routeTable ec2.RouteTable
 	resourceName := "aws_default_route_table.test"
 	igwResourceName := "aws_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationCidr := "10.2.0.0/16"
 	destinationIpv6Cidr := "::/0"
 
@@ -411,7 +411,7 @@ func TestAccEC2DefaultRouteTable_prefixListToInternetGateway(t *testing.T) {
 	resourceName := "aws_default_route_table.test"
 	igwResourceName := "aws_internet_gateway.test"
 	plResourceName := "aws_ec2_managed_prefix_list.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -455,7 +455,7 @@ func TestAccEC2DefaultRouteTable_revokeExistingRules(t *testing.T) {
 	igwResourceName := "aws_internet_gateway.test"
 	vgwResourceName := "aws_vpn_gateway.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

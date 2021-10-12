@@ -21,7 +21,7 @@ import (
 
 func TestAccECSService_withARN(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -53,7 +53,7 @@ func TestAccECSService_withARN(t *testing.T) {
 
 func TestAccECSService_basicImport(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 	importInput := fmt.Sprintf("%s/%s", rName, rName)
 
@@ -92,7 +92,7 @@ func TestAccECSService_basicImport(t *testing.T) {
 
 func TestAccECSService_disappears(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -115,7 +115,7 @@ func TestAccECSService_disappears(t *testing.T) {
 
 func TestAccECSService_withUnnormalizedPlacementStrategy(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -136,7 +136,7 @@ func TestAccECSService_withUnnormalizedPlacementStrategy(t *testing.T) {
 
 func TestAccECSService_withCapacityProviderStrategy(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -163,7 +163,7 @@ func TestAccECSService_withCapacityProviderStrategy(t *testing.T) {
 
 func TestAccECSService_withMultipleCapacityProviderStrategies(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -185,7 +185,7 @@ func TestAccECSService_withMultipleCapacityProviderStrategies(t *testing.T) {
 
 func TestAccECSService_withFamilyAndRevision(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -214,7 +214,7 @@ func TestAccECSService_withFamilyAndRevision(t *testing.T) {
 // Regression for https://github.com/hashicorp/terraform/issues/2427
 func TestAccECSService_withRenamedCluster(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -244,7 +244,7 @@ func TestAccECSService_withRenamedCluster(t *testing.T) {
 
 func TestAccECSService_healthCheckGracePeriodSeconds(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -288,7 +288,7 @@ func TestAccECSService_healthCheckGracePeriodSeconds(t *testing.T) {
 
 func TestAccECSService_withIAMRole(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -309,7 +309,7 @@ func TestAccECSService_withIAMRole(t *testing.T) {
 
 func TestAccECSService_WithDeploymentControllerType_codeDeploy(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -341,7 +341,7 @@ func TestAccECSService_WithDeploymentControllerType_codeDeploy(t *testing.T) {
 
 func TestAccECSService_WithDeploymentControllerType_external(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -372,7 +372,7 @@ func TestAccECSService_WithDeploymentControllerType_external(t *testing.T) {
 
 func TestAccECSService_withDeploymentValues(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -396,7 +396,7 @@ func TestAccECSService_withDeploymentValues(t *testing.T) {
 // Regression for https://github.com/hashicorp/terraform-provider-aws/issues/6315
 func TestAccECSService_withDeploymentMinimumZeroMaximumOneHundred(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -419,7 +419,7 @@ func TestAccECSService_withDeploymentMinimumZeroMaximumOneHundred(t *testing.T) 
 
 func TestAccECSService_withDeploymentCircuitBreaker(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -444,7 +444,7 @@ func TestAccECSService_withDeploymentCircuitBreaker(t *testing.T) {
 // Regression for https://github.com/hashicorp/terraform/issues/3444
 func TestAccECSService_withLbChanges(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -472,7 +472,7 @@ func TestAccECSService_withLbChanges(t *testing.T) {
 // Regression for https://github.com/hashicorp/terraform/issues/3361
 func TestAccECSService_withECSClusterName(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -494,7 +494,7 @@ func TestAccECSService_withECSClusterName(t *testing.T) {
 
 func TestAccECSService_withAlb(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -516,7 +516,7 @@ func TestAccECSService_withAlb(t *testing.T) {
 
 func TestAccECSService_withMultipleTargetGroups(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -538,7 +538,7 @@ func TestAccECSService_withMultipleTargetGroups(t *testing.T) {
 
 func TestAccECSService_withForceNewDeployment(t *testing.T) {
 	var service1, service2 ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -570,7 +570,7 @@ func TestAccECSService_withForceNewDeployment(t *testing.T) {
 
 func TestAccECSService_withPlacementStrategy(t *testing.T) {
 	var service1, service2, service3, service4 ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -624,7 +624,7 @@ func TestAccECSService_withPlacementStrategy(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/13146
 func TestAccECSService_WithPlacementStrategyType_missing(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -642,7 +642,7 @@ func TestAccECSService_WithPlacementStrategyType_missing(t *testing.T) {
 
 func TestAccECSService_withPlacementConstraints(t *testing.T) {
 	var service1, service2 ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -672,7 +672,7 @@ func TestAccECSService_withPlacementConstraints(t *testing.T) {
 
 func TestAccECSService_WithPlacementConstraints_emptyExpression(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -694,7 +694,7 @@ func TestAccECSService_WithPlacementConstraints_emptyExpression(t *testing.T) {
 
 func TestAccECSService_withLaunchTypeFargate(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -734,7 +734,7 @@ func TestAccECSService_withLaunchTypeFargate(t *testing.T) {
 
 func TestAccECSService_withLaunchTypeFargateAndPlatformVersion(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -770,7 +770,7 @@ func TestAccECSService_withLaunchTypeFargateAndPlatformVersion(t *testing.T) {
 
 func TestAccECSService_withLaunchTypeFargateAndWaitForSteadyState(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -803,7 +803,7 @@ func TestAccECSService_withLaunchTypeFargateAndWaitForSteadyState(t *testing.T) 
 
 func TestAccECSService_withLaunchTypeFargateAndUpdateWaitForSteadyState(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -844,7 +844,7 @@ func TestAccECSService_withLaunchTypeFargateAndUpdateWaitForSteadyState(t *testi
 
 func TestAccECSService_withLaunchTypeEC2AndNetwork(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -877,7 +877,7 @@ func TestAccECSService_withLaunchTypeEC2AndNetwork(t *testing.T) {
 
 func TestAccECSService_withDaemonSchedulingStrategy(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -899,7 +899,7 @@ func TestAccECSService_withDaemonSchedulingStrategy(t *testing.T) {
 
 func TestAccECSService_withDaemonSchedulingStrategySetDeploymentMinimum(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -921,7 +921,7 @@ func TestAccECSService_withDaemonSchedulingStrategySetDeploymentMinimum(t *testi
 
 func TestAccECSService_withReplicaSchedulingStrategy(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -943,7 +943,7 @@ func TestAccECSService_withReplicaSchedulingStrategy(t *testing.T) {
 
 func TestAccECSService_withServiceRegistries(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -965,7 +965,7 @@ func TestAccECSService_withServiceRegistries(t *testing.T) {
 
 func TestAccECSService_WithServiceRegistries_container(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -987,9 +987,9 @@ func TestAccECSService_WithServiceRegistries_container(t *testing.T) {
 
 func TestAccECSService_withServiceRegistriesChanges(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	serviceDiscoveryName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	updatedServiceDiscoveryName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	serviceDiscoveryName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	updatedServiceDiscoveryName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1018,7 +1018,7 @@ func TestAccECSService_withServiceRegistriesChanges(t *testing.T) {
 
 func TestAccECSService_tags(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1067,7 +1067,7 @@ func TestAccECSService_tags(t *testing.T) {
 
 func TestAccECSService_managedTags(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1090,7 +1090,7 @@ func TestAccECSService_managedTags(t *testing.T) {
 
 func TestAccECSService_propagateTags(t *testing.T) {
 	var first, second, third ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1127,7 +1127,7 @@ func TestAccECSService_propagateTags(t *testing.T) {
 
 func TestAccECSService_executeCommand(t *testing.T) {
 	var service ecs.Service
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{

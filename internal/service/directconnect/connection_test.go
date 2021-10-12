@@ -18,7 +18,7 @@ import (
 func TestAccDirectConnectConnection_basic(t *testing.T) {
 	var connection directconnect.Connection
 	resourceName := "aws_dx_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -52,7 +52,7 @@ func TestAccDirectConnectConnection_basic(t *testing.T) {
 func TestAccDirectConnectConnection_disappears(t *testing.T) {
 	var connection directconnect.Connection
 	resourceName := "aws_dx_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -75,7 +75,7 @@ func TestAccDirectConnectConnection_disappears(t *testing.T) {
 func TestAccDirectConnectConnection_providerName(t *testing.T) {
 	var connection directconnect.Connection
 	resourceName := "aws_dx_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -109,7 +109,7 @@ func TestAccDirectConnectConnection_providerName(t *testing.T) {
 func TestAccDirectConnectConnection_tags(t *testing.T) {
 	var connection directconnect.Connection
 	resourceName := "aws_dx_connection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

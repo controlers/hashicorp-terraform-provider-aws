@@ -13,7 +13,7 @@ import (
 func TestAccAutoScalingGroupDataSource_basic(t *testing.T) {
 	datasourceName := "data.aws_autoscaling_group.test"
 	resourceName := "aws_autoscaling_group.match"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

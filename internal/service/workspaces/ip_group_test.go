@@ -17,7 +17,7 @@ import (
 
 func testAccIPGroup_basic(t *testing.T) {
 	var v workspaces.IpGroup
-	ipGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ipGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ipGroupNewName := sdkacctest.RandomWithPrefix("tf-acc-test-upd")
 	ipGroupDescription := fmt.Sprintf("Terraform Acceptance Test %s", strings.Title(sdkacctest.RandString(20)))
 	resourceName := "aws_workspaces_ip_group.test"
@@ -64,7 +64,7 @@ func testAccIPGroup_basic(t *testing.T) {
 func testAccIPGroup_tags(t *testing.T) {
 	var v workspaces.IpGroup
 	resourceName := "aws_workspaces_ip_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -108,7 +108,7 @@ func testAccIPGroup_tags(t *testing.T) {
 
 func testAccIPGroup_disappears(t *testing.T) {
 	var v workspaces.IpGroup
-	ipGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ipGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ipGroupDescription := fmt.Sprintf("Terraform Acceptance Test %s", strings.Title(sdkacctest.RandString(20)))
 	resourceName := "aws_workspaces_ip_group.test"
 
@@ -134,7 +134,7 @@ func testAccIPGroup_MultipleDirectories(t *testing.T) {
 	var v workspaces.IpGroup
 	var d1, d2 workspaces.WorkspaceDirectory
 
-	ipGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ipGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := acctest.RandomDomainName()
 
 	resourceName := "aws_workspaces_ip_group.test"

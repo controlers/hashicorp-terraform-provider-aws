@@ -18,7 +18,7 @@ import (
 
 func TestAccServiceDiscoveryPublicDNSNamespace_basic(t *testing.T) {
 	resourceName := "aws_service_discovery_public_dns_namespace.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -51,7 +51,7 @@ func TestAccServiceDiscoveryPublicDNSNamespace_basic(t *testing.T) {
 
 func TestAccServiceDiscoveryPublicDNSNamespace_disappears(t *testing.T) {
 	resourceName := "aws_service_discovery_public_dns_namespace.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -77,7 +77,7 @@ func TestAccServiceDiscoveryPublicDNSNamespace_disappears(t *testing.T) {
 
 func TestAccServiceDiscoveryPublicDNSNamespace_description(t *testing.T) {
 	resourceName := "aws_service_discovery_public_dns_namespace.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -102,7 +102,7 @@ func TestAccServiceDiscoveryPublicDNSNamespace_description(t *testing.T) {
 
 func TestAccServiceDiscoveryPublicDNSNamespace_tags(t *testing.T) {
 	resourceName := "aws_service_discovery_public_dns_namespace.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {

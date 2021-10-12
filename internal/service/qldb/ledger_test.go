@@ -174,7 +174,7 @@ resource "aws_qldb_ledger" "test" {
 
 func TestAccQLDBLedger_tags(t *testing.T) {
 	var cluster1, cluster2, cluster3 qldb.DescribeLedgerOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_qldb_ledger.test"
 
 	resource.ParallelTest(t, resource.TestCase{

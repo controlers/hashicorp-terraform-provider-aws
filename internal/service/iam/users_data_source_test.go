@@ -14,7 +14,7 @@ import (
 func TestAccIAMUsersDataSource_nameRegex(t *testing.T) {
 	dataSourceName := "data.aws_iam_users.test"
 	rCount := strconv.Itoa(sdkacctest.RandIntRange(1, 4))
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -35,7 +35,7 @@ func TestAccIAMUsersDataSource_nameRegex(t *testing.T) {
 func TestAccIAMUsersDataSource_pathPrefix(t *testing.T) {
 	dataSourceName := "data.aws_iam_users.test"
 	rCount := strconv.Itoa(sdkacctest.RandIntRange(1, 4))
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rPathPrefix := sdkacctest.RandomWithPrefix("tf-acc-path")
 
 	resource.ParallelTest(t, resource.TestCase{

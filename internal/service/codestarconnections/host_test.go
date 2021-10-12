@@ -20,7 +20,7 @@ import (
 func TestAccCodeStarConnectionsHost_basic(t *testing.T) {
 	var v codestarconnections.GetHostOutput
 	resourceName := "aws_codestarconnections_host.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarconnections.EndpointsID, t) },
@@ -51,7 +51,7 @@ func TestAccCodeStarConnectionsHost_basic(t *testing.T) {
 func TestAccCodeStarConnectionsHost_disappears(t *testing.T) {
 	var v codestarconnections.GetHostOutput
 	resourceName := "aws_codestarconnections_host.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarconnections.EndpointsID, t) },
@@ -74,7 +74,7 @@ func TestAccCodeStarConnectionsHost_disappears(t *testing.T) {
 func TestAccCodeStarConnectionsHost_vpc(t *testing.T) {
 	var v codestarconnections.GetHostOutput
 	resourceName := "aws_codestarconnections_host.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(codestarconnections.EndpointsID, t) },

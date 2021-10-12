@@ -18,7 +18,7 @@ import (
 
 func TestAccServiceCatalogBudgetResourceAssociation_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_budget_resource_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService("budgets", t) },
@@ -45,7 +45,7 @@ func TestAccServiceCatalogBudgetResourceAssociation_basic(t *testing.T) {
 
 func TestAccServiceCatalogBudgetResourceAssociation_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_budget_resource_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService("budgets", t) },

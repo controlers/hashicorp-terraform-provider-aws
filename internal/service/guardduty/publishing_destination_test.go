@@ -16,7 +16,7 @@ import (
 
 func testAccPublishingDestination_basic(t *testing.T) {
 	resourceName := "aws_guardduty_publishing_destination.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	detectorResourceName := "aws_guardduty_detector.test_gd"
 	bucketResourceName := "aws_s3_bucket.gd_bucket"
 	kmsKeyResourceName := "aws_kms_key.gd_key"
@@ -47,7 +47,7 @@ func testAccPublishingDestination_basic(t *testing.T) {
 
 func testAccPublishingDestination_disappears(t *testing.T) {
 	resourceName := "aws_guardduty_publishing_destination.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

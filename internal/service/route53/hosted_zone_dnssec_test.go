@@ -18,7 +18,7 @@ import (
 func TestAccRoute53HostedZoneDNSSEC_basic(t *testing.T) {
 	route53ZoneResourceName := "aws_route53_zone.test"
 	resourceName := "aws_route53_hosted_zone_dnssec.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domainName := acctest.RandomDomainName()
 
@@ -47,7 +47,7 @@ func TestAccRoute53HostedZoneDNSSEC_basic(t *testing.T) {
 
 func TestAccRoute53HostedZoneDNSSEC_disappears(t *testing.T) {
 	resourceName := "aws_route53_hosted_zone_dnssec.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domainName := acctest.RandomDomainName()
 
@@ -71,7 +71,7 @@ func TestAccRoute53HostedZoneDNSSEC_disappears(t *testing.T) {
 
 func TestAccRoute53HostedZoneDNSSEC_signingStatus(t *testing.T) {
 	resourceName := "aws_route53_hosted_zone_dnssec.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domainName := acctest.RandomDomainName()
 

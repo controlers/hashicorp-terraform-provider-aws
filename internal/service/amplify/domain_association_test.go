@@ -24,7 +24,7 @@ func testAccDomainAssociation_basic(t *testing.T) {
 	}
 
 	var domain amplify.DomainAssociation
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_domain_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -65,7 +65,7 @@ func testAccDomainAssociation_disappears(t *testing.T) {
 	}
 
 	var domain amplify.DomainAssociation
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_domain_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -94,7 +94,7 @@ func testAccDomainAssociation_update(t *testing.T) {
 	}
 
 	var domain amplify.DomainAssociation
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_domain_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{

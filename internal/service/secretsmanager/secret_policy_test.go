@@ -19,7 +19,7 @@ import (
 
 func TestAccSecretsManagerSecretPolicy_basic(t *testing.T) {
 	var policy secretsmanager.GetResourcePolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -56,7 +56,7 @@ func TestAccSecretsManagerSecretPolicy_basic(t *testing.T) {
 
 func TestAccSecretsManagerSecretPolicy_blockPublicPolicy(t *testing.T) {
 	var policy secretsmanager.GetResourcePolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -98,7 +98,7 @@ func TestAccSecretsManagerSecretPolicy_blockPublicPolicy(t *testing.T) {
 
 func TestAccSecretsManagerSecretPolicy_disappears(t *testing.T) {
 	var policy secretsmanager.GetResourcePolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -1484,7 +1484,7 @@ func TestAccEC2SecurityGroup_defaultEgressVPC(t *testing.T) {
 func TestAccEC2SecurityGroup_defaultEgressClassic(t *testing.T) {
 	var group ec2.SecurityGroup
 	resourceName := "aws_security_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckEC2Classic(t) },
@@ -1672,7 +1672,7 @@ func TestAccEC2SecurityGroup_invalidCIDRBlock(t *testing.T) {
 func TestAccEC2SecurityGroup_tags(t *testing.T) {
 	var group ec2.SecurityGroup
 	resourceName := "aws_security_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1797,7 +1797,7 @@ func TestAccEC2SecurityGroup_ingressWithCIDRAndSGsVPC(t *testing.T) {
 func TestAccEC2SecurityGroup_ingressWithCIDRAndSGsClassic(t *testing.T) {
 	var group ec2.SecurityGroup
 	resourceName := "aws_security_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckEC2Classic(t) },

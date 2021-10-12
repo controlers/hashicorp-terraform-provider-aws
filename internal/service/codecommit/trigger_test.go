@@ -15,7 +15,7 @@ import (
 )
 
 func TestAccCodeCommitTrigger_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codecommit_trigger.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -61,7 +61,7 @@ func TestAccPinpointEmailChannel_basic(t *testing.T) {
 func TestAccPinpointEmailChannel_set(t *testing.T) {
 	var channel pinpoint.EmailChannelResponse
 	resourceName := "aws_pinpoint_email_channel.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := acctest.RandomDomainName()
 	address := acctest.RandomEmailAddress(domain)
@@ -91,7 +91,7 @@ func TestAccPinpointEmailChannel_set(t *testing.T) {
 func TestAccPinpointEmailChannel_noRole(t *testing.T) {
 	var channel pinpoint.EmailChannelResponse
 	resourceName := "aws_pinpoint_email_channel.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := acctest.RandomDomainName()
 	address := acctest.RandomEmailAddress(domain)

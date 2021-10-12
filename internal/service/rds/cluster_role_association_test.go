@@ -17,7 +17,7 @@ import (
 
 func TestAccRDSClusterRoleAssociation_basic(t *testing.T) {
 	var dbClusterRole rds.DBClusterRole
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbClusterResourceName := "aws_rds_cluster.test"
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_rds_cluster_role_association.test"
@@ -48,7 +48,7 @@ func TestAccRDSClusterRoleAssociation_basic(t *testing.T) {
 
 func TestAccRDSClusterRoleAssociation_disappears(t *testing.T) {
 	var dbClusterRole rds.DBClusterRole
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster_role_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -71,7 +71,7 @@ func TestAccRDSClusterRoleAssociation_disappears(t *testing.T) {
 
 func TestAccRDSClusterRoleAssociation_Disappears_cluster(t *testing.T) {
 	var dbClusterRole rds.DBClusterRole
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster_role_association.test"
 	clusterResourceName := "aws_rds_cluster.test"
 
@@ -95,7 +95,7 @@ func TestAccRDSClusterRoleAssociation_Disappears_cluster(t *testing.T) {
 
 func TestAccRDSClusterRoleAssociation_Disappears_role(t *testing.T) {
 	var dbClusterRole rds.DBClusterRole
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster_role_association.test"
 	roleResourceName := "aws_iam_role.test"
 

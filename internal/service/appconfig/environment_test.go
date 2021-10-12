@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccAppConfigEnvironment_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_environment.test"
 	appResourceName := "aws_appconfig_application.test"
 
@@ -49,7 +49,7 @@ func TestAccAppConfigEnvironment_basic(t *testing.T) {
 }
 
 func TestAccAppConfigEnvironment_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_environment.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -71,7 +71,7 @@ func TestAccAppConfigEnvironment_disappears(t *testing.T) {
 }
 
 func TestAccAppConfigEnvironment_updateName(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-update")
 	resourceName := "aws_appconfig_environment.test"
 
@@ -104,7 +104,7 @@ func TestAccAppConfigEnvironment_updateName(t *testing.T) {
 }
 
 func TestAccAppConfigEnvironment_updateDescription(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := sdkacctest.RandomWithPrefix("tf-acc-test-update")
 	resourceName := "aws_appconfig_environment.test"
 
@@ -150,7 +150,7 @@ func TestAccAppConfigEnvironment_updateDescription(t *testing.T) {
 }
 
 func TestAccAppConfigEnvironment_monitors(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_environment.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -206,7 +206,7 @@ func TestAccAppConfigEnvironment_monitors(t *testing.T) {
 }
 
 func TestAccAppConfigEnvironment_multipleEnvironments(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName1 := "aws_appconfig_environment.test"
 	resourceName2 := "aws_appconfig_environment.test2"
 
@@ -249,7 +249,7 @@ func TestAccAppConfigEnvironment_multipleEnvironments(t *testing.T) {
 }
 
 func TestAccAppConfigEnvironment_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_environment.test"
 
 	resource.ParallelTest(t, resource.TestCase{

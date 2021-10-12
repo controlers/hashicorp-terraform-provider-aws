@@ -13,7 +13,7 @@ import (
 func TestAccEC2NetworkInterfaceDataSource_basic(t *testing.T) {
 	datasourceName := "data.aws_network_interface.test"
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -41,7 +41,7 @@ func TestAccEC2NetworkInterfaceDataSource_basic(t *testing.T) {
 
 func TestAccEC2NetworkInterfaceDataSource_filters(t *testing.T) {
 	datasourceName := "data.aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -66,7 +66,7 @@ func TestAccEC2NetworkInterfaceDataSource_carrierIPAssociation(t *testing.T) {
 	eipAssociationResourceName := "aws_eip_association.test"
 	securityGroupResourceName := "aws_security_group.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },
@@ -114,7 +114,7 @@ func TestAccEC2NetworkInterfaceDataSource_publicIPAssociation(t *testing.T) {
 	eipAssociationResourceName := "aws_eip_association.test"
 	securityGroupResourceName := "aws_security_group.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

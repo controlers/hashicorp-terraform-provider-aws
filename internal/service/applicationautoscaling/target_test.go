@@ -58,7 +58,7 @@ func TestAccApplicationAutoScalingTarget_basic(t *testing.T) {
 
 func TestAccApplicationAutoScalingTarget_disappears(t *testing.T) {
 	var target applicationautoscaling.ScalableTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appautoscaling_target.bar"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -565,7 +565,7 @@ func TestAccRoute53Record_Alias_elb(t *testing.T) {
 
 func TestAccRoute53Record_Alias_s3(t *testing.T) {
 	var record1 route53.ResourceRecordSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_record.alias"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -592,7 +592,7 @@ func TestAccRoute53Record_Alias_s3(t *testing.T) {
 
 func TestAccRoute53Record_Alias_vpcEndpoint(t *testing.T) {
 	var record1 route53.ResourceRecordSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_record.test"
 
 	resource.ParallelTest(t, resource.TestCase{

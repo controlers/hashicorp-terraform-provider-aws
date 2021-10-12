@@ -16,7 +16,7 @@ import (
 
 func TestAccSchemasDiscoverer_basic(t *testing.T) {
 	var v schemas.DescribeDiscovererOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_discoverer.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -45,7 +45,7 @@ func TestAccSchemasDiscoverer_basic(t *testing.T) {
 
 func TestAccSchemasDiscoverer_disappears(t *testing.T) {
 	var v schemas.DescribeDiscovererOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_discoverer.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -68,7 +68,7 @@ func TestAccSchemasDiscoverer_disappears(t *testing.T) {
 
 func TestAccSchemasDiscoverer_description(t *testing.T) {
 	var v schemas.DescribeDiscovererOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_discoverer.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -109,7 +109,7 @@ func TestAccSchemasDiscoverer_description(t *testing.T) {
 
 func TestAccSchemasDiscoverer_tags(t *testing.T) {
 	var v schemas.DescribeDiscovererOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_discoverer.test"
 
 	resource.ParallelTest(t, resource.TestCase{

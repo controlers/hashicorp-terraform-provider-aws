@@ -18,7 +18,7 @@ import (
 )
 
 func TestAccRoute53RecoveryReadinessResourceSet_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cwArn := arn.ARN{
 		AccountID: "123456789012",
 		Partition: endpoints.AwsPartitionID,
@@ -53,7 +53,7 @@ func TestAccRoute53RecoveryReadinessResourceSet_basic(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessResourceSet_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cwArn := arn.ARN{
 		AccountID: "123456789012",
 		Partition: endpoints.AwsPartitionID,
@@ -82,7 +82,7 @@ func TestAccRoute53RecoveryReadinessResourceSet_disappears(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessResourceSet_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_resource_set.test"
 	cwArn := arn.ARN{
 		AccountID: "123456789012",
@@ -133,7 +133,7 @@ func TestAccRoute53RecoveryReadinessResourceSet_tags(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessResourceSet_readinessScope(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_resource_set.test"
 	cwArn := arn.ARN{
 		AccountID: "123456789012",
@@ -167,7 +167,7 @@ func TestAccRoute53RecoveryReadinessResourceSet_readinessScope(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessResourceSet_basicDNSTargetResource(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_resource_set.test"
 	domainName := "myTestDomain.test"
 	hzArn := arn.ARN{
@@ -210,7 +210,7 @@ func TestAccRoute53RecoveryReadinessResourceSet_basicDNSTargetResource(t *testin
 }
 
 func TestAccRoute53RecoveryReadinessResourceSet_dnsTargetResourceNLBTarget(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_resource_set.test"
 	hzArn := arn.ARN{
 		AccountID: "123456789012",
@@ -247,7 +247,7 @@ func TestAccRoute53RecoveryReadinessResourceSet_dnsTargetResourceNLBTarget(t *te
 }
 
 func TestAccRoute53RecoveryReadinessResourceSet_dnsTargetResourceR53Target(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_resource_set.test"
 	hzArn := arn.ARN{
 		AccountID: "123456789012",
@@ -287,7 +287,7 @@ func TestAccRoute53RecoveryReadinessResourceSet_dnsTargetResourceR53Target(t *te
 }
 
 func TestAccRoute53RecoveryReadinessResourceSet_timeout(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cwArn := arn.ARN{
 		AccountID: "123456789012",
 		Partition: endpoints.AwsPartitionID,

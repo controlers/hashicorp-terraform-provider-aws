@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCloudControlResourceDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_cloudcontrolapi_resource.test"
 	resourceName := "aws_cloudcontrolapi_resource.test"
 

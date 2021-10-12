@@ -18,7 +18,7 @@ import (
 
 func TestAccKMSAlias_basic(t *testing.T) {
 	var alias kms.AliasListEntry
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_alias.test"
 	keyResourceName := "aws_kms_key.test"
 
@@ -49,7 +49,7 @@ func TestAccKMSAlias_basic(t *testing.T) {
 
 func TestAccKMSAlias_disappears(t *testing.T) {
 	var alias kms.AliasListEntry
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_alias.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -72,7 +72,7 @@ func TestAccKMSAlias_disappears(t *testing.T) {
 
 func TestAccKMSAlias_Name_generated(t *testing.T) {
 	var alias kms.AliasListEntry
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_alias.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -100,7 +100,7 @@ func TestAccKMSAlias_Name_generated(t *testing.T) {
 
 func TestAccKMSAlias_namePrefix(t *testing.T) {
 	var alias kms.AliasListEntry
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_alias.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -128,7 +128,7 @@ func TestAccKMSAlias_namePrefix(t *testing.T) {
 
 func TestAccKMSAlias_updateKeyID(t *testing.T) {
 	var alias kms.AliasListEntry
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_alias.test"
 	key1ResourceName := "aws_kms_key.test"
 	key2ResourceName := "aws_kms_key.test2"
@@ -166,7 +166,7 @@ func TestAccKMSAlias_updateKeyID(t *testing.T) {
 
 func TestAccKMSAlias_multipleAliasesForSameKey(t *testing.T) {
 	var alias kms.AliasListEntry
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_alias.test"
 	alias2ResourceName := "aws_kms_alias.test2"
 	keyResourceName := "aws_kms_key.test"
@@ -199,7 +199,7 @@ func TestAccKMSAlias_multipleAliasesForSameKey(t *testing.T) {
 
 func TestAccKMSAlias_arnDiffSuppress(t *testing.T) {
 	var alias kms.AliasListEntry
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_alias.test"
 
 	resource.ParallelTest(t, resource.TestCase{

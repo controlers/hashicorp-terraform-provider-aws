@@ -191,7 +191,7 @@ func testAccTransitGatewayVPCAttachment_SharedTransitGateway(t *testing.T) {
 	var providers []*schema.Provider
 	var transitGatewayVpcAttachment1 ec2.TransitGatewayVpcAttachment
 	resourceName := "aws_ec2_transit_gateway_vpc_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {

@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccNetworkFirewallResourcePolicy_firewallPolicy(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_resource_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -52,7 +52,7 @@ func TestAccNetworkFirewallResourcePolicy_firewallPolicy(t *testing.T) {
 }
 
 func TestAccNetworkFirewallResourcePolicy_ruleGroup(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_resource_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -87,7 +87,7 @@ func TestAccNetworkFirewallResourcePolicy_ruleGroup(t *testing.T) {
 }
 
 func TestAccNetworkFirewallResourcePolicy_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_resource_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -109,7 +109,7 @@ func TestAccNetworkFirewallResourcePolicy_disappears(t *testing.T) {
 }
 
 func TestAccNetworkFirewallResourcePolicy_Disappears_firewallPolicy(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_resource_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -131,7 +131,7 @@ func TestAccNetworkFirewallResourcePolicy_Disappears_firewallPolicy(t *testing.T
 }
 
 func TestAccNetworkFirewallResourcePolicy_Disappears_ruleGroup(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_resource_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

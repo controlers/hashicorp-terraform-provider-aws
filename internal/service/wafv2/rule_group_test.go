@@ -18,7 +18,7 @@ import (
 
 func TestAccWAFV2RuleGroup_basic(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -56,7 +56,7 @@ func TestAccWAFV2RuleGroup_basic(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_updateRule(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -122,7 +122,7 @@ func TestAccWAFV2RuleGroup_updateRule(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_updateRuleProperties(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 	ruleName2 := fmt.Sprintf("%s-2", ruleGroupName)
 
@@ -295,7 +295,7 @@ func TestAccWAFV2RuleGroup_updateRuleProperties(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_byteMatchStatement(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -358,7 +358,7 @@ func TestAccWAFV2RuleGroup_byteMatchStatement(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_ByteMatchStatement_fieldToMatch(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -521,8 +521,8 @@ func TestAccWAFV2RuleGroup_ByteMatchStatement_fieldToMatch(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_changeNameForceNew(t *testing.T) {
 	var before, after wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	ruleGroupNewName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	ruleGroupNewName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -569,7 +569,7 @@ func TestAccWAFV2RuleGroup_changeNameForceNew(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_changeCapacityForceNew(t *testing.T) {
 	var before, after wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -616,7 +616,7 @@ func TestAccWAFV2RuleGroup_changeCapacityForceNew(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_changeMetricNameForceNew(t *testing.T) {
 	var before, after wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -663,7 +663,7 @@ func TestAccWAFV2RuleGroup_changeMetricNameForceNew(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_disappears(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -686,7 +686,7 @@ func TestAccWAFV2RuleGroup_disappears(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_geoMatchStatement(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -740,7 +740,7 @@ func TestAccWAFV2RuleGroup_geoMatchStatement(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_GeoMatchStatement_forwardedIP(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -797,7 +797,7 @@ func TestAccWAFV2RuleGroup_GeoMatchStatement_forwardedIP(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_ipSetReferenceStatement(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -834,7 +834,7 @@ func TestAccWAFV2RuleGroup_ipSetReferenceStatement(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_IPSetReferenceStatement_ipsetForwardedIP(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -934,7 +934,7 @@ func TestAccWAFV2RuleGroup_IPSetReferenceStatement_ipsetForwardedIP(t *testing.T
 
 func TestAccWAFV2RuleGroup_logicalRuleStatements(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1007,7 +1007,7 @@ func TestAccWAFV2RuleGroup_logicalRuleStatements(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_minimal(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1038,7 +1038,7 @@ func TestAccWAFV2RuleGroup_minimal(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_regexPatternSetReferenceStatement(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1076,7 +1076,7 @@ func TestAccWAFV2RuleGroup_regexPatternSetReferenceStatement(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_ruleAction(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1157,7 +1157,7 @@ func TestAccWAFV2RuleGroup_ruleAction(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_RuleAction_customRequestHandling(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1228,7 +1228,7 @@ func TestAccWAFV2RuleGroup_RuleAction_customRequestHandling(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_RuleAction_customResponse(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1275,7 +1275,7 @@ func TestAccWAFV2RuleGroup_RuleAction_customResponse(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_sizeConstraintStatement(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1330,7 +1330,7 @@ func TestAccWAFV2RuleGroup_sizeConstraintStatement(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_sqliMatchStatement(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1401,7 +1401,7 @@ func TestAccWAFV2RuleGroup_sqliMatchStatement(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_tags(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1450,7 +1450,7 @@ func TestAccWAFV2RuleGroup_tags(t *testing.T) {
 
 func TestAccWAFV2RuleGroup_xssMatchStatement(t *testing.T) {
 	var v wafv2.RuleGroup
-	ruleGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	ruleGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

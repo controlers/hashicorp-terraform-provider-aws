@@ -17,7 +17,7 @@ import (
 
 func TestAccSageMakerNotebookInstanceLifecycleConfiguration_basic(t *testing.T) {
 	var lifecycleConfig sagemaker.DescribeNotebookInstanceLifecycleConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -48,7 +48,7 @@ func TestAccSageMakerNotebookInstanceLifecycleConfiguration_basic(t *testing.T) 
 
 func TestAccSageMakerNotebookInstanceLifecycleConfiguration_update(t *testing.T) {
 	var lifecycleConfig sagemaker.DescribeNotebookInstanceLifecycleConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance_lifecycle_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -23,7 +23,7 @@ import (
 
 func TestAccEC2EBSSnapshotImport_basic(t *testing.T) {
 	var v ec2.Snapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ebs_snapshot_import.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -48,7 +48,7 @@ func TestAccEC2EBSSnapshotImport_basic(t *testing.T) {
 
 func TestAccEC2EBSSnapshotImport_tags(t *testing.T) {
 	var v ec2.Snapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ebs_snapshot_import.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -94,7 +94,7 @@ func TestAccEC2EBSSnapshotImport_tags(t *testing.T) {
 
 func TestAccEC2EBSSnapshotImport_disappears(t *testing.T) {
 	var v ec2.Snapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ebs_snapshot_import.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -120,7 +120,7 @@ func TestAccEC2EBSSnapshotImport_disappears(t *testing.T) {
 
 func TestAccEC2EBSSnapshotImport_Disappears_s3BucketObject(t *testing.T) {
 	var v ec2.Snapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	parentResourceName := "aws_s3_bucket_object.image"
 	resourceName := "aws_ebs_snapshot_import.test"
 

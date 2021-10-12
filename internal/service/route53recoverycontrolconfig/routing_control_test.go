@@ -15,7 +15,7 @@ import (
 )
 
 func testAccRoutingControl_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoverycontrolconfig_routing_control.test"
 
 	resource.Test(t, resource.TestCase{
@@ -45,7 +45,7 @@ func testAccRoutingControl_basic(t *testing.T) {
 }
 
 func testAccRoutingControl_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoverycontrolconfig_routing_control.test"
 
 	resource.Test(t, resource.TestCase{
@@ -67,7 +67,7 @@ func testAccRoutingControl_disappears(t *testing.T) {
 }
 
 func testAccRoutingControl_nonDefaultControlPanel(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoverycontrolconfig_routing_control.test"
 
 	resource.Test(t, resource.TestCase{

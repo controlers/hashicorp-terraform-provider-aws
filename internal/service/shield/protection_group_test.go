@@ -18,7 +18,7 @@ import (
 
 func TestAccShieldProtectionGroup_basic(t *testing.T) {
 	resourceName := "aws_shield_protection_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -53,7 +53,7 @@ func TestAccShieldProtectionGroup_basic(t *testing.T) {
 
 func TestAccShieldProtectionGroup_disappears(t *testing.T) {
 	resourceName := "aws_shield_protection_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -79,7 +79,7 @@ func TestAccShieldProtectionGroup_disappears(t *testing.T) {
 
 func TestAccShieldProtectionGroup_aggregation(t *testing.T) {
 	resourceName := "aws_shield_protection_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -121,7 +121,7 @@ func TestAccShieldProtectionGroup_aggregation(t *testing.T) {
 
 func TestAccShieldProtectionGroup_members(t *testing.T) {
 	resourceName := "aws_shield_protection_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -153,8 +153,8 @@ func TestAccShieldProtectionGroup_members(t *testing.T) {
 
 func TestAccShieldProtectionGroup_protectionGroupID(t *testing.T) {
 	resourceName := "aws_shield_protection_group.test"
-	testID1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	testID2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	testID1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	testID2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -196,7 +196,7 @@ func TestAccShieldProtectionGroup_protectionGroupID(t *testing.T) {
 
 func TestAccShieldProtectionGroup_resourceType(t *testing.T) {
 	resourceName := "aws_shield_protection_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {

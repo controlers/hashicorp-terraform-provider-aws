@@ -82,7 +82,7 @@ func TestAccRDSCluster_basic(t *testing.T) {
 
 func TestAccRDSCluster_allowMajorVersionUpgrade(t *testing.T) {
 	var dbCluster1, dbCluster2 rds.DBCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 	// If these hardcoded versions become a maintenance burden, use DescribeDBEngineVersions
 	// either by having a new data source created or implementing the testing similar
@@ -133,7 +133,7 @@ func TestAccRDSCluster_allowMajorVersionUpgrade(t *testing.T) {
 
 func TestAccRDSCluster_onlyMajorVersion(t *testing.T) {
 	var dbCluster1 rds.DBCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 	// If these hardcoded versions become a maintenance burden, use DescribeDBEngineVersions
 	// either by having a new data source created or implementing the testing similar
@@ -174,7 +174,7 @@ func TestAccRDSCluster_onlyMajorVersion(t *testing.T) {
 
 func TestAccRDSCluster_availabilityZones(t *testing.T) {
 	var dbCluster rds.DBCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -279,7 +279,7 @@ func TestAccRDSCluster_clusterIdentifierPrefix(t *testing.T) {
 
 func TestAccRDSCluster_dbSubnetGroupName(t *testing.T) {
 	var dbCluster rds.DBCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -312,7 +312,7 @@ func TestAccRDSCluster_dbSubnetGroupName(t *testing.T) {
 func TestAccRDSCluster_s3Restore(t *testing.T) {
 	var v rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
-	bucket := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucket := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	uniqueId := sdkacctest.RandomWithPrefix("tf-acc-s3-import-test")
 	bucketPrefix := sdkacctest.RandString(5)
 
@@ -487,7 +487,7 @@ func TestAccRDSCluster_missingUserNameCausesError(t *testing.T) {
 
 func TestAccRDSCluster_tags(t *testing.T) {
 	var dbCluster1, dbCluster2, dbCluster3 rds.DBCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -539,7 +539,7 @@ func TestAccRDSCluster_tags(t *testing.T) {
 
 func TestAccRDSCluster_EnabledCloudWatchLogsExports_mySQL(t *testing.T) {
 	var dbCluster1, dbCluster2, dbCluster3 rds.DBCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -591,7 +591,7 @@ func TestAccRDSCluster_EnabledCloudWatchLogsExports_mySQL(t *testing.T) {
 
 func TestAccRDSCluster_EnabledCloudWatchLogsExports_postgresql(t *testing.T) {
 	var dbCluster1 rds.DBCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -796,7 +796,7 @@ func TestAccRDSCluster_ReplicationSourceIdentifier_kmsKeyID(t *testing.T) {
 	var replicaCluster rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
 	resourceName2 := "aws_rds_cluster.alternate"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	// record the initialized providers so that we can use them to
 	// check for the cluster in each region
@@ -922,7 +922,7 @@ func TestAccRDSCluster_iamAuth(t *testing.T) {
 
 func TestAccRDSCluster_deletionProtection(t *testing.T) {
 	var dbCluster1 rds.DBCluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -964,7 +964,7 @@ func TestAccRDSCluster_deletionProtection(t *testing.T) {
 func TestAccRDSCluster_engineMode(t *testing.T) {
 	var dbCluster1, dbCluster2 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1021,7 +1021,7 @@ func TestAccRDSCluster_engineMode(t *testing.T) {
 func TestAccRDSCluster_EngineMode_global(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1056,7 +1056,7 @@ func TestAccRDSCluster_EngineMode_global(t *testing.T) {
 func TestAccRDSCluster_EngineMode_multiMaster(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1091,7 +1091,7 @@ func TestAccRDSCluster_EngineMode_multiMaster(t *testing.T) {
 func TestAccRDSCluster_EngineMode_parallelQuery(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1211,7 +1211,7 @@ func TestAccRDSCluster_engineVersionWithPrimaryInstance(t *testing.T) {
 func TestAccRDSCluster_GlobalClusterIdentifierEngineMode_global(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	globalClusterResourceName := "aws_rds_global_cluster.test"
 	resourceName := "aws_rds_cluster.test"
 
@@ -1247,7 +1247,7 @@ func TestAccRDSCluster_GlobalClusterIdentifierEngineMode_global(t *testing.T) {
 func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_add(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1286,7 +1286,7 @@ func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_add(t *testing.T)
 func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_remove(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	globalClusterResourceName := "aws_rds_global_cluster.test"
 	resourceName := "aws_rds_cluster.test"
 
@@ -1329,7 +1329,7 @@ func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_remove(t *testing
 func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_update(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	globalClusterResourceName1 := "aws_rds_global_cluster.test.0"
 	globalClusterResourceName2 := "aws_rds_global_cluster.test.1"
 	resourceName := "aws_rds_cluster.test"
@@ -1370,7 +1370,7 @@ func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_update(t *testing
 func TestAccRDSCluster_GlobalClusterIdentifierEngineMode_provisioned(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	globalClusterResourceName := "aws_rds_global_cluster.test"
 	resourceName := "aws_rds_cluster.test"
 
@@ -1441,7 +1441,7 @@ func TestAccRDSCluster_GlobalClusterIdentifier_replicationSourceIdentifier(t *te
 	var providers []*schema.Provider
 	var primaryDbCluster, secondaryDbCluster rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceNamePrimary := "aws_rds_cluster.primary"
 	resourceNameSecondary := "aws_rds_cluster.secondary"
 
@@ -1510,7 +1510,7 @@ func TestAccRDSCluster_port(t *testing.T) {
 func TestAccRDSCluster_scaling(t *testing.T) {
 	var dbCluster rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1563,7 +1563,7 @@ func TestAccRDSCluster_scaling(t *testing.T) {
 func TestAccRDSCluster_Scaling_defaultMinCapacity(t *testing.T) {
 	var dbCluster rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1604,7 +1604,7 @@ func TestAccRDSCluster_snapshotIdentifier(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -1643,7 +1643,7 @@ func TestAccRDSCluster_SnapshotIdentifier_deletionProtection(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -1693,7 +1693,7 @@ func TestAccRDSCluster_SnapshotIdentifierEngineMode_parallelQuery(t *testing.T) 
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -1733,7 +1733,7 @@ func TestAccRDSCluster_SnapshotIdentifierEngineMode_provisioned(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -1777,7 +1777,7 @@ func TestAccRDSCluster_SnapshotIdentifierEngineMode_serverless(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -1818,7 +1818,7 @@ func TestAccRDSCluster_SnapshotIdentifierEngineVersion_different(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -1860,7 +1860,7 @@ func TestAccRDSCluster_SnapshotIdentifierEngineVersion_equal(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -1901,7 +1901,7 @@ func TestAccRDSCluster_SnapshotIdentifier_kmsKeyID(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
@@ -1942,7 +1942,7 @@ func TestAccRDSCluster_SnapshotIdentifier_masterPassword(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -1982,7 +1982,7 @@ func TestAccRDSCluster_SnapshotIdentifier_masterUsername(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -2024,7 +2024,7 @@ func TestAccRDSCluster_SnapshotIdentifier_preferredBackupWindow(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -2064,7 +2064,7 @@ func TestAccRDSCluster_SnapshotIdentifier_preferredMaintenanceWindow(t *testing.
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -2104,7 +2104,7 @@ func TestAccRDSCluster_SnapshotIdentifier_tags(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -2145,7 +2145,7 @@ func TestAccRDSCluster_SnapshotIdentifier_vpcSecurityGroupIDs(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -2188,7 +2188,7 @@ func TestAccRDSCluster_SnapshotIdentifierVPCSecurityGroupIDs_tags(t *testing.T) 
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
 	resourceName := "aws_rds_cluster.test"
@@ -2229,7 +2229,7 @@ func TestAccRDSCluster_SnapshotIdentifier_encryptedRestore(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	sourceDbResourceName := "aws_rds_cluster.source"
 	snapshotResourceName := "aws_db_cluster_snapshot.test"
@@ -2405,7 +2405,7 @@ func testAccCheckClusterRecreated(i, j *rds.DBCluster) resource.TestCheckFunc {
 func TestAccRDSCluster_enableHTTPEndpoint(t *testing.T) {
 	var dbCluster rds.DBCluster
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_rds_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{

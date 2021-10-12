@@ -19,7 +19,7 @@ import (
 func TestAccAPIGatewayAPIKey_basic(t *testing.T) {
 	var apiKey1 apigateway.ApiKey
 	resourceName := "aws_api_gateway_api_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -52,7 +52,7 @@ func TestAccAPIGatewayAPIKey_basic(t *testing.T) {
 func TestAccAPIGatewayAPIKey_tags(t *testing.T) {
 	var apiKey1 apigateway.ApiKey
 	resourceName := "aws_api_gateway_api_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -97,7 +97,7 @@ func TestAccAPIGatewayAPIKey_tags(t *testing.T) {
 func TestAccAPIGatewayAPIKey_description(t *testing.T) {
 	var apiKey1, apiKey2 apigateway.ApiKey
 	resourceName := "aws_api_gateway_api_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -132,7 +132,7 @@ func TestAccAPIGatewayAPIKey_description(t *testing.T) {
 func TestAccAPIGatewayAPIKey_enabled(t *testing.T) {
 	var apiKey1, apiKey2 apigateway.ApiKey
 	resourceName := "aws_api_gateway_api_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -167,7 +167,7 @@ func TestAccAPIGatewayAPIKey_enabled(t *testing.T) {
 func TestAccAPIGatewayAPIKey_value(t *testing.T) {
 	var apiKey1 apigateway.ApiKey
 	resourceName := "aws_api_gateway_api_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -194,7 +194,7 @@ func TestAccAPIGatewayAPIKey_value(t *testing.T) {
 func TestAccAPIGatewayAPIKey_disappears(t *testing.T) {
 	var apiKey1 apigateway.ApiKey
 	resourceName := "aws_api_gateway_api_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

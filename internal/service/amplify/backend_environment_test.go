@@ -17,7 +17,7 @@ import (
 
 func testAccBackendEnvironment_basic(t *testing.T) {
 	var env amplify.BackendEnvironment
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_backend_environment.test"
 
 	environmentName := sdkacctest.RandStringFromCharSet(10, sdkacctest.CharSetAlpha)
@@ -49,7 +49,7 @@ func testAccBackendEnvironment_basic(t *testing.T) {
 
 func testAccBackendEnvironment_disappears(t *testing.T) {
 	var env amplify.BackendEnvironment
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_backend_environment.test"
 
 	environmentName := sdkacctest.RandStringFromCharSet(10, sdkacctest.CharSetAlpha)
@@ -74,7 +74,7 @@ func testAccBackendEnvironment_disappears(t *testing.T) {
 
 func testAccBackendEnvironment_DeploymentArtifacts_StackName(t *testing.T) {
 	var env amplify.BackendEnvironment
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_backend_environment.test"
 
 	environmentName := sdkacctest.RandStringFromCharSet(10, sdkacctest.CharSetAlpha)

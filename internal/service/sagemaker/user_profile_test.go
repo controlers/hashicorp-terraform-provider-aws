@@ -18,7 +18,7 @@ import (
 
 func testAccUserProfile_basic(t *testing.T) {
 	var domain sagemaker.DescribeUserProfileOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_user_profile.test"
 
 	resource.Test(t, resource.TestCase{
@@ -50,7 +50,7 @@ func testAccUserProfile_basic(t *testing.T) {
 
 func testAccUserProfile_tags(t *testing.T) {
 	var domain sagemaker.DescribeUserProfileOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_user_profile.test"
 
 	resource.Test(t, resource.TestCase{
@@ -95,7 +95,7 @@ func testAccUserProfile_tags(t *testing.T) {
 
 func testAccUserProfile_tensorboardAppSettings(t *testing.T) {
 	var domain sagemaker.DescribeUserProfileOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_user_profile.test"
 
 	resource.Test(t, resource.TestCase{
@@ -125,7 +125,7 @@ func testAccUserProfile_tensorboardAppSettings(t *testing.T) {
 
 func testAccUserProfile_tensorboardAppSettingsWithImage(t *testing.T) {
 	var domain sagemaker.DescribeUserProfileOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_user_profile.test"
 
 	resource.Test(t, resource.TestCase{
@@ -156,7 +156,7 @@ func testAccUserProfile_tensorboardAppSettingsWithImage(t *testing.T) {
 
 func testAccUserProfile_kernelGatewayAppSettings(t *testing.T) {
 	var domain sagemaker.DescribeUserProfileOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_user_profile.test"
 
 	resource.Test(t, resource.TestCase{
@@ -186,7 +186,7 @@ func testAccUserProfile_kernelGatewayAppSettings(t *testing.T) {
 
 func testAccUserProfile_kernelGatewayAppSettings_lifecycleconfig(t *testing.T) {
 	var domain sagemaker.DescribeUserProfileOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_user_profile.test"
 
 	resource.Test(t, resource.TestCase{
@@ -217,7 +217,7 @@ func testAccUserProfile_kernelGatewayAppSettings_lifecycleconfig(t *testing.T) {
 
 func testAccUserProfile_jupyterServerAppSettings(t *testing.T) {
 	var domain sagemaker.DescribeUserProfileOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_user_profile.test"
 
 	resource.Test(t, resource.TestCase{
@@ -247,7 +247,7 @@ func testAccUserProfile_jupyterServerAppSettings(t *testing.T) {
 
 func testAccUserProfile_disappears(t *testing.T) {
 	var domain sagemaker.DescribeUserProfileOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_user_profile.test"
 
 	resource.Test(t, resource.TestCase{

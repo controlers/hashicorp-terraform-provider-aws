@@ -65,7 +65,7 @@ func TestAccDMSCertificate_disappears(t *testing.T) {
 
 func TestAccDMSCertificate_certificateWallet(t *testing.T) {
 	resourceName := "aws_dms_certificate.dms_certificate"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

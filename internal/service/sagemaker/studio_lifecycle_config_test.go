@@ -16,7 +16,7 @@ import (
 
 func TestAccSageMakerStudioLifecycleConfig_basic(t *testing.T) {
 	var config sagemaker.DescribeStudioLifecycleConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_studio_lifecycle_config.test"
 
 	resource.Test(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccSageMakerStudioLifecycleConfig_basic(t *testing.T) {
 
 func TestAccSageMakerStudioLifecycleConfig_tags(t *testing.T) {
 	var config sagemaker.DescribeStudioLifecycleConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_studio_lifecycle_config.test"
 
 	resource.Test(t, resource.TestCase{
@@ -92,7 +92,7 @@ func TestAccSageMakerStudioLifecycleConfig_tags(t *testing.T) {
 
 func TestAccSageMakerStudioLifecycleConfig_disappears(t *testing.T) {
 	var config sagemaker.DescribeStudioLifecycleConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_studio_lifecycle_config.test"
 
 	resource.Test(t, resource.TestCase{

@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccAppMeshVirtualServiceDataSource_virtualNode(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appmesh_virtual_service.test"
 	dataSourceName := "data.aws_appmesh_virtual_service.test"
 	vsName := fmt.Sprintf("tf-acc-test-%d.mesh.local", sdkacctest.RandInt())
@@ -41,7 +41,7 @@ func TestAccAppMeshVirtualServiceDataSource_virtualNode(t *testing.T) {
 }
 
 func TestAccAppMeshVirtualServiceDataSource_virtualRouter(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appmesh_virtual_service.test"
 	dataSourceName := "data.aws_appmesh_virtual_service.test"
 	vsName := fmt.Sprintf("tf-acc-test-%d.mesh.local", sdkacctest.RandInt())

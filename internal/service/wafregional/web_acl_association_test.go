@@ -85,7 +85,7 @@ func TestAccWAFRegionalWebACLAssociation_multipleAssociations(t *testing.T) {
 
 func TestAccWAFRegionalWebACLAssociation_ResourceARN_apiGatewayStage(t *testing.T) {
 	resourceName := "aws_wafregional_web_acl_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {

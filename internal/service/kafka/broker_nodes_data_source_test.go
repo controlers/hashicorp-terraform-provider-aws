@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccKafkaBrokerNodesDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_msk_broker_nodes.test"
 	resourceName := "aws_msk_cluster.test"
 

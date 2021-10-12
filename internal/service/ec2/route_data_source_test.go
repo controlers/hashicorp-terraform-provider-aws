@@ -20,7 +20,7 @@ func TestAccEC2RouteDataSource_basic(t *testing.T) {
 	datasource1Name := "data.aws_route.by_destination_cidr_block"
 	datasource2Name := "data.aws_route.by_instance_id"
 	datasource3Name := "data.aws_route.by_peering_connection_id"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -52,7 +52,7 @@ func TestAccEC2RouteDataSource_basic(t *testing.T) {
 func TestAccEC2RouteDataSource_transitGatewayID(t *testing.T) {
 	dataSourceName := "data.aws_route.test"
 	resourceName := "aws_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -75,7 +75,7 @@ func TestAccEC2RouteDataSource_transitGatewayID(t *testing.T) {
 func TestAccEC2RouteDataSource_ipv6DestinationCIDR(t *testing.T) {
 	dataSourceName := "data.aws_route.test"
 	resourceName := "aws_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -97,7 +97,7 @@ func TestAccEC2RouteDataSource_ipv6DestinationCIDR(t *testing.T) {
 func TestAccEC2RouteDataSource_localGatewayID(t *testing.T) {
 	dataSourceName := "data.aws_route.by_local_gateway_id"
 	resourceName := "aws_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckOutpostsOutposts(t) },
@@ -120,7 +120,7 @@ func TestAccEC2RouteDataSource_localGatewayID(t *testing.T) {
 func TestAccEC2RouteDataSource_carrierGatewayID(t *testing.T) {
 	dataSourceName := "data.aws_route.test"
 	resourceName := "aws_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },
@@ -143,7 +143,7 @@ func TestAccEC2RouteDataSource_carrierGatewayID(t *testing.T) {
 func TestAccEC2RouteDataSource_destinationPrefixListID(t *testing.T) {
 	dataSourceName := "data.aws_route.test"
 	resourceName := "aws_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckEc2ManagedPrefixList(t) },
@@ -168,7 +168,7 @@ func TestAccEC2RouteDataSource_gatewayVPCEndpoint(t *testing.T) {
 	var vpce ec2.VpcEndpoint
 	rtResourceName := "aws_route_table.test"
 	vpceResourceName := "aws_vpc_endpoint.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

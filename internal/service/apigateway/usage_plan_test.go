@@ -18,7 +18,7 @@ import (
 
 func TestAccAPIGatewayUsagePlan_basic(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	updatedName := sdkacctest.RandomWithPrefix("tf-acc-test-2")
 	resourceName := "aws_api_gateway_usage_plan.test"
 
@@ -59,7 +59,7 @@ func TestAccAPIGatewayUsagePlan_basic(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlan_tags(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -106,7 +106,7 @@ func TestAccAPIGatewayUsagePlan_tags(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlan_description(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -160,7 +160,7 @@ func TestAccAPIGatewayUsagePlan_description(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlan_productCode(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -208,7 +208,7 @@ func TestAccAPIGatewayUsagePlan_productCode(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlan_throttling(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -263,7 +263,7 @@ func TestAccAPIGatewayUsagePlan_throttling(t *testing.T) {
 // https://github.com/hashicorp/terraform-provider-aws/issues/2057
 func TestAccAPIGatewayUsagePlan_throttlingInitialRateLimit(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -290,7 +290,7 @@ func TestAccAPIGatewayUsagePlan_throttlingInitialRateLimit(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlan_quota(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -346,7 +346,7 @@ func TestAccAPIGatewayUsagePlan_quota(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlan_apiStages(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -430,7 +430,7 @@ func TestAccAPIGatewayUsagePlan_apiStages(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlan_APIStages_multiple(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -463,7 +463,7 @@ func TestAccAPIGatewayUsagePlan_APIStages_multiple(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlan_disappears(t *testing.T) {
 	var conf apigateway.UsagePlan
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -17,7 +17,7 @@ import (
 
 func TestAccRDSInstanceRoleAssociation_basic(t *testing.T) {
 	var dbInstanceRole1 rds.DBInstanceRole
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbInstanceResourceName := "aws_db_instance.test"
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_db_instance_role_association.test"
@@ -49,7 +49,7 @@ func TestAccRDSInstanceRoleAssociation_basic(t *testing.T) {
 func TestAccRDSInstanceRoleAssociation_disappears(t *testing.T) {
 	var dbInstance1 rds.DBInstance
 	var dbInstanceRole1 rds.DBInstanceRole
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dbInstanceResourceName := "aws_db_instance.test"
 	resourceName := "aws_db_instance_role_association.test"
 

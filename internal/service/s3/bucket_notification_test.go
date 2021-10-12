@@ -18,7 +18,7 @@ import (
 )
 
 func TestAccS3BucketNotification_lambdaFunction(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_notification.notification"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -60,7 +60,7 @@ func TestAccS3BucketNotification_lambdaFunction(t *testing.T) {
 }
 
 func TestAccS3BucketNotification_LambdaFunctionLambdaFunctionARN_alias(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_notification.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -91,7 +91,7 @@ func TestAccS3BucketNotification_LambdaFunctionLambdaFunctionARN_alias(t *testin
 }
 
 func TestAccS3BucketNotification_queue(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_notification.notification"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -133,7 +133,7 @@ func TestAccS3BucketNotification_queue(t *testing.T) {
 }
 
 func TestAccS3BucketNotification_topic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_notification.notification"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -164,7 +164,7 @@ func TestAccS3BucketNotification_topic(t *testing.T) {
 }
 
 func TestAccS3BucketNotification_Topic_multiple(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket_notification.notification"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -220,7 +220,7 @@ func TestAccS3BucketNotification_Topic_multiple(t *testing.T) {
 }
 
 func TestAccS3BucketNotification_update(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

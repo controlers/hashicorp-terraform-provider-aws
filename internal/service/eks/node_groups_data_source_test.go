@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccEKSNodeGroupsDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceResourceName := "data.aws_eks_node_groups.test"
 
 	resource.Test(t, resource.TestCase{

@@ -18,7 +18,7 @@ func TestAccIAMUserSSHKey_basic(t *testing.T) {
 	var conf iam.GetSSHPublicKeyOutput
 	resourceName := "aws_iam_user_ssh_key.user"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	publicKey, _, err := RandSSHKeyPairSize(2048, acctest.DefaultEmailAddress)
 	if err != nil {
 		t.Fatalf("error generating random SSH key: %s", err)

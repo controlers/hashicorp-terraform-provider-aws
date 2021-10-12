@@ -20,8 +20,8 @@ import (
 func TestAccQuickSightGroup_basic(t *testing.T) {
 	var group quicksight.Group
 	resourceName := "aws_quicksight_group.default"
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -57,7 +57,7 @@ func TestAccQuickSightGroup_basic(t *testing.T) {
 func TestAccQuickSightGroup_withDescription(t *testing.T) {
 	var group quicksight.Group
 	resourceName := "aws_quicksight_group.default"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -91,7 +91,7 @@ func TestAccQuickSightGroup_withDescription(t *testing.T) {
 func TestAccQuickSightGroup_disappears(t *testing.T) {
 	var group quicksight.Group
 	resourceName := "aws_quicksight_group.default"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

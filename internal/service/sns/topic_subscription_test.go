@@ -70,7 +70,7 @@ func TestSuppressEquivalentSnsTopicSubscriptionDeliveryPolicy(t *testing.T) {
 func TestAccSNSTopicSubscription_basic(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -111,7 +111,7 @@ func TestAccSNSTopicSubscription_filterPolicy(t *testing.T) {
 	resourceName := "aws_sns_topic_subscription.test"
 	filterPolicy1 := `{"key1": ["val1"], "key2": ["val2"]}`
 	filterPolicy2 := `{"key3": ["val3"], "key4": ["val4"]}`
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -158,7 +158,7 @@ func TestAccSNSTopicSubscription_filterPolicy(t *testing.T) {
 func TestAccSNSTopicSubscription_deliveryPolicy(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -217,9 +217,9 @@ func TestAccSNSTopicSubscription_deliveryPolicy(t *testing.T) {
 func TestAccSNSTopicSubscription_redrivePolicy(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	dlqName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	updatedDlqName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	dlqName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	updatedDlqName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -275,7 +275,7 @@ func TestAccSNSTopicSubscription_redrivePolicy(t *testing.T) {
 func TestAccSNSTopicSubscription_rawMessageDelivery(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -322,7 +322,7 @@ func TestAccSNSTopicSubscription_rawMessageDelivery(t *testing.T) {
 func TestAccSNSTopicSubscription_autoConfirmingEndpoint(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },
@@ -352,7 +352,7 @@ func TestAccSNSTopicSubscription_autoConfirmingEndpoint(t *testing.T) {
 func TestAccSNSTopicSubscription_autoConfirmingSecuredEndpoint(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },
@@ -382,7 +382,7 @@ func TestAccSNSTopicSubscription_autoConfirmingSecuredEndpoint(t *testing.T) {
 func TestAccSNSTopicSubscription_email(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -412,7 +412,7 @@ func TestAccSNSTopicSubscription_email(t *testing.T) {
 func TestAccSNSTopicSubscription_firehose(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -441,7 +441,7 @@ func TestAccSNSTopicSubscription_firehose(t *testing.T) {
 func TestAccSNSTopicSubscription_disappears(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -464,7 +464,7 @@ func TestAccSNSTopicSubscription_disappears(t *testing.T) {
 func TestAccSNSTopicSubscription_Disappears_topic(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_subscription.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

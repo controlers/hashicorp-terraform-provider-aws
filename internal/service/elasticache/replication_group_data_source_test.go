@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccElastiCacheReplicationGroupDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elasticache_replication_group.test"
 	dataSourceName := "data.aws_elasticache_replication_group.test"
 
@@ -44,7 +44,7 @@ func TestAccElastiCacheReplicationGroupDataSource_basic(t *testing.T) {
 }
 
 func TestAccElastiCacheReplicationGroupDataSource_clusterMode(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elasticache_replication_group.test"
 	dataSourceName := "data.aws_elasticache_replication_group.test"
 
@@ -71,7 +71,7 @@ func TestAccElastiCacheReplicationGroupDataSource_clusterMode(t *testing.T) {
 }
 
 func TestAccElastiCacheReplicationGroupDataSource_multiAZ(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_elasticache_replication_group.test"
 	dataSourceName := "data.aws_elasticache_replication_group.test"
 

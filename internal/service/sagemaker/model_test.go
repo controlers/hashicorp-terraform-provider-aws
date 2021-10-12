@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccSageMakerModel_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccSageMakerModel_basic(t *testing.T) {
 }
 
 func TestAccSageMakerModel_inferenceExecution(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -78,7 +78,7 @@ func TestAccSageMakerModel_inferenceExecution(t *testing.T) {
 }
 
 func TestAccSageMakerModel_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -122,7 +122,7 @@ func TestAccSageMakerModel_tags(t *testing.T) {
 }
 
 func TestAccSageMakerModel_primaryContainerModelDataURL(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -148,7 +148,7 @@ func TestAccSageMakerModel_primaryContainerModelDataURL(t *testing.T) {
 }
 
 func TestAccSageMakerModel_primaryContainerHostname(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -174,7 +174,7 @@ func TestAccSageMakerModel_primaryContainerHostname(t *testing.T) {
 }
 
 func TestAccSageMakerModel_primaryContainerImage(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -201,7 +201,7 @@ func TestAccSageMakerModel_primaryContainerImage(t *testing.T) {
 }
 
 func TestAccSageMakerModel_primaryContainerEnvironment(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -228,7 +228,7 @@ func TestAccSageMakerModel_primaryContainerEnvironment(t *testing.T) {
 }
 
 func TestAccSageMakerModel_primaryContainerModeSingle(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -254,7 +254,7 @@ func TestAccSageMakerModel_primaryContainerModeSingle(t *testing.T) {
 }
 
 func TestAccSageMakerModel_containers(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -282,7 +282,7 @@ func TestAccSageMakerModel_containers(t *testing.T) {
 }
 
 func TestAccSageMakerModel_vpc(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -310,7 +310,7 @@ func TestAccSageMakerModel_vpc(t *testing.T) {
 }
 
 func TestAccSageMakerModel_networkIsolation(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -336,7 +336,7 @@ func TestAccSageMakerModel_networkIsolation(t *testing.T) {
 }
 
 func TestAccSageMakerModel_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model.test"
 
 	resource.ParallelTest(t, resource.TestCase{

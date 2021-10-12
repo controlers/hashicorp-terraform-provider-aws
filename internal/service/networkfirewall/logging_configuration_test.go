@@ -16,9 +16,9 @@ import (
 )
 
 func TestAccNetworkFirewallLoggingConfiguration_CloudWatchLogDestination_logGroup(t *testing.T) {
-	logGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	logGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	updatedLogGroupName := fmt.Sprintf("%s-updated", logGroupName)
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -61,8 +61,8 @@ func TestAccNetworkFirewallLoggingConfiguration_CloudWatchLogDestination_logGrou
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_CloudWatchLogDestination_logType(t *testing.T) {
-	logGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	logGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -101,9 +101,9 @@ func TestAccNetworkFirewallLoggingConfiguration_CloudWatchLogDestination_logType
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_KinesisLogDestination_deliveryStream(t *testing.T) {
-	streamName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	streamName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	updatedStreamName := fmt.Sprintf("%s-updated", streamName)
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -146,8 +146,8 @@ func TestAccNetworkFirewallLoggingConfiguration_KinesisLogDestination_deliverySt
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_KinesisLogDestination_logType(t *testing.T) {
-	streamName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	streamName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -186,9 +186,9 @@ func TestAccNetworkFirewallLoggingConfiguration_KinesisLogDestination_logType(t 
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_S3LogDestination_bucketName(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	updatedBucketName := fmt.Sprintf("%s-updated", bucketName)
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -230,8 +230,8 @@ func TestAccNetworkFirewallLoggingConfiguration_S3LogDestination_bucketName(t *t
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_S3LogDestination_logType(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -271,8 +271,8 @@ func TestAccNetworkFirewallLoggingConfiguration_S3LogDestination_logType(t *test
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_S3LogDestination_prefix(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -315,8 +315,8 @@ func TestAccNetworkFirewallLoggingConfiguration_S3LogDestination_prefix(t *testi
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_updateFirewallARN(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 	firewallResourceName := "aws_networkfirewall_firewall.test"
 
@@ -351,10 +351,10 @@ func TestAccNetworkFirewallLoggingConfiguration_updateFirewallARN(t *testing.T) 
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_updateLogDestinationType(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	logGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	streamName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	logGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	streamName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -410,9 +410,9 @@ func TestAccNetworkFirewallLoggingConfiguration_updateLogDestinationType(t *test
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_updateToMultipleLogDestinations(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	streamName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	streamName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -465,9 +465,9 @@ func TestAccNetworkFirewallLoggingConfiguration_updateToMultipleLogDestinations(
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_updateToSingleAlertTypeLogDestination(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	logGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	logGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -520,9 +520,9 @@ func TestAccNetworkFirewallLoggingConfiguration_updateToSingleAlertTypeLogDestin
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_updateToSingleFlowTypeLogDestination(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	logGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	logGroupName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -575,8 +575,8 @@ func TestAccNetworkFirewallLoggingConfiguration_updateToSingleFlowTypeLogDestina
 }
 
 func TestAccNetworkFirewallLoggingConfiguration_disappears(t *testing.T) {
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_logging_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{

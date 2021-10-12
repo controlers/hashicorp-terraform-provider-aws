@@ -18,7 +18,7 @@ import (
 )
 
 func TestAccAppRunnerService_ImageRepository_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -69,7 +69,7 @@ func TestAccAppRunnerService_ImageRepository_basic(t *testing.T) {
 }
 
 func TestAccAppRunnerService_ImageRepository_autoScaling(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_service.test"
 	autoScalingResourceName := "aws_apprunner_auto_scaling_configuration_version.test"
 
@@ -102,7 +102,7 @@ func TestAccAppRunnerService_ImageRepository_autoScaling(t *testing.T) {
 }
 
 func TestAccAppRunnerService_ImageRepository_encryption(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_service.test"
 	kmsResourceName := "aws_kms_key.test"
 
@@ -138,7 +138,7 @@ func TestAccAppRunnerService_ImageRepository_encryption(t *testing.T) {
 }
 
 func TestAccAppRunnerService_ImageRepository_healthCheck(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -187,7 +187,7 @@ func TestAccAppRunnerService_ImageRepository_healthCheck(t *testing.T) {
 }
 
 func TestAccAppRunnerService_ImageRepository_instance(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_service.test"
 	roleResourceName := "aws_iam_role.test"
 
@@ -242,7 +242,7 @@ func TestAccAppRunnerService_ImageRepository_instance(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/19469
 func TestAccAppRunnerService_ImageRepository_runtimeEnvironmentVars(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -272,7 +272,7 @@ func TestAccAppRunnerService_ImageRepository_runtimeEnvironmentVars(t *testing.T
 }
 
 func TestAccAppRunnerService_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -294,7 +294,7 @@ func TestAccAppRunnerService_disappears(t *testing.T) {
 }
 
 func TestAccAppRunnerService_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_service.test"
 
 	resource.ParallelTest(t, resource.TestCase{

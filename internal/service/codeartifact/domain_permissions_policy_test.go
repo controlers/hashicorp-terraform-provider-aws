@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccCodeArtifactDomainPermissionsPolicy_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codeartifact_domain_permissions_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -57,7 +57,7 @@ func TestAccCodeArtifactDomainPermissionsPolicy_basic(t *testing.T) {
 }
 
 func TestAccCodeArtifactDomainPermissionsPolicy_owner(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codeartifact_domain_permissions_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -86,7 +86,7 @@ func TestAccCodeArtifactDomainPermissionsPolicy_owner(t *testing.T) {
 }
 
 func TestAccCodeArtifactDomainPermissionsPolicy_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codeartifact_domain_permissions_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -108,7 +108,7 @@ func TestAccCodeArtifactDomainPermissionsPolicy_disappears(t *testing.T) {
 }
 
 func TestAccCodeArtifactDomainPermissionsPolicy_Disappears_domain(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codeartifact_domain_permissions_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

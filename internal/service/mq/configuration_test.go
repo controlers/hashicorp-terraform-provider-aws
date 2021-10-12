@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccMQConfiguration_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -64,7 +64,7 @@ func TestAccMQConfiguration_basic(t *testing.T) {
 }
 
 func TestAccMQConfiguration_withData(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -99,7 +99,7 @@ func TestAccMQConfiguration_withData(t *testing.T) {
 }
 
 func TestAccMQConfiguration_withLdapData(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -135,7 +135,7 @@ func TestAccMQConfiguration_withLdapData(t *testing.T) {
 }
 
 func TestAccMQConfiguration_updateTags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -167,7 +167,7 @@ func TestAccACMPCACertificateAuthority_deleteFromActiveState(t *testing.T) {
 
 func TestAccACMPCACertificateAuthority_RevocationCrl_customCNAME(t *testing.T) {
 	var certificateAuthority acmpca.CertificateAuthority
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_acmpca_certificate_authority.test"
 
 	domain := acctest.RandomDomain()
@@ -258,7 +258,7 @@ func TestAccACMPCACertificateAuthority_RevocationCrl_customCNAME(t *testing.T) {
 
 func TestAccACMPCACertificateAuthority_RevocationCrl_enabled(t *testing.T) {
 	var certificateAuthority acmpca.CertificateAuthority
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_acmpca_certificate_authority.test"
 
 	commonName := acctest.RandomDomainName()
@@ -330,7 +330,7 @@ func TestAccACMPCACertificateAuthority_RevocationCrl_enabled(t *testing.T) {
 
 func TestAccACMPCACertificateAuthority_RevocationCrl_expirationInDays(t *testing.T) {
 	var certificateAuthority acmpca.CertificateAuthority
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_acmpca_certificate_authority.test"
 
 	commonName := acctest.RandomDomainName()
@@ -392,7 +392,7 @@ func TestAccACMPCACertificateAuthority_RevocationCrl_expirationInDays(t *testing
 
 func TestAccACMPCACertificateAuthority_RevocationCrl_s3ObjectACL(t *testing.T) {
 	var certificateAuthority acmpca.CertificateAuthority
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_acmpca_certificate_authority.test"
 
 	commonName := acctest.RandomDomainName()

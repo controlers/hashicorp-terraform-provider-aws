@@ -361,7 +361,7 @@ func TestAccEFSFileSystem_lifecyclePolicy(t *testing.T) {
 func TestAccEFSFileSystem_disappears(t *testing.T) {
 	var desc efs.FileSystemDescription
 	resourceName := "aws_efs_file_system.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

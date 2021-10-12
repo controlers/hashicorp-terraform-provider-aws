@@ -40,7 +40,7 @@ func TestAccSESIdentityPolicy_basic(t *testing.T) {
 }
 
 func TestAccSESIdentityPolicy_Identity_email(t *testing.T) {
-	emailPrefix := sdkacctest.RandomWithPrefix("tf-acc-test")
+	emailPrefix := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	email := fmt.Sprintf("%s@%s", emailPrefix, acctest.RandomDomainName())
 	resourceName := "aws_ses_identity_policy.test"
 

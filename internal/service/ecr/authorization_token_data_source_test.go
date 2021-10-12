@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccECRAuthorizationTokenDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_ecr_authorization_token.repo"
 
 	resource.Test(t, resource.TestCase{

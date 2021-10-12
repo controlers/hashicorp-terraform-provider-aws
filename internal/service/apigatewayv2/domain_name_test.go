@@ -19,7 +19,7 @@ func TestAccAPIGatewayV2DomainName_basic(t *testing.T) {
 	var v apigatewayv2.GetDomainNameOutput
 	resourceName := "aws_apigatewayv2_domain_name.test"
 	certResourceName := "aws_acm_certificate.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	domainName := fmt.Sprintf("%s.example.com", rName)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, domainName)
@@ -58,7 +58,7 @@ func TestAccAPIGatewayV2DomainName_basic(t *testing.T) {
 func TestAccAPIGatewayV2DomainName_disappears(t *testing.T) {
 	var v apigatewayv2.GetDomainNameOutput
 	resourceName := "aws_apigatewayv2_domain_name.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	domainName := fmt.Sprintf("%s.example.com", rName)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, domainName)
@@ -85,7 +85,7 @@ func TestAccAPIGatewayV2DomainName_tags(t *testing.T) {
 	var v apigatewayv2.GetDomainNameOutput
 	resourceName := "aws_apigatewayv2_domain_name.test"
 	certResourceName := "aws_acm_certificate.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	domainName := fmt.Sprintf("%s.example.com", rName)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, domainName)
@@ -144,7 +144,7 @@ func TestAccAPIGatewayV2DomainName_updateCertificate(t *testing.T) {
 	resourceName := "aws_apigatewayv2_domain_name.test"
 	certResourceName0 := "aws_acm_certificate.test.0"
 	certResourceName1 := "aws_acm_certificate.test.1"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	domainName := fmt.Sprintf("%s.example.com", rName)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, domainName)
@@ -222,7 +222,7 @@ func TestAccAPIGatewayV2DomainName_mutualTLSAuthentication(t *testing.T) {
 	resourceName := "aws_apigatewayv2_domain_name.test"
 	acmCertificateResourceName := "aws_acm_certificate.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

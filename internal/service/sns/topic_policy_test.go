@@ -19,7 +19,7 @@ import (
 func TestAccSNSTopicPolicy_basic(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -49,7 +49,7 @@ func TestAccSNSTopicPolicy_basic(t *testing.T) {
 func TestAccSNSTopicPolicy_updated(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -87,7 +87,7 @@ func TestAccSNSTopicPolicy_updated(t *testing.T) {
 func TestAccSNSTopicPolicy_Disappears_topic(t *testing.T) {
 	attributes := make(map[string]string)
 	topicResourceName := "aws_sns_topic.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -110,7 +110,7 @@ func TestAccSNSTopicPolicy_Disappears_topic(t *testing.T) {
 func TestAccSNSTopicPolicy_disappears(t *testing.T) {
 	attributes := make(map[string]string)
 	resourceName := "aws_sns_topic_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

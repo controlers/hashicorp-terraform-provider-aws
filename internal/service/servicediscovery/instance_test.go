@@ -16,7 +16,7 @@ import (
 
 func TestAccServiceDiscoveryInstance_private(t *testing.T) {
 	resourceName := "aws_service_discovery_instance.instance"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domainName := acctest.RandomDomainName()
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -69,7 +69,7 @@ func TestAccServiceDiscoveryInstance_private(t *testing.T) {
 
 func TestAccServiceDiscoveryInstance_public(t *testing.T) {
 	resourceName := "aws_service_discovery_instance.instance"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domainName := acctest.RandomDomainName()
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -122,7 +122,7 @@ func TestAccServiceDiscoveryInstance_public(t *testing.T) {
 
 func TestAccServiceDiscoveryInstance_http(t *testing.T) {
 	resourceName := "aws_service_discovery_instance.instance"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domainName := acctest.RandomDomainName()
 
 	resource.ParallelTest(t, resource.TestCase{

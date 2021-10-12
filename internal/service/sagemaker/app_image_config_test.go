@@ -17,7 +17,7 @@ import (
 
 func TestAccSageMakerAppImageConfig_basic(t *testing.T) {
 	var config sagemaker.DescribeAppImageConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app_image_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccSageMakerAppImageConfig_basic(t *testing.T) {
 
 func TestAccSageMakerAppImageConfig_KernelGatewayImage_kernelSpecs(t *testing.T) {
 	var config sagemaker.DescribeAppImageConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app_image_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -90,7 +90,7 @@ func TestAccSageMakerAppImageConfig_KernelGatewayImage_kernelSpecs(t *testing.T)
 
 func TestAccSageMakerAppImageConfig_KernelGatewayImage_fileSystem(t *testing.T) {
 	var config sagemaker.DescribeAppImageConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app_image_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -136,7 +136,7 @@ func TestAccSageMakerAppImageConfig_KernelGatewayImage_fileSystem(t *testing.T) 
 
 func TestAccSageMakerAppImageConfig_tags(t *testing.T) {
 	var app sagemaker.DescribeAppImageConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app_image_config.test"
 
 	resource.Test(t, resource.TestCase{
@@ -181,7 +181,7 @@ func TestAccSageMakerAppImageConfig_tags(t *testing.T) {
 
 func TestAccSageMakerAppImageConfig_disappears(t *testing.T) {
 	var config sagemaker.DescribeAppImageConfigOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_app_image_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{

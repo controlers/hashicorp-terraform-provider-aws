@@ -20,7 +20,7 @@ func TestAccEC2CarrierGateway_basic(t *testing.T) {
 	var v ec2.CarrierGateway
 	resourceName := "aws_ec2_carrier_gateway.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },
@@ -50,7 +50,7 @@ func TestAccEC2CarrierGateway_basic(t *testing.T) {
 func TestAccEC2CarrierGateway_disappears(t *testing.T) {
 	var v ec2.CarrierGateway
 	resourceName := "aws_ec2_carrier_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },
@@ -73,7 +73,7 @@ func TestAccEC2CarrierGateway_disappears(t *testing.T) {
 func TestAccEC2CarrierGateway_tags(t *testing.T) {
 	var v ec2.CarrierGateway
 	resourceName := "aws_ec2_carrier_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckWavelengthZoneAvailable(t) },

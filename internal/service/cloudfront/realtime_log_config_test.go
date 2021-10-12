@@ -17,7 +17,7 @@ import (
 
 func TestAccCloudFrontRealtimeLogConfig_basic(t *testing.T) {
 	var v cloudfront.RealtimeLogConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	samplingRate := sdkacctest.RandIntRange(1, 100)
 	resourceName := "aws_cloudfront_realtime_log_config.test"
 	roleResourceName := "aws_iam_role.test.0"
@@ -57,7 +57,7 @@ func TestAccCloudFrontRealtimeLogConfig_basic(t *testing.T) {
 
 func TestAccCloudFrontRealtimeLogConfig_disappears(t *testing.T) {
 	var v cloudfront.RealtimeLogConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	samplingRate := sdkacctest.RandIntRange(1, 100)
 	resourceName := "aws_cloudfront_realtime_log_config.test"
 
@@ -81,7 +81,7 @@ func TestAccCloudFrontRealtimeLogConfig_disappears(t *testing.T) {
 
 func TestAccCloudFrontRealtimeLogConfig_updates(t *testing.T) {
 	var v cloudfront.RealtimeLogConfig
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	samplingRate1 := sdkacctest.RandIntRange(1, 100)
 	samplingRate2 := sdkacctest.RandIntRange(1, 100)
 	resourceName := "aws_cloudfront_realtime_log_config.test"

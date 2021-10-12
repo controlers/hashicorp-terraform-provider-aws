@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCloudWatchLogsGroupDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "data.aws_cloudwatch_log_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -33,7 +33,7 @@ func TestAccCloudWatchLogsGroupDataSource_basic(t *testing.T) {
 }
 
 func TestAccCloudWatchLogsGroupDataSource_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "data.aws_cloudwatch_log_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -58,7 +58,7 @@ func TestAccCloudWatchLogsGroupDataSource_tags(t *testing.T) {
 }
 
 func TestAccCloudWatchLogsGroupDataSource_kms(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "data.aws_cloudwatch_log_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -81,7 +81,7 @@ func TestAccCloudWatchLogsGroupDataSource_kms(t *testing.T) {
 }
 
 func TestAccCloudWatchLogsGroupDataSource_retention(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "data.aws_cloudwatch_log_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -49,7 +49,7 @@ func TestAccCloudTrail_serial(t *testing.T) {
 
 func testAcc_basic(t *testing.T) {
 	var trail cloudtrail.Trail
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -89,7 +89,7 @@ func testAcc_basic(t *testing.T) {
 
 func testAcc_cloudWatch(t *testing.T) {
 	var trail cloudtrail.Trail
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -125,7 +125,7 @@ func testAcc_cloudWatch(t *testing.T) {
 
 func testAcc_enableLogging(t *testing.T) {
 	var trail cloudtrail.Trail
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -174,7 +174,7 @@ func testAcc_enableLogging(t *testing.T) {
 
 func testAcc_multiRegion(t *testing.T) {
 	var trail cloudtrail.Trail
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -221,7 +221,7 @@ func testAcc_multiRegion(t *testing.T) {
 
 func testAcc_organization(t *testing.T) {
 	var trail cloudtrail.Trail
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -259,7 +259,7 @@ func testAcc_organization(t *testing.T) {
 
 func testAcc_logValidation(t *testing.T) {
 	var trail cloudtrail.Trail
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -299,7 +299,7 @@ func testAcc_logValidation(t *testing.T) {
 
 func testAcc_kmsKey(t *testing.T) {
 	var trail cloudtrail.Trail
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_cloudtrail.test"
 	kmsResourceName := "aws_kms_key.test"
@@ -333,7 +333,7 @@ func testAcc_tags(t *testing.T) {
 	var trail cloudtrail.Trail
 	var trailTags []*cloudtrail.Tag
 	var trailTagsModified []*cloudtrail.Tag
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -388,7 +388,7 @@ func testAcc_tags(t *testing.T) {
 
 func testAcc_globalServiceEvents(t *testing.T) {
 	var trail cloudtrail.Trail
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -414,7 +414,7 @@ func testAcc_globalServiceEvents(t *testing.T) {
 }
 
 func testAcc_eventSelector(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -483,7 +483,7 @@ func testAcc_eventSelector(t *testing.T) {
 }
 
 func testAcc_eventSelectorDynamoDB(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudtrail.test"
 
 	resource.Test(t, resource.TestCase{
@@ -510,7 +510,7 @@ func testAcc_eventSelectorDynamoDB(t *testing.T) {
 
 func testAcc_insightSelector(t *testing.T) {
 	resourceName := "aws_cloudtrail.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -536,7 +536,7 @@ func testAcc_insightSelector(t *testing.T) {
 
 func testAcc_advanced_event_selector(t *testing.T) {
 	resourceName := "aws_cloudtrail.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

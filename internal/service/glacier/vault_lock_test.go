@@ -16,7 +16,7 @@ import (
 
 func TestAccGlacierVaultLock_basic(t *testing.T) {
 	var vaultLock1 glacier.GetVaultLockOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	glacierVaultResourceName := "aws_glacier_vault.test"
 	resourceName := "aws_glacier_vault_lock.test"
 
@@ -48,7 +48,7 @@ func TestAccGlacierVaultLock_basic(t *testing.T) {
 
 func TestAccGlacierVaultLock_completeLock(t *testing.T) {
 	var vaultLock1 glacier.GetVaultLockOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	glacierVaultResourceName := "aws_glacier_vault.test"
 	resourceName := "aws_glacier_vault_lock.test"
 

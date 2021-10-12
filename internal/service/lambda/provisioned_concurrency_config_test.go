@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccLambdaProvisionedConcurrencyConfig_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaFunctionResourceName := "aws_lambda_function.test"
 	resourceName := "aws_lambda_provisioned_concurrency_config.test"
 
@@ -46,7 +46,7 @@ func TestAccLambdaProvisionedConcurrencyConfig_basic(t *testing.T) {
 
 func TestAccLambdaProvisionedConcurrencyConfig_Disappears_lambdaFunction(t *testing.T) {
 	var function lambda.GetFunctionOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaFunctionResourceName := "aws_lambda_function.test"
 	resourceName := "aws_lambda_provisioned_concurrency_config.test"
 
@@ -70,7 +70,7 @@ func TestAccLambdaProvisionedConcurrencyConfig_Disappears_lambdaFunction(t *test
 }
 
 func TestAccLambdaProvisionedConcurrencyConfig_Disappears_lambdaProvisionedConcurrency(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_provisioned_concurrency_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -92,7 +92,7 @@ func TestAccLambdaProvisionedConcurrencyConfig_Disappears_lambdaProvisionedConcu
 }
 
 func TestAccLambdaProvisionedConcurrencyConfig_provisionedConcurrentExecutions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lambda_provisioned_concurrency_config.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -129,7 +129,7 @@ func TestAccLambdaProvisionedConcurrencyConfig_provisionedConcurrentExecutions(t
 }
 
 func TestAccLambdaProvisionedConcurrencyConfig_Qualifier_aliasName(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	lambdaAliasResourceName := "aws_lambda_alias.test"
 	resourceName := "aws_lambda_provisioned_concurrency_config.test"
 

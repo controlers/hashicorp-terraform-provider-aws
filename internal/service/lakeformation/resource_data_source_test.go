@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccLakeFormationResourceDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lakeformation_resource.test"
 	resourceName := "aws_lakeformation_resource.test"
 

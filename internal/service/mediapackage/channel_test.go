@@ -48,7 +48,7 @@ func TestAccMediaPackageChannel_basic(t *testing.T) {
 
 func TestAccMediaPackageChannel_description(t *testing.T) {
 	resourceName := "aws_media_package_channel.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -81,7 +81,7 @@ func TestAccMediaPackageChannel_description(t *testing.T) {
 
 func TestAccMediaPackageChannel_tags(t *testing.T) {
 	resourceName := "aws_media_package_channel.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

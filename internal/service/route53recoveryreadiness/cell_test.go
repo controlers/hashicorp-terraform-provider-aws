@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccRoute53RecoveryReadinessCell_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_cell.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -45,7 +45,7 @@ func TestAccRoute53RecoveryReadinessCell_basic(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessCell_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_cell.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -118,7 +118,7 @@ func TestAccRoute53RecoveryReadinessCell_nestedCell(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessCell_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_cell.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -162,7 +162,7 @@ func TestAccRoute53RecoveryReadinessCell_tags(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessCell_timeout(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_cell.test"
 
 	resource.ParallelTest(t, resource.TestCase{

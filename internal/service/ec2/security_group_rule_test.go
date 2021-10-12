@@ -842,7 +842,7 @@ func TestAccEC2SecurityGroupRule_EgressDescription_updates(t *testing.T) {
 
 func TestAccEC2SecurityGroupRule_Description_allPorts(t *testing.T) {
 	var group ec2.SecurityGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	securityGroupResourceName := "aws_security_group.test"
 	resourceName := "aws_security_group_rule.test"
 
@@ -900,7 +900,7 @@ func TestAccEC2SecurityGroupRule_Description_allPorts(t *testing.T) {
 
 func TestAccEC2SecurityGroupRule_DescriptionAllPorts_nonZeroPorts(t *testing.T) {
 	var group ec2.SecurityGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	securityGroupResourceName := "aws_security_group.test"
 	resourceName := "aws_security_group_rule.test"
 
@@ -959,7 +959,7 @@ func TestAccEC2SecurityGroupRule_DescriptionAllPorts_nonZeroPorts(t *testing.T) 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/6416
 func TestAccEC2SecurityGroupRule_MultipleRuleSearching_allProtocolCrash(t *testing.T) {
 	var group ec2.SecurityGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	securityGroupResourceName := "aws_security_group.test"
 	resourceName1 := "aws_security_group_rule.test1"
 	resourceName2 := "aws_security_group_rule.test2"

@@ -18,7 +18,7 @@ import (
 func testAccMesh_basic(t *testing.T) {
 	var mesh appmesh.MeshData
 	resourceName := "aws_appmesh_mesh.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -50,7 +50,7 @@ func testAccMesh_basic(t *testing.T) {
 func testAccMesh_egressFilter(t *testing.T) {
 	var mesh appmesh.MeshData
 	resourceName := "aws_appmesh_mesh.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -90,7 +90,7 @@ func testAccMesh_egressFilter(t *testing.T) {
 func testAccMesh_tags(t *testing.T) {
 	var mesh appmesh.MeshData
 	resourceName := "aws_appmesh_mesh.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },

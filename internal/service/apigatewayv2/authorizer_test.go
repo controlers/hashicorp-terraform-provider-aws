@@ -20,7 +20,7 @@ func TestAccAPIGatewayV2Authorizer_basic(t *testing.T) {
 	var v apigatewayv2.GetAuthorizerOutput
 	resourceName := "aws_apigatewayv2_authorizer.test"
 	lambdaResourceName := "aws_lambda_function.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -57,7 +57,7 @@ func TestAccAPIGatewayV2Authorizer_disappears(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetAuthorizerOutput
 	resourceName := "aws_apigatewayv2_authorizer.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -83,7 +83,7 @@ func TestAccAPIGatewayV2Authorizer_credentials(t *testing.T) {
 	resourceName := "aws_apigatewayv2_authorizer.test"
 	iamRoleResourceName := "aws_iam_role.test"
 	lambdaResourceName := "aws_lambda_function.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -153,7 +153,7 @@ func TestAccAPIGatewayV2Authorizer_jwt(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetAuthorizerOutput
 	resourceName := "aws_apigatewayv2_authorizer.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -213,7 +213,7 @@ func TestAccAPIGatewayV2Authorizer_HTTPAPILambdaRequestAuthorizer_initialMissing
 	var v apigatewayv2.GetAuthorizerOutput
 	resourceName := "aws_apigatewayv2_authorizer.test"
 	lambdaResourceName := "aws_lambda_function.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -286,7 +286,7 @@ func TestAccAPIGatewayV2Authorizer_HTTPAPILambdaRequestAuthorizer_initialZeroCac
 	var v apigatewayv2.GetAuthorizerOutput
 	resourceName := "aws_apigatewayv2_authorizer.test"
 	lambdaResourceName := "aws_lambda_function.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

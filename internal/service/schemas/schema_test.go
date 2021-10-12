@@ -68,7 +68,7 @@ const (
 
 func TestAccSchemasSchema_basic(t *testing.T) {
 	var v schemas.DescribeSchemaOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -104,7 +104,7 @@ func TestAccSchemasSchema_basic(t *testing.T) {
 
 func TestAccSchemasSchema_disappears(t *testing.T) {
 	var v schemas.DescribeSchemaOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -127,7 +127,7 @@ func TestAccSchemasSchema_disappears(t *testing.T) {
 
 func TestAccSchemasSchema_contentDescription(t *testing.T) {
 	var v schemas.DescribeSchemaOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -173,7 +173,7 @@ func TestAccSchemasSchema_contentDescription(t *testing.T) {
 
 func TestAccSchemasSchema_tags(t *testing.T) {
 	var v schemas.DescribeSchemaOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_schema.test"
 
 	resource.ParallelTest(t, resource.TestCase{

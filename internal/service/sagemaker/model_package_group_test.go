@@ -17,7 +17,7 @@ import (
 
 func TestAccSageMakerModelPackageGroup_basic(t *testing.T) {
 	var mpg sagemaker.DescribeModelPackageGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model_package_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccSageMakerModelPackageGroup_basic(t *testing.T) {
 
 func TestAccSageMakerModelPackageGroup_description(t *testing.T) {
 	var mpg sagemaker.DescribeModelPackageGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model_package_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -73,7 +73,7 @@ func TestAccSageMakerModelPackageGroup_description(t *testing.T) {
 
 func TestAccSageMakerModelPackageGroup_tags(t *testing.T) {
 	var mpg sagemaker.DescribeModelPackageGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model_package_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -118,7 +118,7 @@ func TestAccSageMakerModelPackageGroup_tags(t *testing.T) {
 
 func TestAccSageMakerModelPackageGroup_disappears(t *testing.T) {
 	var mpg sagemaker.DescribeModelPackageGroupOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_model_package_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

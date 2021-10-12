@@ -24,7 +24,7 @@ func init() {
 
 func TestAccEKSNodeGroup_basic(t *testing.T) {
 	var nodeGroup eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	eksClusterResourceName := "aws_eks_cluster.test"
 	iamRoleResourceName := "aws_iam_role.node"
 	resourceName := "aws_eks_node_group.test"
@@ -76,7 +76,7 @@ func TestAccEKSNodeGroup_basic(t *testing.T) {
 
 func TestAccEKSNodeGroup_Name_generated(t *testing.T) {
 	var nodeGroup eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -104,7 +104,7 @@ func TestAccEKSNodeGroup_Name_generated(t *testing.T) {
 
 func TestAccEKSNodeGroup_namePrefix(t *testing.T) {
 	var nodeGroup eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -132,7 +132,7 @@ func TestAccEKSNodeGroup_namePrefix(t *testing.T) {
 
 func TestAccEKSNodeGroup_disappears(t *testing.T) {
 	var nodeGroup eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -155,7 +155,7 @@ func TestAccEKSNodeGroup_disappears(t *testing.T) {
 
 func TestAccEKSNodeGroup_amiType(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -189,7 +189,7 @@ func TestAccEKSNodeGroup_amiType(t *testing.T) {
 
 func TestAccEKSNodeGroup_CapacityType_spot(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -216,7 +216,7 @@ func TestAccEKSNodeGroup_CapacityType_spot(t *testing.T) {
 
 func TestAccEKSNodeGroup_diskSize(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -243,7 +243,7 @@ func TestAccEKSNodeGroup_diskSize(t *testing.T) {
 
 func TestAccEKSNodeGroup_forceUpdateVersion(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -278,7 +278,7 @@ func TestAccEKSNodeGroup_forceUpdateVersion(t *testing.T) {
 
 func TestAccEKSNodeGroup_InstanceTypes_multiple(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ec2InstanceTypeOfferingsDataSourceName := "data.aws_ec2_instance_type_offerings.available"
 	resourceName := "aws_eks_node_group.test"
 
@@ -306,7 +306,7 @@ func TestAccEKSNodeGroup_InstanceTypes_multiple(t *testing.T) {
 
 func TestAccEKSNodeGroup_InstanceTypes_single(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -333,7 +333,7 @@ func TestAccEKSNodeGroup_InstanceTypes_single(t *testing.T) {
 
 func TestAccEKSNodeGroup_labels(t *testing.T) {
 	var nodeGroup1, nodeGroup2, nodeGroup3 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -378,7 +378,7 @@ func TestAccEKSNodeGroup_labels(t *testing.T) {
 
 func TestAccEKSNodeGroup_LaunchTemplate_id(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	launchTemplateResourceName1 := "aws_launch_template.test1"
 	launchTemplateResourceName2 := "aws_launch_template.test2"
 	resourceName := "aws_eks_node_group.test"
@@ -417,7 +417,7 @@ func TestAccEKSNodeGroup_LaunchTemplate_id(t *testing.T) {
 
 func TestAccEKSNodeGroup_LaunchTemplate_name(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	launchTemplateResourceName1 := "aws_launch_template.test1"
 	launchTemplateResourceName2 := "aws_launch_template.test2"
 	resourceName := "aws_eks_node_group.test"
@@ -456,7 +456,7 @@ func TestAccEKSNodeGroup_LaunchTemplate_name(t *testing.T) {
 
 func TestAccEKSNodeGroup_LaunchTemplate_version(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	launchTemplateResourceName := "aws_launch_template.test"
 	resourceName := "aws_eks_node_group.test"
 
@@ -494,7 +494,7 @@ func TestAccEKSNodeGroup_LaunchTemplate_version(t *testing.T) {
 
 func TestAccEKSNodeGroup_releaseVersion(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ssmParameterDataSourceName := "data.aws_ssm_parameter.test"
 	resourceName := "aws_eks_node_group.test"
 
@@ -530,7 +530,7 @@ func TestAccEKSNodeGroup_releaseVersion(t *testing.T) {
 
 func TestAccEKSNodeGroup_RemoteAccess_ec2SSHKey(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	publicKey, _, err := sdkacctest.RandSSHKeyPair(acctest.DefaultEmailAddress)
@@ -563,7 +563,7 @@ func TestAccEKSNodeGroup_RemoteAccess_ec2SSHKey(t *testing.T) {
 
 func TestAccEKSNodeGroup_RemoteAccess_sourceSecurityGroupIDs(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	publicKey, _, err := sdkacctest.RandSSHKeyPair(acctest.DefaultEmailAddress)
@@ -596,7 +596,7 @@ func TestAccEKSNodeGroup_RemoteAccess_sourceSecurityGroupIDs(t *testing.T) {
 
 func TestAccEKSNodeGroup_Scaling_desiredSize(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -637,7 +637,7 @@ func TestAccEKSNodeGroup_Scaling_desiredSize(t *testing.T) {
 
 func TestAccEKSNodeGroup_Scaling_maxSize(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -678,7 +678,7 @@ func TestAccEKSNodeGroup_Scaling_maxSize(t *testing.T) {
 
 func TestAccEKSNodeGroup_Scaling_minSize(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -719,7 +719,7 @@ func TestAccEKSNodeGroup_Scaling_minSize(t *testing.T) {
 
 func TestAccEKSNodeGroup_ScalingZeroDesiredSize_minSize(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -770,7 +770,7 @@ func TestAccEKSNodeGroup_ScalingZeroDesiredSize_minSize(t *testing.T) {
 
 func TestAccEKSNodeGroup_tags(t *testing.T) {
 	var nodeGroup1, nodeGroup2, nodeGroup3 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -817,7 +817,7 @@ func TestAccEKSNodeGroup_tags(t *testing.T) {
 
 func TestAccEKSNodeGroup_taints(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -880,7 +880,7 @@ func TestAccEKSNodeGroup_taints(t *testing.T) {
 
 func TestAccEKSNodeGroup_update(t *testing.T) {
 	var nodeGroup1 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -918,7 +918,7 @@ func TestAccEKSNodeGroup_update(t *testing.T) {
 
 func TestAccEKSNodeGroup_version(t *testing.T) {
 	var nodeGroup1, nodeGroup2 eks.Nodegroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_node_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

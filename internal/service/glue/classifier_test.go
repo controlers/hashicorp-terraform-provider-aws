@@ -18,7 +18,7 @@ import (
 func TestAccGlueClassifier_csvClassifier(t *testing.T) {
 	var classifier glue.Classifier
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_classifier.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -73,7 +73,7 @@ func TestAccGlueClassifier_csvClassifier(t *testing.T) {
 func TestAccGlueClassifier_CSVClassifier_quoteSymbol(t *testing.T) {
 	var classifier glue.Classifier
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_classifier.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -110,7 +110,7 @@ func TestAccGlueClassifier_CSVClassifier_quoteSymbol(t *testing.T) {
 func TestAccGlueClassifier_grokClassifier(t *testing.T) {
 	var classifier glue.Classifier
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_classifier.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -159,7 +159,7 @@ func TestAccGlueClassifier_grokClassifier(t *testing.T) {
 func TestAccGlueClassifier_GrokClassifier_customPatterns(t *testing.T) {
 	var classifier glue.Classifier
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_classifier.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -208,7 +208,7 @@ func TestAccGlueClassifier_GrokClassifier_customPatterns(t *testing.T) {
 func TestAccGlueClassifier_jsonClassifier(t *testing.T) {
 	var classifier glue.Classifier
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_classifier.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -253,7 +253,7 @@ func TestAccGlueClassifier_jsonClassifier(t *testing.T) {
 func TestAccGlueClassifier_typeChange(t *testing.T) {
 	var classifier glue.Classifier
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_classifier.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -322,7 +322,7 @@ func TestAccGlueClassifier_typeChange(t *testing.T) {
 func TestAccGlueClassifier_xmlClassifier(t *testing.T) {
 	var classifier glue.Classifier
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_classifier.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -369,7 +369,7 @@ func TestAccGlueClassifier_xmlClassifier(t *testing.T) {
 func TestAccGlueClassifier_disappears(t *testing.T) {
 	var classifier glue.Classifier
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_classifier.test"
 
 	resource.ParallelTest(t, resource.TestCase{

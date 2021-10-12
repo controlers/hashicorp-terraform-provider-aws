@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccTimestreamWriteTable_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_timestreamwrite_table.test"
 	dbResourceName := "aws_timestreamwrite_database.test"
 
@@ -49,7 +49,7 @@ func TestAccTimestreamWriteTable_basic(t *testing.T) {
 
 func TestAccTimestreamWriteTable_disappears(t *testing.T) {
 	resourceName := "aws_timestreamwrite_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -70,7 +70,7 @@ func TestAccTimestreamWriteTable_disappears(t *testing.T) {
 }
 
 func TestAccTimestreamWriteTable_retentionProperties(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_timestreamwrite_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -120,7 +120,7 @@ func TestAccTimestreamWriteTable_retentionProperties(t *testing.T) {
 
 func TestAccTimestreamWriteTable_tags(t *testing.T) {
 	resourceName := "aws_timestreamwrite_table.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

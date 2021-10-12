@@ -17,7 +17,7 @@ import (
 
 func TestAccSESReceiptRuleSet_basic(t *testing.T) {
 	resourceName := "aws_ses_receipt_rule_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t); testAccPreCheckSESReceiptRule(t) },
@@ -44,7 +44,7 @@ func TestAccSESReceiptRuleSet_basic(t *testing.T) {
 
 func TestAccSESReceiptRuleSet_disappears(t *testing.T) {
 	resourceName := "aws_ses_receipt_rule_set.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t); testAccPreCheckSESReceiptRule(t) },

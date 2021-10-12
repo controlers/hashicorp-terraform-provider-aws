@@ -20,7 +20,7 @@ import (
 func TestAccServiceCatalogProvisionedProduct_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioned_product.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -65,7 +65,7 @@ func TestAccServiceCatalogProvisionedProduct_basic(t *testing.T) {
 func TestAccServiceCatalogProvisionedProduct_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioned_product.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -89,7 +89,7 @@ func TestAccServiceCatalogProvisionedProduct_disappears(t *testing.T) {
 func TestAccServiceCatalogProvisionedProduct_tags(t *testing.T) {
 	resourceName := "aws_servicecatalog_provisioned_product.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
 	resource.ParallelTest(t, resource.TestCase{

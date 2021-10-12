@@ -20,7 +20,7 @@ import (
 
 func TestAccSecretsManagerSecret_basic(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -86,7 +86,7 @@ func TestAccSecretsManagerSecret_withNamePrefix(t *testing.T) {
 
 func TestAccSecretsManagerSecret_description(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -122,7 +122,7 @@ func TestAccSecretsManagerSecret_description(t *testing.T) {
 func TestAccSecretsManagerSecret_basicReplica(t *testing.T) {
 	var providers []*schema.Provider
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -146,7 +146,7 @@ func TestAccSecretsManagerSecret_basicReplica(t *testing.T) {
 func TestAccSecretsManagerSecret_overwriteReplica(t *testing.T) {
 	var providers []*schema.Provider
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -182,7 +182,7 @@ func TestAccSecretsManagerSecret_overwriteReplica(t *testing.T) {
 
 func TestAccSecretsManagerSecret_kmsKeyID(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -217,7 +217,7 @@ func TestAccSecretsManagerSecret_kmsKeyID(t *testing.T) {
 
 func TestAccSecretsManagerSecret_RecoveryWindowInDays_recreate(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -253,7 +253,7 @@ func TestAccSecretsManagerSecret_RecoveryWindowInDays_recreate(t *testing.T) {
 
 func TestAccSecretsManagerSecret_rotationLambdaARN(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 	lambdaFunctionResourceName := "aws_lambda_function.test1"
 
@@ -306,7 +306,7 @@ func TestAccSecretsManagerSecret_rotationLambdaARN(t *testing.T) {
 
 func TestAccSecretsManagerSecret_rotationRules(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -360,7 +360,7 @@ func TestAccSecretsManagerSecret_rotationRules(t *testing.T) {
 
 func TestAccSecretsManagerSecret_tags(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -414,7 +414,7 @@ func TestAccSecretsManagerSecret_tags(t *testing.T) {
 
 func TestAccSecretsManagerSecret_policy(t *testing.T) {
 	var secret secretsmanager.DescribeSecretOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret.test"
 
 	resource.ParallelTest(t, resource.TestCase{

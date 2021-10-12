@@ -16,7 +16,7 @@ func init() {
 }
 
 func TestAccRoute53ResolverRuleDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_rule.example"
 	ds1ResourceName := "data.aws_route53_resolver_rule.by_resolver_rule_id"
 	ds2ResourceName := "data.aws_route53_resolver_rule.by_domain_name"
@@ -69,7 +69,7 @@ func TestAccRoute53ResolverRuleDataSource_basic(t *testing.T) {
 }
 
 func TestAccRoute53ResolverRuleDataSource_resolverEndpointIdWithTags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_rule.example"
 	ds1ResourceName := "data.aws_route53_resolver_rule.by_resolver_endpoint_id"
 
@@ -102,7 +102,7 @@ func TestAccRoute53ResolverRuleDataSource_resolverEndpointIdWithTags(t *testing.
 
 func TestAccRoute53ResolverRuleDataSource_sharedByMe(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_rule.example"
 	ds1ResourceName := "data.aws_route53_resolver_rule.by_resolver_endpoint_id"
 
@@ -140,7 +140,7 @@ func TestAccRoute53ResolverRuleDataSource_sharedByMe(t *testing.T) {
 
 func TestAccRoute53ResolverRuleDataSource_sharedWithMe(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_rule.example"
 	ds1ResourceName := "data.aws_route53_resolver_rule.by_resolver_endpoint_id"
 

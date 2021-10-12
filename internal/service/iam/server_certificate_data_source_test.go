@@ -37,7 +37,7 @@ func TestResourceSortByExpirationDate(t *testing.T) {
 }
 
 func TestAccIAMServerCertificateDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
@@ -81,7 +81,7 @@ func TestAccIAMServerCertificateDataSource_matchNamePrefix(t *testing.T) {
 }
 
 func TestAccIAMServerCertificateDataSource_path(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	path := "/test-path/"
 	pathPrefix := "/test-path/"
 

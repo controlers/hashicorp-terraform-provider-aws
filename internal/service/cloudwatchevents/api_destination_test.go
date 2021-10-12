@@ -19,11 +19,11 @@ const uuidRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[
 
 func TestAccCloudWatchEventsAPIDestination_basic(t *testing.T) {
 	var v1, v2, v3 events.DescribeApiDestinationOutput
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	invocationEndpoint := "https://www.hashicorp.com/"
 	httpMethod := "GET"
 
-	nameModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	nameModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	invocationEndpointModified := "https://www.hashicorp.com/products/terraform"
 	httpMethodModified := "POST"
 
@@ -88,16 +88,16 @@ func TestAccCloudWatchEventsAPIDestination_basic(t *testing.T) {
 
 func TestAccCloudWatchEventsAPIDestination_optional(t *testing.T) {
 	var v1, v2, v3 events.DescribeApiDestinationOutput
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	invocationEndpoint := "https://www.hashicorp.com/"
 	httpMethod := "GET"
-	description := sdkacctest.RandomWithPrefix("tf-acc-test")
+	description := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	invocationRateLimitPerSecond := 10
 
-	nameModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	nameModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	invocationEndpointModified := "https://www.hashicorp.com/products/terraform"
 	httpMethodModified := "POST"
-	descriptionModified := sdkacctest.RandomWithPrefix("tf-acc-test")
+	descriptionModified := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	invocationRateLimitPerSecondModified := 12
 
 	resourceName := "aws_cloudwatch_event_api_destination.optional"
@@ -172,7 +172,7 @@ func TestAccCloudWatchEventsAPIDestination_optional(t *testing.T) {
 
 func TestAccCloudWatchEventsAPIDestination_disappears(t *testing.T) {
 	var v events.DescribeApiDestinationOutput
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	invocationEndpoint := "https://www.hashicorp.com/"
 	httpMethod := "GET"
 

@@ -17,7 +17,7 @@ import (
 
 func TestAccCloudFormationStack_basic(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -44,7 +44,7 @@ func TestAccCloudFormationStack_basic(t *testing.T) {
 }
 
 func TestAccCloudFormationStack_CreationFailure_doNothing(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -61,7 +61,7 @@ func TestAccCloudFormationStack_CreationFailure_doNothing(t *testing.T) {
 }
 
 func TestAccCloudFormationStack_CreationFailure_delete(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -78,7 +78,7 @@ func TestAccCloudFormationStack_CreationFailure_delete(t *testing.T) {
 }
 
 func TestAccCloudFormationStack_CreationFailure_rollback(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -96,7 +96,7 @@ func TestAccCloudFormationStack_CreationFailure_rollback(t *testing.T) {
 
 func TestAccCloudFormationStack_updateFailure(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	vpcCidrInitial := "10.0.0.0/16"
@@ -124,7 +124,7 @@ func TestAccCloudFormationStack_updateFailure(t *testing.T) {
 
 func TestAccCloudFormationStack_disappears(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -147,7 +147,7 @@ func TestAccCloudFormationStack_disappears(t *testing.T) {
 
 func TestAccCloudFormationStack_yaml(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -173,7 +173,7 @@ func TestAccCloudFormationStack_yaml(t *testing.T) {
 
 func TestAccCloudFormationStack_defaultParams(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -200,7 +200,7 @@ func TestAccCloudFormationStack_defaultParams(t *testing.T) {
 
 func TestAccCloudFormationStack_allAttributes(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 	expectedPolicyBody := "{\"Statement\":[{\"Action\":\"Update:*\",\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":\"LogicalResourceId/StaticVPC\"},{\"Action\":\"Update:*\",\"Effect\":\"Allow\",\"Principal\":\"*\",\"Resource\":\"*\"}]}"
 
@@ -259,7 +259,7 @@ func TestAccCloudFormationStack_allAttributes(t *testing.T) {
 // Regression for https://github.com/hashicorp/terraform/issues/4332
 func TestAccCloudFormationStack_withParams(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	vpcCidrInitial := "10.0.0.0/16"
@@ -300,7 +300,7 @@ func TestAccCloudFormationStack_withParams(t *testing.T) {
 // Regression for https://github.com/hashicorp/terraform/issues/4534
 func TestAccCloudFormationStack_WithURL_withParams(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -333,7 +333,7 @@ func TestAccCloudFormationStack_WithURL_withParams(t *testing.T) {
 
 func TestAccCloudFormationStack_WithURLWithParams_withYAML(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -361,7 +361,7 @@ func TestAccCloudFormationStack_WithURLWithParams_withYAML(t *testing.T) {
 // Test for https://github.com/hashicorp/terraform/issues/5653
 func TestAccCloudFormationStack_WithURLWithParams_noUpdate(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -394,7 +394,7 @@ func TestAccCloudFormationStack_WithURLWithParams_noUpdate(t *testing.T) {
 
 func TestAccCloudFormationStack_withTransform(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -423,7 +423,7 @@ func TestAccCloudFormationStack_withTransform(t *testing.T) {
 // TestAccCloudFormationStack_onFailure verifies https://github.com/hashicorp/terraform-provider-aws/issues/5204
 func TestAccCloudFormationStack_onFailure(t *testing.T) {
 	var stack cloudformation.Stack
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack.test"
 
 	resource.ParallelTest(t, resource.TestCase{

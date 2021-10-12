@@ -15,7 +15,7 @@ import (
 )
 
 func testAccSafetyRule_assertionRule(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoverycontrolconfig_safety_rule.test"
 
 	resource.Test(t, resource.TestCase{
@@ -45,7 +45,7 @@ func testAccSafetyRule_assertionRule(t *testing.T) {
 }
 
 func testAccSafetyRule_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoverycontrolconfig_safety_rule.test"
 
 	resource.Test(t, resource.TestCase{
@@ -67,7 +67,7 @@ func testAccSafetyRule_disappears(t *testing.T) {
 }
 
 func testAccSafetyRule_gatingRule(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoverycontrolconfig_safety_rule.test"
 
 	resource.Test(t, resource.TestCase{

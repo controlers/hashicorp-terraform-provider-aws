@@ -15,7 +15,7 @@ import (
 )
 
 func TestAccSESEventDestination_basic(t *testing.T) {
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test-kinesis")
 	rName3 := sdkacctest.RandomWithPrefix("tf-acc-test-sns")
 	cloudwatchDestinationResourceName := "aws_ses_event_destination.cloudwatch"
@@ -69,7 +69,7 @@ func TestAccSESEventDestination_basic(t *testing.T) {
 }
 
 func TestAccSESEventDestination_disappears(t *testing.T) {
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test-kinesis")
 	rName3 := sdkacctest.RandomWithPrefix("tf-acc-test-sns")
 	cloudwatchDestinationResourceName := "aws_ses_event_destination.cloudwatch"

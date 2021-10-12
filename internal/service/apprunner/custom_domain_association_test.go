@@ -22,7 +22,7 @@ func TestAccAppRunnerCustomDomainAssociation_basic(t *testing.T) {
 		t.Skip("Environment variable APPRUNNER_CUSTOM_DOMAIN is not set")
 	}
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_custom_domain_association.test"
 	serviceResourceName := "aws_apprunner_service.test"
 
@@ -60,7 +60,7 @@ func TestAccAppRunnerCustomDomainAssociation_disappears(t *testing.T) {
 		t.Skip("Environment variable APPRUNNER_CUSTOM_DOMAIN is not set")
 	}
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_apprunner_custom_domain_association.test"
 
 	resource.ParallelTest(t, resource.TestCase{

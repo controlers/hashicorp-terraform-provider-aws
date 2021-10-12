@@ -26,7 +26,7 @@ func testAccErrorCheckSkipGlue(t *testing.T) resource.ErrorCheckFunc {
 }
 
 func TestAccGlueCatalogTable_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -60,7 +60,7 @@ func TestAccGlueCatalogTable_basic(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_columnParameters(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -90,7 +90,7 @@ func TestAccGlueCatalogTable_columnParameters(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_full(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "A test table from terraform"
 	resourceName := "aws_glue_catalog_table.test"
 
@@ -154,7 +154,7 @@ func TestAccGlueCatalogTable_full(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_Update_addValues(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "A test table from terraform"
 	resourceName := "aws_glue_catalog_table.test"
 
@@ -227,7 +227,7 @@ func TestAccGlueCatalogTable_Update_addValues(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_Update_replaceValues(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "A test table from terraform"
 	resourceName := "aws_glue_catalog_table.test"
 
@@ -342,7 +342,7 @@ func TestAccGlueCatalogTable_Update_replaceValues(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11784
 func TestAccGlueCatalogTable_StorageDescriptor_emptyBlock(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -363,7 +363,7 @@ func TestAccGlueCatalogTable_StorageDescriptor_emptyBlock(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11784
 func TestAccGlueCatalogTable_StorageDescriptorSerDeInfo_emptyBlock(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -385,7 +385,7 @@ func TestAccGlueCatalogTable_StorageDescriptorSerDeInfo_emptyBlock(t *testing.T)
 }
 
 func TestAccGlueCatalogTable_StorageDescriptorSerDeInfo_updateValues(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -426,7 +426,7 @@ func TestAccGlueCatalogTable_StorageDescriptorSerDeInfo_updateValues(t *testing.
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11784
 func TestAccGlueCatalogTable_StorageDescriptorSkewedInfo_emptyBlock(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -448,7 +448,7 @@ func TestAccGlueCatalogTable_StorageDescriptorSkewedInfo_emptyBlock(t *testing.T
 }
 
 func TestAccGlueCatalogTable_StorageDescriptor_schemaReference(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -490,7 +490,7 @@ func TestAccGlueCatalogTable_StorageDescriptor_schemaReference(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_StorageDescriptor_schemaReferenceARN(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -520,7 +520,7 @@ func TestAccGlueCatalogTable_StorageDescriptor_schemaReferenceARN(t *testing.T) 
 }
 
 func TestAccGlueCatalogTable_partitionIndexesSingle(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -551,7 +551,7 @@ func TestAccGlueCatalogTable_partitionIndexesSingle(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_partitionIndexesMultiple(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -585,7 +585,7 @@ func TestAccGlueCatalogTable_partitionIndexesMultiple(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_Disappears_database(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -608,7 +608,7 @@ func TestAccGlueCatalogTable_Disappears_database(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_targetTable(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -638,7 +638,7 @@ func TestAccGlueCatalogTable_targetTable(t *testing.T) {
 }
 
 func TestAccGlueCatalogTable_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_catalog_table.test"
 
 	resource.ParallelTest(t, resource.TestCase{

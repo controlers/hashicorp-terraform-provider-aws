@@ -134,7 +134,7 @@ func testAccCustomDataIdentifier_WithClassificationJob(t *testing.T) {
 	var macie2Output macie2.GetCustomDataIdentifierOutput
 	resourceName := "aws_macie2_custom_data_identifier.test"
 	regex := "[0-9]{3}-[0-9]{2}-[0-9]{4}"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "this is a description"
 	descriptionUpdated := "this is a updated description"
 
@@ -177,7 +177,7 @@ func testAccCustomDataIdentifier_WithTags(t *testing.T) {
 	var macie2Output macie2.GetCustomDataIdentifierOutput
 	resourceName := "aws_macie2_custom_data_identifier.test"
 	regex := "[0-9]{3}-[0-9]{2}-[0-9]{4}"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },

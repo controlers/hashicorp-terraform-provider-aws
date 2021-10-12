@@ -20,7 +20,7 @@ func TestAccEC2VolumeAttachment_basic(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -51,7 +51,7 @@ func TestAccEC2VolumeAttachment_skipDestroy(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -85,7 +85,7 @@ func TestAccEC2VolumeAttachment_attachStopped(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	stopInstance := func() {
 		conn := acctest.Provider.Meta().(*conns.AWSClient).EC2Conn
@@ -146,7 +146,7 @@ func TestAccEC2VolumeAttachment_attachStopped(t *testing.T) {
 
 func TestAccEC2VolumeAttachment_update(t *testing.T) {
 	resourceName := "aws_volume_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -196,7 +196,7 @@ func TestAccEC2VolumeAttachment_disappears(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -222,7 +222,7 @@ func TestAccEC2VolumeAttachment_stopInstance(t *testing.T) {
 	var i ec2.Instance
 	var v ec2.Volume
 	resourceName := "aws_volume_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

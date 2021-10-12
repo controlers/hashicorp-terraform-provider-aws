@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCodeArtifactAuthorizationTokenDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_codeartifact_authorization_token.test"
 
 	resource.Test(t, resource.TestCase{
@@ -32,7 +32,7 @@ func TestAccCodeArtifactAuthorizationTokenDataSource_basic(t *testing.T) {
 }
 
 func TestAccCodeArtifactAuthorizationTokenDataSource_owner(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_codeartifact_authorization_token.test"
 
 	resource.Test(t, resource.TestCase{
@@ -53,7 +53,7 @@ func TestAccCodeArtifactAuthorizationTokenDataSource_owner(t *testing.T) {
 }
 
 func TestAccCodeArtifactAuthorizationTokenDataSource_duration(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_codeartifact_authorization_token.test"
 
 	resource.Test(t, resource.TestCase{

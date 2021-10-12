@@ -16,7 +16,7 @@ import (
 func TestAccXRaySamplingRule_basic(t *testing.T) {
 	var samplingRule xray.SamplingRule
 	resourceName := "aws_xray_sampling_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -55,7 +55,7 @@ func TestAccXRaySamplingRule_basic(t *testing.T) {
 func TestAccXRaySamplingRule_update(t *testing.T) {
 	var samplingRule xray.SamplingRule
 	resourceName := "aws_xray_sampling_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	updatedPriority := sdkacctest.RandIntRange(0, 9999)
 	updatedReservoirSize := sdkacctest.RandIntRange(0, 2147483647)
 
@@ -113,7 +113,7 @@ func TestAccXRaySamplingRule_update(t *testing.T) {
 func TestAccXRaySamplingRule_tags(t *testing.T) {
 	var samplingRule xray.SamplingRule
 	resourceName := "aws_xray_sampling_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -158,7 +158,7 @@ func TestAccXRaySamplingRule_tags(t *testing.T) {
 func TestAccXRaySamplingRule_disappears(t *testing.T) {
 	var samplingRule xray.SamplingRule
 	resourceName := "aws_xray_sampling_rule.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

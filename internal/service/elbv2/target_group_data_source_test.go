@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccELBV2TargetGroupDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceNameArn := "data.aws_lb_target_group.alb_tg_test_with_arn"
 	resourceName := "data.aws_lb_target_group.alb_tg_test_with_name"
 
@@ -72,7 +72,7 @@ func TestAccELBV2TargetGroupDataSource_basic(t *testing.T) {
 }
 
 func TestAccELBV2TargetGroupDataSource_appCookie(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceNameArn := "data.aws_lb_target_group.alb_tg_test_with_arn"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -113,7 +113,7 @@ func TestAccELBV2TargetGroupDataSource_appCookie(t *testing.T) {
 }
 
 func TestAccELBV2TargetGroupDataSource_backwardsCompatibility(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceNameArn := "data.aws_alb_target_group.alb_tg_test_with_arn"
 	resourceName := "data.aws_alb_target_group.alb_tg_test_with_name"
 

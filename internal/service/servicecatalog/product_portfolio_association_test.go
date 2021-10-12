@@ -18,7 +18,7 @@ import (
 
 func TestAccServiceCatalogProductPortfolioAssociation_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_product_portfolio_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 
@@ -47,7 +47,7 @@ func TestAccServiceCatalogProductPortfolioAssociation_basic(t *testing.T) {
 
 func TestAccServiceCatalogProductPortfolioAssociation_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_product_portfolio_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domain := fmt.Sprintf("http://%s", acctest.RandomDomainName())
 

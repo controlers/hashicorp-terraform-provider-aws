@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCloudWatchLogsGroupsDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "data.aws_cloudwatch_log_groups.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -18,7 +18,7 @@ import (
 func TestAccCodeDeployDeploymentConfig_basic(t *testing.T) {
 	var config1 codedeploy.DeploymentConfigInfo
 	resourceName := "aws_codedeploy_deployment_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -47,7 +47,7 @@ func TestAccCodeDeployDeploymentConfig_basic(t *testing.T) {
 func TestAccCodeDeployDeploymentConfig_fleetPercent(t *testing.T) {
 	var config1, config2 codedeploy.DeploymentConfigInfo
 	resourceName := "aws_codedeploy_deployment_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -90,7 +90,7 @@ func TestAccCodeDeployDeploymentConfig_fleetPercent(t *testing.T) {
 func TestAccCodeDeployDeploymentConfig_hostCount(t *testing.T) {
 	var config1, config2 codedeploy.DeploymentConfigInfo
 	resourceName := "aws_codedeploy_deployment_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -133,7 +133,7 @@ func TestAccCodeDeployDeploymentConfig_hostCount(t *testing.T) {
 func TestAccCodeDeployDeploymentConfig_trafficCanary(t *testing.T) {
 	var config1, config2 codedeploy.DeploymentConfigInfo
 	resourceName := "aws_codedeploy_deployment_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -182,7 +182,7 @@ func TestAccCodeDeployDeploymentConfig_trafficCanary(t *testing.T) {
 func TestAccCodeDeployDeploymentConfig_trafficLinear(t *testing.T) {
 	var config1, config2 codedeploy.DeploymentConfigInfo
 	resourceName := "aws_codedeploy_deployment_config.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

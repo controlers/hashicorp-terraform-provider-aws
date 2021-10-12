@@ -18,7 +18,7 @@ import (
 
 func TestAccAppSyncGraphQLAPI_basic(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -55,7 +55,7 @@ func TestAccAppSyncGraphQLAPI_basic(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_disappears(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -78,7 +78,7 @@ func TestAccAppSyncGraphQLAPI_disappears(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_schema(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -123,7 +123,7 @@ func TestAccAppSyncGraphQLAPI_schema(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_authenticationType(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -157,7 +157,7 @@ func TestAccAppSyncGraphQLAPI_authenticationType(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_AuthenticationType_apiKey(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -186,7 +186,7 @@ func TestAccAppSyncGraphQLAPI_AuthenticationType_apiKey(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_AuthenticationType_awsIAM(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -215,7 +215,7 @@ func TestAccAppSyncGraphQLAPI_AuthenticationType_awsIAM(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_AuthenticationType_amazonCognitoUserPools(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cognitoUserPoolResourceName := "aws_cognito_user_pool.test"
 	resourceName := "aws_appsync_graphql_api.test"
 
@@ -247,7 +247,7 @@ func TestAccAppSyncGraphQLAPI_AuthenticationType_amazonCognitoUserPools(t *testi
 
 func TestAccAppSyncGraphQLAPI_AuthenticationType_openIDConnect(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -276,7 +276,7 @@ func TestAccAppSyncGraphQLAPI_AuthenticationType_openIDConnect(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_log(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_appsync_graphql_api.test"
 
@@ -307,7 +307,7 @@ func TestAccAppSyncGraphQLAPI_log(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_Log_fieldLogLevel(t *testing.T) {
 	var api1, api2, api3 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_appsync_graphql_api.test"
 
@@ -358,7 +358,7 @@ func TestAccAppSyncGraphQLAPI_Log_fieldLogLevel(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_Log_excludeVerboseContent(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_appsync_graphql_api.test"
 
@@ -400,7 +400,7 @@ func TestAccAppSyncGraphQLAPI_Log_excludeVerboseContent(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_OpenIDConnect_authTTL(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -440,7 +440,7 @@ func TestAccAppSyncGraphQLAPI_OpenIDConnect_authTTL(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_OpenIDConnect_clientID(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -480,7 +480,7 @@ func TestAccAppSyncGraphQLAPI_OpenIDConnect_clientID(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_OpenIDConnect_iatTTL(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -520,7 +520,7 @@ func TestAccAppSyncGraphQLAPI_OpenIDConnect_iatTTL(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_OpenIDConnect_issuer(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -558,8 +558,8 @@ func TestAccAppSyncGraphQLAPI_OpenIDConnect_issuer(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_name(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -588,7 +588,7 @@ func TestAccAppSyncGraphQLAPI_name(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_UserPool_awsRegion(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cognitoUserPoolResourceName := "aws_cognito_user_pool.test"
 	resourceName := "aws_appsync_graphql_api.test"
 
@@ -631,7 +631,7 @@ func TestAccAppSyncGraphQLAPI_UserPool_awsRegion(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_UserPool_defaultAction(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cognitoUserPoolResourceName := "aws_cognito_user_pool.test"
 	resourceName := "aws_appsync_graphql_api.test"
 
@@ -674,7 +674,7 @@ func TestAccAppSyncGraphQLAPI_UserPool_defaultAction(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_tags(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -715,7 +715,7 @@ func TestAccAppSyncGraphQLAPI_tags(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_apiKey(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -748,7 +748,7 @@ func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_apiKey(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_awsIAM(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -781,7 +781,7 @@ func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_awsIAM(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_cognitoUserPools(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cognitoUserPoolResourceName := "aws_cognito_user_pool.test"
 	resourceName := "aws_appsync_graphql_api.test"
 
@@ -816,7 +816,7 @@ func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_cognitoUserPools(t *testi
 
 func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_openIDConnect(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -850,7 +850,7 @@ func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_openIDConnect(t *testing.
 
 func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_multiple(t *testing.T) {
 	var api1 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cognitoUserPoolResourceName := "aws_cognito_user_pool.test"
 	resourceName := "aws_appsync_graphql_api.test"
 
@@ -892,7 +892,7 @@ func TestAccAppSyncGraphQLAPI_AdditionalAuthentication_multiple(t *testing.T) {
 
 func TestAccAppSyncGraphQLAPI_xrayEnabled(t *testing.T) {
 	var api1, api2 appsync.GraphqlApi
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appsync_graphql_api.test"
 
 	resource.ParallelTest(t, resource.TestCase{

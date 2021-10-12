@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccImageBuilderComponent_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_component.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -56,7 +56,7 @@ func TestAccImageBuilderComponent_basic(t *testing.T) {
 }
 
 func TestAccImageBuilderComponent_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_component.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -78,7 +78,7 @@ func TestAccImageBuilderComponent_disappears(t *testing.T) {
 }
 
 func TestAccImageBuilderComponent_changeDescription(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_component.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -104,7 +104,7 @@ func TestAccImageBuilderComponent_changeDescription(t *testing.T) {
 }
 
 func TestAccImageBuilderComponent_description(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_component.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -130,7 +130,7 @@ func TestAccImageBuilderComponent_description(t *testing.T) {
 }
 
 func TestAccImageBuilderComponent_kmsKeyID(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_imagebuilder_component.test"
 
@@ -157,7 +157,7 @@ func TestAccImageBuilderComponent_kmsKeyID(t *testing.T) {
 }
 
 func TestAccImageBuilderComponent_Platform_windows(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_component.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -183,7 +183,7 @@ func TestAccImageBuilderComponent_Platform_windows(t *testing.T) {
 }
 
 func TestAccImageBuilderComponent_supportedOsVersions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_component.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -209,7 +209,7 @@ func TestAccImageBuilderComponent_supportedOsVersions(t *testing.T) {
 }
 
 func TestAccImageBuilderComponent_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_component.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -253,7 +253,7 @@ func TestAccImageBuilderComponent_tags(t *testing.T) {
 }
 
 func TestAccImageBuilderComponent_uri(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_component.test"
 
 	resource.ParallelTest(t, resource.TestCase{

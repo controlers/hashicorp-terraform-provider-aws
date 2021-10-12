@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccGlueUserDefinedFunction_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	updated := "test"
 	resourceName := "aws_glue_user_defined_function.test"
 
@@ -57,7 +57,7 @@ func TestAccGlueUserDefinedFunction_basic(t *testing.T) {
 }
 
 func TestAccGlueUserDefinedFunction_Resource_uri(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_user_defined_function.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -97,7 +97,7 @@ func TestAccGlueUserDefinedFunction_Resource_uri(t *testing.T) {
 }
 
 func TestAccGlueUserDefinedFunction_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_user_defined_function.test"
 
 	resource.ParallelTest(t, resource.TestCase{

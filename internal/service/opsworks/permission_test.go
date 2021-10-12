@@ -98,7 +98,7 @@ func TestAccOpsWorksPermission_basic(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/4804
 func TestAccOpsWorksPermission_self(t *testing.T) {
 	var opsperm opsworks.Permission
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_opsworks_permission.test"
 
 	resource.ParallelTest(t, resource.TestCase{

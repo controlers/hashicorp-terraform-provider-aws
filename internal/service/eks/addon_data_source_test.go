@@ -14,7 +14,7 @@ import (
 
 func TestAccEKSAddonDataSource_basic(t *testing.T) {
 	var addon eks.Addon
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceResourceName := "data.aws_eks_addon.test"
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"

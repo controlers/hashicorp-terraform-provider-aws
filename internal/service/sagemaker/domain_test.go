@@ -19,7 +19,7 @@ import (
 
 func testAccDomain_basic(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -57,7 +57,7 @@ func testAccDomain_basic(t *testing.T) {
 
 func testAccDomain_kms(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -85,7 +85,7 @@ func testAccDomain_kms(t *testing.T) {
 
 func testAccDomain_tags(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -131,7 +131,7 @@ func testAccDomain_tags(t *testing.T) {
 
 func testAccDomain_securityGroup(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -168,7 +168,7 @@ func testAccDomain_securityGroup(t *testing.T) {
 
 func testAccDomain_sharingSettings(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -200,7 +200,7 @@ func testAccDomain_sharingSettings(t *testing.T) {
 
 func testAccDomain_tensorboardAppSettings(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -231,7 +231,7 @@ func testAccDomain_tensorboardAppSettings(t *testing.T) {
 
 func testAccDomain_tensorboardAppSettingsWithImage(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -263,7 +263,7 @@ func testAccDomain_tensorboardAppSettingsWithImage(t *testing.T) {
 
 func testAccDomain_kernelGatewayAppSettings(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -294,7 +294,7 @@ func testAccDomain_kernelGatewayAppSettings(t *testing.T) {
 
 func testAccDomain_kernelGatewayAppSettings_lifecycleConfig(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -331,7 +331,7 @@ func testAccDomain_kernelGatewayAppSettings_customImage(t *testing.T) {
 	}
 
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 	baseImage := os.Getenv("SAGEMAKER_IMAGE_VERSION_BASE_IMAGE")
 
@@ -365,7 +365,7 @@ func testAccDomain_kernelGatewayAppSettings_customImage(t *testing.T) {
 
 func testAccDomain_jupyterServerAppSettings(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{
@@ -396,7 +396,7 @@ func testAccDomain_jupyterServerAppSettings(t *testing.T) {
 
 func testAccDomain_disappears(t *testing.T) {
 	var domain sagemaker.DescribeDomainOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_domain.test"
 
 	resource.Test(t, resource.TestCase{

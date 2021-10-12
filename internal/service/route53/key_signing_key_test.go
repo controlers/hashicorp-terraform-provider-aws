@@ -27,7 +27,7 @@ func TestAccRoute53KeySigningKey_basic(t *testing.T) {
 	kmsKeyResourceName := "aws_kms_key.test"
 	route53ZoneResourceName := "aws_route53_zone.test"
 	resourceName := "aws_route53_key_signing_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domainName := acctest.RandomDomainName()
 
@@ -68,7 +68,7 @@ func TestAccRoute53KeySigningKey_basic(t *testing.T) {
 
 func TestAccRoute53KeySigningKey_disappears(t *testing.T) {
 	resourceName := "aws_route53_key_signing_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domainName := acctest.RandomDomainName()
 
@@ -92,7 +92,7 @@ func TestAccRoute53KeySigningKey_disappears(t *testing.T) {
 
 func TestAccRoute53KeySigningKey_status(t *testing.T) {
 	resourceName := "aws_route53_key_signing_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	domainName := acctest.RandomDomainName()
 

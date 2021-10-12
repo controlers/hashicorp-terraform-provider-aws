@@ -17,7 +17,7 @@ import (
 func testAccAccess_s3_basic(t *testing.T) {
 	var conf transfer.DescribedAccess
 	resourceName := "aws_transfer_access.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
@@ -62,7 +62,7 @@ func testAccAccess_s3_basic(t *testing.T) {
 func testAccAccess_efs_basic(t *testing.T) {
 	var conf transfer.DescribedAccess
 	resourceName := "aws_transfer_access.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
@@ -108,7 +108,7 @@ func testAccAccess_efs_basic(t *testing.T) {
 func testAccAccess_disappears(t *testing.T) {
 	var conf transfer.DescribedAccess
 	resourceName := "aws_transfer_access.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
@@ -136,7 +136,7 @@ func testAccAccess_disappears(t *testing.T) {
 func testAccAccess_s3_policy(t *testing.T) {
 	var conf transfer.DescribedAccess
 	resourceName := "aws_transfer_access.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {

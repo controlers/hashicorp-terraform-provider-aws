@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccServiceDiscoveryDNSNamespaceDataSource_private(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_service_discovery_dns_namespace.test"
 	resourceName := "aws_service_discovery_private_dns_namespace.test"
 
@@ -38,7 +38,7 @@ func TestAccServiceDiscoveryDNSNamespaceDataSource_private(t *testing.T) {
 }
 
 func TestAccServiceDiscoveryDNSNamespaceDataSource_public(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_service_discovery_dns_namespace.test"
 	resourceName := "aws_service_discovery_public_dns_namespace.test"
 

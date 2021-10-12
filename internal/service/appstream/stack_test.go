@@ -18,7 +18,7 @@ import (
 func TestAccAppStreamStack_basic(t *testing.T) {
 	var stackOutput appstream.Stack
 	resourceName := "aws_appstream_stack.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -46,7 +46,7 @@ func TestAccAppStreamStack_basic(t *testing.T) {
 func TestAccAppStreamStack_disappears(t *testing.T) {
 	var stackOutput appstream.Stack
 	resourceName := "aws_appstream_stack.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -69,7 +69,7 @@ func TestAccAppStreamStack_disappears(t *testing.T) {
 func TestAccAppStreamStack_complete(t *testing.T) {
 	var stackOutput appstream.Stack
 	resourceName := "aws_appstream_stack.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Description of a test"
 	descriptionUpdated := "Updated Description of a test"
 
@@ -109,7 +109,7 @@ func TestAccAppStreamStack_complete(t *testing.T) {
 func TestAccAppStreamStack_withTags(t *testing.T) {
 	var stackOutput appstream.Stack
 	resourceName := "aws_appstream_stack.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Description of a test"
 	descriptionUpdated := "Updated Description of a test"
 

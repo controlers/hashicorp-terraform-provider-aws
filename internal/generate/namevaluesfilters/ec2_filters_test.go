@@ -2,6 +2,8 @@ package namevaluesfilters
 
 import (
 	"testing"
+
+	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
 func TestNameValuesFiltersEc2Tags(t *testing.T) {
@@ -23,11 +25,11 @@ func TestNameValuesFiltersEc2Tags(t *testing.T) {
 		{
 			name: "tags",
 			filters: Ec2Tags(map[string]string{
-				"Name":    "tf-acc-test",
+				"Name":    acctest.ResourcePrefix,
 				"Purpose": "testing",
 			}),
 			want: map[string][]string{
-				"tag:Name":    {"tf-acc-test"},
+				"tag:Name":    {acctest.ResourcePrefix},
 				"tag:Purpose": {"testing"},
 			},
 		},

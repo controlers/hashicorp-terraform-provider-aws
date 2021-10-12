@@ -18,7 +18,7 @@ import (
 func TestAccEFSBackupPolicy_basic(t *testing.T) {
 	var v efs.BackupPolicy
 	resourceName := "aws_efs_backup_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -47,7 +47,7 @@ func TestAccEFSBackupPolicy_Disappears_fs(t *testing.T) {
 	var v efs.BackupPolicy
 	resourceName := "aws_efs_backup_policy.test"
 	fsResourceName := "aws_efs_file_system.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -70,7 +70,7 @@ func TestAccEFSBackupPolicy_Disappears_fs(t *testing.T) {
 func TestAccEFSBackupPolicy_update(t *testing.T) {
 	var v efs.BackupPolicy
 	resourceName := "aws_efs_backup_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

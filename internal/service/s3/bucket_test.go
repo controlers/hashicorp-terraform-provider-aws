@@ -240,7 +240,7 @@ func TestAccS3Bucket_Tags_withSystemTags(t *testing.T) {
 
 func TestAccS3Bucket_Tags_ignoreTags(t *testing.T) {
 	resourceName := "aws_s3_bucket.bucket"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1315,7 +1315,7 @@ func TestAccS3Bucket_Manage_lifecycleExpireMarkerOnly(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11420
 func TestAccS3Bucket_Manage_lifecycleRuleExpirationEmptyBlock(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket.bucket"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1336,7 +1336,7 @@ func TestAccS3Bucket_Manage_lifecycleRuleExpirationEmptyBlock(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/15138
 func TestAccS3Bucket_Manage_lifecycleRuleAbortIncompleteMultipartUploadDaysNoExpiration(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_bucket.bucket"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -2165,9 +2165,9 @@ func TestAccS3Bucket_Replication_schemaV2(t *testing.T) {
 
 func TestAccS3Bucket_Replication_schemaV2SameRegion(t *testing.T) {
 	resourceName := "aws_s3_bucket.bucket"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	destinationResourceName := "aws_s3_bucket.destination"
-	rNameDestination := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rNameDestination := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

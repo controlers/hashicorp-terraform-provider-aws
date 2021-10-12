@@ -19,7 +19,7 @@ import (
 
 func TestAccBudgetsBudget_basic(t *testing.T) {
 	var budget budgets.Budget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_budgets_budget.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -141,7 +141,7 @@ func TestAccBudgetsBudget_namePrefix(t *testing.T) {
 
 func TestAccBudgetsBudget_disappears(t *testing.T) {
 	var budget budgets.Budget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_budgets_budget.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -164,7 +164,7 @@ func TestAccBudgetsBudget_disappears(t *testing.T) {
 
 func TestAccBudgetsBudget_costTypes(t *testing.T) {
 	var budget budgets.Budget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_budgets_budget.test"
 
 	now := time.Now().UTC()
@@ -264,7 +264,7 @@ func TestAccBudgetsBudget_costTypes(t *testing.T) {
 
 func TestAccBudgetsBudget_notifications(t *testing.T) {
 	var budget budgets.Budget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_budgets_budget.test"
 	snsTopicResourceName := "aws_sns_topic.test"
 

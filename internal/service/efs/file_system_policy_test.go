@@ -17,7 +17,7 @@ import (
 func TestAccEFSFileSystemPolicy_basic(t *testing.T) {
 	var desc efs.DescribeFileSystemPolicyOutput
 	resourceName := "aws_efs_file_system_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -52,7 +52,7 @@ func TestAccEFSFileSystemPolicy_basic(t *testing.T) {
 func TestAccEFSFileSystemPolicy_disappears(t *testing.T) {
 	var desc efs.DescribeFileSystemPolicyOutput
 	resourceName := "aws_efs_file_system_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -75,7 +75,7 @@ func TestAccEFSFileSystemPolicy_disappears(t *testing.T) {
 func TestAccEFSFileSystemPolicy_policyBypass(t *testing.T) {
 	var desc efs.DescribeFileSystemPolicyOutput
 	resourceName := "aws_efs_file_system_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccImageBuilderDistributionConfiguration_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccImageBuilderDistributionConfiguration_basic(t *testing.T) {
 }
 
 func TestAccImageBuilderDistributionConfiguration_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -69,7 +69,7 @@ func TestAccImageBuilderDistributionConfiguration_disappears(t *testing.T) {
 }
 
 func TestAccImageBuilderDistributionConfiguration_description(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -103,7 +103,7 @@ func TestAccImageBuilderDistributionConfiguration_description(t *testing.T) {
 }
 
 func TestAccImageBuilderDistributionConfiguration_distribution(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -132,7 +132,7 @@ func TestAccImageBuilderDistributionConfiguration_distribution(t *testing.T) {
 }
 
 func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_amiTags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -176,7 +176,7 @@ func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_am
 }
 
 func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_description(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -218,7 +218,7 @@ func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_de
 }
 
 func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_kmsKeyID(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	kmsKeyResourceName2 := "aws_kms_key.test2"
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
@@ -256,7 +256,7 @@ func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_km
 }
 
 func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistributionLaunchPermission_userGroups(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -283,7 +283,7 @@ func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistributionLau
 }
 
 func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistributionLaunchPermission_userIDs(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -319,7 +319,7 @@ func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistributionLau
 }
 
 func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_name(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -361,7 +361,7 @@ func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_na
 }
 
 func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_targetAccountIDs(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -397,7 +397,7 @@ func TestAccImageBuilderDistributionConfiguration_DistributionAMIDistribution_ta
 }
 
 func TestAccImageBuilderDistributionConfiguration_Distribution_licenseARNs(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	licenseConfigurationResourceName := "aws_licensemanager_license_configuration.test"
 	licenseConfigurationResourceName2 := "aws_licensemanager_license_configuration.test2"
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
@@ -435,7 +435,7 @@ func TestAccImageBuilderDistributionConfiguration_Distribution_licenseARNs(t *te
 }
 
 func TestAccImageBuilderDistributionConfiguration_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_distribution_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -203,7 +203,7 @@ func TestAccIAMRolePolicy_invalidJSON(t *testing.T) {
 }
 
 func TestAccIAMRolePolicy_Policy_invalidResource(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

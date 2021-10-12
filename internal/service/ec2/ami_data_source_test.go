@@ -167,7 +167,7 @@ func TestAccEC2AMIDataSource_localNameFilter(t *testing.T) {
 func TestAccEC2AMIDataSource_gp3BlockDevice(t *testing.T) {
 	resourceName := "aws_ami.test"
 	datasourceName := "data.aws_ami.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

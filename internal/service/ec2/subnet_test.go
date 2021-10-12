@@ -58,7 +58,7 @@ func TestAccEC2Subnet_basic(t *testing.T) {
 func TestAccEC2Subnet_tags(t *testing.T) {
 	var v ec2.Subnet
 	resourceName := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -160,7 +160,7 @@ func TestAccEC2Subnet_DefaultTags_updateToProviderOnly(t *testing.T) {
 	var providers []*schema.Provider
 	var subnet ec2.Subnet
 	resourceName := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -203,7 +203,7 @@ func TestAccEC2Subnet_DefaultTags_updateToResourceOnly(t *testing.T) {
 	var providers []*schema.Provider
 	var subnet ec2.Subnet
 	resourceName := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -246,7 +246,7 @@ func TestAccEC2Subnet_DefaultTagsProviderAndResource_nonOverlappingTag(t *testin
 	var providers []*schema.Provider
 	var subnet ec2.Subnet
 	resourceName := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -311,7 +311,7 @@ func TestAccEC2Subnet_DefaultTagsProviderAndResource_overlappingTag(t *testing.T
 	var providers []*schema.Provider
 	var subnet ec2.Subnet
 	resourceName := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -370,7 +370,7 @@ func TestAccEC2Subnet_DefaultTagsProviderAndResource_overlappingTag(t *testing.T
 
 func TestAccEC2Subnet_DefaultTagsProviderAndResource_duplicateTag(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -394,7 +394,7 @@ func TestAccEC2Subnet_defaultAndIgnoreTags(t *testing.T) {
 	var providers []*schema.Provider
 	var subnet ec2.Subnet
 	resourceName := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },

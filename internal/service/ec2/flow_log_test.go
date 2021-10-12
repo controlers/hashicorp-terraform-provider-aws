@@ -21,7 +21,7 @@ func TestAccEC2FlowLog_vpcID(t *testing.T) {
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_flow_log.test"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -60,7 +60,7 @@ func TestAccEC2FlowLog_vpcID(t *testing.T) {
 func TestAccEC2FlowLog_logFormat(t *testing.T) {
 	var flowLog ec2.FlowLog
 	resourceName := "aws_flow_log.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	logFormat := "${version} ${vpc-id} ${subnet-id}"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -96,7 +96,7 @@ func TestAccEC2FlowLog_subnetID(t *testing.T) {
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_flow_log.test"
 	subnetResourceName := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -131,7 +131,7 @@ func TestAccEC2FlowLog_LogDestinationType_cloudWatchLogs(t *testing.T) {
 	var flowLog ec2.FlowLog
 	cloudwatchLogGroupResourceName := "aws_cloudwatch_log_group.test"
 	resourceName := "aws_flow_log.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -163,7 +163,7 @@ func TestAccEC2FlowLog_LogDestinationType_s3(t *testing.T) {
 	var flowLog ec2.FlowLog
 	s3ResourceName := "aws_s3_bucket.test"
 	resourceName := "aws_flow_log.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -210,7 +210,7 @@ func TestAccEC2FlowLog_LogDestinationTypeS3_invalid(t *testing.T) {
 func TestAccEC2FlowLog_LogDestinationType_maxAggregationInterval(t *testing.T) {
 	var flowLog ec2.FlowLog
 	resourceName := "aws_flow_log.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -238,7 +238,7 @@ func TestAccEC2FlowLog_LogDestinationType_maxAggregationInterval(t *testing.T) {
 func TestAccEC2FlowLog_tags(t *testing.T) {
 	var flowLog ec2.FlowLog
 	resourceName := "aws_flow_log.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -286,7 +286,7 @@ func TestAccEC2FlowLog_tags(t *testing.T) {
 func TestAccEC2FlowLog_disappears(t *testing.T) {
 	var flowLog ec2.FlowLog
 	resourceName := "aws_flow_log.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

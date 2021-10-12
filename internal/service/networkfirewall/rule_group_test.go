@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccNetworkFirewallRuleGroup_Basic_rulesSourceList(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -54,7 +54,7 @@ func TestAccNetworkFirewallRuleGroup_Basic_rulesSourceList(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_Basic_statefulRule(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -101,7 +101,7 @@ func TestAccNetworkFirewallRuleGroup_Basic_statefulRule(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_Basic_statelessRule(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -143,7 +143,7 @@ func TestAccNetworkFirewallRuleGroup_Basic_statelessRule(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_Basic_rules(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 	rules := `alert http any any -> any any (http_response_line; content:"403 Forbidden"; sid:1;)`
 
@@ -180,7 +180,7 @@ func TestAccNetworkFirewallRuleGroup_Basic_rules(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_statelessRuleWithCustomAction(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -229,7 +229,7 @@ func TestAccNetworkFirewallRuleGroup_statelessRuleWithCustomAction(t *testing.T)
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/19414
 func TestAccNetworkFirewallRuleGroup_updateRules(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	rules := `pass tls $HOME_NET any -> $EXTERNAL_NET 443 (tls.sni; content:"OLD.example.com"; msg:"FQDN test"; sid:1;)`
@@ -269,7 +269,7 @@ func TestAccNetworkFirewallRuleGroup_updateRules(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_updateRulesSourceList(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -314,7 +314,7 @@ func TestAccNetworkFirewallRuleGroup_updateRulesSourceList(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_rulesSourceAndRuleVariables(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -393,7 +393,7 @@ func TestAccNetworkFirewallRuleGroup_rulesSourceAndRuleVariables(t *testing.T) {
 // TestAccNetworkFirewallRuleGroup_updateStatefulRule validates
 // in-place updates to a single stateful_rule configuration block
 func TestAccNetworkFirewallRuleGroup_updateStatefulRule(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -439,7 +439,7 @@ func TestAccNetworkFirewallRuleGroup_updateStatefulRule(t *testing.T) {
 // in-place updates to stateful_rule configuration blocks
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/16868
 func TestAccNetworkFirewallRuleGroup_updateMultipleStatefulRules(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -520,7 +520,7 @@ func TestAccNetworkFirewallRuleGroup_updateMultipleStatefulRules(t *testing.T) {
 // updates to the "action" argument within 1 stateful_rule configuration block
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/16868
 func TestAccNetworkFirewallRuleGroup_StatefulRule_action(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -580,7 +580,7 @@ func TestAccNetworkFirewallRuleGroup_StatefulRule_action(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/16470
 func TestAccNetworkFirewallRuleGroup_StatefulRule_header(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -640,7 +640,7 @@ func TestAccNetworkFirewallRuleGroup_StatefulRule_header(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_updateStatelessRule(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -689,7 +689,7 @@ func TestAccNetworkFirewallRuleGroup_updateStatelessRule(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -732,7 +732,7 @@ func TestAccNetworkFirewallRuleGroup_tags(t *testing.T) {
 }
 
 func TestAccNetworkFirewallRuleGroup_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_rule_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

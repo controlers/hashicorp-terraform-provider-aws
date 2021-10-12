@@ -48,7 +48,7 @@ func TestAccKMSKey_basic(t *testing.T) {
 
 func TestAccKMSKey_asymmetricKey(t *testing.T) {
 	var key kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -71,7 +71,7 @@ func TestAccKMSKey_asymmetricKey(t *testing.T) {
 
 func TestAccKMSKey_disappears(t *testing.T) {
 	var key kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -94,7 +94,7 @@ func TestAccKMSKey_disappears(t *testing.T) {
 
 func TestAccKMSKey_policy(t *testing.T) {
 	var key kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 	expectedPolicyText := `{"Version":"2012-10-17","Id":"kms-tf-1","Statement":[{"Sid":"Enable IAM User Permissions","Effect":"Allow","Principal":{"AWS":"*"},"Action":"kms:*","Resource":"*"}]}`
 
@@ -129,7 +129,7 @@ func TestAccKMSKey_policy(t *testing.T) {
 
 func TestAccKMSKey_policyBypass(t *testing.T) {
 	var key kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -161,7 +161,7 @@ func TestAccKMSKey_policyBypass(t *testing.T) {
 
 func TestAccKMSKey_policyBypassUpdate(t *testing.T) {
 	var before, after kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -190,7 +190,7 @@ func TestAccKMSKey_policyBypassUpdate(t *testing.T) {
 
 func TestAccKMSKey_Policy_iamRole(t *testing.T) {
 	var key kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -218,7 +218,7 @@ func TestAccKMSKey_Policy_iamRole(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/7646
 func TestAccKMSKey_Policy_iamServiceLinkedRole(t *testing.T) {
 	var key kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -245,7 +245,7 @@ func TestAccKMSKey_Policy_iamServiceLinkedRole(t *testing.T) {
 
 func TestAccKMSKey_isEnabled(t *testing.T) {
 	var key1, key2, key3 kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -293,7 +293,7 @@ func TestAccKMSKey_isEnabled(t *testing.T) {
 
 func TestAccKMSKey_tags(t *testing.T) {
 	var key kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{

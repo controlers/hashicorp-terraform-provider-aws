@@ -22,7 +22,7 @@ import (
 func TestAccIAMAccessKey_basic(t *testing.T) {
 	var conf iam.AccessKeyMetadata
 	resourceName := "aws_iam_access_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -56,7 +56,7 @@ func TestAccIAMAccessKey_basic(t *testing.T) {
 func TestAccIAMAccessKey_encrypted(t *testing.T) {
 	var conf iam.AccessKeyMetadata
 	resourceName := "aws_iam_access_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -90,7 +90,7 @@ func TestAccIAMAccessKey_encrypted(t *testing.T) {
 func TestAccIAMAccessKey_status(t *testing.T) {
 	var conf iam.AccessKeyMetadata
 	resourceName := "aws_iam_access_key.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -195,7 +195,7 @@ func testAccCheckAccessKeyExists(n string, res *iam.AccessKeyMetadata) resource.
 
 func testAccCheckAccessKeyAttributes(accessKeyMetadata *iam.AccessKeyMetadata, status string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		if !strings.Contains(*accessKeyMetadata.UserName, "tf-acc-test") {
+		if !strings.Contains(*accessKeyMetadata.UserName, acctest.ResourcePrefix) {
 			return fmt.Errorf("Bad username: %s", *accessKeyMetadata.UserName)
 		}
 

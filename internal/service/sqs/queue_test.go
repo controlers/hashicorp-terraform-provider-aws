@@ -21,7 +21,7 @@ import (
 func TestAccSQSQueue_basic(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -65,7 +65,7 @@ func TestAccSQSQueue_basic(t *testing.T) {
 func TestAccSQSQueue_disappears(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -200,7 +200,7 @@ func TestAccSQSQueue_NamePrefix_fifoQueue(t *testing.T) {
 func TestAccSQSQueue_tags(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -245,7 +245,7 @@ func TestAccSQSQueue_tags(t *testing.T) {
 func TestAccSQSQueue_update(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -311,7 +311,7 @@ func TestAccSQSQueue_update(t *testing.T) {
 func TestAccSQSQueue_policy(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -343,7 +343,7 @@ func TestAccSQSQueue_policy(t *testing.T) {
 func TestAccSQSQueue_recentlyDeleted(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -372,7 +372,7 @@ func TestAccSQSQueue_recentlyDeleted(t *testing.T) {
 func TestAccSQSQueue_redrivePolicy(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -401,7 +401,7 @@ func TestAccSQSQueue_redrivePolicy(t *testing.T) {
 func TestAccSQSQueue_fifoQueue(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := fmt.Sprintf("%s.fifo", sdkacctest.RandomWithPrefix("tf-acc-test"))
+	rName := fmt.Sprintf("%s.fifo", sdkacctest.RandomWithPrefix(acctest.ResourcePrefix))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -428,7 +428,7 @@ func TestAccSQSQueue_fifoQueue(t *testing.T) {
 }
 
 func TestAccSQSQueue_FIFOQueue_expectNameError(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -447,7 +447,7 @@ func TestAccSQSQueue_FIFOQueue_expectNameError(t *testing.T) {
 func TestAccSQSQueue_FIFOQueue_contentBasedDeduplication(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := fmt.Sprintf("%s.fifo", sdkacctest.RandomWithPrefix("tf-acc-test"))
+	rName := fmt.Sprintf("%s.fifo", sdkacctest.RandomWithPrefix(acctest.ResourcePrefix))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -475,7 +475,7 @@ func TestAccSQSQueue_FIFOQueue_contentBasedDeduplication(t *testing.T) {
 func TestAccSQSQueue_FIFOQueue_highThroughputMode(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := fmt.Sprintf("%s.fifo", sdkacctest.RandomWithPrefix("tf-acc-test"))
+	rName := fmt.Sprintf("%s.fifo", sdkacctest.RandomWithPrefix(acctest.ResourcePrefix))
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -511,7 +511,7 @@ func TestAccSQSQueue_FIFOQueue_highThroughputMode(t *testing.T) {
 }
 
 func TestAccSQSQueue_StandardQueue_expectContentBasedDeduplicationError(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -530,7 +530,7 @@ func TestAccSQSQueue_StandardQueue_expectContentBasedDeduplicationError(t *testi
 func TestAccSQSQueue_encryption(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -566,7 +566,7 @@ func TestAccSQSQueue_encryption(t *testing.T) {
 func TestAccSQSQueue_zeroVisibilityTimeoutSeconds(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -594,7 +594,7 @@ func TestAccSQSQueue_zeroVisibilityTimeoutSeconds(t *testing.T) {
 func TestAccSQSQueue_defaultKMSDataKeyReusePeriodSeconds(t *testing.T) {
 	var queueAttributes map[string]string
 	resourceName := "aws_sqs_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

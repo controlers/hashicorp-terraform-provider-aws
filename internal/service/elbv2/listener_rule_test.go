@@ -573,7 +573,7 @@ func TestAccELBV2ListenerRule_cognito(t *testing.T) {
 	var conf elbv2.Rule
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	lbName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	lbName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_lb_listener_rule.cognito"
 	frontEndListenerResourceName := "aws_lb_listener.front_end"
@@ -617,7 +617,7 @@ func TestAccELBV2ListenerRule_oidc(t *testing.T) {
 	var conf elbv2.Rule
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	lbName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	lbName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_lb_listener_rule.oidc"
 	frontEndListenerResourceName := "aws_lb_listener.front_end"
@@ -661,7 +661,7 @@ func TestAccELBV2ListenerRule_Action_order(t *testing.T) {
 	var rule elbv2.Rule
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_listener_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -688,7 +688,7 @@ func TestAccELBV2ListenerRule_ActionOrder_recreates(t *testing.T) {
 	var rule elbv2.Rule
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_listener_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{

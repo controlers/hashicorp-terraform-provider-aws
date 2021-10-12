@@ -315,7 +315,7 @@ func TestAccECSTaskDefinition_withEFSAccessPoint(t *testing.T) {
 func TestAccECSTaskDefinition_withFSxWinFileSystem(t *testing.T) {
 	var def ecs.TaskDefinition
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_task_definition.test"
 
 	if acctest.Partition() == "aws-us-gov" {
@@ -772,7 +772,7 @@ func TestAccECSTaskDefinition_disappears(t *testing.T) {
 
 func TestAccECSTaskDefinition_tags(t *testing.T) {
 	var taskDefinition ecs.TaskDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_task_definition.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -818,7 +818,7 @@ func TestAccECSTaskDefinition_tags(t *testing.T) {
 
 func TestAccECSTaskDefinition_proxy(t *testing.T) {
 	var taskDefinition ecs.TaskDefinition
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ecs_task_definition.test"
 
 	containerName := "web"

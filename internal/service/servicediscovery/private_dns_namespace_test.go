@@ -18,7 +18,7 @@ import (
 
 func TestAccServiceDiscoveryPrivateDNSNamespace_basic(t *testing.T) {
 	resourceName := "aws_service_discovery_private_dns_namespace.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -52,7 +52,7 @@ func TestAccServiceDiscoveryPrivateDNSNamespace_basic(t *testing.T) {
 
 func TestAccServiceDiscoveryPrivateDNSNamespace_disappears(t *testing.T) {
 	resourceName := "aws_service_discovery_private_dns_namespace.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -78,7 +78,7 @@ func TestAccServiceDiscoveryPrivateDNSNamespace_disappears(t *testing.T) {
 
 func TestAccServiceDiscoveryPrivateDNSNamespace_description(t *testing.T) {
 	resourceName := "aws_service_discovery_private_dns_namespace.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -105,7 +105,7 @@ func TestAccServiceDiscoveryPrivateDNSNamespace_description(t *testing.T) {
 //  * https://github.com/hashicorp/terraform-provider-aws/issues/2830
 //  * https://github.com/hashicorp/terraform-provider-aws/issues/5532
 func TestAccServiceDiscoveryPrivateDNSNamespace_Error_overlap(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -127,7 +127,7 @@ func TestAccServiceDiscoveryPrivateDNSNamespace_Error_overlap(t *testing.T) {
 
 func TestAccServiceDiscoveryPrivateDNSNamespace_tags(t *testing.T) {
 	resourceName := "aws_service_discovery_private_dns_namespace.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {

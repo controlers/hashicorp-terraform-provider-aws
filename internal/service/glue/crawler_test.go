@@ -21,7 +21,7 @@ import (
 
 func TestAccGlueCrawler_dynamoDBTarget(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -89,7 +89,7 @@ func TestAccGlueCrawler_dynamoDBTarget(t *testing.T) {
 
 func TestAccGlueCrawler_DynamoDBTarget_scanAll(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -133,7 +133,7 @@ func TestAccGlueCrawler_DynamoDBTarget_scanAll(t *testing.T) {
 
 func TestAccGlueCrawler_DynamoDBTarget_scanRate(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -177,7 +177,7 @@ func TestAccGlueCrawler_DynamoDBTarget_scanRate(t *testing.T) {
 
 func TestAccGlueCrawler_jdbcTarget(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	jdbcConnectionUrl := fmt.Sprintf("jdbc:mysql://%s/testdatabase", acctest.RandomDomainName())
@@ -249,7 +249,7 @@ func TestAccGlueCrawler_jdbcTarget(t *testing.T) {
 
 func TestAccGlueCrawler_JDBCTarget_exclusions(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	jdbcConnectionUrl := fmt.Sprintf("jdbc:mysql://%s/testdatabase", acctest.RandomDomainName())
@@ -292,7 +292,7 @@ func TestAccGlueCrawler_JDBCTarget_exclusions(t *testing.T) {
 
 func TestAccGlueCrawler_JDBCTarget_multiple(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	jdbcConnectionUrl := fmt.Sprintf("jdbc:mysql://%s/testdatabase", acctest.RandomDomainName())
@@ -353,7 +353,7 @@ func TestAccGlueCrawler_JDBCTarget_multiple(t *testing.T) {
 
 func TestAccGlueCrawler_mongoDBTarget(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	connectionUrl := fmt.Sprintf("mongodb://%s:27017/testdatabase", acctest.RandomDomainName())
@@ -395,7 +395,7 @@ func TestAccGlueCrawler_mongoDBTarget(t *testing.T) {
 
 func TestAccGlueCrawler_MongoDBTargetScan_all(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	connectionUrl := fmt.Sprintf("mongodb://%s:27017/testdatabase", acctest.RandomDomainName())
@@ -447,7 +447,7 @@ func TestAccGlueCrawler_MongoDBTargetScan_all(t *testing.T) {
 
 func TestAccGlueCrawler_MongoDBTarget_multiple(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	connectionUrl := fmt.Sprintf("mongodb://%s:27017/testdatabase", acctest.RandomDomainName())
@@ -505,7 +505,7 @@ func TestAccGlueCrawler_MongoDBTarget_multiple(t *testing.T) {
 
 func TestAccGlueCrawler_s3Target(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -573,7 +573,7 @@ func TestAccGlueCrawler_s3Target(t *testing.T) {
 
 func TestAccGlueCrawler_S3Target_connectionName(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 	connectionName := "aws_glue_connection.test"
 
@@ -603,7 +603,7 @@ func TestAccGlueCrawler_S3Target_connectionName(t *testing.T) {
 
 func TestAccGlueCrawler_S3Target_sampleSize(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -639,7 +639,7 @@ func TestAccGlueCrawler_S3Target_sampleSize(t *testing.T) {
 
 func TestAccGlueCrawler_S3Target_exclusions(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -680,7 +680,7 @@ func TestAccGlueCrawler_S3Target_exclusions(t *testing.T) {
 
 func TestAccGlueCrawler_S3Target_multiple(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -734,7 +734,7 @@ func TestAccGlueCrawler_S3Target_multiple(t *testing.T) {
 
 func TestAccGlueCrawler_catalogTarget(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -807,7 +807,7 @@ func TestAccGlueCrawler_catalogTarget(t *testing.T) {
 
 func TestAccGlueCrawler_CatalogTarget_multiple(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -863,7 +863,7 @@ func TestAccGlueCrawler_CatalogTarget_multiple(t *testing.T) {
 
 func TestAccGlueCrawler_disappears(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -886,7 +886,7 @@ func TestAccGlueCrawler_disappears(t *testing.T) {
 
 func TestAccGlueCrawler_classifiers(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -933,7 +933,7 @@ func TestAccGlueCrawler(t *testing.T) {
 	var crawler glue.Crawler
 	configuration1 := `{"Version": 1.0, "CrawlerOutput": {"Tables": { "AddOrUpdateBehavior": "MergeNewColumns" }}}`
 	configuration2 := `{"Version": 1.0, "CrawlerOutput": {"Partitions": { "AddOrUpdateBehavior": "InheritFromTable" }}}`
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -974,7 +974,7 @@ func TestAccGlueCrawler(t *testing.T) {
 
 func TestAccGlueCrawler_description(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1009,7 +1009,7 @@ func TestAccGlueCrawler_description(t *testing.T) {
 func TestAccGlueCrawler_RoleARN_noPath(t *testing.T) {
 	var crawler glue.Crawler
 	iamRoleResourceName := "aws_iam_role.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1036,7 +1036,7 @@ func TestAccGlueCrawler_RoleARN_noPath(t *testing.T) {
 
 func TestAccGlueCrawler_RoleARN_path(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1063,7 +1063,7 @@ func TestAccGlueCrawler_RoleARN_path(t *testing.T) {
 
 func TestAccGlueCrawler_RoleName_path(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1090,7 +1090,7 @@ func TestAccGlueCrawler_RoleName_path(t *testing.T) {
 
 func TestAccGlueCrawler_schedule(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1131,7 +1131,7 @@ func TestAccGlueCrawler_schedule(t *testing.T) {
 
 func TestAccGlueCrawler_schemaChangePolicy(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1169,7 +1169,7 @@ func TestAccGlueCrawler_schemaChangePolicy(t *testing.T) {
 
 func TestAccGlueCrawler_tablePrefix(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1203,7 +1203,7 @@ func TestAccGlueCrawler_tablePrefix(t *testing.T) {
 
 func TestAccGlueCrawler_removeTablePrefix(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1237,7 +1237,7 @@ func TestAccGlueCrawler_removeTablePrefix(t *testing.T) {
 
 func TestAccGlueCrawler_tags(t *testing.T) {
 	var crawler1, crawler2, crawler3 glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1282,7 +1282,7 @@ func TestAccGlueCrawler_tags(t *testing.T) {
 
 func TestAccGlueCrawler_security(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1316,7 +1316,7 @@ func TestAccGlueCrawler_security(t *testing.T) {
 
 func TestAccGlueCrawler_lineage(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1359,7 +1359,7 @@ func TestAccGlueCrawler_lineage(t *testing.T) {
 
 func TestAccGlueCrawler_reCrawlPolicy(t *testing.T) {
 	var crawler glue.Crawler
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_crawler.test"
 
 	resource.ParallelTest(t, resource.TestCase{

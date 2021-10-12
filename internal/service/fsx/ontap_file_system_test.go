@@ -72,8 +72,8 @@ func TestAccFSxOntapFileSystem_basic(t *testing.T) {
 func TestAccFSxOntapFileSystem_fsxAdminPassword(t *testing.T) {
 	var filesystem1, filesystem2 fsx.FileSystem
 	resourceName := "aws_fsx_ontap_file_system.test"
-	pass := sdkacctest.RandomWithPrefix("tf-acc-test")
-	pass2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	pass := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	pass2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(fsx.EndpointsID, t) },

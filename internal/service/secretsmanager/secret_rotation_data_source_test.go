@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccSecretsManagerSecretRotationDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_secretsmanager_secret_rotation.test"
 	datasourceName := "data.aws_secretsmanager_secret_rotation.test"
 

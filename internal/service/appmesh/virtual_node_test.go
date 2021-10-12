@@ -19,8 +19,8 @@ import (
 func testAccVirtualNode_basic(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -60,8 +60,8 @@ func testAccVirtualNode_basic(t *testing.T) {
 func testAccVirtualNode_disappears(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -87,8 +87,8 @@ func testAccVirtualNode_backendClientPolicyACM(t *testing.T) {
 	resourceName := "aws_appmesh_virtual_node.test"
 	acmCAResourceName := "aws_acmpca_certificate_authority.test"
 
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := acctest.RandomDomainName()
 
 	resource.Test(t, resource.TestCase{
@@ -171,8 +171,8 @@ func testAccVirtualNode_backendClientPolicyACM(t *testing.T) {
 func testAccVirtualNode_backendClientPolicyFile(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -285,8 +285,8 @@ func testAccVirtualNode_backendClientPolicyFile(t *testing.T) {
 func testAccVirtualNode_backendDefaults(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -372,8 +372,8 @@ func testAccVirtualNode_backendDefaults(t *testing.T) {
 func testAccVirtualNode_backendDefaultsCertificate(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -434,8 +434,8 @@ func testAccVirtualNode_cloudMapServiceDiscovery(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
 	nsResourceName := "aws_service_discovery_http_namespace.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	// Avoid 'config is invalid: last character of "name" must be a letter' for aws_service_discovery_http_namespace.
 	rName := fmt.Sprintf("tf-acc-test-%s", sdkacctest.RandStringFromCharSet(20, sdkacctest.CharSetAlpha))
 
@@ -488,8 +488,8 @@ func testAccVirtualNode_cloudMapServiceDiscovery(t *testing.T) {
 func testAccVirtualNode_listenerConnectionPool(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -577,8 +577,8 @@ func testAccVirtualNode_listenerConnectionPool(t *testing.T) {
 func testAccVirtualNode_listenerHealthChecks(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -685,8 +685,8 @@ func testAccVirtualNode_listenerHealthChecks(t *testing.T) {
 func testAccVirtualNode_listenerOutlierDetection(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -779,8 +779,8 @@ func testAccVirtualNode_listenerOutlierDetection(t *testing.T) {
 func testAccVirtualNode_listenerTimeout(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -878,8 +878,8 @@ func testAccVirtualNode_listenerTLS(t *testing.T) {
 	acmCAResourceName := "aws_acmpca_certificate_authority.test"
 	acmCertificateResourceName := "aws_acm_certificate.test"
 
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	domain := acctest.RandomDomainName()
 
 	resource.Test(t, resource.TestCase{
@@ -1004,8 +1004,8 @@ func testAccVirtualNode_listenerTLS(t *testing.T) {
 func testAccVirtualNode_listenerValidation(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -1122,8 +1122,8 @@ func testAccVirtualNode_listenerValidation(t *testing.T) {
 func testAccVirtualNode_logging(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -1171,8 +1171,8 @@ func testAccVirtualNode_logging(t *testing.T) {
 func testAccVirtualNode_tags(t *testing.T) {
 	var vn appmesh.VirtualNodeData
 	resourceName := "aws_appmesh_virtual_node.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vnName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vnName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },

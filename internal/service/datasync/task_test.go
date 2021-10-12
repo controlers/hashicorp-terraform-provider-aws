@@ -19,7 +19,7 @@ import (
 
 func TestAccDataSyncTask_basic(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSyncDestinationLocationResourceName := "aws_datasync_location_s3.destination"
 	dataSyncSourceLocationResourceName := "aws_datasync_location_nfs.source"
 	resourceName := "aws_datasync_task.test"
@@ -69,7 +69,7 @@ func TestAccDataSyncTask_basic(t *testing.T) {
 
 func TestAccDataSyncTask_disappears(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -92,7 +92,7 @@ func TestAccDataSyncTask_disappears(t *testing.T) {
 
 func TestAccDataSyncTask_schedule(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -128,7 +128,7 @@ func TestAccDataSyncTask_schedule(t *testing.T) {
 
 func TestAccDataSyncTask_cloudWatchLogGroupARN(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -161,7 +161,7 @@ func TestAccDataSyncTask_cloudWatchLogGroupARN(t *testing.T) {
 
 func TestAccDataSyncTask_excludes(t *testing.T) {
 	var task1 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -199,7 +199,7 @@ func TestAccDataSyncTask_excludes(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_atimeMtime(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -238,7 +238,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_atimeMtime(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_bytesPerSecond(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -275,7 +275,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_bytesPerSecond(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_gid(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -312,7 +312,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_gid(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_logLevel(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -349,7 +349,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_logLevel(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_overwriteMode(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -386,7 +386,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_overwriteMode(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_posixPermissions(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -423,7 +423,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_posixPermissions(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_preserveDeletedFiles(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -460,7 +460,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_preserveDeletedFiles(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_preserveDevices(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -497,7 +497,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_preserveDevices(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_taskQueueing(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -534,7 +534,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_taskQueueing(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_transferMode(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -571,7 +571,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_transferMode(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_uid(t *testing.T) {
 	var task1, task2 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -608,7 +608,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_uid(t *testing.T) {
 
 func TestAccDataSyncTask_DefaultSyncOptions_verifyMode(t *testing.T) {
 	var task1, task2, task3 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -655,7 +655,7 @@ func TestAccDataSyncTask_DefaultSyncOptions_verifyMode(t *testing.T) {
 func TestAccDataSyncTask_tags(t *testing.T) {
 	acctest.Skip(t, "Tagging on creation is inconsistent")
 	var task1, task2, task3 datasync.DescribeTaskOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -20,7 +20,7 @@ import (
 func TestAccBatchJobQueue_basic(t *testing.T) {
 	var jobQueue1 batch.JobQueueDetail
 	resourceName := "aws_batch_job_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -52,7 +52,7 @@ func TestAccBatchJobQueue_basic(t *testing.T) {
 func TestAccBatchJobQueue_disappears(t *testing.T) {
 	var jobQueue1 batch.JobQueueDetail
 	resourceName := "aws_batch_job_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -76,7 +76,7 @@ func TestAccBatchJobQueue_disappears(t *testing.T) {
 func TestAccBatchJobQueue_ComputeEnvironments_externalOrderUpdate(t *testing.T) {
 	var jobQueue1 batch.JobQueueDetail
 	resourceName := "aws_batch_job_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -103,7 +103,7 @@ func TestAccBatchJobQueue_ComputeEnvironments_externalOrderUpdate(t *testing.T) 
 func TestAccBatchJobQueue_priority(t *testing.T) {
 	var jobQueue1, jobQueue2 batch.JobQueueDetail
 	resourceName := "aws_batch_job_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -137,7 +137,7 @@ func TestAccBatchJobQueue_priority(t *testing.T) {
 func TestAccBatchJobQueue_state(t *testing.T) {
 	var jobQueue1, jobQueue2 batch.JobQueueDetail
 	resourceName := "aws_batch_job_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -171,7 +171,7 @@ func TestAccBatchJobQueue_state(t *testing.T) {
 func TestAccBatchJobQueue_tags(t *testing.T) {
 	var jobQueue batch.JobQueueDetail
 	resourceName := "aws_batch_job_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

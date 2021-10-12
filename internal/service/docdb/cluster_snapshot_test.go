@@ -17,7 +17,7 @@ import (
 
 func TestAccDocDBClusterSnapshot_basic(t *testing.T) {
 	var dbClusterSnapshot docdb.DBClusterSnapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_docdb_cluster_snapshot.test"
 
 	resource.ParallelTest(t, resource.TestCase{

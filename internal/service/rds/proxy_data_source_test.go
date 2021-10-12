@@ -13,7 +13,7 @@ import (
 func TestAccRDSProxyDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_db_proxy.test"
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

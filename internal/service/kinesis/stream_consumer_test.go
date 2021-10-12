@@ -18,7 +18,7 @@ import (
 func TestAccKinesisStreamConsumer_basic(t *testing.T) {
 	resourceName := "aws_kinesis_stream_consumer.test"
 	streamName := "aws_kinesis_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -47,7 +47,7 @@ func TestAccKinesisStreamConsumer_basic(t *testing.T) {
 
 func TestAccKinesisStreamConsumer_disappears(t *testing.T) {
 	resourceName := "aws_kinesis_stream_consumer.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -69,7 +69,7 @@ func TestAccKinesisStreamConsumer_disappears(t *testing.T) {
 
 func TestAccKinesisStreamConsumer_maxConcurrentConsumers(t *testing.T) {
 	resourceName := "aws_kinesis_stream_consumer.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -94,7 +94,7 @@ func TestAccKinesisStreamConsumer_maxConcurrentConsumers(t *testing.T) {
 
 func TestAccKinesisStreamConsumer_exceedMaxConcurrentConsumers(t *testing.T) {
 	resourceName := "aws_kinesis_stream_consumer.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

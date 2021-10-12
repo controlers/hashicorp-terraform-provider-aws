@@ -133,7 +133,7 @@ func TestAccELBV2LoadBalancer_NLB_basic(t *testing.T) {
 
 func TestAccELBV2LoadBalancer_LoadBalancerType_gateway(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -166,7 +166,7 @@ func TestAccELBV2LoadBalancer_LoadBalancerType_gateway(t *testing.T) {
 
 func TestAccELBV2LoadBalancer_ipv6SubnetMapping(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -200,7 +200,7 @@ func TestAccELBV2LoadBalancer_ipv6SubnetMapping(t *testing.T) {
 
 func TestAccELBV2LoadBalancer_LoadBalancerTypeGateway_enableCrossZoneLoadBalancing(t *testing.T) {
 	var conf elbv2.LoadBalancer
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb.test"
 
 	resource.ParallelTest(t, resource.TestCase{

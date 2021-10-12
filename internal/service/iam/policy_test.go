@@ -18,7 +18,7 @@ import (
 
 func TestAccIAMPolicy_basic(t *testing.T) {
 	var out iam.GetPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_policy.test"
 	expectedPolicyText := `{
   "Version": "2012-10-17",
@@ -63,7 +63,7 @@ func TestAccIAMPolicy_basic(t *testing.T) {
 
 func TestAccIAMPolicy_description(t *testing.T) {
 	var out iam.GetPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -90,7 +90,7 @@ func TestAccIAMPolicy_description(t *testing.T) {
 
 func TestAccIAMPolicy_tags(t *testing.T) {
 	var out iam.GetPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -135,7 +135,7 @@ func TestAccIAMPolicy_tags(t *testing.T) {
 
 func TestAccIAMPolicy_disappears(t *testing.T) {
 	var out iam.GetPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -186,7 +186,7 @@ func TestAccIAMPolicy_namePrefix(t *testing.T) {
 
 func TestAccIAMPolicy_path(t *testing.T) {
 	var out iam.GetPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -213,7 +213,7 @@ func TestAccIAMPolicy_path(t *testing.T) {
 
 func TestAccIAMPolicy_policy(t *testing.T) {
 	var out iam.GetPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_policy.test"
 	policy1 := "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"ec2:Describe*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}"
 	policy2 := "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"ec2:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}"

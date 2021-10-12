@@ -25,7 +25,7 @@ func testAccPreCheckSwfDomainTestingEnabled(t *testing.T) {
 }
 
 func TestAccSWFDomain_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_swf_domain.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -56,7 +56,7 @@ func TestAccSWFDomain_basic(t *testing.T) {
 }
 
 func TestAccSWFDomain_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_swf_domain.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -159,7 +159,7 @@ func TestAccSWFDomain_generatedName(t *testing.T) {
 }
 
 func TestAccSWFDomain_description(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_swf_domain.test"
 
 	resource.ParallelTest(t, resource.TestCase{

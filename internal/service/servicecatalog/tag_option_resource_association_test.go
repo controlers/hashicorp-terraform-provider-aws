@@ -18,7 +18,7 @@ import (
 
 func TestAccServiceCatalogTagOptionResourceAssociation_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_tag_option_resource_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -45,7 +45,7 @@ func TestAccServiceCatalogTagOptionResourceAssociation_basic(t *testing.T) {
 
 func TestAccServiceCatalogTagOptionResourceAssociation_disappears(t *testing.T) {
 	resourceName := "aws_servicecatalog_tag_option_resource_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

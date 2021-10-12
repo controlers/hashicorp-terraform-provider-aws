@@ -15,7 +15,7 @@ import (
 func TestAccBackupRegionSettings_basic(t *testing.T) {
 	var settings backup.DescribeRegionSettingsOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_backup_region_settings.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {

@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccWAFV2WebACLDataSource_basic(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafv2_web_acl.test"
 	datasourceName := "data.aws_wafv2_web_acl.test"
 

@@ -18,8 +18,8 @@ import (
 func TestAccPinpointEventStream_basic(t *testing.T) {
 	var stream pinpoint.EventStream
 	resourceName := "aws_pinpoint_event_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckApp(t) },
@@ -57,7 +57,7 @@ func TestAccPinpointEventStream_basic(t *testing.T) {
 func TestAccPinpointEventStream_disappears(t *testing.T) {
 	var stream pinpoint.EventStream
 	resourceName := "aws_pinpoint_event_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckApp(t) },

@@ -18,7 +18,7 @@ import (
 
 func TestAccWAFXSSMatchSet_basic(t *testing.T) {
 	var v waf.XssMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -59,7 +59,7 @@ func TestAccWAFXSSMatchSet_basic(t *testing.T) {
 
 func TestAccWAFXSSMatchSet_changeNameForceNew(t *testing.T) {
 	var before, after waf.XssMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	xssMatchSetNewName := fmt.Sprintf("xssMatchSetNewName-%s", sdkacctest.RandString(5))
 	resourceName := "aws_waf_xss_match_set.test"
 
@@ -96,7 +96,7 @@ func TestAccWAFXSSMatchSet_changeNameForceNew(t *testing.T) {
 
 func TestAccWAFXSSMatchSet_disappears(t *testing.T) {
 	var v waf.XssMatchSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -119,7 +119,7 @@ func TestAccWAFXSSMatchSet_disappears(t *testing.T) {
 
 func TestAccWAFXSSMatchSet_changeTuples(t *testing.T) {
 	var before, after waf.XssMatchSet
-	setName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	setName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -179,7 +179,7 @@ func TestAccWAFXSSMatchSet_changeTuples(t *testing.T) {
 
 func TestAccWAFXSSMatchSet_noTuples(t *testing.T) {
 	var ipset waf.XssMatchSet
-	setName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	setName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_waf_xss_match_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{

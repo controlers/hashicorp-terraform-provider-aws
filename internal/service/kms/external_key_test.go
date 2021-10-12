@@ -83,7 +83,7 @@ func TestAccKMSExternalKey_disappears(t *testing.T) {
 
 func TestAccKMSExternalKey_deletionWindowInDays(t *testing.T) {
 	var key1, key2 kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_external_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -123,7 +123,7 @@ func TestAccKMSExternalKey_deletionWindowInDays(t *testing.T) {
 
 func TestAccKMSExternalKey_description(t *testing.T) {
 	var key1, key2 kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_external_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -163,7 +163,7 @@ func TestAccKMSExternalKey_description(t *testing.T) {
 
 func TestAccKMSExternalKey_enabled(t *testing.T) {
 	var key1, key2, key3 kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_external_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -211,7 +211,7 @@ func TestAccKMSExternalKey_enabled(t *testing.T) {
 
 func TestAccKMSExternalKey_keyMaterialBase64(t *testing.T) {
 	var key1, key2 kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_external_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -253,7 +253,7 @@ func TestAccKMSExternalKey_keyMaterialBase64(t *testing.T) {
 
 func TestAccKMSExternalKey_policy(t *testing.T) {
 	var key1, key2 kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	policy1 := `{"Version":"2012-10-17","Id":"kms-tf-1","Statement":[{"Sid":"Enable IAM User Permissions 1","Effect":"Allow","Principal":{"AWS":"*"},"Action":"kms:*","Resource":"*"}]}`
 	policy2 := `{"Version":"2012-10-17","Id":"kms-tf-1","Statement":[{"Sid":"Enable IAM User Permissions 2","Effect":"Allow","Principal":{"AWS":"*"},"Action":"kms:*","Resource":"*"}]}`
 	resourceName := "aws_kms_external_key.test"
@@ -295,7 +295,7 @@ func TestAccKMSExternalKey_policy(t *testing.T) {
 
 func TestAccKMSExternalKey_policyBypass(t *testing.T) {
 	var key kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	policy := `{"Version":"2012-10-17","Id":"kms-tf-1","Statement":[{"Sid":"Enable IAM User Permissions 1","Effect":"Allow","Principal":{"AWS":"*"},"Action":"kms:*","Resource":"*"}]}`
 	resourceName := "aws_kms_external_key.test"
 
@@ -329,7 +329,7 @@ func TestAccKMSExternalKey_policyBypass(t *testing.T) {
 
 func TestAccKMSExternalKey_tags(t *testing.T) {
 	var key1, key2, key3 kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_external_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -381,7 +381,7 @@ func TestAccKMSExternalKey_tags(t *testing.T) {
 
 func TestAccKMSExternalKey_validTo(t *testing.T) {
 	var key1, key2, key3, key4 kms.KeyMetadata
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_kms_external_key.test"
 	validTo1 := time.Now().UTC().Add(1 * time.Hour).Format(time.RFC3339)
 	validTo2 := time.Now().UTC().Add(2 * time.Hour).Format(time.RFC3339)

@@ -13,7 +13,7 @@ import (
 func TestAccECSClusterDataSource_ecsCluster(t *testing.T) {
 	dataSourceName := "data.aws_ecs_cluster.test"
 	resourceName := "aws_ecs_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -37,7 +37,7 @@ func TestAccECSClusterDataSource_ecsCluster(t *testing.T) {
 func TestAccECSClusterDataSource_ecsClusterContainerInsights(t *testing.T) {
 	dataSourceName := "data.aws_ecs_cluster.test"
 	resourceName := "aws_ecs_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

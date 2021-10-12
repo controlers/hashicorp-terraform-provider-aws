@@ -19,7 +19,7 @@ import (
 
 func TestAccDeviceFarmProject_basic(t *testing.T) {
 	var proj devicefarm.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-updated")
 	resourceName := "aws_devicefarm_project.test"
 
@@ -63,7 +63,7 @@ func TestAccDeviceFarmProject_basic(t *testing.T) {
 
 func TestAccDeviceFarmProject_timeout(t *testing.T) {
 	var proj devicefarm.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_devicefarm_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -105,7 +105,7 @@ func TestAccDeviceFarmProject_timeout(t *testing.T) {
 
 func TestAccDeviceFarmProject_tags(t *testing.T) {
 	var proj devicefarm.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_devicefarm_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -156,7 +156,7 @@ func TestAccDeviceFarmProject_tags(t *testing.T) {
 
 func TestAccDeviceFarmProject_disappears(t *testing.T) {
 	var proj devicefarm.Project
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_devicefarm_project.test"
 
 	resource.ParallelTest(t, resource.TestCase{

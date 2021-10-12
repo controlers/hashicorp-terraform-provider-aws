@@ -16,7 +16,7 @@ import (
 func TestAccGlueDataCatalogEncryptionSettings_basic(t *testing.T) {
 	var settings glue.DataCatalogEncryptionSettings
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_data_catalog_encryption_settings.test"
 	keyResourceName := "aws_kms_key.test"
 

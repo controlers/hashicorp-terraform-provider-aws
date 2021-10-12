@@ -17,7 +17,7 @@ import (
 
 func testAccWebhook_basic(t *testing.T) {
 	var webhook amplify.Webhook
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_webhook.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func testAccWebhook_basic(t *testing.T) {
 
 func testAccWebhook_disappears(t *testing.T) {
 	var webhook amplify.Webhook
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_webhook.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -70,7 +70,7 @@ func testAccWebhook_disappears(t *testing.T) {
 
 func testAccWebhook_update(t *testing.T) {
 	var webhook amplify.Webhook
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_webhook.test"
 
 	resource.ParallelTest(t, resource.TestCase{

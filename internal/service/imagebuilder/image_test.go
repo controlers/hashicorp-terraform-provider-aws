@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccImageBuilderImage_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	imageRecipeResourceName := "aws_imagebuilder_image_recipe.test"
 	infrastructureConfigurationResourceName := "aws_imagebuilder_infrastructure_configuration.test"
 	resourceName := "aws_imagebuilder_image.test"
@@ -59,7 +59,7 @@ func TestAccImageBuilderImage_basic(t *testing.T) {
 }
 
 func TestAccImageBuilderImage_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -81,7 +81,7 @@ func TestAccImageBuilderImage_disappears(t *testing.T) {
 }
 
 func TestAccImageBuilderImage_distributionARN(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	distributionConfigurationResourceName := "aws_imagebuilder_distribution_configuration.test"
 	resourceName := "aws_imagebuilder_image.test"
 
@@ -108,7 +108,7 @@ func TestAccImageBuilderImage_distributionARN(t *testing.T) {
 }
 
 func TestAccImageBuilderImage_enhancedImageMetadataEnabled(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -134,7 +134,7 @@ func TestAccImageBuilderImage_enhancedImageMetadataEnabled(t *testing.T) {
 }
 
 func TestAccImageBuilderImage_ImageTests_imageTestsEnabled(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -161,7 +161,7 @@ func TestAccImageBuilderImage_ImageTests_imageTestsEnabled(t *testing.T) {
 }
 
 func TestAccImageBuilderImage_ImageTests_timeoutMinutes(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -188,7 +188,7 @@ func TestAccImageBuilderImage_ImageTests_timeoutMinutes(t *testing.T) {
 }
 
 func TestAccImageBuilderImage_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_imagebuilder_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{

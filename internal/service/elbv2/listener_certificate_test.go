@@ -22,7 +22,7 @@ func TestAccELBV2ListenerCertificate_basic(t *testing.T) {
 	iamServerCertificateResourceName := "aws_iam_server_certificate.test"
 	lbListenerResourceName := "aws_lb_listener.test"
 	resourceName := "aws_lb_listener_certificate.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -54,7 +54,7 @@ func TestAccELBV2ListenerCertificate_CertificateARN_underscores(t *testing.T) {
 	iamServerCertificateResourceName := "aws_iam_server_certificate.test"
 	lbListenerResourceName := "aws_lb_listener.test"
 	resourceName := "aws_lb_listener_certificate.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -87,7 +87,7 @@ func TestAccELBV2ListenerCertificate_multiple(t *testing.T) {
 		certificates[i] = acctest.TLSRSAX509SelfSignedCertificatePEM(keys[i], "example.com")
 	}
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_listener_certificate.default"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -155,7 +155,7 @@ func TestAccELBV2ListenerCertificate_disappears(t *testing.T) {
 	key := acctest.TLSRSAPrivateKeyPEM(2048)
 	certificate := acctest.TLSRSAX509SelfSignedCertificatePEM(key, "example.com")
 	resourceName := "aws_lb_listener_certificate.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

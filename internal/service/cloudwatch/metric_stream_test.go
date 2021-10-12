@@ -28,7 +28,7 @@ func testAccErrorCheckSkipCloudwatch(t *testing.T) resource.ErrorCheckFunc {
 
 func TestAccCloudWatchMetricStream_basic(t *testing.T) {
 	resourceName := "aws_cloudwatch_metric_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -84,7 +84,7 @@ func TestAccCloudWatchMetricStream_noName(t *testing.T) {
 
 func TestAccCloudWatchMetricStream_namePrefix(t *testing.T) {
 	resourceName := "aws_cloudwatch_metric_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(cloudwatch.EndpointsID, t) },
@@ -96,7 +96,7 @@ func TestAccCloudWatchMetricStream_namePrefix(t *testing.T) {
 				Config: testAccMetricStreamNamePrefixConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCloudWatchMetricStreamExists(resourceName),
-					testAccCheckCloudWatchMetricStreamGeneratedNamePrefix(resourceName, "tf-acc-test"),
+					testAccCheckCloudWatchMetricStreamGeneratedNamePrefix(resourceName, acctest.ResourcePrefix),
 				),
 			},
 			{
@@ -110,7 +110,7 @@ func TestAccCloudWatchMetricStream_namePrefix(t *testing.T) {
 
 func TestAccCloudWatchMetricStream_includeFilters(t *testing.T) {
 	resourceName := "aws_cloudwatch_metric_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -138,7 +138,7 @@ func TestAccCloudWatchMetricStream_includeFilters(t *testing.T) {
 
 func TestAccCloudWatchMetricStream_excludeFilters(t *testing.T) {
 	resourceName := "aws_cloudwatch_metric_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -166,7 +166,7 @@ func TestAccCloudWatchMetricStream_excludeFilters(t *testing.T) {
 
 func TestAccCloudWatchMetricStream_update(t *testing.T) {
 	resourceName := "aws_cloudwatch_metric_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -201,8 +201,8 @@ func TestAccCloudWatchMetricStream_update(t *testing.T) {
 
 func TestAccCloudWatchMetricStream_updateName(t *testing.T) {
 	resourceName := "aws_cloudwatch_metric_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -231,7 +231,7 @@ func TestAccCloudWatchMetricStream_updateName(t *testing.T) {
 
 func TestAccCloudWatchMetricStream_tags(t *testing.T) {
 	resourceName := "aws_cloudwatch_metric_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },

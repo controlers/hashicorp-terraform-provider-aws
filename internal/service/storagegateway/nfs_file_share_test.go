@@ -18,7 +18,7 @@ import (
 
 func TestAccStorageGatewayNFSFileShare_basic(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 	gatewayResourceName := "aws_storagegateway_gateway.test"
 	bucketResourceName := "aws_s3_bucket.test"
@@ -68,7 +68,7 @@ func TestAccStorageGatewayNFSFileShare_basic(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_tags(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -116,7 +116,7 @@ func TestAccStorageGatewayNFSFileShare_tags(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_fileShareName(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -150,7 +150,7 @@ func TestAccStorageGatewayNFSFileShare_fileShareName(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_clientList(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -195,7 +195,7 @@ func TestAccStorageGatewayNFSFileShare_clientList(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_defaultStorageClass(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -229,7 +229,7 @@ func TestAccStorageGatewayNFSFileShare_defaultStorageClass(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_guessMIMETypeEnabled(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -263,7 +263,7 @@ func TestAccStorageGatewayNFSFileShare_guessMIMETypeEnabled(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_kmsEncrypted(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -294,7 +294,7 @@ func TestAccStorageGatewayNFSFileShare_kmsEncrypted(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_kmsKeyARN(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 	keyName := "aws_kms_key.test.0"
 	keyUpdatedName := "aws_kms_key.test.1"
@@ -339,7 +339,7 @@ func TestAccStorageGatewayNFSFileShare_kmsKeyARN(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_nFSFileShareDefaults(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -381,7 +381,7 @@ func TestAccStorageGatewayNFSFileShare_nFSFileShareDefaults(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_objectACL(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -415,7 +415,7 @@ func TestAccStorageGatewayNFSFileShare_objectACL(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_readOnly(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -449,7 +449,7 @@ func TestAccStorageGatewayNFSFileShare_readOnly(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_requesterPays(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -483,7 +483,7 @@ func TestAccStorageGatewayNFSFileShare_requesterPays(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_squash(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -517,7 +517,7 @@ func TestAccStorageGatewayNFSFileShare_squash(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_notificationPolicy(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -558,7 +558,7 @@ func TestAccStorageGatewayNFSFileShare_notificationPolicy(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_cacheAttributes(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -602,7 +602,7 @@ func TestAccStorageGatewayNFSFileShare_cacheAttributes(t *testing.T) {
 
 func TestAccStorageGatewayNFSFileShare_disappears(t *testing.T) {
 	var nfsFileShare storagegateway.NFSFileShareInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_nfs_file_share.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -17,7 +17,7 @@ import (
 func TestAccCloudWatchLogsStream_basic(t *testing.T) {
 	var ls cloudwatchlogs.LogStream
 	resourceName := "aws_cloudwatch_log_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -44,7 +44,7 @@ func TestAccCloudWatchLogsStream_basic(t *testing.T) {
 func TestAccCloudWatchLogsStream_disappears(t *testing.T) {
 	var ls cloudwatchlogs.LogStream
 	resourceName := "aws_cloudwatch_log_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -69,7 +69,7 @@ func TestAccCloudWatchLogsStream_Disappears_logGroup(t *testing.T) {
 	var lg cloudwatchlogs.LogGroup
 	resourceName := "aws_cloudwatch_log_stream.test"
 	logGroupResourceName := "aws_cloudwatch_log_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

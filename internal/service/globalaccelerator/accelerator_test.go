@@ -17,7 +17,7 @@ import (
 
 func TestAccGlobalAcceleratorAccelerator_basic(t *testing.T) {
 	resourceName := "aws_globalaccelerator_accelerator.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	ipRegex := regexp.MustCompile(`\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`)
 	dnsNameRegex := regexp.MustCompile(`^a[a-f0-9]{16}\.awsglobalaccelerator\.com$`)
 
@@ -58,7 +58,7 @@ func TestAccGlobalAcceleratorAccelerator_basic(t *testing.T) {
 
 func TestAccGlobalAcceleratorAccelerator_disappears(t *testing.T) {
 	resourceName := "aws_globalaccelerator_accelerator.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -80,8 +80,8 @@ func TestAccGlobalAcceleratorAccelerator_disappears(t *testing.T) {
 
 func TestAccGlobalAcceleratorAccelerator_update(t *testing.T) {
 	resourceName := "aws_globalaccelerator_accelerator.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	newName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	newName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -125,7 +125,7 @@ func TestAccGlobalAcceleratorAccelerator_update(t *testing.T) {
 func TestAccGlobalAcceleratorAccelerator_attributes(t *testing.T) {
 	resourceName := "aws_globalaccelerator_accelerator.test"
 	s3BucketResourceName := "aws_s3_bucket.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },
@@ -184,7 +184,7 @@ func TestAccGlobalAcceleratorAccelerator_attributes(t *testing.T) {
 
 func TestAccGlobalAcceleratorAccelerator_tags(t *testing.T) {
 	resourceName := "aws_globalaccelerator_accelerator.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckGlobalAccelerator(t) },

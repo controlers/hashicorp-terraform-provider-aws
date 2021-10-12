@@ -19,7 +19,7 @@ func TestAccEC2RouteTableAssociation_Subnet_basic(t *testing.T) {
 	resourceName := "aws_route_table_association.test"
 	resourceNameRouteTable := "aws_route_table.test"
 	resourceNameSubnet := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -51,7 +51,7 @@ func TestAccEC2RouteTableAssociation_Subnet_changeRouteTable(t *testing.T) {
 	resourceNameRouteTable1 := "aws_route_table.test"
 	resourceNameRouteTable2 := "aws_route_table.test2"
 	resourceNameSubnet := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -84,7 +84,7 @@ func TestAccEC2RouteTableAssociation_Gateway_basic(t *testing.T) {
 	resourceName := "aws_route_table_association.test"
 	resourceNameRouteTable := "aws_route_table.test"
 	resourceNameGateway := "aws_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -116,7 +116,7 @@ func TestAccEC2RouteTableAssociation_Gateway_changeRouteTable(t *testing.T) {
 	resourceNameRouteTable1 := "aws_route_table.test"
 	resourceNameRouteTable2 := "aws_route_table.test2"
 	resourceNameGateway := "aws_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -147,7 +147,7 @@ func TestAccEC2RouteTableAssociation_Gateway_changeRouteTable(t *testing.T) {
 func TestAccEC2RouteTableAssociation_disappears(t *testing.T) {
 	var rta ec2.RouteTableAssociation
 	resourceName := "aws_route_table_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

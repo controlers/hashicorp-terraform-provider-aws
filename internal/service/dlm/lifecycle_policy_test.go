@@ -17,7 +17,7 @@ import (
 
 func TestAccDLMLifecyclePolicy_basic(t *testing.T) {
 	resourceName := "aws_dlm_lifecycle_policy.basic"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -54,7 +54,7 @@ func TestAccDLMLifecyclePolicy_basic(t *testing.T) {
 
 func TestAccDLMLifecyclePolicy_full(t *testing.T) {
 	resourceName := "aws_dlm_lifecycle_policy.full"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -103,7 +103,7 @@ func TestAccDLMLifecyclePolicy_full(t *testing.T) {
 }
 
 func TestAccDLMLifecyclePolicy_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_dlm_lifecycle_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

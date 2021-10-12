@@ -349,7 +349,7 @@ func TestAccRoute53HealthCheck_disabled(t *testing.T) {
 
 func TestAccRoute53HealthCheck_withRoutingControlARN(t *testing.T) {
 	var check route53.HealthCheck
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_health_check.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(r53rcc.EndpointsID, t) },

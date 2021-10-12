@@ -11,7 +11,7 @@ import (
 )
 
 func testAccPermissionsDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	dataSourceName := "data.aws_lakeformation_permissions.test"
 
@@ -35,7 +35,7 @@ func testAccPermissionsDataSource_basic(t *testing.T) {
 }
 
 func testAccPermissionsDataSource_dataLocation(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	dataSourceName := "data.aws_lakeformation_permissions.test"
 
@@ -60,7 +60,7 @@ func testAccPermissionsDataSource_dataLocation(t *testing.T) {
 }
 
 func testAccPermissionsDataSource_database(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	dataSourceName := "data.aws_lakeformation_permissions.test"
 
@@ -89,7 +89,7 @@ func testAccPermissionsDataSource_database(t *testing.T) {
 }
 
 func testAccPermissionsDataSource_table(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	dataSourceName := "data.aws_lakeformation_permissions.test"
 
@@ -115,7 +115,7 @@ func testAccPermissionsDataSource_table(t *testing.T) {
 }
 
 func testAccPermissionsDataSource_tableWithColumns(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	dataSourceName := "data.aws_lakeformation_permissions.test"
 

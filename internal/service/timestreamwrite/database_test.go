@@ -18,7 +18,7 @@ import (
 
 func TestAccTimestreamWriteDatabase_basic(t *testing.T) {
 	resourceName := "aws_timestreamwrite_database.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -47,7 +47,7 @@ func TestAccTimestreamWriteDatabase_basic(t *testing.T) {
 
 func TestAccTimestreamWriteDatabase_disappears(t *testing.T) {
 	resourceName := "aws_timestreamwrite_database.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -69,7 +69,7 @@ func TestAccTimestreamWriteDatabase_disappears(t *testing.T) {
 
 func TestAccTimestreamWriteDatabase_kmsKey(t *testing.T) {
 	resourceName := "aws_timestreamwrite_database.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsResourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -97,7 +97,7 @@ func TestAccTimestreamWriteDatabase_kmsKey(t *testing.T) {
 
 func TestAccTimestreamWriteDatabase_updateKMSKey(t *testing.T) {
 	resourceName := "aws_timestreamwrite_database.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsResourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -138,7 +138,7 @@ func TestAccTimestreamWriteDatabase_updateKMSKey(t *testing.T) {
 
 func TestAccTimestreamWriteDatabase_tags(t *testing.T) {
 	resourceName := "aws_timestreamwrite_database.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

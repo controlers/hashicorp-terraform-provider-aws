@@ -18,7 +18,7 @@ import (
 
 func TestAccEMRInstanceFleet_basic(t *testing.T) {
 	var fleet emr.InstanceFleet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_instance_fleet.task"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -46,7 +46,7 @@ func TestAccEMRInstanceFleet_basic(t *testing.T) {
 
 func TestAccEMRInstanceFleet_Zero_count(t *testing.T) {
 	var fleet emr.InstanceFleet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_instance_fleet.task"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -82,7 +82,7 @@ func TestAccEMRInstanceFleet_Zero_count(t *testing.T) {
 
 func TestAccEMRInstanceFleet_ebsBasic(t *testing.T) {
 	var fleet emr.InstanceFleet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_instance_fleet.task"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -110,7 +110,7 @@ func TestAccEMRInstanceFleet_ebsBasic(t *testing.T) {
 
 func TestAccEMRInstanceFleet_full(t *testing.T) {
 	var fleet emr.InstanceFleet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_instance_fleet.task"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -138,7 +138,7 @@ func TestAccEMRInstanceFleet_full(t *testing.T) {
 
 func TestAccEMRInstanceFleet_disappears(t *testing.T) {
 	var fleet emr.InstanceFleet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_instance_fleet.task"
 	emrClusterResourceName := "aws_emr_cluster.test"
 

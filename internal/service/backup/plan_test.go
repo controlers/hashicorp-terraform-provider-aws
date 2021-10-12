@@ -340,7 +340,7 @@ func TestAccBackupPlan_withRecoveryPointTags(t *testing.T) {
 func TestAccBackupPlan_RuleCopyAction_sameRegion(t *testing.T) {
 	var plan backup.GetBackupPlanOutput
 	resourceName := "aws_backup_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -403,7 +403,7 @@ func TestAccBackupPlan_RuleCopyAction_sameRegion(t *testing.T) {
 func TestAccBackupPlan_RuleCopyAction_noLifecycle(t *testing.T) {
 	var plan backup.GetBackupPlanOutput
 	resourceName := "aws_backup_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -464,7 +464,7 @@ func TestAccBackupPlan_RuleCopyAction_noLifecycle(t *testing.T) {
 func TestAccBackupPlan_RuleCopyAction_multiple(t *testing.T) {
 	var plan backup.GetBackupPlanOutput
 	resourceName := "aws_backup_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -500,7 +500,7 @@ func TestAccBackupPlan_RuleCopyAction_crossRegion(t *testing.T) {
 	var providers []*schema.Provider
 	var plan backup.GetBackupPlanOutput
 	resourceName := "aws_backup_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -540,7 +540,7 @@ func TestAccBackupPlan_RuleCopyAction_crossRegion(t *testing.T) {
 func TestAccBackupPlan_advancedBackupSetting(t *testing.T) {
 	var plan backup.GetBackupPlanOutput
 	resourceName := "aws_backup_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

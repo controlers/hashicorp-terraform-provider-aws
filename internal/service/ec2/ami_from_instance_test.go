@@ -17,7 +17,7 @@ import (
 
 func TestAccEC2AMIFromInstance_basic(t *testing.T) {
 	var image ec2.Image
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ami_from_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccEC2AMIFromInstance_basic(t *testing.T) {
 
 func TestAccEC2AMIFromInstance_tags(t *testing.T) {
 	var image ec2.Image
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ami_from_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -86,7 +86,7 @@ func TestAccEC2AMIFromInstance_tags(t *testing.T) {
 
 func TestAccEC2AMIFromInstance_disappears(t *testing.T) {
 	var image ec2.Image
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ami_from_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{

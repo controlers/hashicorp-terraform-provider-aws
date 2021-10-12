@@ -52,7 +52,7 @@ func TestAccEC2LocalGatewayVirtualInterfaceGroupDataSource_localGatewayID(t *tes
 }
 
 func TestAccEC2LocalGatewayVirtualInterfaceGroupDataSource_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	sourceDataSourceName := "data.aws_ec2_local_gateway_virtual_interface_group.source"
 	dataSourceName := "data.aws_ec2_local_gateway_virtual_interface_group.test"
 

@@ -18,7 +18,7 @@ func TestAccKinesisAnalyticsV2ApplicationSnapshot_basic(t *testing.T) {
 	var v kinesisanalyticsv2.SnapshotDetails
 	resourceName := "aws_kinesisanalyticsv2_application_snapshot.test"
 	applicationResourceName := "aws_kinesisanalyticsv2_application.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -48,7 +48,7 @@ func TestAccKinesisAnalyticsV2ApplicationSnapshot_basic(t *testing.T) {
 func TestAccKinesisAnalyticsV2ApplicationSnapshot_disappears(t *testing.T) {
 	var v kinesisanalyticsv2.SnapshotDetails
 	resourceName := "aws_kinesisanalyticsv2_application_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -72,7 +72,7 @@ func TestAccKinesisAnalyticsV2ApplicationSnapshot_Disappears_application(t *test
 	var v kinesisanalyticsv2.SnapshotDetails
 	resourceName := "aws_kinesisanalyticsv2_application_snapshot.test"
 	applicationResourceName := "aws_kinesisanalyticsv2_application.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

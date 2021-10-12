@@ -15,7 +15,7 @@ import (
 )
 
 func TestAccSageMakerEndpoint_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -42,7 +42,7 @@ func TestAccSageMakerEndpoint_basic(t *testing.T) {
 }
 
 func TestAccSageMakerEndpoint_endpointName(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_sagemaker_endpoint.test"
 	sagemakerEndpointConfigurationResourceName1 := "aws_sagemaker_endpoint_configuration.test"
@@ -78,7 +78,7 @@ func TestAccSageMakerEndpoint_endpointName(t *testing.T) {
 }
 
 func TestAccSageMakerEndpoint_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint.test"
 
 	resource.ParallelTest(t, resource.TestCase{

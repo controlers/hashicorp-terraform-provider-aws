@@ -18,7 +18,7 @@ import (
 
 func testAccBranch_basic(t *testing.T) {
 	var branch amplify.Branch
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_branch.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -65,7 +65,7 @@ func testAccBranch_basic(t *testing.T) {
 
 func testAccBranch_disappears(t *testing.T) {
 	var branch amplify.Branch
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_branch.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -88,7 +88,7 @@ func testAccBranch_disappears(t *testing.T) {
 
 func testAccBranch_Tags(t *testing.T) {
 	var branch amplify.Branch
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_branch.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -133,7 +133,7 @@ func testAccBranch_Tags(t *testing.T) {
 
 func testAccBranch_BasicAuthCredentials(t *testing.T) {
 	var branch amplify.Branch
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_branch.test"
 
 	credentials1 := base64.StdEncoding.EncodeToString([]byte("username1:password1"))
@@ -181,7 +181,7 @@ func testAccBranch_BasicAuthCredentials(t *testing.T) {
 
 func testAccBranch_EnvironmentVariables(t *testing.T) {
 	var branch amplify.Branch
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_branch.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -225,7 +225,7 @@ func testAccBranch_EnvironmentVariables(t *testing.T) {
 
 func testAccBranch_OptionalArguments(t *testing.T) {
 	var branch amplify.Branch
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	environmentName := sdkacctest.RandStringFromCharSet(9, sdkacctest.CharSetAlpha)
 	resourceName := "aws_amplify_branch.test"
 	backendEnvironment1ResourceName := "aws_amplify_backend_environment.test1"

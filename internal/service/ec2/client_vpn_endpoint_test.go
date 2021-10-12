@@ -338,7 +338,7 @@ func testAccClientVPNEndpoint_tags(t *testing.T) {
 
 func testAccClientVPNEndpoint_splitTunnel(t *testing.T) {
 	var v1, v2 ec2.ClientVpnEndpoint
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ec2_client_vpn_endpoint.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -372,7 +372,7 @@ func testAccClientVPNEndpoint_splitTunnel(t *testing.T) {
 
 func testAccClientVPNEndpoint_selfServicePortal(t *testing.T) {
 	var v1, v2 ec2.ClientVpnEndpoint
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ec2_client_vpn_endpoint.test"
 
 	resource.ParallelTest(t, resource.TestCase{

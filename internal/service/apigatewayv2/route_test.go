@@ -20,7 +20,7 @@ func TestAccAPIGatewayV2Route_basic(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetRouteOutput
 	resourceName := "aws_apigatewayv2_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -58,7 +58,7 @@ func TestAccAPIGatewayV2Route_disappears(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetRouteOutput
 	resourceName := "aws_apigatewayv2_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -83,7 +83,7 @@ func TestAccAPIGatewayV2Route_authorizer(t *testing.T) {
 	var v apigatewayv2.GetRouteOutput
 	resourceName := "aws_apigatewayv2_route.test"
 	authorizerResourceName := "aws_apigatewayv2_authorizer.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -140,7 +140,7 @@ func TestAccAPIGatewayV2Route_jwtAuthorization(t *testing.T) {
 	var v apigatewayv2.GetRouteOutput
 	resourceName := "aws_apigatewayv2_route.test"
 	authorizerResourceName := "aws_apigatewayv2_authorizer.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -198,7 +198,7 @@ func TestAccAPIGatewayV2Route_model(t *testing.T) {
 	resourceName := "aws_apigatewayv2_route.test"
 	modelResourceName := "aws_apigatewayv2_model.test"
 	// Model name must be alphanumeric.
-	rName := strings.ReplaceAll(sdkacctest.RandomWithPrefix("tf-acc-test"), "-", "")
+	rName := strings.ReplaceAll(sdkacctest.RandomWithPrefix(acctest.ResourcePrefix), "-", "")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -237,7 +237,7 @@ func TestAccAPIGatewayV2Route_requestParameters(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetRouteOutput
 	resourceName := "aws_apigatewayv2_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -319,7 +319,7 @@ func TestAccAPIGatewayV2Route_simpleAttributes(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetRouteOutput
 	resourceName := "aws_apigatewayv2_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -390,7 +390,7 @@ func TestAccAPIGatewayV2Route_target(t *testing.T) {
 	var v apigatewayv2.GetRouteOutput
 	resourceName := "aws_apigatewayv2_route.test"
 	integrationResourceName := "aws_apigatewayv2_integration.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -428,7 +428,7 @@ func TestAccAPIGatewayV2Route_updateRouteKey(t *testing.T) {
 	var apiId string
 	var v apigatewayv2.GetRouteOutput
 	resourceName := "aws_apigatewayv2_route.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

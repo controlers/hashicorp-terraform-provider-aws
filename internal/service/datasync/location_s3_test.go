@@ -18,7 +18,7 @@ import (
 
 func TestAccDataSyncLocationS3_basic(t *testing.T) {
 	var locationS31 datasync.DescribeLocationS3Output
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_datasync_location_s3.test"
 	s3BucketResourceName := "aws_s3_bucket.test"
@@ -56,7 +56,7 @@ func TestAccDataSyncLocationS3_basic(t *testing.T) {
 
 func TestAccDataSyncLocationS3_storageClass(t *testing.T) {
 	var locationS31 datasync.DescribeLocationS3Output
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamRoleResourceName := "aws_iam_role.test"
 	resourceName := "aws_datasync_location_s3.test"
 	s3BucketResourceName := "aws_s3_bucket.test"
@@ -92,7 +92,7 @@ func TestAccDataSyncLocationS3_storageClass(t *testing.T) {
 
 func TestAccDataSyncLocationS3_disappears(t *testing.T) {
 	var locationS31 datasync.DescribeLocationS3Output
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_location_s3.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -115,7 +115,7 @@ func TestAccDataSyncLocationS3_disappears(t *testing.T) {
 
 func TestAccDataSyncLocationS3_tags(t *testing.T) {
 	var locationS31, locationS32, locationS33 datasync.DescribeLocationS3Output
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_datasync_location_s3.test"
 
 	resource.ParallelTest(t, resource.TestCase{

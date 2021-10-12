@@ -17,7 +17,7 @@ import (
 
 func TestAccSageMakerImage_basic(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccSageMakerImage_basic(t *testing.T) {
 
 func TestAccSageMakerImage_description(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -88,7 +88,7 @@ func TestAccSageMakerImage_description(t *testing.T) {
 
 func TestAccSageMakerImage_displayName(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -129,7 +129,7 @@ func TestAccSageMakerImage_displayName(t *testing.T) {
 
 func TestAccSageMakerImage_tags(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -174,7 +174,7 @@ func TestAccSageMakerImage_tags(t *testing.T) {
 
 func TestAccSageMakerImage_disappears(t *testing.T) {
 	var image sagemaker.DescribeImageOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_image.test"
 
 	resource.ParallelTest(t, resource.TestCase{

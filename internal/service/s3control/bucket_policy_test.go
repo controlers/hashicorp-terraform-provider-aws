@@ -18,7 +18,7 @@ import (
 )
 
 func TestAccS3ControlBucketPolicy_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -45,7 +45,7 @@ func TestAccS3ControlBucketPolicy_basic(t *testing.T) {
 }
 
 func TestAccS3ControlBucketPolicy_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -67,7 +67,7 @@ func TestAccS3ControlBucketPolicy_disappears(t *testing.T) {
 }
 
 func TestAccS3ControlBucketPolicy_policy(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3control_bucket_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

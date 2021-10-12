@@ -19,7 +19,7 @@ import (
 func TestAccMediaConvertQueue_basic(t *testing.T) {
 	var queue mediaconvert.Queue
 	resourceName := "aws_media_convert_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -51,7 +51,7 @@ func TestAccMediaConvertQueue_reservationPlanSettings(t *testing.T) {
 
 	var queue mediaconvert.Queue
 	resourceName := "aws_media_convert_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -93,7 +93,7 @@ func TestAccMediaConvertQueue_reservationPlanSettings(t *testing.T) {
 func TestAccMediaConvertQueue_withStatus(t *testing.T) {
 	var queue mediaconvert.Queue
 	resourceName := "aws_media_convert_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -127,7 +127,7 @@ func TestAccMediaConvertQueue_withStatus(t *testing.T) {
 func TestAccMediaConvertQueue_withTags(t *testing.T) {
 	var queue mediaconvert.Queue
 	resourceName := "aws_media_convert_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -172,7 +172,7 @@ func TestAccMediaConvertQueue_withTags(t *testing.T) {
 func TestAccMediaConvertQueue_disappears(t *testing.T) {
 	var queue mediaconvert.Queue
 	resourceName := "aws_media_convert_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -195,7 +195,7 @@ func TestAccMediaConvertQueue_disappears(t *testing.T) {
 func TestAccMediaConvertQueue_withDescription(t *testing.T) {
 	var queue mediaconvert.Queue
 	resourceName := "aws_media_convert_queue.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description1 := sdkacctest.RandomWithPrefix("Description: ")
 	description2 := sdkacctest.RandomWithPrefix("Description: ")
 

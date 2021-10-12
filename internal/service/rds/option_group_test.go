@@ -131,7 +131,7 @@ func TestAccRDSOptionGroup_generatedName(t *testing.T) {
 
 func TestAccRDSOptionGroup_optionGroupDescription(t *testing.T) {
 	var optionGroup1 rds.OptionGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_option_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -349,7 +349,7 @@ func TestAccRDSOptionGroup_oracleOptionsUpdate(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/1876
 func TestAccRDSOptionGroup_OptionOptionSettings_multipleNonDefault(t *testing.T) {
 	var optionGroup1, optionGroup2 rds.OptionGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_option_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -415,7 +415,7 @@ func TestAccRDSOptionGroup_multipleOptions(t *testing.T) {
 func TestAccRDSOptionGroup_tags(t *testing.T) {
 	var optionGroup1, optionGroup2, optionGroup3 rds.OptionGroup
 	resourceName := "aws_db_option_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -462,7 +462,7 @@ func TestAccRDSOptionGroup_tags(t *testing.T) {
 func TestAccRDSOptionGroup_Tags_withOptions(t *testing.T) {
 	var optionGroup1, optionGroup2, optionGroup3 rds.OptionGroup
 	resourceName := "aws_db_option_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

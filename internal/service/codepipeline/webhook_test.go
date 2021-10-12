@@ -20,7 +20,7 @@ func TestAccCodePipelineWebhook_basic(t *testing.T) {
 	githubToken := conns.SkipIfEnvVarEmpty(t, conns.EnvVarGithubToken, envVarGithubTokenUsageCodePipelineWebhook)
 
 	var v codepipeline.ListWebhookItem
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codepipeline_webhook.test"
 
 	resource.Test(t, resource.TestCase{
@@ -55,7 +55,7 @@ func TestAccCodePipelineWebhook_ipAuth(t *testing.T) {
 	githubToken := conns.SkipIfEnvVarEmpty(t, conns.EnvVarGithubToken, envVarGithubTokenUsageCodePipelineWebhook)
 
 	var v codepipeline.ListWebhookItem
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codepipeline_webhook.test"
 
 	resource.Test(t, resource.TestCase{
@@ -90,7 +90,7 @@ func TestAccCodePipelineWebhook_unauthenticated(t *testing.T) {
 	githubToken := conns.SkipIfEnvVarEmpty(t, conns.EnvVarGithubToken, envVarGithubTokenUsageCodePipelineWebhook)
 
 	var v codepipeline.ListWebhookItem
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codepipeline_webhook.test"
 
 	resource.Test(t, resource.TestCase{
@@ -123,7 +123,7 @@ func TestAccCodePipelineWebhook_tags(t *testing.T) {
 	githubToken := conns.SkipIfEnvVarEmpty(t, conns.EnvVarGithubToken, envVarGithubTokenUsageCodePipelineWebhook)
 
 	var v1, v2, v3 codepipeline.ListWebhookItem
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codepipeline_webhook.test"
 
 	resource.Test(t, resource.TestCase{
@@ -187,7 +187,7 @@ func TestAccCodePipelineWebhook_UpdateAuthentication_secretToken(t *testing.T) {
 	githubToken := conns.SkipIfEnvVarEmpty(t, conns.EnvVarGithubToken, envVarGithubTokenUsageCodePipelineWebhook)
 
 	var v1, v2 codepipeline.ListWebhookItem
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codepipeline_webhook.test"
 
 	resource.Test(t, resource.TestCase{

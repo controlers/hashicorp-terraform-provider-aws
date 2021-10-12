@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccRoute53RecoveryReadinessRecoveryGroup_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_recovery_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -44,7 +44,7 @@ func TestAccRoute53RecoveryReadinessRecoveryGroup_basic(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessRecoveryGroup_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_recovery_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -66,7 +66,7 @@ func TestAccRoute53RecoveryReadinessRecoveryGroup_disappears(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessRecoveryGroup_nestedCell(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameCell := sdkacctest.RandomWithPrefix("tf-acc-test-cell")
 	resourceName := "aws_route53recoveryreadiness_recovery_group.test"
 	resource.ParallelTest(t, resource.TestCase{
@@ -93,7 +93,7 @@ func TestAccRoute53RecoveryReadinessRecoveryGroup_nestedCell(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessRecoveryGroup_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_recovery_group.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -136,7 +136,7 @@ func TestAccRoute53RecoveryReadinessRecoveryGroup_tags(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessRecoveryGroup_timeout(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_recovery_group.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheck(t) },

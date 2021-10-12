@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccWAFRegionalRateBasedRuleDataSource_basic(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_wafregional_rate_based_rule.wafrule"
 	datasourceName := "data.aws_wafregional_rate_based_rule.wafrule"
 

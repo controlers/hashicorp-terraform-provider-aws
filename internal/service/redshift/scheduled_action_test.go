@@ -18,7 +18,7 @@ import (
 func TestAccRedshiftScheduledAction_basicPauseCluster(t *testing.T) {
 	var v redshift.ScheduledAction
 	resourceName := "aws_redshift_scheduled_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -72,7 +72,7 @@ func TestAccRedshiftScheduledAction_basicPauseCluster(t *testing.T) {
 func TestAccRedshiftScheduledAction_pauseClusterWithOptions(t *testing.T) {
 	var v redshift.ScheduledAction
 	resourceName := "aws_redshift_scheduled_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	startTime := time.Now().UTC().Add(1 * time.Hour).Format(time.RFC3339)
 	endTime := time.Now().UTC().Add(2 * time.Hour).Format(time.RFC3339)
 
@@ -111,7 +111,7 @@ func TestAccRedshiftScheduledAction_pauseClusterWithOptions(t *testing.T) {
 func TestAccRedshiftScheduledAction_basicResumeCluster(t *testing.T) {
 	var v redshift.ScheduledAction
 	resourceName := "aws_redshift_scheduled_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -165,7 +165,7 @@ func TestAccRedshiftScheduledAction_basicResumeCluster(t *testing.T) {
 func TestAccRedshiftScheduledAction_basicResizeCluster(t *testing.T) {
 	var v redshift.ScheduledAction
 	resourceName := "aws_redshift_scheduled_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -219,7 +219,7 @@ func TestAccRedshiftScheduledAction_basicResizeCluster(t *testing.T) {
 func TestAccRedshiftScheduledAction_resizeClusterWithOptions(t *testing.T) {
 	var v redshift.ScheduledAction
 	resourceName := "aws_redshift_scheduled_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -260,7 +260,7 @@ func TestAccRedshiftScheduledAction_resizeClusterWithOptions(t *testing.T) {
 func TestAccRedshiftScheduledAction_disappears(t *testing.T) {
 	var v redshift.ScheduledAction
 	resourceName := "aws_redshift_scheduled_action.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

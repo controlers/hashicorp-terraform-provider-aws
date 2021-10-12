@@ -18,7 +18,7 @@ import (
 )
 
 func TestAccRoute53RecoveryReadinessReadinessCheck_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rSetName := sdkacctest.RandomWithPrefix("tf-acc-test-set")
 	resourceName := "aws_route53recoveryreadiness_readiness_check.test"
 	cwArn := arn.ARN{
@@ -53,7 +53,7 @@ func TestAccRoute53RecoveryReadinessReadinessCheck_basic(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessReadinessCheck_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rSetName := sdkacctest.RandomWithPrefix("tf-acc-test-set")
 	resourceName := "aws_route53recoveryreadiness_readiness_check.test"
 	cwArn := arn.ARN{
@@ -83,7 +83,7 @@ func TestAccRoute53RecoveryReadinessReadinessCheck_disappears(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessReadinessCheck_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53recoveryreadiness_readiness_check.test"
 	cwArn := arn.ARN{
 		AccountID: "123456789012",
@@ -134,7 +134,7 @@ func TestAccRoute53RecoveryReadinessReadinessCheck_tags(t *testing.T) {
 }
 
 func TestAccRoute53RecoveryReadinessReadinessCheck_timeout(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rSetName := sdkacctest.RandomWithPrefix("tf-acc-test-set")
 	resourceName := "aws_route53recoveryreadiness_readiness_check.test"
 	cwArn := arn.ARN{

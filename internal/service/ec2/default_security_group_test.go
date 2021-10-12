@@ -50,7 +50,7 @@ func TestAccEC2DefaultSecurityGroup_VPC_basic(t *testing.T) {
 					testAccCheckDefaultSecurityGroupARN(resourceName, &group),
 					acctest.CheckResourceAttrAccountID(resourceName, "owner_id"),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
-					resource.TestCheckResourceAttr(resourceName, "tags.Name", "tf-acc-test"),
+					resource.TestCheckResourceAttr(resourceName, "tags.Name", acctest.ResourcePrefix),
 				),
 			},
 			{
@@ -124,7 +124,7 @@ func TestAccEC2DefaultSecurityGroup_Classic_basic(t *testing.T) {
 					testAccCheckDefaultSecurityGroupARNClassic(resourceName, &group),
 					acctest.CheckResourceAttrAccountID(resourceName, "owner_id"),
 					resource.TestCheckResourceAttr(resourceName, "tags.%", "1"),
-					resource.TestCheckResourceAttr(resourceName, "tags.Name", "tf-acc-test"),
+					resource.TestCheckResourceAttr(resourceName, "tags.Name", acctest.ResourcePrefix),
 				),
 			},
 			{

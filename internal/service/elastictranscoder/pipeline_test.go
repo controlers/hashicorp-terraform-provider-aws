@@ -21,7 +21,7 @@ import (
 func TestAccElasticTranscoderPipeline_basic(t *testing.T) {
 	pipeline := &elastictranscoder.Pipeline{}
 	resourceName := "aws_elastictranscoder_pipeline.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -48,7 +48,7 @@ func TestAccElasticTranscoderPipeline_basic(t *testing.T) {
 func TestAccElasticTranscoderPipeline_kmsKey(t *testing.T) {
 	pipeline := &elastictranscoder.Pipeline{}
 	resourceName := "aws_elastictranscoder_pipeline.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	keyResourceName := "aws_kms_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -77,7 +77,7 @@ func TestAccElasticTranscoderPipeline_notifications(t *testing.T) {
 	pipeline := elastictranscoder.Pipeline{}
 	resourceName := "aws_elastictranscoder_pipeline.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -147,7 +147,7 @@ func TestAccElasticTranscoderPipeline_withContent(t *testing.T) {
 	pipeline := &elastictranscoder.Pipeline{}
 	resourceName := "aws_elastictranscoder_pipeline.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -180,7 +180,7 @@ func TestAccElasticTranscoderPipeline_withPermissions(t *testing.T) {
 	pipeline := &elastictranscoder.Pipeline{}
 	resourceName := "aws_elastictranscoder_pipeline.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -206,7 +206,7 @@ func TestAccElasticTranscoderPipeline_withPermissions(t *testing.T) {
 func TestAccElasticTranscoderPipeline_disappears(t *testing.T) {
 	pipeline := &elastictranscoder.Pipeline{}
 	resourceName := "aws_elastictranscoder_pipeline.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

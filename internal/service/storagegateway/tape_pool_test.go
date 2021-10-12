@@ -17,7 +17,7 @@ import (
 
 func TestAccStorageGatewayTapePool_basic(t *testing.T) {
 	var TapePool storagegateway.PoolInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_tape_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -48,7 +48,7 @@ func TestAccStorageGatewayTapePool_basic(t *testing.T) {
 
 func TestAccStorageGatewayTapePool_retention(t *testing.T) {
 	var TapePool storagegateway.PoolInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_tape_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -79,7 +79,7 @@ func TestAccStorageGatewayTapePool_retention(t *testing.T) {
 
 func TestAccStorageGatewayTapePool_tags(t *testing.T) {
 	var TapePool storagegateway.PoolInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_tape_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -124,7 +124,7 @@ func TestAccStorageGatewayTapePool_tags(t *testing.T) {
 
 func TestAccStorageGatewayTapePool_disappears(t *testing.T) {
 	var storedIscsiVolume storagegateway.PoolInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_tape_pool.test"
 
 	resource.ParallelTest(t, resource.TestCase{

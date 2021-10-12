@@ -24,7 +24,7 @@ import (
 )
 
 func TestAccCloudFormationType_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	typeName := fmt.Sprintf("HashiCorp::TerraformAwsProvider::TfAccTest%s", sdkacctest.RandString(8))
 	zipPath := testAccTypeZipGenerator(t, typeName)
 	resourceName := "aws_cloudformation_type.test"
@@ -62,7 +62,7 @@ func TestAccCloudFormationType_basic(t *testing.T) {
 }
 
 func TestAccCloudFormationType_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	typeName := fmt.Sprintf("HashiCorp::TerraformAwsProvider::TfAccTest%s", sdkacctest.RandString(8))
 	zipPath := testAccTypeZipGenerator(t, typeName)
 	resourceName := "aws_cloudformation_type.test"
@@ -88,7 +88,7 @@ func TestAccCloudFormationType_disappears(t *testing.T) {
 }
 
 func TestAccCloudFormationType_executionRoleARN(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	typeName := fmt.Sprintf("HashiCorp::TerraformAwsProvider::TfAccTest%s", sdkacctest.RandString(8))
 	zipPath := testAccTypeZipGenerator(t, typeName)
 	iamRoleResourceName := "aws_iam_role.test"
@@ -112,7 +112,7 @@ func TestAccCloudFormationType_executionRoleARN(t *testing.T) {
 }
 
 func TestAccCloudFormationType_logging(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	typeName := fmt.Sprintf("HashiCorp::TerraformAwsProvider::TfAccTest%s", sdkacctest.RandString(8))
 	zipPath := testAccTypeZipGenerator(t, typeName)
 	cloudwatchLogGroupResourceName := "aws_cloudwatch_log_group.test"

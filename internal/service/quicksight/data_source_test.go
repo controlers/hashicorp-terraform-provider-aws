@@ -227,8 +227,8 @@ func TestQuickSightDataSourcePermissionsDiff(t *testing.T) {
 func TestAccQuickSightDataSource_basic(t *testing.T) {
 	var dataSource quicksight.DataSource
 	resourceName := "aws_quicksight_data_source.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rId := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rId := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -264,8 +264,8 @@ func TestAccQuickSightDataSource_basic(t *testing.T) {
 func TestAccQuickSightDataSource_disappears(t *testing.T) {
 	var dataSource quicksight.DataSource
 	resourceName := "aws_quicksight_data_source.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rId := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rId := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -288,8 +288,8 @@ func TestAccQuickSightDataSource_disappears(t *testing.T) {
 func TestAccQuickSightDataSource_tags(t *testing.T) {
 	var dataSource quicksight.DataSource
 	resourceName := "aws_quicksight_data_source.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rId := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rId := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -334,8 +334,8 @@ func TestAccQuickSightDataSource_tags(t *testing.T) {
 func TestAccQuickSightDataSource_permissions(t *testing.T) {
 	var dataSource quicksight.DataSource
 	resourceName := "aws_quicksight_data_source.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rId := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rId := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },

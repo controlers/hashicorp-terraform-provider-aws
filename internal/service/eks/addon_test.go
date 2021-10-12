@@ -20,7 +20,7 @@ import (
 
 func TestAccEKSAddon_basic(t *testing.T) {
 	var addon eks.Addon
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	clusterResourceName := "aws_eks_cluster.test"
 	addonResourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
@@ -54,7 +54,7 @@ func TestAccEKSAddon_basic(t *testing.T) {
 
 func TestAccEKSAddon_disappears(t *testing.T) {
 	var addon eks.Addon
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -79,7 +79,7 @@ func TestAccEKSAddon_disappears(t *testing.T) {
 
 func TestAccEKSAddon_Disappears_cluster(t *testing.T) {
 	var addon eks.Addon
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	clusterResourceName := "aws_eks_cluster.test"
 	addonName := "vpc-cni"
@@ -105,7 +105,7 @@ func TestAccEKSAddon_Disappears_cluster(t *testing.T) {
 
 func TestAccEKSAddon_addonVersion(t *testing.T) {
 	var addon1, addon2 eks.Addon
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	addonVersion1 := "v1.8.0-eksbuild.1"
@@ -144,7 +144,7 @@ func TestAccEKSAddon_addonVersion(t *testing.T) {
 
 func TestAccEKSAddon_resolveConflicts(t *testing.T) {
 	var addon1, addon2 eks.Addon
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -181,7 +181,7 @@ func TestAccEKSAddon_resolveConflicts(t *testing.T) {
 
 func TestAccEKSAddon_serviceAccountRoleARN(t *testing.T) {
 	var addon eks.Addon
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	serviceRoleResourceName := "aws_iam_role.test-service-role"
 	addonName := "vpc-cni"
@@ -211,7 +211,7 @@ func TestAccEKSAddon_serviceAccountRoleARN(t *testing.T) {
 
 func TestAccEKSAddon_tags(t *testing.T) {
 	var addon1, addon2, addon3 eks.Addon
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -260,7 +260,7 @@ func TestAccEKSAddon_DefaultTags_providerOnly(t *testing.T) {
 	var providers []*schema.Provider
 	var addon eks.Addon
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -321,7 +321,7 @@ func TestAccEKSAddon_DefaultTags_updateToProviderOnly(t *testing.T) {
 	var providers []*schema.Provider
 	var addon eks.Addon
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -367,7 +367,7 @@ func TestAccEKSAddon_DefaultTags_updateToResourceOnly(t *testing.T) {
 	var providers []*schema.Provider
 	var addon eks.Addon
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -413,7 +413,7 @@ func TestAccEKSAddon_DefaultTagsProviderAndResource_nonOverlappingTag(t *testing
 	var providers []*schema.Provider
 	var addon eks.Addon
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -481,7 +481,7 @@ func TestAccEKSAddon_DefaultTagsProviderAndResource_overlappingTag(t *testing.T)
 	var providers []*schema.Provider
 	var addon eks.Addon
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -544,7 +544,7 @@ func TestAccEKSAddon_DefaultTagsProviderAndResource_overlappingTag(t *testing.T)
 func TestAccEKSAddon_DefaultTagsProviderAndResource_duplicateTag(t *testing.T) {
 	var providers []*schema.Provider
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	addonName := "vpc-cni"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -569,7 +569,7 @@ func TestAccEKSAddon_defaultAndIgnoreTags(t *testing.T) {
 	var providers []*schema.Provider
 	var addon eks.Addon
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()
@@ -610,7 +610,7 @@ func TestAccEKSAddon_ignoreTags(t *testing.T) {
 	var providers []*schema.Provider
 	var addon eks.Addon
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_addon.test"
 	addonName := "vpc-cni"
 	ctx := context.TODO()

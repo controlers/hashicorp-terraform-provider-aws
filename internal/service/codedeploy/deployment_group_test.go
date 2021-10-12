@@ -1311,7 +1311,7 @@ func TestAccCodeDeployDeploymentGroup_InPlaceDeploymentWithTrafficControl_update
 	})
 }
 
-func TestAccDeploymentGroup_blueGreenDeploymentConfiguration_create(t *testing.T) {
+func TestAccCodeDeployDeploymentGroup_BlueGreenDeployment_create(t *testing.T) {
 	var group codedeploy.DeploymentGroupInfo
 	resourceName := "aws_codedeploy_deployment_group.test"
 

@@ -19,7 +19,7 @@ import (
 
 func TestAccSageMakerNotebookInstance_basic(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -57,7 +57,7 @@ func TestAccSageMakerNotebookInstance_basic(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_update(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -92,7 +92,7 @@ func TestAccSageMakerNotebookInstance_update(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_volumeSize(t *testing.T) {
 	var notebook1, notebook2, notebook3 sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var resourceName = "aws_sagemaker_notebook_instance.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -134,7 +134,7 @@ func TestAccSageMakerNotebookInstance_volumeSize(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_lifecycleName(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 	sagemakerLifecycleConfigResourceName := "aws_sagemaker_notebook_instance_lifecycle_configuration.test"
 
@@ -176,7 +176,7 @@ func TestAccSageMakerNotebookInstance_lifecycleName(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_tags(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -221,7 +221,7 @@ func TestAccSageMakerNotebookInstance_tags(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_kms(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -248,7 +248,7 @@ func TestAccSageMakerNotebookInstance_kms(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_disappears(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -346,7 +346,7 @@ func testAccCheckNotebookInstanceRecreated(i, j *sagemaker.DescribeNotebookInsta
 
 func TestAccSageMakerNotebookInstance_Root_access(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -380,7 +380,7 @@ func TestAccSageMakerNotebookInstance_Root_access(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_Platform_identifier(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -414,7 +414,7 @@ func TestAccSageMakerNotebookInstance_Platform_identifier(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_DirectInternet_access(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_notebook_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -454,7 +454,7 @@ func TestAccSageMakerNotebookInstance_DirectInternet_access(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_DefaultCode_repository(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var resourceName = "aws_sagemaker_notebook_instance.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -494,7 +494,7 @@ func TestAccSageMakerNotebookInstance_DefaultCode_repository(t *testing.T) {
 
 func TestAccSageMakerNotebookInstance_AdditionalCode_repositories(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var resourceName = "aws_sagemaker_notebook_instance.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -545,7 +545,7 @@ func TestAccSageMakerNotebookInstance_AdditionalCode_repositories(t *testing.T) 
 
 func TestAccSageMakerNotebookInstance_DefaultCodeRepository_sageMakerRepo(t *testing.T) {
 	var notebook sagemaker.DescribeNotebookInstanceOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var resourceName = "aws_sagemaker_notebook_instance.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

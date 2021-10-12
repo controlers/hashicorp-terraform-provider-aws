@@ -12,7 +12,7 @@ import (
 
 func TestAccSSMParameterDataSource_basic(t *testing.T) {
 	resourceName := "data.aws_ssm_parameter.test"
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

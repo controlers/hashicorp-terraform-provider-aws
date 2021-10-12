@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCloudFormationExportDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_cloudformation_export.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -31,7 +31,7 @@ func TestAccCloudFormationExportDataSource_basic(t *testing.T) {
 }
 
 func TestAccCloudFormationExportDataSource_resourceReference(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_cloudformation_export.test"
 	resourceName := "aws_cloudformation_stack.test"
 

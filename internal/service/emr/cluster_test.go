@@ -23,7 +23,7 @@ func TestAccEMRCluster_basic(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -66,7 +66,7 @@ func TestAccEMRCluster_additionalInfo(t *testing.T) {
 }`
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -101,7 +101,7 @@ func TestAccEMRCluster_disappears(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -124,7 +124,7 @@ func TestAccEMRCluster_sJSON(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -221,7 +221,7 @@ func TestAccEMRCluster_CoreInstanceGroup_autoScalingPolicy(t *testing.T) {
   ]
 }
 `
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -272,7 +272,7 @@ func TestAccEMRCluster_CoreInstanceGroup_autoScalingPolicy(t *testing.T) {
 
 func TestAccEMRCluster_CoreInstanceGroup_bidPrice(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -314,7 +314,7 @@ func TestAccEMRCluster_CoreInstanceGroup_bidPrice(t *testing.T) {
 
 func TestAccEMRCluster_CoreInstanceGroup_instanceCount(t *testing.T) {
 	var cluster1, cluster2, cluster3 emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -365,7 +365,7 @@ func TestAccEMRCluster_CoreInstanceGroup_instanceCount(t *testing.T) {
 
 func TestAccEMRCluster_CoreInstanceGroup_instanceType(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -407,7 +407,7 @@ func TestAccEMRCluster_CoreInstanceGroup_instanceType(t *testing.T) {
 
 func TestAccEMRCluster_CoreInstanceGroup_name(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -451,7 +451,7 @@ func TestAccEMRCluster_EC2Attributes_defaultManagedSecurityGroups(t *testing.T) 
 	var cluster emr.Cluster
 	var vpc ec2.Vpc
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 	vpcResourceName := "aws_vpc.test"
 
@@ -494,7 +494,7 @@ func TestAccEMRCluster_Kerberos_clusterDedicatedKdc(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	password := fmt.Sprintf("NeverKeepPasswordsInPlainText%s!", rName)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -528,7 +528,7 @@ func TestAccEMRCluster_Kerberos_clusterDedicatedKdc(t *testing.T) {
 
 func TestAccEMRCluster_MasterInstanceGroup_bidPrice(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -570,7 +570,7 @@ func TestAccEMRCluster_MasterInstanceGroup_bidPrice(t *testing.T) {
 
 func TestAccEMRCluster_MasterInstanceGroup_instanceCount(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -612,7 +612,7 @@ func TestAccEMRCluster_MasterInstanceGroup_instanceCount(t *testing.T) {
 
 func TestAccEMRCluster_MasterInstanceGroup_instanceType(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -654,7 +654,7 @@ func TestAccEMRCluster_MasterInstanceGroup_instanceType(t *testing.T) {
 
 func TestAccEMRCluster_MasterInstanceGroup_name(t *testing.T) {
 	var cluster1, cluster2 emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -698,7 +698,7 @@ func TestAccEMRCluster_security(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -730,7 +730,7 @@ func TestAccEMRCluster_Step_basic(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -768,7 +768,7 @@ func TestAccEMRCluster_Step_mode(t *testing.T) {
 	var cluster1, cluster2, cluster3 emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -834,7 +834,7 @@ func TestAccEMRCluster_Step_multiple(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -976,7 +976,7 @@ func TestAccEMRCluster_terminationProtected(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -1033,7 +1033,7 @@ func TestAccEMRCluster_keepJob(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -1065,7 +1065,7 @@ func TestAccEMRCluster_visibleToAllUsers(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -1114,7 +1114,7 @@ func TestAccEMRCluster_s3Logging(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	bucketName := fmt.Sprintf("s3n://%s/", rName)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1147,7 +1147,7 @@ func TestAccEMRCluster_s3LogEncryption(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	bucketName := fmt.Sprintf("s3n://%s/", rName)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1181,7 +1181,7 @@ func TestAccEMRCluster_tags(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -1226,7 +1226,7 @@ func TestAccEMRCluster_RootVolume_size(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -1263,7 +1263,7 @@ func TestAccEMRCluster_RootVolume_size(t *testing.T) {
 
 func TestAccEMRCluster_StepConcurrency_level(t *testing.T) {
 	var cluster emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1301,7 +1301,7 @@ func TestAccEMRCluster_StepConcurrency_level(t *testing.T) {
 
 func TestAccEMRCluster_ebs(t *testing.T) {
 	var cluster emr.Cluster
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_emr_cluster.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1335,7 +1335,7 @@ func TestAccEMRCluster_CustomAMI_id(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),
@@ -1369,7 +1369,7 @@ func TestAccEMRCluster_InstanceFleet_basic(t *testing.T) {
 	resourceName := "aws_emr_cluster.test"
 	subnetResourceName := "aws_subnet.test"
 	subnet2ResourceName := "aws_subnet.test2"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1434,7 +1434,7 @@ func TestAccEMRCluster_InstanceFleetMaster_only(t *testing.T) {
 	var cluster emr.Cluster
 
 	resourceName := "aws_emr_cluster.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, emr.EndpointsID),

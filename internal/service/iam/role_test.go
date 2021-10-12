@@ -119,7 +119,7 @@ func TestAccIAMRole_nameGenerated(t *testing.T) {
 
 func TestAccIAMRole_namePrefix(t *testing.T) {
 	var conf iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -197,7 +197,7 @@ func TestAccIAMRole_badJSON(t *testing.T) {
 func TestAccIAMRole_disappears(t *testing.T) {
 	var role iam.Role
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -368,7 +368,7 @@ func TestAccIAMRole_permissionsBoundary(t *testing.T) {
 
 func TestAccIAMRole_tags(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -405,10 +405,10 @@ func TestAccIAMRole_tags(t *testing.T) {
 
 func TestAccIAMRole_policyBasicInline(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName3 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName3 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -453,7 +453,7 @@ func TestAccIAMRole_policyBasicInline(t *testing.T) {
 
 func TestAccIAMRole_policyBasicInlineEmpty(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -474,10 +474,10 @@ func TestAccIAMRole_policyBasicInlineEmpty(t *testing.T) {
 
 func TestAccIAMRole_policyBasicManaged(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName3 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName3 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -521,8 +521,8 @@ func TestAccIAMRole_policyBasicManaged(t *testing.T) {
 // out of band, it should be reattached.
 func TestAccIAMRole_PolicyOutOfBandRemovalAddedBack_managedNonEmpty(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -554,8 +554,8 @@ func TestAccIAMRole_PolicyOutOfBandRemovalAddedBack_managedNonEmpty(t *testing.T
 // out of band, it should be recreated.
 func TestAccIAMRole_PolicyOutOfBandRemovalAddedBack_inlineNonEmpty(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -587,9 +587,9 @@ func TestAccIAMRole_PolicyOutOfBandRemovalAddedBack_inlineNonEmpty(t *testing.T)
 // exists and is non-empty, policy attached out of band should be removed
 func TestAccIAMRole_PolicyOutOfBandAdditionRemoved_managedNonEmpty(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -621,9 +621,9 @@ func TestAccIAMRole_PolicyOutOfBandAdditionRemoved_managedNonEmpty(t *testing.T)
 // exists and is non-empty, policy added out of band should be removed
 func TestAccIAMRole_PolicyOutOfBandAdditionRemoved_inlineNonEmpty(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -656,9 +656,9 @@ func TestAccIAMRole_PolicyOutOfBandAdditionRemoved_inlineNonEmpty(t *testing.T) 
 // inline_policy attribute, out of band changes should be ignored.
 func TestAccIAMRole_PolicyOutOfBandAdditionIgnored_inlineNonExistent(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -697,8 +697,8 @@ func TestAccIAMRole_PolicyOutOfBandAdditionIgnored_inlineNonExistent(t *testing.
 // managed_policies attribute, out of band changes should be ignored.
 func TestAccIAMRole_PolicyOutOfBandAdditionIgnored_managedNonExistent(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -729,8 +729,8 @@ func TestAccIAMRole_PolicyOutOfBandAdditionIgnored_managedNonExistent(t *testing
 // out of band with empty inline arg, should be removed
 func TestAccIAMRole_PolicyOutOfBandAdditionRemoved_inlineEmpty(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -761,8 +761,8 @@ func TestAccIAMRole_PolicyOutOfBandAdditionRemoved_inlineEmpty(t *testing.T) {
 // out of band with empty managed arg, should be detached
 func TestAccIAMRole_PolicyOutOfBandAdditionRemoved_managedEmpty(t *testing.T) {
 	var role iam.Role
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	policyName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	policyName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_role.test"
 
 	resource.ParallelTest(t, resource.TestCase{

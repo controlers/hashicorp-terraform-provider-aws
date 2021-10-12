@@ -18,7 +18,7 @@ import (
 
 func TestAccAPIGatewayUsagePlanKey_basic(t *testing.T) {
 	var conf apigateway.UsagePlanKey
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	apiGatewayApiKeyResourceName := "aws_api_gateway_api_key.test"
 	apiGatewayUsagePlanResourceName := "aws_api_gateway_usage_plan.test"
 	resourceName := "aws_api_gateway_usage_plan_key.test"
@@ -52,7 +52,7 @@ func TestAccAPIGatewayUsagePlanKey_basic(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlanKey_disappears(t *testing.T) {
 	var conf apigateway.UsagePlanKey
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_usage_plan_key.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -75,7 +75,7 @@ func TestAccAPIGatewayUsagePlanKey_disappears(t *testing.T) {
 
 func TestAccAPIGatewayUsagePlanKey_KeyID_concurrency(t *testing.T) {
 	var conf apigateway.UsagePlanKey
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },

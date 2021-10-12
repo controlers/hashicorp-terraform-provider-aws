@@ -15,7 +15,7 @@ import (
 )
 
 func TestAccSageMakerEndpointConfiguration_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -50,7 +50,7 @@ func TestAccSageMakerEndpointConfiguration_basic(t *testing.T) {
 }
 
 func TestAccSageMakerEndpointConfiguration_ProductionVariants_initialVariantWeight(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -77,7 +77,7 @@ func TestAccSageMakerEndpointConfiguration_ProductionVariants_initialVariantWeig
 }
 
 func TestAccSageMakerEndpointConfiguration_ProductionVariants_acceleratorType(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -103,7 +103,7 @@ func TestAccSageMakerEndpointConfiguration_ProductionVariants_acceleratorType(t 
 }
 
 func TestAccSageMakerEndpointConfiguration_kmsKeyID(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -129,7 +129,7 @@ func TestAccSageMakerEndpointConfiguration_kmsKeyID(t *testing.T) {
 }
 
 func TestAccSageMakerEndpointConfiguration_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -173,7 +173,7 @@ func TestAccSageMakerEndpointConfiguration_tags(t *testing.T) {
 }
 
 func TestAccSageMakerEndpointConfiguration_dataCapture(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -206,7 +206,7 @@ func TestAccSageMakerEndpointConfiguration_dataCapture(t *testing.T) {
 }
 
 func TestAccSageMakerEndpointConfiguration_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -229,7 +229,7 @@ func TestAccSageMakerEndpointConfiguration_disappears(t *testing.T) {
 }
 
 func TestAccSageMakerEndpointConfiguration_async(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -261,7 +261,7 @@ func TestAccSageMakerEndpointConfiguration_async(t *testing.T) {
 }
 
 func TestAccSageMakerEndpointConfiguration_Async_notif(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -294,7 +294,7 @@ func TestAccSageMakerEndpointConfiguration_Async_notif(t *testing.T) {
 }
 
 func TestAccSageMakerEndpointConfiguration_Async_client(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_endpoint_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{

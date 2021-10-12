@@ -19,7 +19,7 @@ import (
 func testAccTransitGatewayPeeringAttachment_basic(t *testing.T) {
 	var transitGatewayPeeringAttachment ec2.TransitGatewayPeeringAttachment
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 	transitGatewayResourceName := "aws_ec2_transit_gateway.test"
 	transitGatewayResourceNamePeer := "aws_ec2_transit_gateway.peer"
@@ -58,7 +58,7 @@ func testAccTransitGatewayPeeringAttachment_basic(t *testing.T) {
 func testAccTransitGatewayPeeringAttachment_disappears(t *testing.T) {
 	var transitGatewayPeeringAttachment ec2.TransitGatewayPeeringAttachment
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 
 	resource.Test(t, resource.TestCase{
@@ -86,7 +86,7 @@ func testAccTransitGatewayPeeringAttachment_disappears(t *testing.T) {
 func testAccTransitGatewayPeeringAttachment_Tags_sameAccount(t *testing.T) {
 	var transitGatewayPeeringAttachment ec2.TransitGatewayPeeringAttachment
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 
 	resource.Test(t, resource.TestCase{
@@ -138,7 +138,7 @@ func testAccTransitGatewayPeeringAttachment_Tags_sameAccount(t *testing.T) {
 func testAccTransitGatewayPeeringAttachment_differentAccount(t *testing.T) {
 	var transitGatewayPeeringAttachment ec2.TransitGatewayPeeringAttachment
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 	transitGatewayResourceName := "aws_ec2_transit_gateway.test"
 	transitGatewayResourceNamePeer := "aws_ec2_transit_gateway.peer"

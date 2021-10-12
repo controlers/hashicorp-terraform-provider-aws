@@ -19,7 +19,7 @@ import (
 func TestAccGlueMlTransform_ML_basic(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 	roleResourceName := "aws_iam_role.test"
 	tableResourceName := "aws_glue_catalog_table.test"
@@ -69,7 +69,7 @@ func TestAccGlueMlTransform_ML_basic(t *testing.T) {
 func TestAccGlueMlTransform_ML_typeFindMatchesFull(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -129,7 +129,7 @@ func TestAccGlueMlTransform_ML_typeFindMatchesFull(t *testing.T) {
 func TestAccGlueMlTransform_ML_description(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -164,7 +164,7 @@ func TestAccGlueMlTransform_ML_description(t *testing.T) {
 func TestAccGlueMlTransform_ML_glueVersion(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -199,7 +199,7 @@ func TestAccGlueMlTransform_ML_glueVersion(t *testing.T) {
 func TestAccGlueMlTransform_ML_maxRetries(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -238,7 +238,7 @@ func TestAccGlueMlTransform_ML_maxRetries(t *testing.T) {
 func TestAccGlueMlTransform_ML_tags(t *testing.T) {
 	var transform1, transform2, transform3 glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -284,7 +284,7 @@ func TestAccGlueMlTransform_ML_tags(t *testing.T) {
 func TestAccGlueMlTransform_ML_timeout(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -319,7 +319,7 @@ func TestAccGlueMlTransform_ML_timeout(t *testing.T) {
 func TestAccGlueMlTransform_ML_workerType(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -356,7 +356,7 @@ func TestAccGlueMlTransform_ML_workerType(t *testing.T) {
 func TestAccGlueMlTransform_ML_maxCapacity(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -391,7 +391,7 @@ func TestAccGlueMlTransform_ML_maxCapacity(t *testing.T) {
 func TestAccGlueMlTransform_ML_disappears(t *testing.T) {
 	var transform glue.GetMLTransformOutput
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_ml_transform.test"
 
 	resource.ParallelTest(t, resource.TestCase{

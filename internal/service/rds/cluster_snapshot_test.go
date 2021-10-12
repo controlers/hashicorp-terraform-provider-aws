@@ -17,7 +17,7 @@ import (
 
 func TestAccRDSClusterSnapshot_basic(t *testing.T) {
 	var dbClusterSnapshot rds.DBClusterSnapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_cluster_snapshot.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -57,7 +57,7 @@ func TestAccRDSClusterSnapshot_basic(t *testing.T) {
 
 func TestAccRDSClusterSnapshot_tags(t *testing.T) {
 	var dbClusterSnapshot rds.DBClusterSnapshot
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_cluster_snapshot.test"
 
 	resource.ParallelTest(t, resource.TestCase{

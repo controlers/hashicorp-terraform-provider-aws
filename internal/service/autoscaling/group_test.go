@@ -820,7 +820,7 @@ func TestAccAutoScalingGroup_ALB_targetGroups(t *testing.T) {
 func TestAccAutoScalingGroup_targetGroupARNs(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1528,7 +1528,7 @@ func TestAccAutoScalingGroup_LaunchTemplate_update(t *testing.T) {
 func TestAccAutoScalingGroup_LaunchTemplate_iamInstanceProfile(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1563,7 +1563,7 @@ func TestAccAutoScalingGroup_LaunchTemplate_iamInstanceProfile(t *testing.T) {
 func TestAccAutoScalingGroup_loadBalancers(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1612,7 +1612,7 @@ func TestAccAutoScalingGroup_loadBalancers(t *testing.T) {
 func TestAccAutoScalingGroup_mixedInstancesPolicy(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1655,7 +1655,7 @@ func TestAccAutoScalingGroup_mixedInstancesPolicy(t *testing.T) {
 func TestAccAutoScalingGroup_MixedInstancesPolicy_capacityRebalance(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1699,7 +1699,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicy_capacityRebalance(t *testing.T
 func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandAllocationStrategy(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1736,7 +1736,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandA
 func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandBaseCapacity(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1792,7 +1792,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandB
 func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_updateToZeroOnDemandBaseCapacity(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1851,7 +1851,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_updateToZ
 func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandPercentageAboveBaseCapacity(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1897,7 +1897,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_onDemandP
 func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotAllocationStrategy(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1934,7 +1934,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotAlloc
 func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotInstancePools(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1980,7 +1980,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotInsta
 func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotMaxPrice(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2035,7 +2035,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyInstancesDistribution_spotMaxPr
 func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateLaunchTemplateSpecification_launchTemplateName(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2073,7 +2073,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateLaunchTemplateSpe
 func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateLaunchTemplateSpecification_version(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2121,7 +2121,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateLaunchTemplateSpe
 func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateOverride_instanceType(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2171,8 +2171,8 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateOverride_instance
 func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateOverride_instanceTypeWithLaunchTemplateSpecification(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -2214,7 +2214,7 @@ func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateOverride_instance
 func TestAccAutoScalingGroup_MixedInstancesPolicyLaunchTemplateOverride_weightedCapacity(t *testing.T) {
 	var group autoscaling.Group
 	resourceName := "aws_autoscaling_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

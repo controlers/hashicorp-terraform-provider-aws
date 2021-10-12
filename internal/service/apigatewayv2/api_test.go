@@ -19,7 +19,7 @@ import (
 func TestAccAPIGatewayV2API_basicWebSocket(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -57,7 +57,7 @@ func TestAccAPIGatewayV2API_basicWebSocket(t *testing.T) {
 func TestAccAPIGatewayV2API_basicHTTP(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -95,7 +95,7 @@ func TestAccAPIGatewayV2API_basicHTTP(t *testing.T) {
 func TestAccAPIGatewayV2API_disappears(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -118,8 +118,8 @@ func TestAccAPIGatewayV2API_disappears(t *testing.T) {
 func TestAccAPIGatewayV2API_allAttributesWebSocket(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -200,8 +200,8 @@ func TestAccAPIGatewayV2API_allAttributesWebSocket(t *testing.T) {
 func TestAccAPIGatewayV2API_allAttributesHTTP(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -282,7 +282,7 @@ func TestAccAPIGatewayV2API_allAttributesHTTP(t *testing.T) {
 func TestAccAPIGatewayV2API_openAPI(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -329,7 +329,7 @@ func TestAccAPIGatewayV2API_openAPI(t *testing.T) {
 func TestAccAPIGatewayV2API_OpenAPI_withTags(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -374,7 +374,7 @@ func TestAccAPIGatewayV2API_OpenAPI_withTags(t *testing.T) {
 func TestAccAPIGatewayV2API_OpenAPI_withCors(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -431,7 +431,7 @@ func TestAccAPIGatewayV2API_OpenAPI_withCors(t *testing.T) {
 func TestAccAPIGatewayV2API_OpenAPI_withMoreFields(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -484,7 +484,7 @@ func TestAccAPIGatewayV2API_OpenAPI_withMoreFields(t *testing.T) {
 func TestAccAPIGatewayV2API_OpenAPI_failOnWarnings(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -568,7 +568,7 @@ func testAccCheckAPIRoutes(v *apigatewayv2.GetApiOutput, routes []string) resour
 func TestAccAPIGatewayV2API_tags(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -621,7 +621,7 @@ func TestAccAPIGatewayV2API_tags(t *testing.T) {
 func TestAccAPIGatewayV2API_cors(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -712,7 +712,7 @@ func TestAccAPIGatewayV2API_cors(t *testing.T) {
 func TestAccAPIGatewayV2API_quickCreate(t *testing.T) {
 	var v apigatewayv2.GetApiOutput
 	resourceName := "aws_apigatewayv2_api.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

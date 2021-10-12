@@ -81,7 +81,7 @@ func TestALBTargetGroupCloudwatchSuffixFromARN(t *testing.T) {
 
 func TestAccELBV2TargetGroup_backwardsCompatibility(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -124,7 +124,7 @@ func TestAccELBV2TargetGroup_backwardsCompatibility(t *testing.T) {
 
 func TestAccELBV2TargetGroup_protocolVersion(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -169,7 +169,7 @@ func TestAccELBV2TargetGroup_protocolVersion(t *testing.T) {
 
 func TestAccELBV2TargetGroup_ProtocolVersionGRPC_healthCheck(t *testing.T) {
 	var targetGroup1 elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -193,7 +193,7 @@ func TestAccELBV2TargetGroup_ProtocolVersionGRPC_healthCheck(t *testing.T) {
 
 func TestAccELBV2TargetGroup_ProtocolVersionHTTPGRPC_update(t *testing.T) {
 	var targetGroup1 elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -224,7 +224,7 @@ func TestAccELBV2TargetGroup_ProtocolVersionHTTPGRPC_update(t *testing.T) {
 
 func TestAccELBV2TargetGroup_ProtocolTCPHealthCheck_protocol(t *testing.T) {
 	var targetGroup1, targetGroup2 elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -256,7 +256,7 @@ func TestAccELBV2TargetGroup_ProtocolTCPHealthCheck_protocol(t *testing.T) {
 
 func TestAccELBV2TargetGroup_Protocol_tls(t *testing.T) {
 	var targetGroup1 elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -278,7 +278,7 @@ func TestAccELBV2TargetGroup_Protocol_tls(t *testing.T) {
 
 func TestAccELBV2TargetGroup_TCP_httpHealthCheck(t *testing.T) {
 	var confBefore, confAfter elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -337,7 +337,7 @@ func TestAccELBV2TargetGroup_TCP_httpHealthCheck(t *testing.T) {
 
 func TestAccELBV2TargetGroup_attrsOnCreate(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -370,7 +370,7 @@ func TestAccELBV2TargetGroup_attrsOnCreate(t *testing.T) {
 
 func TestAccELBV2TargetGroup_basic(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -415,7 +415,7 @@ func TestAccELBV2TargetGroup_basic(t *testing.T) {
 
 func TestAccELBV2TargetGroup_basicUdp(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -446,8 +446,8 @@ func TestAccELBV2TargetGroup_basicUdp(t *testing.T) {
 
 func TestAccELBV2TargetGroup_changeNameForceNew(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rNameBefore := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rNameAfter := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rNameBefore := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rNameAfter := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -476,7 +476,7 @@ func TestAccELBV2TargetGroup_changeNameForceNew(t *testing.T) {
 
 func TestAccELBV2TargetGroup_changePortForceNew(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -505,7 +505,7 @@ func TestAccELBV2TargetGroup_changePortForceNew(t *testing.T) {
 
 func TestAccELBV2TargetGroup_changeProtocolForceNew(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -534,7 +534,7 @@ func TestAccELBV2TargetGroup_changeProtocolForceNew(t *testing.T) {
 
 func TestAccELBV2TargetGroup_changeVPCForceNew(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -561,7 +561,7 @@ func TestAccELBV2TargetGroup_changeVPCForceNew(t *testing.T) {
 
 func TestAccELBV2TargetGroup_Defaults_application(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -599,7 +599,7 @@ func TestAccELBV2TargetGroup_Defaults_application(t *testing.T) {
 
 func TestAccELBV2TargetGroup_Defaults_network(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 	healthCheckInvalid1 := `
 path     = "/health"
@@ -671,7 +671,7 @@ protocol = "TCP"
 
 func TestAccELBV2TargetGroup_enableHealthCheck(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -706,7 +706,7 @@ func TestAccELBV2TargetGroup_enableHealthCheck(t *testing.T) {
 
 func TestAccELBV2TargetGroup_generatedName(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -727,7 +727,7 @@ func TestAccELBV2TargetGroup_generatedName(t *testing.T) {
 
 func TestAccELBV2TargetGroup_namePrefix(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -749,7 +749,7 @@ func TestAccELBV2TargetGroup_namePrefix(t *testing.T) {
 
 func TestAccELBV2TargetGroup_NetworkLB_targetGroup(t *testing.T) {
 	var targetGroup1, targetGroup2, targetGroup3 elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -821,7 +821,7 @@ func TestAccELBV2TargetGroup_NetworkLB_targetGroup(t *testing.T) {
 
 func TestAccELBV2TargetGroup_NetworkLB_targetGroupWithProxy(t *testing.T) {
 	var confBefore, confAfter elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -851,7 +851,7 @@ func TestAccELBV2TargetGroup_NetworkLB_targetGroupWithProxy(t *testing.T) {
 func TestAccELBV2TargetGroup_preserveClientIPValid(t *testing.T) {
 	var conf elbv2.TargetGroup
 	resourceName := "aws_lb_target_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -879,7 +879,7 @@ func TestAccELBV2TargetGroup_preserveClientIPValid(t *testing.T) {
 
 func TestAccELBV2TargetGroup_protocolGeneve(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -912,7 +912,7 @@ func TestAccELBV2TargetGroup_protocolGeneve(t *testing.T) {
 
 func TestAccELBV2TargetGroup_protocolGeneveNotSticky(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -952,7 +952,7 @@ func TestAccELBV2TargetGroup_protocolGeneveNotSticky(t *testing.T) {
 
 func TestAccELBV2TargetGroup_stickinessDefaultALB(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -976,7 +976,7 @@ func TestAccELBV2TargetGroup_stickinessDefaultALB(t *testing.T) {
 
 func TestAccELBV2TargetGroup_stickinessDefaultNLB(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1017,7 +1017,7 @@ func TestAccELBV2TargetGroup_stickinessDefaultNLB(t *testing.T) {
 }
 
 func TestAccELBV2TargetGroup_stickinessInvalidALB(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1047,7 +1047,7 @@ func TestAccELBV2TargetGroup_stickinessInvalidALB(t *testing.T) {
 }
 
 func TestAccELBV2TargetGroup_stickinessInvalidNLB(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -1073,7 +1073,7 @@ func TestAccELBV2TargetGroup_stickinessInvalidNLB(t *testing.T) {
 
 func TestAccELBV2TargetGroup_stickinessValidALB(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1108,7 +1108,7 @@ func TestAccELBV2TargetGroup_stickinessValidALB(t *testing.T) {
 
 func TestAccELBV2TargetGroup_stickinessValidNLB(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1168,7 +1168,7 @@ func TestAccELBV2TargetGroup_stickinessValidNLB(t *testing.T) {
 
 func TestAccELBV2TargetGroup_tags(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1296,7 +1296,7 @@ func TestAccELBV2TargetGroup_updateAppStickinessEnabled(t *testing.T) {
 
 func TestAccELBV2TargetGroup_updateHealthCheck(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1361,7 +1361,7 @@ func TestAccELBV2TargetGroup_updateHealthCheck(t *testing.T) {
 
 func TestAccELBV2TargetGroup_updateStickinessEnabled(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1447,7 +1447,7 @@ func TestAccELBV2TargetGroup_updateStickinessEnabled(t *testing.T) {
 
 func TestAccELBV2TargetGroup_withoutHealthCheck(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1472,7 +1472,7 @@ func TestAccELBV2TargetGroup_withoutHealthCheck(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_basic(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1516,8 +1516,8 @@ func TestAccELBV2TargetGroup_A_basic(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_changeNameForceNew(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rNameAfter := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rNameAfter := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1546,7 +1546,7 @@ func TestAccELBV2TargetGroup_A_changeNameForceNew(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_changePortForceNew(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1575,7 +1575,7 @@ func TestAccELBV2TargetGroup_A_changePortForceNew(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_changeProtocolForceNew(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1604,7 +1604,7 @@ func TestAccELBV2TargetGroup_A_changeProtocolForceNew(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_changeVPCForceNew(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1631,7 +1631,7 @@ func TestAccELBV2TargetGroup_A_changeVPCForceNew(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_generatedName(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1652,7 +1652,7 @@ func TestAccELBV2TargetGroup_A_generatedName(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_lambda(t *testing.T) {
 	var targetGroup1 elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1686,7 +1686,7 @@ func TestAccELBV2TargetGroup_A_lambda(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_lambdaMultiValueHeadersEnabled(t *testing.T) {
 	var targetGroup1 elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1761,7 +1761,7 @@ func TestAccELBV2TargetGroup_A_missingPortProtocolVPC(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_namePrefix(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1783,7 +1783,7 @@ func TestAccELBV2TargetGroup_A_namePrefix(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_setAndUpdateSlowStart(t *testing.T) {
 	var before, after elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1812,7 +1812,7 @@ func TestAccELBV2TargetGroup_A_setAndUpdateSlowStart(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_tags(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1844,7 +1844,7 @@ func TestAccELBV2TargetGroup_A_tags(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_updateHealthCheck(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1907,7 +1907,7 @@ func TestAccELBV2TargetGroup_A_updateHealthCheck(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_updateLoadBalancingAlgorithmType(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -1949,7 +1949,7 @@ func TestAccELBV2TargetGroup_A_updateLoadBalancingAlgorithmType(t *testing.T) {
 
 func TestAccELBV2TargetGroup_A_updateStickinessEnabled(t *testing.T) {
 	var conf elbv2.TargetGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_alb_target_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

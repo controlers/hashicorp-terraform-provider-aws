@@ -20,7 +20,7 @@ import (
 func TestAccDocDBClusterInstance_basic(t *testing.T) {
 	var v docdb.DBInstance
 	resourceName := "aws_docdb_cluster_instance.cluster_instances"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -69,7 +69,7 @@ func TestAccDocDBClusterInstance_basic(t *testing.T) {
 func TestAccDocDBClusterInstance_az(t *testing.T) {
 	var v docdb.DBInstance
 	resourceName := "aws_docdb_cluster_instance.cluster_instances"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -102,7 +102,7 @@ func TestAccDocDBClusterInstance_az(t *testing.T) {
 func TestAccDocDBClusterInstance_namePrefix(t *testing.T) {
 	var v docdb.DBInstance
 	resourceName := "aws_docdb_cluster_instance.test"
-	rNamePrefix := "tf-acc-test"
+	rNamePrefix := acctest.ResourcePrefix
 	rName := sdkacctest.RandomWithPrefix(rNamePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -137,7 +137,7 @@ func TestAccDocDBClusterInstance_namePrefix(t *testing.T) {
 func TestAccDocDBClusterInstance_generatedName(t *testing.T) {
 	var v docdb.DBInstance
 	resourceName := "aws_docdb_cluster_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -170,7 +170,7 @@ func TestAccDocDBClusterInstance_generatedName(t *testing.T) {
 func TestAccDocDBClusterInstance_kmsKey(t *testing.T) {
 	var v docdb.DBInstance
 	resourceName := "aws_docdb_cluster_instance.cluster_instances"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -203,7 +203,7 @@ func TestAccDocDBClusterInstance_kmsKey(t *testing.T) {
 func TestAccDocDBClusterInstance_disappears(t *testing.T) {
 	var v docdb.DBInstance
 	resourceName := "aws_docdb_cluster_instance.cluster_instances"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -231,8 +231,8 @@ func testAccCheckClusterInstanceAttributes(v *docdb.DBInstance) resource.TestChe
 			return fmt.Errorf("bad engine, expected \"docdb\": %#v", *v.Engine)
 		}
 
-		if !strings.HasPrefix(*v.DBClusterIdentifier, "tf-acc-test") {
-			return fmt.Errorf("Bad Cluster Identifier prefix:\nexpected: %s-*\ngot: %s", "tf-acc-test", *v.DBClusterIdentifier)
+		if !strings.HasPrefix(*v.DBClusterIdentifier, acctest.ResourcePrefix) {
+			return fmt.Errorf("Bad Cluster Identifier prefix:\nexpected: %s-*\ngot: %s", acctest.ResourcePrefix, *v.DBClusterIdentifier)
 		}
 
 		return nil

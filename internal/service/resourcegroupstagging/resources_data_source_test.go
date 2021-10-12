@@ -13,7 +13,7 @@ import (
 func TestAccResourceGroupsTaggingResourcesDataSource_tagFilter(t *testing.T) {
 	dataSourceName := "data.aws_resourcegroupstaggingapi_resources.test"
 	resourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -35,7 +35,7 @@ func TestAccResourceGroupsTaggingResourcesDataSource_tagFilter(t *testing.T) {
 
 func TestAccResourceGroupsTaggingResourcesDataSource_includeComplianceDetails(t *testing.T) {
 	dataSourceName := "data.aws_resourcegroupstaggingapi_resources.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -56,7 +56,7 @@ func TestAccResourceGroupsTaggingResourcesDataSource_includeComplianceDetails(t 
 func TestAccResourceGroupsTaggingResourcesDataSource_resourceTypeFilters(t *testing.T) {
 	dataSourceName := "data.aws_resourcegroupstaggingapi_resources.test"
 	resourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -79,7 +79,7 @@ func TestAccResourceGroupsTaggingResourcesDataSource_resourceTypeFilters(t *test
 func TestAccResourceGroupsTaggingResourcesDataSource_resourceARNList(t *testing.T) {
 	dataSourceName := "data.aws_resourcegroupstaggingapi_resources.test"
 	resourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

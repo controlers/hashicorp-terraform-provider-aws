@@ -208,7 +208,7 @@ func TestAccLambdaPermission_basic(t *testing.T) {
 }
 
 func TestAccLambdaPermission_StatementID_duplicate(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -263,7 +263,7 @@ func TestAccLambdaPermission_withRawFunctionName(t *testing.T) {
 func TestAccLambdaPermission_withStatementIdPrefix(t *testing.T) {
 	var statement tflambda.PolicyStatement
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	startsWithPrefix := regexp.MustCompile("^AllowExecutionWithStatementIdPrefix-")
 
 	resourceName := "aws_lambda_permission.with_statement_id_prefix"

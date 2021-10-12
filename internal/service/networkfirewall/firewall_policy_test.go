@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccNetworkFirewallFirewallPolicy_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -50,7 +50,7 @@ func TestAccNetworkFirewallFirewallPolicy_basic(t *testing.T) {
 }
 
 func TestAccNetworkFirewallFirewallPolicy_statefulRuleGroupReference(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 	ruleGroupResourceName := "aws_networkfirewall_rule_group.test.0"
 
@@ -79,7 +79,7 @@ func TestAccNetworkFirewallFirewallPolicy_statefulRuleGroupReference(t *testing.
 }
 
 func TestAccNetworkFirewallFirewallPolicy_updateStatefulRuleGroupReference(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 	ruleGroupResourceName := "aws_networkfirewall_rule_group.test.0"
 
@@ -120,7 +120,7 @@ func TestAccNetworkFirewallFirewallPolicy_updateStatefulRuleGroupReference(t *te
 }
 
 func TestAccNetworkFirewallFirewallPolicy_multipleStatefulRuleGroupReferences(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 	ruleGroupResourceName1 := "aws_networkfirewall_rule_group.test.0"
 	ruleGroupResourceName2 := "aws_networkfirewall_rule_group.test.1"
@@ -160,7 +160,7 @@ func TestAccNetworkFirewallFirewallPolicy_multipleStatefulRuleGroupReferences(t 
 }
 
 func TestAccNetworkFirewallFirewallPolicy_statelessRuleGroupReference(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 	ruleGroupResourceName := "aws_networkfirewall_rule_group.test.0"
 
@@ -203,7 +203,7 @@ func TestAccNetworkFirewallFirewallPolicy_statelessRuleGroupReference(t *testing
 }
 
 func TestAccNetworkFirewallFirewallPolicy_updateStatelessRuleGroupReference(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 	ruleGroupResourceName := "aws_networkfirewall_rule_group.test.0"
 
@@ -248,7 +248,7 @@ func TestAccNetworkFirewallFirewallPolicy_updateStatelessRuleGroupReference(t *t
 }
 
 func TestAccNetworkFirewallFirewallPolicy_multipleStatelessRuleGroupReferences(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 	ruleGroupResourceName1 := "aws_networkfirewall_rule_group.test.0"
 	ruleGroupResourceName2 := "aws_networkfirewall_rule_group.test.1"
@@ -297,7 +297,7 @@ func TestAccNetworkFirewallFirewallPolicy_multipleStatelessRuleGroupReferences(t
 }
 
 func TestAccNetworkFirewallFirewallPolicy_statelessCustomAction(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -330,7 +330,7 @@ func TestAccNetworkFirewallFirewallPolicy_statelessCustomAction(t *testing.T) {
 }
 
 func TestAccNetworkFirewallFirewallPolicy_updateStatelessCustomAction(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -390,7 +390,7 @@ func TestAccNetworkFirewallFirewallPolicy_updateStatelessCustomAction(t *testing
 }
 
 func TestAccNetworkFirewallFirewallPolicy_multipleStatelessCustomActions(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -443,7 +443,7 @@ func TestAccNetworkFirewallFirewallPolicy_multipleStatelessCustomActions(t *test
 }
 
 func TestAccNetworkFirewallFirewallPolicy_statefulRuleGroupReferenceAndCustomAction(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 	ruleGroupResourceName := "aws_networkfirewall_rule_group.test.0"
 
@@ -487,7 +487,7 @@ func TestAccNetworkFirewallFirewallPolicy_statefulRuleGroupReferenceAndCustomAct
 }
 
 func TestAccNetworkFirewallFirewallPolicy_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -530,7 +530,7 @@ func TestAccNetworkFirewallFirewallPolicy_tags(t *testing.T) {
 }
 
 func TestAccNetworkFirewallFirewallPolicy_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_networkfirewall_firewall_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

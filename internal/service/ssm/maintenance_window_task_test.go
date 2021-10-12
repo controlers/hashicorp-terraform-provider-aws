@@ -19,7 +19,7 @@ func TestAccSSMMaintenanceWindowTask_basic(t *testing.T) {
 	var before, after ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
@@ -58,7 +58,7 @@ func TestAccSSMMaintenanceWindowTask_basic(t *testing.T) {
 
 func TestAccSSMMaintenanceWindowTask_noRole(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -79,7 +79,7 @@ func TestAccSSMMaintenanceWindowTask_noRole(t *testing.T) {
 
 func TestAccSSMMaintenanceWindowTask_updateForcesNewResource(t *testing.T) {
 	var before, after ssm.MaintenanceWindowTask
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -116,7 +116,7 @@ func TestAccSSMMaintenanceWindowTask_updateForcesNewResource(t *testing.T) {
 func TestAccSSMMaintenanceWindowTask_description(t *testing.T) {
 	var task1, task2 ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -153,7 +153,7 @@ func TestAccSSMMaintenanceWindowTask_taskInvocationAutomationParameters(t *testi
 	var task ssm.MaintenanceWindowTask
 	resourceName := "aws_ssm_maintenance_window_task.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
@@ -223,7 +223,7 @@ func TestAccSSMMaintenanceWindowTask_taskInvocationRunCommandParameters(t *testi
 	serviceRoleResourceName := "aws_iam_role.test"
 	s3BucketResourceName := "aws_s3_bucket.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, ssm.EndpointsID),
@@ -340,7 +340,7 @@ func TestAccSSMMaintenanceWindowTask_taskInvocationStepFunctionParameters(t *tes
 
 func TestAccSSMMaintenanceWindowTask_emptyNotification(t *testing.T) {
 	var task ssm.MaintenanceWindowTask
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_task.test"
 
 	resource.ParallelTest(t, resource.TestCase{

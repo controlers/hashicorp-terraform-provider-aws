@@ -12,7 +12,7 @@ import (
 
 func testAccTransitGatewayPeeringAttachmentDataSource_Filter_sameAccount(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_ec2_transit_gateway_peering_attachment.test"
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 
@@ -42,7 +42,7 @@ func testAccTransitGatewayPeeringAttachmentDataSource_Filter_sameAccount(t *test
 
 func testAccTransitGatewayPeeringAttachmentDataSource_Filter_differentAccount(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_ec2_transit_gateway_peering_attachment.test"
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 	transitGatewayResourceName := "aws_ec2_transit_gateway.test"
@@ -73,7 +73,7 @@ func testAccTransitGatewayPeeringAttachmentDataSource_Filter_differentAccount(t 
 
 func testAccTransitGatewayPeeringAttachmentDataSource_ID_sameAccount(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_ec2_transit_gateway_peering_attachment.test"
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 
@@ -103,7 +103,7 @@ func testAccTransitGatewayPeeringAttachmentDataSource_ID_sameAccount(t *testing.
 
 func testAccTransitGatewayPeeringAttachmentDataSource_ID_differentAccount(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_ec2_transit_gateway_peering_attachment.test"
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 	transitGatewayResourceName := "aws_ec2_transit_gateway.test"
@@ -134,7 +134,7 @@ func testAccTransitGatewayPeeringAttachmentDataSource_ID_differentAccount(t *tes
 
 func testAccTransitGatewayPeeringAttachmentDataSource_Tags(t *testing.T) {
 	var providers []*schema.Provider
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_ec2_transit_gateway_peering_attachment.test"
 	resourceName := "aws_ec2_transit_gateway_peering_attachment.test"
 

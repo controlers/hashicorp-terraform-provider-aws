@@ -14,8 +14,8 @@ import (
 )
 
 func TestAccS3ObjectCopy_basic(t *testing.T) {
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_object_copy.test"
 	sourceName := "aws_s3_bucket_object.source"
 	key := "HundBegraven"
@@ -42,7 +42,7 @@ func TestAccS3ObjectCopy_basic(t *testing.T) {
 }
 
 func TestAccS3ObjectCopy_BucketKeyEnabled_bucket(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_object_copy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -63,7 +63,7 @@ func TestAccS3ObjectCopy_BucketKeyEnabled_bucket(t *testing.T) {
 }
 
 func TestAccS3ObjectCopy_BucketKeyEnabled_object(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_object_copy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

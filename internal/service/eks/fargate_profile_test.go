@@ -18,7 +18,7 @@ import (
 
 func TestAccEKSFargateProfile_basic(t *testing.T) {
 	var fargateProfile eks.FargateProfile
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	eksClusterResourceName := "aws_eks_cluster.test"
 	iamRoleResourceName := "aws_iam_role.pod"
 	resourceName := "aws_eks_fargate_profile.test"
@@ -54,7 +54,7 @@ func TestAccEKSFargateProfile_basic(t *testing.T) {
 
 func TestAccEKSFargateProfile_disappears(t *testing.T) {
 	var fargateProfile eks.FargateProfile
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_fargate_profile.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -77,7 +77,7 @@ func TestAccEKSFargateProfile_disappears(t *testing.T) {
 
 func TestAccEKSFargateProfile_Multi_profile(t *testing.T) {
 	var fargateProfile eks.FargateProfile
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName1 := "aws_eks_fargate_profile.test.0"
 	resourceName2 := "aws_eks_fargate_profile.test.1"
 
@@ -100,7 +100,7 @@ func TestAccEKSFargateProfile_Multi_profile(t *testing.T) {
 
 func TestAccEKSFargateProfile_Selector_labels(t *testing.T) {
 	var fargateProfile1 eks.FargateProfile
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_fargate_profile.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -126,7 +126,7 @@ func TestAccEKSFargateProfile_Selector_labels(t *testing.T) {
 
 func TestAccEKSFargateProfile_tags(t *testing.T) {
 	var fargateProfile1, fargateProfile2, fargateProfile3 eks.FargateProfile
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eks_fargate_profile.test"
 
 	resource.ParallelTest(t, resource.TestCase{

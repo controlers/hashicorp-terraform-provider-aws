@@ -16,7 +16,7 @@ import (
 
 func TestAccSchemasRegistry_basic(t *testing.T) {
 	var v schemas.DescribeRegistryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_registry.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccSchemasRegistry_basic(t *testing.T) {
 
 func TestAccSchemasRegistry_disappears(t *testing.T) {
 	var v schemas.DescribeRegistryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_registry.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -69,7 +69,7 @@ func TestAccSchemasRegistry_disappears(t *testing.T) {
 
 func TestAccSchemasRegistry_description(t *testing.T) {
 	var v schemas.DescribeRegistryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_registry.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -110,7 +110,7 @@ func TestAccSchemasRegistry_description(t *testing.T) {
 
 func TestAccSchemasRegistry_tags(t *testing.T) {
 	var v schemas.DescribeRegistryOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_schemas_registry.test"
 
 	resource.ParallelTest(t, resource.TestCase{

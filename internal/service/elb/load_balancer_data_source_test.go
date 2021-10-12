@@ -12,7 +12,7 @@ import (
 
 func TestAccELBLoadBalancerDataSource_basic(t *testing.T) {
 	// Must be less than 32 characters for ELB name
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_elb.test"
 
 	resource.ParallelTest(t, resource.TestCase{

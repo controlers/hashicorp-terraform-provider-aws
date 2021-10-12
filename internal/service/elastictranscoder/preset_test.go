@@ -17,7 +17,7 @@ import (
 func TestAccElasticTranscoderPreset_basic(t *testing.T) {
 	var preset elastictranscoder.Preset
 	resourceName := "aws_elastictranscoder_preset.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -43,7 +43,7 @@ func TestAccElasticTranscoderPreset_basic(t *testing.T) {
 func TestAccElasticTranscoderPreset_disappears(t *testing.T) {
 	var preset elastictranscoder.Preset
 	resourceName := "aws_elastictranscoder_preset.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -67,7 +67,7 @@ func TestAccElasticTranscoderPreset_disappears(t *testing.T) {
 func TestAccElasticTranscoderPreset_AudioCodecOptions_empty(t *testing.T) {
 	var preset elastictranscoder.Preset
 	resourceName := "aws_elastictranscoder_preset.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -94,7 +94,7 @@ func TestAccElasticTranscoderPreset_AudioCodecOptions_empty(t *testing.T) {
 func TestAccElasticTranscoderPreset_description(t *testing.T) {
 	var preset elastictranscoder.Preset
 	resourceName := "aws_elastictranscoder_preset.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -122,7 +122,7 @@ func TestAccElasticTranscoderPreset_description(t *testing.T) {
 func TestAccElasticTranscoderPreset_full(t *testing.T) {
 	var preset elastictranscoder.Preset
 	resourceName := "aws_elastictranscoder_preset.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -172,7 +172,7 @@ func TestAccElasticTranscoderPreset_full(t *testing.T) {
 func TestAccElasticTranscoderPreset_Video_frameRate(t *testing.T) {
 	var preset elastictranscoder.Preset
 	resourceName := "aws_elastictranscoder_preset.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

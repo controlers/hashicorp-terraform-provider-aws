@@ -18,7 +18,7 @@ func testAccTransitGatewayPrefixListReference_basic(t *testing.T) {
 	managedPrefixListResourceName := "aws_ec2_managed_prefix_list.test"
 	resourceName := "aws_ec2_transit_gateway_prefix_list_reference.test"
 	transitGatewayResourceName := "aws_ec2_transit_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
@@ -52,7 +52,7 @@ func testAccTransitGatewayPrefixListReference_basic(t *testing.T) {
 
 func testAccTransitGatewayPrefixListReference_disappears(t *testing.T) {
 	resourceName := "aws_ec2_transit_gateway_prefix_list_reference.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
@@ -79,7 +79,7 @@ func testAccTransitGatewayPrefixListReference_disappears(t *testing.T) {
 func testAccTransitGatewayPrefixListReference_disappears_TransitGateway(t *testing.T) {
 	resourceName := "aws_ec2_transit_gateway_prefix_list_reference.test"
 	transitGatewayResourceName := "aws_ec2_transit_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
@@ -107,7 +107,7 @@ func testAccTransitGatewayPrefixListReference_TransitGatewayAttachmentID(t *test
 	resourceName := "aws_ec2_transit_gateway_prefix_list_reference.test"
 	transitGatewayVpcAttachmentResourceName1 := "aws_ec2_transit_gateway_vpc_attachment.test.0"
 	transitGatewayVpcAttachmentResourceName2 := "aws_ec2_transit_gateway_vpc_attachment.test.1"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {

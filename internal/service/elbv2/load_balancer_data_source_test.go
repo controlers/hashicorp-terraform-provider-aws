@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccELBV2LoadBalancerDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lb.alb_test_with_arn"
 	dataSourceName2 := "data.aws_lb.alb_test_with_name"
 	dataSourceName3 := "data.aws_lb.alb_test_with_tags"
@@ -77,7 +77,7 @@ func TestAccELBV2LoadBalancerDataSource_basic(t *testing.T) {
 }
 
 func TestAccELBV2LoadBalancerDataSource_outpost(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_lb.alb_test_with_arn"
 	resourceName := "aws_lb.test"
 
@@ -112,7 +112,7 @@ func TestAccELBV2LoadBalancerDataSource_outpost(t *testing.T) {
 }
 
 func TestAccELBV2LoadBalancerDataSource_backwardsCompatibility(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName1 := "data.aws_alb.alb_test_with_arn"
 	dataSourceName2 := "data.aws_alb.alb_test_with_name"
 	dataSourceName3 := "data.aws_alb.alb_test_with_tags"

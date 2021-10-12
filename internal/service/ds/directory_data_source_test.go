@@ -27,7 +27,7 @@ func TestAccDirectoryServiceDirectoryDataSource_nonExistent(t *testing.T) {
 }
 
 func TestAccDirectoryServiceDirectoryDataSource_simpleAD(t *testing.T) {
-	alias := sdkacctest.RandomWithPrefix("tf-acc-test")
+	alias := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_directory_service_directory.test-simple-ad"
 	dataSourceName := "data.aws_directory_service_directory.test-simple-ad"
 
@@ -61,7 +61,7 @@ func TestAccDirectoryServiceDirectoryDataSource_simpleAD(t *testing.T) {
 }
 
 func TestAccDirectoryServiceDirectoryDataSource_microsoftAD(t *testing.T) {
-	alias := sdkacctest.RandomWithPrefix("tf-acc-test")
+	alias := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_directory_service_directory.test-microsoft-ad"
 	dataSourceName := "data.aws_directory_service_directory.test-microsoft-ad"
 

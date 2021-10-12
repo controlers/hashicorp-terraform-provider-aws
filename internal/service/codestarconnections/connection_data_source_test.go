@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCodeStarConnectionsConnectionDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_codestarconnections_connection.test"
 	resourceName := "aws_codestarconnections_connection.test"
 
@@ -36,7 +36,7 @@ func TestAccCodeStarConnectionsConnectionDataSource_basic(t *testing.T) {
 }
 
 func TestAccCodeStarConnectionsConnectionDataSource_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_codestarconnections_connection.test"
 	resourceName := "aws_codestarconnections_connection.test"
 

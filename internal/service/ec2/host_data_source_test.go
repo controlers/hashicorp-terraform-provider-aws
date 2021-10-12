@@ -13,7 +13,7 @@ import (
 func TestAccEC2HostDataSource_basic(t *testing.T) {
 	dataSourceName := "data.aws_ec2_host.test"
 	resourceName := "aws_ec2_host.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -44,7 +44,7 @@ func TestAccEC2HostDataSource_basic(t *testing.T) {
 func TestAccEC2HostDataSource_filter(t *testing.T) {
 	dataSourceName := "data.aws_ec2_host.test"
 	resourceName := "aws_ec2_host.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

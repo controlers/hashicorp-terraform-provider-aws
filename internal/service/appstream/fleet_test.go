@@ -31,7 +31,7 @@ func TestAccAppStreamFleet_basic(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
 	instanceType := "stream.standard.small"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -65,7 +65,7 @@ func TestAccAppStreamFleet_disappears(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
 	instanceType := "stream.standard.small"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -91,7 +91,7 @@ func TestAccAppStreamFleet_disappears(t *testing.T) {
 func TestAccAppStreamFleet_completeWithStop(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Description of a test"
 	descriptionUpdated := "Updated Description of a test"
 	fleetType := "ON_DEMAND"
@@ -141,7 +141,7 @@ func TestAccAppStreamFleet_completeWithStop(t *testing.T) {
 func TestAccAppStreamFleet_completeWithoutStop(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Description of a test"
 	fleetType := "ON_DEMAND"
 	instanceType := "stream.standard.small"
@@ -194,7 +194,7 @@ func TestAccAppStreamFleet_completeWithoutStop(t *testing.T) {
 func TestAccAppStreamFleet_withTags(t *testing.T) {
 	var fleetOutput appstream.Fleet
 	resourceName := "aws_appstream_fleet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Description of a test"
 	fleetType := "ON_DEMAND"
 	instanceType := "stream.standard.small"

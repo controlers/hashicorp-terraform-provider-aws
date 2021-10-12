@@ -19,7 +19,7 @@ import (
 
 func TestAccAPIGatewayAuthorizer_basic(t *testing.T) {
 	var conf apigateway.Authorizer
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_authorizer.test"
 	lambdaResourceName := "aws_lambda_function.test"
 	roleResourceName := "aws_iam_role.test"
@@ -67,7 +67,7 @@ func TestAccAPIGatewayAuthorizer_basic(t *testing.T) {
 }
 
 func TestAccAPIGatewayAuthorizer_cognito(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_authorizer.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -104,7 +104,7 @@ func TestAccAPIGatewayAuthorizer_cognito(t *testing.T) {
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/16613
 func TestAccAPIGatewayAuthorizer_Cognito_authorizerCredentials(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_authorizer.test"
 	iamRoleResourceName := "aws_iam_role.lambda"
 
@@ -134,7 +134,7 @@ func TestAccAPIGatewayAuthorizer_Cognito_authorizerCredentials(t *testing.T) {
 }
 
 func TestAccAPIGatewayAuthorizer_switchAuthType(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_authorizer.test"
 	lambdaResourceName := "aws_lambda_function.test"
 	roleResourceName := "aws_iam_role.test"
@@ -183,7 +183,7 @@ func TestAccAPIGatewayAuthorizer_switchAuthType(t *testing.T) {
 
 func TestAccAPIGatewayAuthorizer_switchAuthorizerTTL(t *testing.T) {
 	var conf apigateway.Authorizer
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_authorizer.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -231,7 +231,7 @@ func TestAccAPIGatewayAuthorizer_switchAuthorizerTTL(t *testing.T) {
 }
 
 func TestAccAPIGatewayAuthorizer_authTypeValidation(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },
@@ -257,7 +257,7 @@ func TestAccAPIGatewayAuthorizer_authTypeValidation(t *testing.T) {
 
 func TestAccAPIGatewayAuthorizer_Zero_ttl(t *testing.T) {
 	var conf apigateway.Authorizer
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_authorizer.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -285,7 +285,7 @@ func TestAccAPIGatewayAuthorizer_Zero_ttl(t *testing.T) {
 
 func TestAccAPIGatewayAuthorizer_disappears(t *testing.T) {
 	var conf apigateway.Authorizer
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_authorizer.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -17,7 +17,7 @@ import (
 
 func TestAccCloudFormationStackSetInstance_basic(t *testing.T) {
 	var stackInstance1 cloudformation.StackInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	cloudformationStackSetResourceName := "aws_cloudformation_stack_set.test"
 	resourceName := "aws_cloudformation_stack_set_instance.test"
 
@@ -54,7 +54,7 @@ func TestAccCloudFormationStackSetInstance_basic(t *testing.T) {
 
 func TestAccCloudFormationStackSetInstance_disappears(t *testing.T) {
 	var stackInstance1 cloudformation.StackInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -78,7 +78,7 @@ func TestAccCloudFormationStackSetInstance_disappears(t *testing.T) {
 func TestAccCloudFormationStackSetInstance_Disappears_stackSet(t *testing.T) {
 	var stackInstance1 cloudformation.StackInstance
 	var stackSet1 cloudformation.StackSet
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	stackSetResourceName := "aws_cloudformation_stack_set.test"
 	resourceName := "aws_cloudformation_stack_set_instance.test"
 
@@ -104,7 +104,7 @@ func TestAccCloudFormationStackSetInstance_Disappears_stackSet(t *testing.T) {
 
 func TestAccCloudFormationStackSetInstance_parameterOverrides(t *testing.T) {
 	var stackInstance1, stackInstance2, stackInstance3, stackInstance4 cloudformation.StackInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -168,7 +168,7 @@ func TestAccCloudFormationStackSetInstance_parameterOverrides(t *testing.T) {
 func TestAccCloudFormationStackSetInstance_retainStack(t *testing.T) {
 	var stack1 cloudformation.Stack
 	var stackInstance1, stackInstance2, stackInstance3 cloudformation.StackInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -224,7 +224,7 @@ func TestAccCloudFormationStackSetInstance_deploymentTargets(t *testing.T) {
 	acctest.Skip(t, "API does not support enabling Organizations access (in particular, creating the Stack Sets IAM Service-Linked Role)")
 
 	var stackInstance cloudformation.StackInstance
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_cloudformation_stack_set_instance.test"
 
 	resource.ParallelTest(t, resource.TestCase{

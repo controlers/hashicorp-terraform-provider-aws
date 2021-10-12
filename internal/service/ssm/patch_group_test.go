@@ -14,7 +14,7 @@ import (
 )
 
 func TestAccSSMPatchGroup_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_patch_group.patchgroup"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -34,7 +34,7 @@ func TestAccSSMPatchGroup_basic(t *testing.T) {
 }
 
 func TestAccSSMPatchGroup_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_patch_group.patchgroup"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -56,7 +56,7 @@ func TestAccSSMPatchGroup_disappears(t *testing.T) {
 }
 
 func TestAccSSMPatchGroup_multipleBaselines(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName1 := "aws_ssm_patch_group.test1"
 	resourceName2 := "aws_ssm_patch_group.test2"
 	resourceName3 := "aws_ssm_patch_group.test3"

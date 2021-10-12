@@ -12,7 +12,7 @@ import (
 )
 
 func TestAccRDSSubnetGroupDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_db_subnet_group.test"
 	dataSourceName := "data.aws_db_subnet_group.test"
 

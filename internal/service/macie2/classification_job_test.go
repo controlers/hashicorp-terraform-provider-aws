@@ -19,7 +19,7 @@ import (
 func testAccClassificationJob_basic(t *testing.T) {
 	var macie2Output macie2.DescribeClassificationJobOutput
 	resourceName := "aws_macie2_classification_job.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -49,7 +49,7 @@ func testAccClassificationJob_basic(t *testing.T) {
 func testAccClassificationJob_Name_Generated(t *testing.T) {
 	var macie2Output macie2.DescribeClassificationJobOutput
 	resourceName := "aws_macie2_classification_job.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -77,7 +77,7 @@ func testAccClassificationJob_Name_Generated(t *testing.T) {
 func testAccClassificationJob_NamePrefix(t *testing.T) {
 	var macie2Output macie2.DescribeClassificationJobOutput
 	resourceName := "aws_macie2_classification_job.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	namePrefix := "tf-acc-test-prefix-"
 
 	resource.Test(t, resource.TestCase{
@@ -106,7 +106,7 @@ func testAccClassificationJob_NamePrefix(t *testing.T) {
 func testAccClassificationJob_disappears(t *testing.T) {
 	var macie2Output macie2.DescribeClassificationJobOutput
 	resourceName := "aws_macie2_classification_job.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -128,7 +128,7 @@ func testAccClassificationJob_disappears(t *testing.T) {
 func testAccClassificationJob_Status(t *testing.T) {
 	var macie2Output, macie2Output2 macie2.DescribeClassificationJobOutput
 	resourceName := "aws_macie2_classification_job.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
@@ -169,7 +169,7 @@ func testAccClassificationJob_Status(t *testing.T) {
 func testAccClassificationJob_complete(t *testing.T) {
 	var macie2Output macie2.DescribeClassificationJobOutput
 	resourceName := "aws_macie2_classification_job.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "Description of a test"
 	descriptionUpdated := "Updated Description of a test"
 
@@ -228,7 +228,7 @@ func testAccClassificationJob_complete(t *testing.T) {
 func testAccClassificationJob_WithTags(t *testing.T) {
 	var macie2Output macie2.DescribeClassificationJobOutput
 	resourceName := "aws_macie2_classification_job.test"
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },

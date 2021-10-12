@@ -105,7 +105,7 @@ func TestAccEC2InternetGateway_delete(t *testing.T) {
 func TestAccEC2InternetGateway_tags(t *testing.T) {
 	var v ec2.InternetGateway
 	resourceName := "aws_internet_gateway.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

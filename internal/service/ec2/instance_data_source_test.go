@@ -254,7 +254,7 @@ func TestAccEC2InstanceDataSource_secondaryPrivateIPs(t *testing.T) {
 func TestAccEC2InstanceDataSource_ipv6Addresses(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -554,7 +554,7 @@ func TestAccEC2InstanceDataSource_creditSpecification(t *testing.T) {
 func TestAccEC2InstanceDataSource_metadataOptions(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -577,7 +577,7 @@ func TestAccEC2InstanceDataSource_metadataOptions(t *testing.T) {
 func TestAccEC2InstanceDataSource_enclaveOptions(t *testing.T) {
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },
@@ -596,7 +596,7 @@ func TestAccEC2InstanceDataSource_enclaveOptions(t *testing.T) {
 }
 
 func TestAccEC2InstanceDataSource_blockDeviceTags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_instance.test"
 	datasourceName := "data.aws_instance.test"
 

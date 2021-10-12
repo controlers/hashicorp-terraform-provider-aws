@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccChimeVoiceConnectorOrigination_basic(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector_origination.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccChimeVoiceConnectorOrigination_basic(t *testing.T) {
 }
 
 func TestAccChimeVoiceConnectorOrigination_disappears(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector_origination.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -68,7 +68,7 @@ func TestAccChimeVoiceConnectorOrigination_disappears(t *testing.T) {
 }
 
 func TestAccChimeVoiceConnectorOrigination_update(t *testing.T) {
-	name := sdkacctest.RandomWithPrefix("tf-acc-test")
+	name := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_chime_voice_connector_origination.test"
 
 	resource.ParallelTest(t, resource.TestCase{

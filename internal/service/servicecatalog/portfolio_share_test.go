@@ -20,7 +20,7 @@ func TestAccServiceCatalogPortfolioShare_basic(t *testing.T) {
 	resourceName := "aws_servicecatalog_portfolio_share.test"
 	compareName := "aws_servicecatalog_portfolio.test"
 	dataSourceName := "data.aws_caller_identity.alternate"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {
@@ -59,7 +59,7 @@ func TestAccServiceCatalogPortfolioShare_basic(t *testing.T) {
 func TestAccServiceCatalogPortfolioShare_organizationalUnit(t *testing.T) {
 	resourceName := "aws_servicecatalog_portfolio_share.test"
 	compareName := "aws_servicecatalog_portfolio.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck: func() {

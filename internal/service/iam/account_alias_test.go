@@ -38,7 +38,7 @@ func TestAccIAMAccountAlias_serial(t *testing.T) {
 func testAccAccountAlias_basic(t *testing.T) {
 	resourceName := "aws_iam_account_alias.test"
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

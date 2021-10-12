@@ -15,7 +15,7 @@ import (
 
 func TestAccCodeBuildReportGroup_basic(t *testing.T) {
 	var reportGroup codebuild.ReportGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_report_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccCodeBuildReportGroup_basic(t *testing.T) {
 
 func TestAccCodeBuildReportGroup_Export_s3(t *testing.T) {
 	var reportGroup codebuild.ReportGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_report_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -97,7 +97,7 @@ func TestAccCodeBuildReportGroup_Export_s3(t *testing.T) {
 
 func TestAccCodeBuildReportGroup_tags(t *testing.T) {
 	var reportGroup codebuild.ReportGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_report_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -143,7 +143,7 @@ func TestAccCodeBuildReportGroup_tags(t *testing.T) {
 
 func TestAccCodeBuildReportGroup_deleteReports(t *testing.T) {
 	var reportGroup codebuild.ReportGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_report_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -171,7 +171,7 @@ func TestAccCodeBuildReportGroup_deleteReports(t *testing.T) {
 
 func TestAccCodeBuildReportGroup_disappears(t *testing.T) {
 	var reportGroup codebuild.ReportGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_codebuild_report_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -17,7 +17,7 @@ import (
 func TestAccBackupSelection_basic(t *testing.T) {
 	var selection1 backup.GetBackupSelectionOutput
 	resourceName := "aws_backup_selection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -44,7 +44,7 @@ func TestAccBackupSelection_basic(t *testing.T) {
 func TestAccBackupSelection_disappears(t *testing.T) {
 	var selection1 backup.GetBackupSelectionOutput
 	resourceName := "aws_backup_selection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -68,7 +68,7 @@ func TestAccBackupSelection_Disappears_backupPlan(t *testing.T) {
 	var selection1 backup.GetBackupSelectionOutput
 	resourceName := "aws_backup_selection.test"
 	backupPlanResourceName := "aws_backup_plan.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -92,7 +92,7 @@ func TestAccBackupSelection_Disappears_backupPlan(t *testing.T) {
 func TestAccBackupSelection_withTags(t *testing.T) {
 	var selection1 backup.GetBackupSelectionOutput
 	resourceName := "aws_backup_selection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -120,7 +120,7 @@ func TestAccBackupSelection_withTags(t *testing.T) {
 func TestAccBackupSelection_withResources(t *testing.T) {
 	var selection1 backup.GetBackupSelectionOutput
 	resourceName := "aws_backup_selection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -148,7 +148,7 @@ func TestAccBackupSelection_withResources(t *testing.T) {
 func TestAccBackupSelection_updateTag(t *testing.T) {
 	var selection1, selection2 backup.GetBackupSelectionOutput
 	resourceName := "aws_backup_selection.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

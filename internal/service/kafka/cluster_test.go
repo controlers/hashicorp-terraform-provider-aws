@@ -41,7 +41,7 @@ var (
 
 func TestAccKafkaCluster_basic(t *testing.T) {
 	var cluster kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -100,7 +100,7 @@ func TestAccKafkaCluster_basic(t *testing.T) {
 
 func TestAccKafkaCluster_BrokerNodeGroupInfo_ebsVolumeSize(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -141,7 +141,7 @@ func TestAccKafkaCluster_BrokerNodeGroupInfo_ebsVolumeSize(t *testing.T) {
 
 func TestAccKafkaCluster_BrokerNodeGroupInfo_instanceType(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -183,7 +183,7 @@ func TestAccKafkaCluster_BrokerNodeGroupInfo_instanceType(t *testing.T) {
 
 func TestAccKafkaCluster_ClientAuthenticationSASL_scram(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -241,7 +241,7 @@ func TestAccKafkaCluster_ClientAuthenticationSASL_scram(t *testing.T) {
 
 func TestAccKafkaCluster_ClientAuthenticationSASL_iam(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -300,7 +300,7 @@ func TestAccKafkaCluster_ClientAuthenticationSASL_iam(t *testing.T) {
 func TestAccKafkaCluster_ClientAuthenticationTLS_certificateAuthorityARNs(t *testing.T) {
 	var cluster1 kafka.ClusterInfo
 	var ca acmpca.CertificateAuthority
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 	acmCAResourceName := "aws_acmpca_certificate_authority.test"
 	commonName := acctest.RandomDomainName()
@@ -352,7 +352,7 @@ func TestAccKafkaCluster_ClientAuthenticationTLS_certificateAuthorityARNs(t *tes
 func TestAccKafkaCluster_Info_revision(t *testing.T) {
 
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	configurationResourceName := "aws_msk_configuration.test"
 	configurationResourceName2 := "aws_msk_configuration.test2"
 	resourceName := "aws_msk_cluster.test"
@@ -396,7 +396,7 @@ func TestAccKafkaCluster_Info_revision(t *testing.T) {
 
 func TestAccKafkaCluster_EncryptionInfo_encryptionAtRestKMSKeyARN(t *testing.T) {
 	var cluster kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -426,7 +426,7 @@ func TestAccKafkaCluster_EncryptionInfo_encryptionAtRestKMSKeyARN(t *testing.T) 
 
 func TestAccKafkaCluster_EncryptionInfoEncryptionInTransit_clientBroker(t *testing.T) {
 	var cluster1 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -462,7 +462,7 @@ func TestAccKafkaCluster_EncryptionInfoEncryptionInTransit_clientBroker(t *testi
 
 func TestAccKafkaCluster_EncryptionInfoEncryptionInTransit_inCluster(t *testing.T) {
 	var cluster1 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -494,7 +494,7 @@ func TestAccKafkaCluster_EncryptionInfoEncryptionInTransit_inCluster(t *testing.
 
 func TestAccKafkaCluster_enhancedMonitoring(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -532,7 +532,7 @@ func TestAccKafkaCluster_enhancedMonitoring(t *testing.T) {
 
 func TestAccKafkaCluster_numberOfBrokerNodes(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -588,7 +588,7 @@ func TestAccKafkaCluster_numberOfBrokerNodes(t *testing.T) {
 
 func TestAccKafkaCluster_openMonitoring(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -636,7 +636,7 @@ func TestAccKafkaCluster_openMonitoring(t *testing.T) {
 
 func TestAccKafkaCluster_loggingInfo(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -688,7 +688,7 @@ func TestAccKafkaCluster_loggingInfo(t *testing.T) {
 
 func TestAccKafkaCluster_kafkaVersionUpgrade(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -726,7 +726,7 @@ func TestAccKafkaCluster_kafkaVersionUpgrade(t *testing.T) {
 
 func TestAccKafkaCluster_kafkaVersionDowngrade(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -774,7 +774,7 @@ func TestAccKafkaCluster_kafkaVersionDowngrade(t *testing.T) {
 
 func TestAccKafkaCluster_kafkaVersionUpgradeWithInfo(t *testing.T) {
 	var cluster1, cluster2 kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	configurationResourceName1 := "aws_msk_configuration.config1"
 	configurationResourceName2 := "aws_msk_configuration.config2"
 	resourceName := "aws_msk_cluster.test"
@@ -820,7 +820,7 @@ func TestAccKafkaCluster_kafkaVersionUpgradeWithInfo(t *testing.T) {
 
 func TestAccKafkaCluster_tags(t *testing.T) {
 	var cluster kafka.ClusterInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_msk_cluster.test"
 
 	resource.ParallelTest(t, resource.TestCase{

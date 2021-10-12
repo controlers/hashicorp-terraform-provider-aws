@@ -20,7 +20,7 @@ import (
 func TestAccAPIGatewayRestAPIPolicy_basic(t *testing.T) {
 	var v apigateway.RestApi
 	resourceName := "aws_api_gateway_rest_api_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },
@@ -53,7 +53,7 @@ func TestAccAPIGatewayRestAPIPolicy_basic(t *testing.T) {
 func TestAccAPIGatewayRestAPIPolicy_disappears(t *testing.T) {
 	var v apigateway.RestApi
 	resourceName := "aws_api_gateway_rest_api_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },
@@ -76,7 +76,7 @@ func TestAccAPIGatewayRestAPIPolicy_disappears(t *testing.T) {
 func TestAccAPIGatewayRestAPIPolicy_Disappears_restAPI(t *testing.T) {
 	var v apigateway.RestApi
 	resourceName := "aws_api_gateway_rest_api_policy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckAPIGatewayTypeEDGE(t) },

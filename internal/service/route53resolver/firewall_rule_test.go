@@ -16,7 +16,7 @@ import (
 
 func TestAccRoute53ResolverFirewallRule_basic(t *testing.T) {
 	var v route53resolver.FirewallRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccRoute53ResolverFirewallRule_basic(t *testing.T) {
 
 func TestAccRoute53ResolverFirewallRule_block(t *testing.T) {
 	var v route53resolver.FirewallRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -76,7 +76,7 @@ func TestAccRoute53ResolverFirewallRule_block(t *testing.T) {
 
 func TestAccRoute53ResolverFirewallRule_blockOverride(t *testing.T) {
 	var v route53resolver.FirewallRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -108,7 +108,7 @@ func TestAccRoute53ResolverFirewallRule_blockOverride(t *testing.T) {
 
 func TestAccRoute53ResolverFirewallRule_disappears(t *testing.T) {
 	var v route53resolver.FirewallRule
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_resolver_firewall_rule.test"
 
 	resource.ParallelTest(t, resource.TestCase{

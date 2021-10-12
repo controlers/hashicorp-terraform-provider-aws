@@ -18,7 +18,7 @@ func TestAccEC2NetworkInterfaceSgAttachment_SG_basic(t *testing.T) {
 	networkInterfaceResourceName := "aws_network_interface.test"
 	securityGroupResourceName := "aws_security_group.test"
 	resourceName := "aws_network_interface_sg_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -40,7 +40,7 @@ func TestAccEC2NetworkInterfaceSgAttachment_SG_basic(t *testing.T) {
 
 func TestAccEC2NetworkInterfaceSgAttachment_SG_disappears(t *testing.T) {
 	resourceName := "aws_network_interface_sg_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -64,7 +64,7 @@ func TestAccEC2NetworkInterfaceSgAttachment_SG_instance(t *testing.T) {
 	instanceResourceName := "aws_instance.test"
 	securityGroupResourceName := "aws_security_group.test"
 	resourceName := "aws_network_interface_sg_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -88,7 +88,7 @@ func TestAccEC2NetworkInterfaceSgAttachment_SG_dataSource(t *testing.T) {
 	instanceDataSourceName := "data.aws_instance.test"
 	securityGroupResourceName := "aws_security_group.test"
 	resourceName := "aws_network_interface_sg_attachment.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -118,7 +118,7 @@ func TestAccEC2NetworkInterfaceSgAttachment_SG_multiple(t *testing.T) {
 	resourceName2 := "aws_network_interface_sg_attachment.test.1"
 	resourceName3 := "aws_network_interface_sg_attachment.test.2"
 	resourceName4 := "aws_network_interface_sg_attachment.test.3"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

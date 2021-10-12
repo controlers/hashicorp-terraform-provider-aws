@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccRoute53DelegationSet_basic(t *testing.T) {
-	refName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	refName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_delegation_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccRoute53DelegationSet_basic(t *testing.T) {
 func TestAccRoute53DelegationSet_withZones(t *testing.T) {
 	var zone route53.GetHostedZoneOutput
 
-	refName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	refName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_delegation_set.test"
 	primaryZoneResourceName := "aws_route53_zone.primary"
 	secondaryZoneResourceName := "aws_route53_zone.secondary"
@@ -82,7 +82,7 @@ func TestAccRoute53DelegationSet_withZones(t *testing.T) {
 }
 
 func TestAccRoute53DelegationSet_disappears(t *testing.T) {
-	refName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	refName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_route53_delegation_set.test"
 
 	resource.ParallelTest(t, resource.TestCase{

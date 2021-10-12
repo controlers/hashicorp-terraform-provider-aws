@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/aws-sdk-go-base/tfawserr"
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
@@ -262,7 +263,7 @@ func sweepDevEndpoint(region string) error {
 		}
 		for _, endpoint := range page.DevEndpoints {
 			name := aws.StringValue(endpoint.EndpointName)
-			if !strings.HasPrefix(name, DevEndpointPrefix) {
+			if !strings.HasPrefix(name, acctest.ResourcePrefix) {
 				log.Printf("[INFO] Skipping Glue Dev Endpoint: %s", name)
 				continue
 			}

@@ -17,7 +17,7 @@ import (
 )
 
 func TestAccAppConfigConfigurationProfile_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_configuration_profile.test"
 	appResourceName := "aws_appconfig_application.test"
 
@@ -50,7 +50,7 @@ func TestAccAppConfigConfigurationProfile_basic(t *testing.T) {
 }
 
 func TestAccAppConfigConfigurationProfile_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_configuration_profile.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -72,7 +72,7 @@ func TestAccAppConfigConfigurationProfile_disappears(t *testing.T) {
 }
 
 func TestAccAppConfigConfigurationProfile_Validators_json(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_configuration_profile.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -125,7 +125,7 @@ func TestAccAppConfigConfigurationProfile_Validators_json(t *testing.T) {
 }
 
 func TestAccAppConfigConfigurationProfile_Validators_lambda(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_configuration_profile.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -163,7 +163,7 @@ func TestAccAppConfigConfigurationProfile_Validators_lambda(t *testing.T) {
 }
 
 func TestAccAppConfigConfigurationProfile_Validators_multiple(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_configuration_profile.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -197,7 +197,7 @@ func TestAccAppConfigConfigurationProfile_Validators_multiple(t *testing.T) {
 }
 
 func TestAccAppConfigConfigurationProfile_updateName(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	rNameUpdated := sdkacctest.RandomWithPrefix("tf-acc-test-update")
 	resourceName := "aws_appconfig_configuration_profile.test"
 
@@ -231,7 +231,7 @@ func TestAccAppConfigConfigurationProfile_updateName(t *testing.T) {
 }
 
 func TestAccAppConfigConfigurationProfile_updateDescription(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := sdkacctest.RandomWithPrefix("tf-acc-test-update")
 	resourceName := "aws_appconfig_configuration_profile.test"
 
@@ -270,7 +270,7 @@ func TestAccAppConfigConfigurationProfile_updateDescription(t *testing.T) {
 }
 
 func TestAccAppConfigConfigurationProfile_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appconfig_configuration_profile.test"
 
 	resource.ParallelTest(t, resource.TestCase{

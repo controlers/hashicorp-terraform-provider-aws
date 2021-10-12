@@ -20,7 +20,7 @@ import (
 )
 
 func testAccPermissions_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 
@@ -45,7 +45,7 @@ func testAccPermissions_basic(t *testing.T) {
 }
 
 func testAccPermissions_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 
 	resource.Test(t, resource.TestCase{
@@ -67,7 +67,7 @@ func testAccPermissions_disappears(t *testing.T) {
 }
 
 func testAccPermissions_database(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 	dbName := "aws_glue_catalog_database.test"
@@ -100,7 +100,7 @@ func testAccPermissions_database(t *testing.T) {
 }
 
 func testAccPermissions_databaseIAMAllowed(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	dbName := "aws_glue_catalog_database.test"
 
@@ -128,7 +128,7 @@ func testAccPermissions_databaseIAMAllowed(t *testing.T) {
 }
 
 func testAccPermissions_databaseMultiple(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	resourceName2 := "aws_lakeformation_permissions.test2"
 	roleName := "aws_iam_role.test"
@@ -173,7 +173,7 @@ func testAccPermissions_databaseMultiple(t *testing.T) {
 }
 
 func testAccPermissions_dataLocation(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 	bucketName := "aws_s3_bucket.test"
@@ -201,7 +201,7 @@ func testAccPermissions_dataLocation(t *testing.T) {
 }
 
 func testAccPermissions_tableBasic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 	tableName := "aws_glue_catalog_table.test"
@@ -231,7 +231,7 @@ func testAccPermissions_tableBasic(t *testing.T) {
 }
 
 func testAccPermissions_tableIAMAllowed(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	dbName := "aws_glue_catalog_table.test"
 
@@ -260,7 +260,7 @@ func testAccPermissions_tableIAMAllowed(t *testing.T) {
 }
 
 func testAccPermissions_tableImplicit(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 	tableName := "aws_glue_catalog_table.test"
@@ -288,7 +288,7 @@ func testAccPermissions_tableImplicit(t *testing.T) {
 }
 
 func testAccPermissions_tableMultipleRoles(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	resourceName2 := "aws_lakeformation_permissions.test2"
 	roleName := "aws_iam_role.test"
@@ -327,7 +327,7 @@ func testAccPermissions_tableMultipleRoles(t *testing.T) {
 }
 
 func testAccPermissions_tableSelectOnly(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 	tableName := "aws_glue_catalog_table.test"
@@ -355,7 +355,7 @@ func testAccPermissions_tableSelectOnly(t *testing.T) {
 }
 
 func testAccPermissions_tableSelectPlus(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 
@@ -379,7 +379,7 @@ func testAccPermissions_tableSelectPlus(t *testing.T) {
 }
 
 func testAccPermissions_tableWildcardNoSelect(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	databaseResourceName := "aws_glue_catalog_database.test"
 
@@ -403,7 +403,7 @@ func testAccPermissions_tableWildcardNoSelect(t *testing.T) {
 }
 
 func testAccPermissions_tableWildcardSelectOnly(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 
@@ -428,7 +428,7 @@ func testAccPermissions_tableWildcardSelectOnly(t *testing.T) {
 }
 
 func testAccPermissions_tableWildcardSelectPlus(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 
@@ -452,7 +452,7 @@ func testAccPermissions_tableWildcardSelectPlus(t *testing.T) {
 }
 
 func testAccPermissions_twcBasic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 	tableName := "aws_glue_catalog_table.test"
@@ -528,7 +528,7 @@ func testAccPermissions_twcBasic(t *testing.T) {
 }
 
 func testAccPermissions_twcImplicit(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 	tableName := "aws_glue_catalog_table.test"
@@ -557,7 +557,7 @@ func testAccPermissions_twcImplicit(t *testing.T) {
 }
 
 func testAccPermissions_twcWildcardExcludedColumns(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 
@@ -581,7 +581,7 @@ func testAccPermissions_twcWildcardExcludedColumns(t *testing.T) {
 }
 
 func testAccPermissions_twcWildcardSelectOnly(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 	tableName := "aws_glue_catalog_table.test"
@@ -611,7 +611,7 @@ func testAccPermissions_twcWildcardSelectOnly(t *testing.T) {
 }
 
 func testAccPermissions_twcWildcardSelectPlus(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_lakeformation_permissions.test"
 	roleName := "aws_iam_role.test"
 

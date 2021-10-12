@@ -17,7 +17,7 @@ import (
 func TestAccRDSProxyTarget_instance(t *testing.T) {
 	var dbProxyTarget rds.DBProxyTarget
 	resourceName := "aws_db_proxy_target.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -49,7 +49,7 @@ func TestAccRDSProxyTarget_instance(t *testing.T) {
 func TestAccRDSProxyTarget_cluster(t *testing.T) {
 	var dbProxyTarget rds.DBProxyTarget
 	resourceName := "aws_db_proxy_target.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -81,7 +81,7 @@ func TestAccRDSProxyTarget_cluster(t *testing.T) {
 func TestAccRDSProxyTarget_disappears(t *testing.T) {
 	var dbProxyTarget rds.DBProxyTarget
 	resourceName := "aws_db_proxy_target.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },

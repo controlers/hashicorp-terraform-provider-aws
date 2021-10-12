@@ -306,7 +306,7 @@ func TestAccAPIGatewayDomainName_mutualTLSAuthentication(t *testing.T) {
 	resourceName := "aws_api_gateway_domain_name.test"
 	acmCertificateResourceName := "aws_acm_certificate.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -17,7 +17,7 @@ import (
 func TestAccEC2VPCEndpointSubnetAssociation_basic(t *testing.T) {
 	var vpce ec2.VpcEndpoint
 	resourceName := "aws_vpc_endpoint_subnet_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -38,7 +38,7 @@ func TestAccEC2VPCEndpointSubnetAssociation_basic(t *testing.T) {
 func TestAccEC2VPCEndpointSubnetAssociation_disappears(t *testing.T) {
 	var vpce ec2.VpcEndpoint
 	resourceName := "aws_vpc_endpoint_subnet_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -63,7 +63,7 @@ func TestAccEC2VPCEndpointSubnetAssociation_multiple(t *testing.T) {
 	resourceName0 := "aws_vpc_endpoint_subnet_association.test.0"
 	resourceName1 := "aws_vpc_endpoint_subnet_association.test.1"
 	resourceName2 := "aws_vpc_endpoint_subnet_association.test.2"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

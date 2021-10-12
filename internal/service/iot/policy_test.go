@@ -17,7 +17,7 @@ import (
 
 func TestAccIoTPolicy_basic(t *testing.T) {
 	var v iot.GetPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iot_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccIoTPolicy_basic(t *testing.T) {
 
 func TestAccIoTPolicy_disappears(t *testing.T) {
 	var v iot.GetPolicyOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iot_policy.test"
 
 	resource.ParallelTest(t, resource.TestCase{

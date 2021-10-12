@@ -19,7 +19,7 @@ func TestAccKinesisAnalyticsV2Application_basicFlinkApplication(t *testing.T) {
 	var v kinesisanalyticsv2.ApplicationDetail
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -166,7 +166,7 @@ func TestAccKinesisAnalyticsV2Application_basicSQLApplication(t *testing.T) {
 	var v kinesisanalyticsv2.ApplicationDetail
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -206,7 +206,7 @@ func TestAccKinesisAnalyticsV2Application_basicSQLApplication(t *testing.T) {
 func TestAccKinesisAnalyticsV2Application_disappears(t *testing.T) {
 	var v kinesisanalyticsv2.ApplicationDetail
 	resourceName := "aws_kinesisanalyticsv2_application.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -229,7 +229,7 @@ func TestAccKinesisAnalyticsV2Application_disappears(t *testing.T) {
 func TestAccKinesisAnalyticsV2Application_tags(t *testing.T) {
 	var v kinesisanalyticsv2.ApplicationDetail
 	resourceName := "aws_kinesisanalyticsv2_application.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -278,7 +278,7 @@ func TestAccKinesisAnalyticsV2Application_ApplicationCode_update(t *testing.T) {
 	var v kinesisanalyticsv2.ApplicationDetail
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -362,7 +362,7 @@ func TestAccKinesisAnalyticsV2Application_CloudWatchLoggingOptions_add(t *testin
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
 	cloudWatchLogStreamResourceName := "aws_cloudwatch_log_stream.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -425,7 +425,7 @@ func TestAccKinesisAnalyticsV2Application_CloudWatchLoggingOptions_delete(t *tes
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
 	cloudWatchLogStreamResourceName := "aws_cloudwatch_log_stream.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -489,7 +489,7 @@ func TestAccKinesisAnalyticsV2Application_CloudWatchLoggingOptions_update(t *tes
 	iamRoleResourceName := "aws_iam_role.test.0"
 	cloudWatchLogStream1ResourceName := "aws_cloudwatch_log_stream.test.0"
 	cloudWatchLogStream2ResourceName := "aws_cloudwatch_log_stream.test.1"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -554,7 +554,7 @@ func TestAccKinesisAnalyticsV2Application_EnvironmentProperties_update(t *testin
 	iamRoleResourceName := "aws_iam_role.test.0"
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -751,7 +751,7 @@ func TestAccKinesisAnalyticsV2Application_FlinkApplication_update(t *testing.T) 
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObject1ResourceName := "aws_s3_bucket_object.test.0"
 	s3BucketObject2ResourceName := "aws_s3_bucket_object.test.1"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -872,7 +872,7 @@ func TestAccKinesisAnalyticsV2Application_FlinkApplicationEnvironmentProperties_
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObject1ResourceName := "aws_s3_bucket_object.test.0"
 	s3BucketObject2ResourceName := "aws_s3_bucket_object.test.1"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -1024,7 +1024,7 @@ func TestAccKinesisAnalyticsV2Application_FlinkApplication_restoreFromSnapshot(t
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test"
 	snapshotResourceName := "aws_kinesisanalyticsv2_application_snapshot.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -1294,7 +1294,7 @@ func TestAccKinesisAnalyticsV2Application_FlinkApplicationStartApplication_onCre
 	iamRoleResourceName := "aws_iam_role.test.0"
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -1370,7 +1370,7 @@ func TestAccKinesisAnalyticsV2Application_FlinkApplicationStartApplication_onUpd
 	iamRoleResourceName := "aws_iam_role.test.0"
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test.0"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -1543,7 +1543,7 @@ func TestAccKinesisAnalyticsV2Application_FlinkApplication_updateRunning(t *test
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObject1ResourceName := "aws_s3_bucket_object.test.0"
 	s3BucketObject2ResourceName := "aws_s3_bucket_object.test.1"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -1670,7 +1670,7 @@ func TestAccKinesisAnalyticsV2Application_ServiceExecutionRole_update(t *testing
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRole1ResourceName := "aws_iam_role.test.0"
 	iamRole2ResourceName := "aws_iam_role.test.1"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -1732,7 +1732,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationInput_add(t *testing.T) 
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -1843,7 +1843,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationInput_update(t *testing.
 	iamRoleResourceName := "aws_iam_role.test.0"
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
 	streamsResourceName := "aws_kinesis_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -1983,7 +1983,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationInputProcessing_add(t *t
 	iamRoleResourceName := "aws_iam_role.test.0"
 	lambdaResourceName := "aws_lambda_function.test.0"
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -2122,7 +2122,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationInputProcessing_delete(t
 	iamRoleResourceName := "aws_iam_role.test.0"
 	lambdaResourceName := "aws_lambda_function.test.0"
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -2262,7 +2262,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationInputProcessing_update(t
 	lambda1ResourceName := "aws_lambda_function.test.0"
 	lambda2ResourceName := "aws_lambda_function.test.1"
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -2407,7 +2407,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationMultiple_update(t *testi
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
 	streamsResourceName := "aws_kinesis_stream.test"
 	s3BucketResourceName := "aws_s3_bucket.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -2598,7 +2598,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationOutput_update(t *testing
 	lambdaResourceName := "aws_lambda_function.test.0"
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
 	streamsResourceName := "aws_kinesis_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -2746,7 +2746,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationReferenceDataSource_add(
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
 	s3BucketResourceName := "aws_s3_bucket.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -2850,7 +2850,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationReferenceDataSource_dele
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
 	s3BucketResourceName := "aws_s3_bucket.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -2954,7 +2954,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationReferenceDataSource_upda
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
 	s3BucketResourceName := "aws_s3_bucket.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -3081,7 +3081,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationStartApplication_onCreat
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -3161,7 +3161,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationStartApplication_onUpdat
 	resourceName := "aws_kinesisanalyticsv2_application.test"
 	iamRoleResourceName := "aws_iam_role.test.0"
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -3360,7 +3360,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplication_updateRunning(t *testin
 	firehoseResourceName := "aws_kinesis_firehose_delivery_stream.test"
 	streamsResourceName := "aws_kinesis_stream.test"
 	s3BucketResourceName := "aws_s3_bucket.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -3552,7 +3552,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationVPC_add(t *testing.T) {
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test.0"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -3676,7 +3676,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationVPC_delete(t *testing.T)
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test.0"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -3800,7 +3800,7 @@ func TestAccKinesisAnalyticsV2Application_SQLApplicationVPC_update(t *testing.T)
 	s3BucketResourceName := "aws_s3_bucket.test"
 	s3BucketObjectResourceName := "aws_s3_bucket_object.test.0"
 	vpcResourceName := "aws_vpc.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

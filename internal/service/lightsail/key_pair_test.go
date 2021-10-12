@@ -17,7 +17,7 @@ import (
 
 func TestAccLightsailKeyPair_basic(t *testing.T) {
 	var conf lightsail.KeyPair
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_lightsail_key_pair.test"
 
@@ -43,7 +43,7 @@ func TestAccLightsailKeyPair_basic(t *testing.T) {
 
 func TestAccLightsailKeyPair_publicKey(t *testing.T) {
 	var conf lightsail.KeyPair
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_lightsail_key_pair.test"
 
@@ -76,7 +76,7 @@ func TestAccLightsailKeyPair_publicKey(t *testing.T) {
 
 func TestAccLightsailKeyPair_encrypted(t *testing.T) {
 	var conf lightsail.KeyPair
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resourceName := "aws_lightsail_key_pair.test"
 

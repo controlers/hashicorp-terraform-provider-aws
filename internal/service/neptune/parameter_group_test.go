@@ -17,7 +17,7 @@ import (
 
 func TestAccNeptuneParameterGroup_basic(t *testing.T) {
 	var v neptune.DBParameterGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_neptune_parameter_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -50,7 +50,7 @@ func TestAccNeptuneParameterGroup_basic(t *testing.T) {
 
 func TestAccNeptuneParameterGroup_description(t *testing.T) {
 	var v neptune.DBParameterGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_neptune_parameter_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -78,7 +78,7 @@ func TestAccNeptuneParameterGroup_description(t *testing.T) {
 
 func TestAccNeptuneParameterGroup_parameter(t *testing.T) {
 	var v neptune.DBParameterGroup
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_neptune_parameter_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -126,7 +126,7 @@ func TestAccNeptuneParameterGroup_parameter(t *testing.T) {
 func TestAccNeptuneParameterGroup_tags(t *testing.T) {
 	var v neptune.DBParameterGroup
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_neptune_parameter_group.test"
 
 	resource.ParallelTest(t, resource.TestCase{

@@ -20,7 +20,7 @@ func testAccPolicy_basic(t *testing.T) {
 	var policy organizations.Policy
 	content1 := `{"Version": "2012-10-17", "Statement": { "Effect": "Allow", "Action": "*", "Resource": "*"}}`
 	content2 := `{"Version": "2012-10-17", "Statement": { "Effect": "Allow", "Action": "s3:*", "Resource": "*"}}`
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy.test"
 
 	resource.Test(t, resource.TestCase{
@@ -59,7 +59,7 @@ func testAccPolicy_basic(t *testing.T) {
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/5073
 func testAccPolicy_concurrent(t *testing.T) {
 	var policy1, policy2, policy3, policy4, policy5 organizations.Policy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName1 := "aws_organizations_policy.test1"
 	resourceName2 := "aws_organizations_policy.test2"
 	resourceName3 := "aws_organizations_policy.test3"
@@ -88,7 +88,7 @@ func testAccPolicy_concurrent(t *testing.T) {
 
 func testAccPolicy_description(t *testing.T) {
 	var policy organizations.Policy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy.test"
 
 	resource.Test(t, resource.TestCase{
@@ -122,7 +122,7 @@ func testAccPolicy_description(t *testing.T) {
 
 func testAccPolicy_tags(t *testing.T) {
 	var p1, p2, p3, p4 organizations.Policy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy.test"
 
 	resource.Test(t, resource.TestCase{
@@ -175,7 +175,7 @@ func testAccPolicy_tags(t *testing.T) {
 
 func testAccPolicy_disappears(t *testing.T) {
 	var p organizations.Policy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy.test"
 
 	resource.Test(t, resource.TestCase{
@@ -198,7 +198,7 @@ func testAccPolicy_disappears(t *testing.T) {
 
 func testAccPolicy_type_AI_OPT_OUT(t *testing.T) {
 	var policy organizations.Policy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy.test"
 	// Reference: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_ai-opt-out_syntax.html
 	AiOptOutPolicyContent := `{ "services": { "rekognition": { "opt_out_policy": { "@@assign": "optOut" } }, "lex": { "opt_out_policy": { "@@assign": "optIn" } } } }`
@@ -227,7 +227,7 @@ func testAccPolicy_type_AI_OPT_OUT(t *testing.T) {
 
 func testAccPolicy_type_Backup(t *testing.T) {
 	var policy organizations.Policy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy.test"
 	// Reference: https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_backup_syntax.html
 	backupPolicyContent := fmt.Sprintf(`{
@@ -324,7 +324,7 @@ func testAccPolicy_type_Backup(t *testing.T) {
 
 func testAccPolicy_type_SCP(t *testing.T) {
 	var policy organizations.Policy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy.test"
 	serviceControlPolicyContent := `{"Version": "2012-10-17", "Statement": { "Effect": "Allow", "Action": "*", "Resource": "*"}}`
 
@@ -359,7 +359,7 @@ func testAccPolicy_type_SCP(t *testing.T) {
 
 func testAccPolicy_type_Tag(t *testing.T) {
 	var policy organizations.Policy
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_organizations_policy.test"
 	tagPolicyContent := `{ "tags": { "Product": { "tag_key": { "@@assign": "Product" }, "enforced_for": { "@@assign": [ "ec2:instance" ] } } } }`
 

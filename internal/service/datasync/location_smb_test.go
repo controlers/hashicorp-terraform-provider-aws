@@ -20,7 +20,7 @@ func TestAccDataSyncLocationSMB_basic(t *testing.T) {
 	var locationSmb1 datasync.DescribeLocationSmbOutput
 
 	resourceName := "aws_datasync_location_smb.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -67,7 +67,7 @@ func TestAccDataSyncLocationSMB_basic(t *testing.T) {
 func TestAccDataSyncLocationSMB_disappears(t *testing.T) {
 	var locationSmb1 datasync.DescribeLocationSmbOutput
 	resourceName := "aws_datasync_location_smb.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },
@@ -90,7 +90,7 @@ func TestAccDataSyncLocationSMB_disappears(t *testing.T) {
 func TestAccDataSyncLocationSMB_tags(t *testing.T) {
 	var locationSmb1, locationSmb2, locationSmb3 datasync.DescribeLocationSmbOutput
 	resourceName := "aws_datasync_location_smb.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheck(t) },

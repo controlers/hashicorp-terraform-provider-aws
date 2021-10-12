@@ -17,8 +17,8 @@ import (
 func testAccVirtualRouter_basic(t *testing.T) {
 	var vr appmesh.VirtualRouterData
 	resourceName := "aws_appmesh_virtual_router.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vrName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vrName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
@@ -71,8 +71,8 @@ func testAccVirtualRouter_basic(t *testing.T) {
 func testAccVirtualRouter_tags(t *testing.T) {
 	var vr appmesh.VirtualRouterData
 	resourceName := "aws_appmesh_virtual_router.test"
-	meshName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	vrName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	meshName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	vrName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },

@@ -69,7 +69,7 @@ func TestAccEC2EIPAssociation_networkInterface(t *testing.T) {
 func TestAccEC2EIPAssociation_basic(t *testing.T) {
 	var a ec2.Address
 	resourceName := "aws_eip_association.by_allocation_id"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); acctest.PreCheckEC2VPCOnly(t) },
@@ -128,7 +128,7 @@ func TestAccEC2EIPAssociation_ec2Classic(t *testing.T) {
 
 func TestAccEC2EIPAssociation_spotInstance(t *testing.T) {
 	var a ec2.Address
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_eip_association.test"
 
 	publicKey, _, err := sdkacctest.RandSSHKeyPair(acctest.DefaultEmailAddress)
@@ -163,7 +163,7 @@ func TestAccEC2EIPAssociation_spotInstance(t *testing.T) {
 func TestAccEC2EIPAssociation_disappears(t *testing.T) {
 	var a ec2.Address
 	resourceName := "aws_eip_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },

@@ -17,7 +17,7 @@ import (
 func TestAccGlueSecurityConfiguration_basic(t *testing.T) {
 	var securityConfiguration glue.SecurityConfiguration
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_security_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -55,7 +55,7 @@ func TestAccGlueSecurityConfiguration_basic(t *testing.T) {
 func TestAccGlueSecurityConfiguration_CloudWatchEncryptionCloudWatchEncryptionMode_sseKMS(t *testing.T) {
 	var securityConfiguration glue.SecurityConfiguration
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_glue_security_configuration.test"
 
@@ -87,7 +87,7 @@ func TestAccGlueSecurityConfiguration_CloudWatchEncryptionCloudWatchEncryptionMo
 func TestAccGlueSecurityConfiguration_JobBookmarksEncryptionJobBookmarksEncryptionMode_cseKMS(t *testing.T) {
 	var securityConfiguration glue.SecurityConfiguration
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_glue_security_configuration.test"
 
@@ -119,7 +119,7 @@ func TestAccGlueSecurityConfiguration_JobBookmarksEncryptionJobBookmarksEncrypti
 func TestAccGlueSecurityConfiguration_S3EncryptionS3EncryptionMode_sseKMS(t *testing.T) {
 	var securityConfiguration glue.SecurityConfiguration
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	kmsKeyResourceName := "aws_kms_key.test"
 	resourceName := "aws_glue_security_configuration.test"
 
@@ -151,7 +151,7 @@ func TestAccGlueSecurityConfiguration_S3EncryptionS3EncryptionMode_sseKMS(t *tes
 func TestAccGlueSecurityConfiguration_S3EncryptionS3EncryptionMode_sseS3(t *testing.T) {
 	var securityConfiguration glue.SecurityConfiguration
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_security_configuration.test"
 
 	resource.ParallelTest(t, resource.TestCase{

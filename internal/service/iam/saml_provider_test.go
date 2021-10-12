@@ -16,7 +16,7 @@ import (
 )
 
 func TestAccIAMSamlProvider_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_saml_provider.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -54,7 +54,7 @@ func TestAccIAMSamlProvider_basic(t *testing.T) {
 }
 
 func TestAccIAMSamlProvider_tags(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_saml_provider.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -98,7 +98,7 @@ func TestAccIAMSamlProvider_tags(t *testing.T) {
 }
 
 func TestAccIAMSamlProvider_disappears(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_iam_saml_provider.test"
 
 	resource.ParallelTest(t, resource.TestCase{

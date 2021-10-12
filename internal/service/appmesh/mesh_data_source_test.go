@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccAppMeshMeshDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appmesh_mesh.test"
 	dataSourceName := "data.aws_appmesh_mesh.test"
 
@@ -39,7 +39,7 @@ func TestAccAppMeshMeshDataSource_basic(t *testing.T) {
 }
 
 func TestAccAppMeshMeshDataSource_meshOwner(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appmesh_mesh.test"
 	dataSourceName := "data.aws_appmesh_mesh.test"
 
@@ -67,7 +67,7 @@ func TestAccAppMeshMeshDataSource_meshOwner(t *testing.T) {
 }
 
 func TestAccAppMeshMeshDataSource_specAndTagsSet(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_appmesh_mesh.test"
 	dataSourceName := "data.aws_appmesh_mesh.test"
 

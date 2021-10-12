@@ -18,7 +18,7 @@ import (
 
 func TestAccSSMMaintenanceWindowTarget_basic(t *testing.T) {
 	var maint ssm.MaintenanceWindowTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_target.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -54,7 +54,7 @@ func TestAccSSMMaintenanceWindowTarget_basic(t *testing.T) {
 
 func TestAccSSMMaintenanceWindowTarget_noNameOrDescription(t *testing.T) {
 	var maint ssm.MaintenanceWindowTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_target.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -111,7 +111,7 @@ func TestAccSSMMaintenanceWindowTarget_validation(t *testing.T) {
 
 func TestAccSSMMaintenanceWindowTarget_update(t *testing.T) {
 	var maint ssm.MaintenanceWindowTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_target.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -167,7 +167,7 @@ func TestAccSSMMaintenanceWindowTarget_update(t *testing.T) {
 
 func TestAccSSMMaintenanceWindowTarget_resourceGroup(t *testing.T) {
 	var maint ssm.MaintenanceWindowTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_target.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -202,7 +202,7 @@ func TestAccSSMMaintenanceWindowTarget_resourceGroup(t *testing.T) {
 
 func TestAccSSMMaintenanceWindowTarget_disappears(t *testing.T) {
 	var maint ssm.MaintenanceWindowTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_target.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -224,7 +224,7 @@ func TestAccSSMMaintenanceWindowTarget_disappears(t *testing.T) {
 
 func TestAccSSMMaintenanceWindowTarget_Disappears_window(t *testing.T) {
 	var maint ssm.MaintenanceWindowTarget
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_maintenance_window_target.test"
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

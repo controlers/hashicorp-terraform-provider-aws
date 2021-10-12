@@ -53,7 +53,7 @@ func TestAccS3BucketObjectDataSource_basic(t *testing.T) {
 
 func TestAccS3BucketObjectDataSource_basicViaAccessPoint(t *testing.T) {
 	var dsObj, rObj s3.GetObjectOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	dataSourceName := "data.aws_s3_bucket_object.test"
 	resourceName := "aws_s3_bucket_object.test"
@@ -411,7 +411,7 @@ func TestAccS3BucketObjectDataSource_multipleSlashes(t *testing.T) {
 func TestAccS3BucketObjectDataSource_singleSlashAsKey(t *testing.T) {
 	var dsObj s3.GetObjectOutput
 	dataSourceName := "data.aws_s3_bucket_object.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:                  func() { acctest.PreCheck(t) },

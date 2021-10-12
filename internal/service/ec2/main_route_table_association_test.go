@@ -17,7 +17,7 @@ import (
 func TestAccEC2MainRouteTableAssociation_basic(t *testing.T) {
 	var rta ec2.RouteTableAssociation
 	resourceName := "aws_main_route_table_association.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

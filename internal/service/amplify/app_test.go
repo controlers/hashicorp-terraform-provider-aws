@@ -20,7 +20,7 @@ import (
 
 func testAccApp_basic(t *testing.T) {
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -67,7 +67,7 @@ func testAccApp_basic(t *testing.T) {
 
 func testAccApp_disappears(t *testing.T) {
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -90,7 +90,7 @@ func testAccApp_disappears(t *testing.T) {
 
 func testAccApp_Tags(t *testing.T) {
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -135,7 +135,7 @@ func testAccApp_Tags(t *testing.T) {
 
 func testAccApp_AutoBranchCreationConfig(t *testing.T) {
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	credentials := base64.StdEncoding.EncodeToString([]byte("username1:password1"))
@@ -230,7 +230,7 @@ func testAccApp_AutoBranchCreationConfig(t *testing.T) {
 
 func testAccApp_BasicAuthCredentials(t *testing.T) {
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	credentials1 := base64.StdEncoding.EncodeToString([]byte("username1:password1"))
@@ -278,7 +278,7 @@ func testAccApp_BasicAuthCredentials(t *testing.T) {
 
 func testAccApp_BuildSpec(t *testing.T) {
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -320,7 +320,7 @@ func testAccApp_BuildSpec(t *testing.T) {
 
 func testAccApp_CustomRules(t *testing.T) {
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -370,7 +370,7 @@ func testAccApp_CustomRules(t *testing.T) {
 
 func testAccApp_Description(t *testing.T) {
 	var app1, app2, app3 amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -413,7 +413,7 @@ func testAccApp_Description(t *testing.T) {
 
 func testAccApp_EnvironmentVariables(t *testing.T) {
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -457,7 +457,7 @@ func testAccApp_EnvironmentVariables(t *testing.T) {
 
 func testAccApp_IAMServiceRole(t *testing.T) {
 	var app1, app2, app3 amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 	iamRole1ResourceName := "aws_iam_role.test1"
 	iamRole2ResourceName := "aws_iam_role.test2"
@@ -501,8 +501,8 @@ func testAccApp_IAMServiceRole(t *testing.T) {
 
 func testAccApp_Name(t *testing.T) {
 	var app amplify.App
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -548,7 +548,7 @@ func testAccApp_Repository(t *testing.T) {
 	}
 
 	var app amplify.App
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_amplify_app.test"
 
 	resource.ParallelTest(t, resource.TestCase{

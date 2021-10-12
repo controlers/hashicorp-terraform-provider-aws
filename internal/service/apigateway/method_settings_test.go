@@ -17,7 +17,7 @@ import (
 
 func TestAccAPIGatewayMethodSettings_basic(t *testing.T) {
 	var stage apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccAPIGatewayMethodSettings_basic(t *testing.T) {
 
 func TestAccAPIGatewayMethodSettings_Settings_cacheDataEncrypted(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -83,7 +83,7 @@ func TestAccAPIGatewayMethodSettings_Settings_cacheDataEncrypted(t *testing.T) {
 
 func TestAccAPIGatewayMethodSettings_Settings_cacheTTLInSeconds(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -128,7 +128,7 @@ func TestAccAPIGatewayMethodSettings_Settings_cacheTTLInSeconds(t *testing.T) {
 
 func TestAccAPIGatewayMethodSettings_Settings_cachingEnabled(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -165,7 +165,7 @@ func TestAccAPIGatewayMethodSettings_Settings_cachingEnabled(t *testing.T) {
 
 func TestAccAPIGatewayMethodSettings_Settings_dataTraceEnabled(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -202,7 +202,7 @@ func TestAccAPIGatewayMethodSettings_Settings_dataTraceEnabled(t *testing.T) {
 
 func TestAccAPIGatewayMethodSettings_Settings_loggingLevel(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -241,7 +241,7 @@ func TestAccAPIGatewayMethodSettings_Settings_loggingLevel(t *testing.T) {
 
 func TestAccAPIGatewayMethodSettings_Settings_metricsEnabled(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -280,7 +280,7 @@ func TestAccAPIGatewayMethodSettings_Settings_metricsEnabled(t *testing.T) {
 
 func TestAccAPIGatewayMethodSettings_Settings_multiple(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -323,7 +323,7 @@ func TestAccAPIGatewayMethodSettings_Settings_multiple(t *testing.T) {
 
 func TestAccAPIGatewayMethodSettings_Settings_requireAuthorizationForCacheControl(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -360,7 +360,7 @@ func TestAccAPIGatewayMethodSettings_Settings_requireAuthorizationForCacheContro
 
 func TestAccAPIGatewayMethodSettings_Settings_throttlingBurstLimit(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -398,7 +398,7 @@ func TestAccAPIGatewayMethodSettings_Settings_throttlingBurstLimit(t *testing.T)
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/5690
 func TestAccAPIGatewayMethodSettings_Settings_throttlingBurstLimitDisabledByDefault(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -435,7 +435,7 @@ func TestAccAPIGatewayMethodSettings_Settings_throttlingBurstLimitDisabledByDefa
 
 func TestAccAPIGatewayMethodSettings_Settings_throttlingRateLimit(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -473,7 +473,7 @@ func TestAccAPIGatewayMethodSettings_Settings_throttlingRateLimit(t *testing.T) 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/5690
 func TestAccAPIGatewayMethodSettings_Settings_throttlingRateLimitDisabledByDefault(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -510,7 +510,7 @@ func TestAccAPIGatewayMethodSettings_Settings_throttlingRateLimitDisabledByDefau
 
 func TestAccAPIGatewayMethodSettings_Settings_unauthorizedCacheControlHeaderStrategy(t *testing.T) {
 	var stage1, stage2 apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -580,7 +580,7 @@ func testAccCheckMethodSettings_loggingLevel(conf *apigateway.Stage, path string
 
 func TestAccAPIGatewayMethodSettings_disappears(t *testing.T) {
 	var stage apigateway.Stage
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_api_gateway_method_settings.test"
 
 	resource.ParallelTest(t, resource.TestCase{

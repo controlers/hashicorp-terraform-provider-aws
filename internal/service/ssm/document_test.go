@@ -46,8 +46,8 @@ func TestAccSSMDocument_basic(t *testing.T) {
 }
 
 func TestAccSSMDocument_name(t *testing.T) {
-	rName1 := sdkacctest.RandomWithPrefix("tf-acc-test")
-	rName2 := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName1 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	rName2 := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_document.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -393,7 +393,7 @@ func TestAccSSMDocument_package(t *testing.T) {
 }
 
 func TestAccSSMDocument_SchemaVersion_1(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_ssm_document.test"
 
 	resource.ParallelTest(t, resource.TestCase{

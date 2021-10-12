@@ -10,7 +10,7 @@ import (
 )
 
 func TestAccServiceCatalogPortfolioDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_servicecatalog_portfolio.test"
 	resourceName := "aws_servicecatalog_portfolio.test"
 

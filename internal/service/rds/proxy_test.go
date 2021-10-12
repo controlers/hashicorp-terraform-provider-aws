@@ -19,7 +19,7 @@ import (
 func TestAccRDSProxy_basic(t *testing.T) {
 	var v rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -61,8 +61,8 @@ func TestAccRDSProxy_basic(t *testing.T) {
 func TestAccRDSProxy_name(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	nName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	nName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -96,7 +96,7 @@ func TestAccRDSProxy_name(t *testing.T) {
 func TestAccRDSProxy_debugLogging(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -130,7 +130,7 @@ func TestAccRDSProxy_debugLogging(t *testing.T) {
 func TestAccRDSProxy_idleClientTimeout(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -164,7 +164,7 @@ func TestAccRDSProxy_idleClientTimeout(t *testing.T) {
 func TestAccRDSProxy_requireTLS(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -198,8 +198,8 @@ func TestAccRDSProxy_requireTLS(t *testing.T) {
 func TestAccRDSProxy_roleARN(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	nName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	nName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -233,8 +233,8 @@ func TestAccRDSProxy_roleARN(t *testing.T) {
 func TestAccRDSProxy_vpcSecurityGroupIDs(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	nName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	nName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -270,7 +270,7 @@ func TestAccRDSProxy_vpcSecurityGroupIDs(t *testing.T) {
 func TestAccRDSProxy_authDescription(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	description := "foo"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -305,7 +305,7 @@ func TestAccRDSProxy_authDescription(t *testing.T) {
 func TestAccRDSProxy_authIAMAuth(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	iamAuth := "REQUIRED"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -340,8 +340,8 @@ func TestAccRDSProxy_authIAMAuth(t *testing.T) {
 func TestAccRDSProxy_authSecretARN(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	nName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	nName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
@@ -375,7 +375,7 @@ func TestAccRDSProxy_authSecretARN(t *testing.T) {
 func TestAccRDSProxy_tags(t *testing.T) {
 	var dbProxy rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	key := "foo"
 	value := "bar"
 
@@ -411,7 +411,7 @@ func TestAccRDSProxy_tags(t *testing.T) {
 func TestAccRDSProxy_disappears(t *testing.T) {
 	var v rds.DBProxy
 	resourceName := "aws_db_proxy.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccDBProxyPreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),

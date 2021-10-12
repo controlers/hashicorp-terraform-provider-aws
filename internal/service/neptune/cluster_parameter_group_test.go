@@ -140,7 +140,7 @@ func TestAccNeptuneClusterParameterGroup_NamePrefix_parameter(t *testing.T) {
 	var v neptune.DBClusterParameterGroup
 
 	resourceName := "aws_neptune_cluster_parameter_group.test"
-	prefix := "tf-acc-test"
+	prefix := acctest.ResourcePrefix
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

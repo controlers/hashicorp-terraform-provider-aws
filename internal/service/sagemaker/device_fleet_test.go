@@ -17,7 +17,7 @@ import (
 
 func TestAccSageMakerDeviceFleet_basic(t *testing.T) {
 	var deviceFleet sagemaker.DescribeDeviceFleetOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_device_fleet.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccSageMakerDeviceFleet_basic(t *testing.T) {
 
 func TestAccSageMakerDeviceFleet_description(t *testing.T) {
 	var deviceFleet sagemaker.DescribeDeviceFleetOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_device_fleet.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -85,7 +85,7 @@ func TestAccSageMakerDeviceFleet_description(t *testing.T) {
 
 func TestAccSageMakerDeviceFleet_tags(t *testing.T) {
 	var deviceFleet sagemaker.DescribeDeviceFleetOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_device_fleet.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -130,7 +130,7 @@ func TestAccSageMakerDeviceFleet_tags(t *testing.T) {
 
 func TestAccSageMakerDeviceFleet_disappears(t *testing.T) {
 	var deviceFleet sagemaker.DescribeDeviceFleetOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_sagemaker_device_fleet.test"
 
 	resource.ParallelTest(t, resource.TestCase{

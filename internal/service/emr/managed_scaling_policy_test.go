@@ -17,7 +17,7 @@ import (
 
 func TestAccEMRManagedScalingPolicy_basic(t *testing.T) {
 	resourceName := "aws_emr_managed_scaling_policy.testpolicy"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   testAccErrorCheckSkipEmrManagedScalingPolicy(t),
@@ -42,7 +42,7 @@ func TestAccEMRManagedScalingPolicy_basic(t *testing.T) {
 
 func TestAccEMRManagedScalingPolicy_ComputeLimits_maximumCoreCapacityUnits(t *testing.T) {
 	resourceName := "aws_emr_managed_scaling_policy.testpolicy"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   testAccErrorCheckSkipEmrManagedScalingPolicy(t),
@@ -67,7 +67,7 @@ func TestAccEMRManagedScalingPolicy_ComputeLimits_maximumCoreCapacityUnits(t *te
 
 func TestAccEMRManagedScalingPolicy_ComputeLimits_maximumOnDemandCapacityUnits(t *testing.T) {
 	resourceName := "aws_emr_managed_scaling_policy.testpolicy"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   testAccErrorCheckSkipEmrManagedScalingPolicy(t),
@@ -92,7 +92,7 @@ func TestAccEMRManagedScalingPolicy_ComputeLimits_maximumOnDemandCapacityUnits(t
 
 func TestAccEMRManagedScalingPolicy_disappears(t *testing.T) {
 	resourceName := "aws_emr_managed_scaling_policy.testpolicy"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   testAccErrorCheckSkipEmrManagedScalingPolicy(t),

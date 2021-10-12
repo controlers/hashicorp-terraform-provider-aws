@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccMQBrokerDataSource_basic(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_mq_broker.test"
 
 	dataSourceByIdName := "data.aws_mq_broker.by_id"

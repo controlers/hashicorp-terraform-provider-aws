@@ -719,7 +719,7 @@ func TestAccRDSParameterGroup_updateParameters(t *testing.T) {
 func TestAccRDSParameterGroup_caseParameters(t *testing.T) {
 	var v rds.DBParameterGroup
 	resourceName := "aws_db_parameter_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

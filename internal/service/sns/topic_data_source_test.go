@@ -13,7 +13,7 @@ import (
 func TestAccSNSTopicDataSource_basic(t *testing.T) {
 	resourceName := "aws_sns_topic.test"
 	datasourceName := "data.aws_sns_topic.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:   func() { acctest.PreCheck(t) },

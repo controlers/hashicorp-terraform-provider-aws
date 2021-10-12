@@ -17,7 +17,7 @@ import (
 
 func TestAccStorageGatewayFileSystemAssociation_basic(t *testing.T) {
 	var fileSystemAssociation storagegateway.FileSystemAssociationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_file_system_association.test"
 	gatewayResourceName := "aws_storagegateway_gateway.test"
 	fsxResourceName := "aws_fsx_windows_file_system.test"
@@ -54,7 +54,7 @@ func TestAccStorageGatewayFileSystemAssociation_basic(t *testing.T) {
 
 func TestAccStorageGatewayFileSystemAssociation_tags(t *testing.T) {
 	var fileSystemAssociation storagegateway.FileSystemAssociationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_file_system_association.test"
 	domainName := acctest.RandomDomainName()
 	username := "Admin"
@@ -105,7 +105,7 @@ func TestAccStorageGatewayFileSystemAssociation_tags(t *testing.T) {
 
 func TestAccStorageGatewayFileSystemAssociation_cacheAttributes(t *testing.T) {
 	var fileSystemAssociation storagegateway.FileSystemAssociationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_file_system_association.test"
 	domainName := acctest.RandomDomainName()
 	username := "Admin"
@@ -144,7 +144,7 @@ func TestAccStorageGatewayFileSystemAssociation_cacheAttributes(t *testing.T) {
 
 func TestAccStorageGatewayFileSystemAssociation_auditDestination(t *testing.T) {
 	var fileSystemAssociation storagegateway.FileSystemAssociationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_file_system_association.test"
 	domainName := acctest.RandomDomainName()
 	username := "Admin"
@@ -187,7 +187,7 @@ func TestAccStorageGatewayFileSystemAssociation_auditDestination(t *testing.T) {
 
 func TestAccStorageGatewayFileSystemAssociation_disappears(t *testing.T) {
 	var fileSystemAssociation storagegateway.FileSystemAssociationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_file_system_association.test"
 	domainName := acctest.RandomDomainName()
 	username := "Admin"
@@ -212,7 +212,7 @@ func TestAccStorageGatewayFileSystemAssociation_disappears(t *testing.T) {
 
 func TestAccStorageGatewayFileSystemAssociation_Disappears_storageGateway(t *testing.T) {
 	var fileSystemAssociation storagegateway.FileSystemAssociationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_file_system_association.test"
 	domainName := acctest.RandomDomainName()
 	username := "Admin"
@@ -240,7 +240,7 @@ func TestAccStorageGatewayFileSystemAssociation_Disappears_fsxFileSystem(t *test
 	t.Skip("A bug in the service API has been reported. Deleting the FSx file system before the association prevents association from being deleted.")
 
 	var fileSystemAssociation storagegateway.FileSystemAssociationInfo
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_storagegateway_file_system_association.test"
 	domainName := acctest.RandomDomainName()
 	username := "Admin"

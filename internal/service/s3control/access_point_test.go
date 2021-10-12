@@ -19,8 +19,8 @@ import (
 
 func TestAccS3ControlAccessPoint_basic(t *testing.T) {
 	var v s3control.GetAccessPointOutput
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	accessPointName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	accessPointName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -60,8 +60,8 @@ func TestAccS3ControlAccessPoint_basic(t *testing.T) {
 
 func TestAccS3ControlAccessPoint_disappears(t *testing.T) {
 	var v s3control.GetAccessPointOutput
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	accessPointName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	accessPointName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -84,8 +84,8 @@ func TestAccS3ControlAccessPoint_disappears(t *testing.T) {
 
 func TestAccS3ControlAccessPoint_Disappears_bucket(t *testing.T) {
 	var v s3control.GetAccessPointOutput
-	bucketName := sdkacctest.RandomWithPrefix("tf-acc-test")
-	accessPointName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	bucketName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
+	accessPointName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_access_point.test"
 	bucketResourceName := "aws_s3_bucket.test"
 
@@ -109,7 +109,7 @@ func TestAccS3ControlAccessPoint_Disappears_bucket(t *testing.T) {
 
 func TestAccS3ControlAccessPoint_Bucket_arn(t *testing.T) {
 	var v s3control.GetAccessPointOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -150,7 +150,7 @@ func TestAccS3ControlAccessPoint_Bucket_arn(t *testing.T) {
 
 func TestAccS3ControlAccessPoint_policy(t *testing.T) {
 	var v s3control.GetAccessPointOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_access_point.test"
 
 	expectedPolicyText1 := func() string {
@@ -244,7 +244,7 @@ func TestAccS3ControlAccessPoint_policy(t *testing.T) {
 
 func TestAccS3ControlAccessPoint_publicAccessBlock(t *testing.T) {
 	var v s3control.GetAccessPointOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_access_point.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -283,7 +283,7 @@ func TestAccS3ControlAccessPoint_publicAccessBlock(t *testing.T) {
 
 func TestAccS3ControlAccessPoint_vpc(t *testing.T) {
 	var v s3control.GetAccessPointOutput
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_s3_access_point.test"
 	vpcResourceName := "aws_vpc.test"
 

@@ -19,7 +19,7 @@ func TestAccEC2NetworkInterface_ENI_basic(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
 	subnetResourceName := "aws_subnet.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -59,7 +59,7 @@ func TestAccEC2NetworkInterface_ENI_basic(t *testing.T) {
 func TestAccEC2NetworkInterface_ENI_ipv6(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -102,7 +102,7 @@ func TestAccEC2NetworkInterface_ENI_ipv6(t *testing.T) {
 
 func TestAccEC2NetworkInterface_ENI_tags(t *testing.T) {
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	var conf ec2.NetworkInterface
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -148,7 +148,7 @@ func TestAccEC2NetworkInterface_ENI_tags(t *testing.T) {
 func TestAccEC2NetworkInterface_ENI_ipv6Count(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -196,7 +196,7 @@ func TestAccEC2NetworkInterface_ENI_ipv6Count(t *testing.T) {
 func TestAccEC2NetworkInterface_ENI_disappears(t *testing.T) {
 	var networkInterface ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -221,7 +221,7 @@ func TestAccEC2NetworkInterface_ENI_description(t *testing.T) {
 	resourceName := "aws_network_interface.test"
 	subnetResourceName := "aws_subnet.test"
 	securityGroupResourceName := "aws_security_group.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -287,7 +287,7 @@ func TestAccEC2NetworkInterface_ENI_description(t *testing.T) {
 func TestAccEC2NetworkInterface_ENI_attachment(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -320,7 +320,7 @@ func TestAccEC2NetworkInterface_ENI_attachment(t *testing.T) {
 func TestAccEC2NetworkInterface_ENI_ignoreExternalAttachment(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -347,7 +347,7 @@ func TestAccEC2NetworkInterface_ENI_ignoreExternalAttachment(t *testing.T) {
 func TestAccEC2NetworkInterface_ENI_sourceDestCheck(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -388,7 +388,7 @@ func TestAccEC2NetworkInterface_ENI_sourceDestCheck(t *testing.T) {
 func TestAccEC2NetworkInterface_ENI_privateIPsCount(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
@@ -451,7 +451,7 @@ func TestAccEC2NetworkInterface_ENI_privateIPsCount(t *testing.T) {
 func TestAccEC2NetworkInterface_ENIInterfaceType_efa(t *testing.T) {
 	var conf ec2.NetworkInterface
 	resourceName := "aws_network_interface.test"
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },

@@ -13,7 +13,7 @@ import (
 )
 
 func TestAccStorageGatewayLocalDiskDataSource_diskNode(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_storagegateway_local_disk.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -40,7 +40,7 @@ func TestAccStorageGatewayLocalDiskDataSource_diskNode(t *testing.T) {
 }
 
 func TestAccStorageGatewayLocalDiskDataSource_diskPath(t *testing.T) {
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	dataSourceName := "data.aws_storagegateway_local_disk.test"
 
 	resource.ParallelTest(t, resource.TestCase{

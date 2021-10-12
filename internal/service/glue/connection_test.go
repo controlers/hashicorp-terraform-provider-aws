@@ -18,7 +18,7 @@ import (
 func TestAccGlueConnection_basic(t *testing.T) {
 	var connection glue.Connection
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_connection.test"
 
 	jdbcConnectionUrl := fmt.Sprintf("jdbc:mysql://%s/testdatabase", acctest.RandomDomainName())
@@ -54,7 +54,7 @@ func TestAccGlueConnection_basic(t *testing.T) {
 func TestAccGlueConnection_mongoDB(t *testing.T) {
 	var connection glue.Connection
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_connection.test"
 
 	connectionUrl := fmt.Sprintf("mongodb://%s:27017/testdatabase", acctest.RandomDomainName())
@@ -90,7 +90,7 @@ func TestAccGlueConnection_mongoDB(t *testing.T) {
 func TestAccGlueConnection_kafka(t *testing.T) {
 	var connection glue.Connection
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_connection.test"
 
 	bootstrapServers := fmt.Sprintf("%s:9094,%s:9094", acctest.RandomDomainName(), acctest.RandomDomainName())
@@ -124,7 +124,7 @@ func TestAccGlueConnection_kafka(t *testing.T) {
 func TestAccGlueConnection_network(t *testing.T) {
 	var connection glue.Connection
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_connection.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -158,7 +158,7 @@ func TestAccGlueConnection_network(t *testing.T) {
 func TestAccGlueConnection_description(t *testing.T) {
 	var connection glue.Connection
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_connection.test"
 
 	jdbcConnectionUrl := fmt.Sprintf("jdbc:mysql://%s/testdatabase", acctest.RandomDomainName())
@@ -195,7 +195,7 @@ func TestAccGlueConnection_description(t *testing.T) {
 func TestAccGlueConnection_matchCriteria(t *testing.T) {
 	var connection glue.Connection
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_connection.test"
 
 	jdbcConnectionUrl := fmt.Sprintf("jdbc:mysql://%s/testdatabase", acctest.RandomDomainName())
@@ -247,7 +247,7 @@ func TestAccGlueConnection_matchCriteria(t *testing.T) {
 func TestAccGlueConnection_physicalConnectionRequirements(t *testing.T) {
 	var connection glue.Connection
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_connection.test"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -284,7 +284,7 @@ func TestAccGlueConnection_physicalConnectionRequirements(t *testing.T) {
 func TestAccGlueConnection_disappears(t *testing.T) {
 	var connection glue.Connection
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_glue_connection.test"
 
 	jdbcConnectionUrl := fmt.Sprintf("jdbc:mysql://%s/testdatabase", acctest.RandomDomainName())

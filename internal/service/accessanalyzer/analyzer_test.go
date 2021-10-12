@@ -18,7 +18,7 @@ import (
 func testAccAnalyzer_basic(t *testing.T) {
 	var analyzer accessanalyzer.AnalyzerSummary
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_accessanalyzer_analyzer.test"
 
 	resource.Test(t, resource.TestCase{
@@ -50,7 +50,7 @@ func testAccAnalyzer_basic(t *testing.T) {
 func testAccAnalyzer_disappears(t *testing.T) {
 	var analyzer accessanalyzer.AnalyzerSummary
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_accessanalyzer_analyzer.test"
 
 	resource.Test(t, resource.TestCase{
@@ -75,7 +75,7 @@ func testAccAnalyzer_disappears(t *testing.T) {
 func testAccAnalyzer_Tags(t *testing.T) {
 	var analyzer accessanalyzer.AnalyzerSummary
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_accessanalyzer_analyzer.test"
 
 	resource.Test(t, resource.TestCase{
@@ -122,7 +122,7 @@ func testAccAnalyzer_Tags(t *testing.T) {
 func testAccAnalyzer_Type_Organization(t *testing.T) {
 	var analyzer accessanalyzer.AnalyzerSummary
 
-	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
+	rName := sdkacctest.RandomWithPrefix(acctest.ResourcePrefix)
 	resourceName := "aws_accessanalyzer_analyzer.test"
 
 	resource.Test(t, resource.TestCase{
