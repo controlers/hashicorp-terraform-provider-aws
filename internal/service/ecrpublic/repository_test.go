@@ -71,7 +71,7 @@ func sweepRepositories(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAWSEcrPublicRepository_basic(t *testing.T) {
+func TestAccECRPublicRepository_basic(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
@@ -100,7 +100,7 @@ func TestAccAWSEcrPublicRepository_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcrPublicRepository_catalogdata_abouttext(t *testing.T) {
+func TestAccECRPublicRepository_CatalogData_aboutText(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
@@ -136,7 +136,7 @@ func TestAccAWSEcrPublicRepository_catalogdata_abouttext(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcrPublicRepository_catalogdata_architectures(t *testing.T) {
+func TestAccECRPublicRepository_CatalogData_architectures(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
@@ -172,7 +172,7 @@ func TestAccAWSEcrPublicRepository_catalogdata_architectures(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcrPublicRepository_catalogdata_description(t *testing.T) {
+func TestAccECRPublicRepository_CatalogData_description(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
@@ -208,7 +208,7 @@ func TestAccAWSEcrPublicRepository_catalogdata_description(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcrPublicRepository_catalogdata_operatingsystems(t *testing.T) {
+func TestAccECRPublicRepository_CatalogData_operatingSystems(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
@@ -244,7 +244,7 @@ func TestAccAWSEcrPublicRepository_catalogdata_operatingsystems(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcrPublicRepository_catalogdata_usagetext(t *testing.T) {
+func TestAccECRPublicRepository_CatalogData_usageText(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
@@ -280,7 +280,7 @@ func TestAccAWSEcrPublicRepository_catalogdata_usagetext(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcrPublicRepository_catalogdata_logoimageblob(t *testing.T) {
+func TestAccECRPublicRepository_CatalogData_logoImageBlob(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
@@ -309,7 +309,7 @@ func TestAccAWSEcrPublicRepository_catalogdata_logoimageblob(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcrPublicRepository_basic_forcedestroy(t *testing.T) {
+func TestAccECRPublicRepository_Basic_forceDestroy(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
@@ -339,7 +339,7 @@ func TestAccAWSEcrPublicRepository_basic_forcedestroy(t *testing.T) {
 	})
 }
 
-func TestAccAWSEcrPublicRepository_disappears(t *testing.T) {
+func TestAccECRPublicRepository_disappears(t *testing.T) {
 	var v ecrpublic.Repository
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_ecrpublic_repository.test"
