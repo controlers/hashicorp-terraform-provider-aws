@@ -19,6 +19,22 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
 )
 
 func init() {
@@ -272,7 +288,7 @@ func testAccCheckAWSSagemakerAppImageConfigDestroy(s *terraform.State) error {
 			continue
 		}
 
-		config, err := finder.AppImageConfigByName(conn, rs.Primary.ID)
+		config, err := tfsagemaker.FindAppImageConfigByName(conn, rs.Primary.ID)
 
 		if tfawserr.ErrCodeEquals(err, sagemaker.ErrCodeResourceNotFound) {
 			continue
@@ -302,7 +318,7 @@ func testAccCheckAWSSagemakerAppImageConfigExists(n string, config *sagemaker.De
 		}
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
-		resp, err := finder.AppImageConfigByName(conn, rs.Primary.ID)
+		resp, err := tfsagemaker.FindAppImageConfigByName(conn, rs.Primary.ID)
 		if err != nil {
 			return err
 		}

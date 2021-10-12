@@ -19,6 +19,22 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
+	tfsagemaker "github.com/hashicorp/terraform-provider-aws/internal/service/sagemaker"
 )
 
 func init() {
@@ -248,7 +264,7 @@ func testAccCheckAWSSagemakerFlowDefinitionDestroy(s *terraform.State) error {
 			continue
 		}
 
-		_, err := finder.FlowDefinitionByName(conn, rs.Primary.ID)
+		_, err := tfsagemaker.FindFlowDefinitionByName(conn, rs.Primary.ID)
 
 		if tfresource.NotFound(err) {
 			continue
@@ -277,7 +293,7 @@ func testAccCheckAWSSagemakerFlowDefinitionExists(n string, flowDefinition *sage
 
 		conn := acctest.Provider.Meta().(*conns.AWSClient).SageMakerConn
 
-		output, err := finder.FlowDefinitionByName(conn, rs.Primary.ID)
+		output, err := tfsagemaker.FindFlowDefinitionByName(conn, rs.Primary.ID)
 
 		if err != nil {
 			return err
