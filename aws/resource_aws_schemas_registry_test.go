@@ -115,7 +115,7 @@ func TestAccAWSSchemasRegistry_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(schemas.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, schemas.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSchemasRegistryDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -145,14 +145,14 @@ func TestAccAWSSchemasRegistry_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(schemas.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, schemas.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSchemasRegistryDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSSchemasRegistryConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckSchemasRegistryExists(resourceName, &v),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsSchemasRegistry(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsSchemasRegistry(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -168,7 +168,7 @@ func TestAccAWSSchemasRegistry_Description(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(schemas.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, schemas.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSchemasRegistryDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -209,7 +209,7 @@ func TestAccAWSSchemasRegistry_Tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(schemas.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, schemas.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSSchemasRegistryDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -247,7 +247,7 @@ func TestAccAWSSchemasRegistry_Tags(t *testing.T) {
 }
 
 func testAccCheckAWSSchemasRegistryDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).schemasconn
+	conn := acctest.Provider.Meta().(*AWSClient).schemasconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_schemas_registry" {
@@ -281,7 +281,7 @@ func testAccCheckSchemasRegistryExists(n string, v *schemas.DescribeRegistryOutp
 			return fmt.Errorf("No EventBridge Schemas Registry ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).schemasconn
+		conn := acctest.Provider.Meta().(*AWSClient).schemasconn
 
 		output, err := finder.RegistryByName(conn, rs.Primary.ID)
 
