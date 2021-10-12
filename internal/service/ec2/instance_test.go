@@ -31,7 +31,7 @@ func init() {
 
 	resource.AddTestSweepers("aws_instance", &resource.Sweeper{
 		Name: "aws_instance",
-		F:    testSweepInstances,
+		F:    sweepInstances,
 		Dependencies: []string{
 			"aws_autoscaling_group",
 			"aws_spot_fleet_request",
@@ -46,7 +46,7 @@ func testAccErrorCheckSkipEC2(t *testing.T) resource.ErrorCheckFunc {
 	)
 }
 
-func testSweepInstances(region string) error {
+func sweepInstances(region string) error {
 	client, err := sweep.SharedRegionalSweepClient(region)
 
 	if err != nil {
@@ -548,7 +548,7 @@ func TestAccAWSInstance_blockDevices(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceConfigBlockDevices(rootVolumeSize),
+				Config: testAccInstanceBlockDevicesConfig(rootVolumeSize),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &v),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.#", "1"),
@@ -1632,7 +1632,7 @@ func TestAccAWSInstance_EbsRootDevice_basic(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceEbsRootDeviceBasic(),
+				Config: testAccInstanceEBSRootDeviceBasic(),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &instance),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.#", "1"),
@@ -1667,7 +1667,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifySize(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceRootBlockDevice(originalSize, deleteOnTermination, volumeType),
+				Config: testAccInstanceRootBlockDevice(originalSize, deleteOnTermination, volumeType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &original),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", originalSize),
@@ -1676,7 +1676,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifySize(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceRootBlockDevice(updatedSize, deleteOnTermination, volumeType),
+				Config: testAccInstanceRootBlockDevice(updatedSize, deleteOnTermination, volumeType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &updated),
 					testAccCheckInstanceNotRecreated(&original, &updated),
@@ -1707,7 +1707,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyType(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceRootBlockDevice(volumeSize, deleteOnTermination, originalType),
+				Config: testAccInstanceRootBlockDevice(volumeSize, deleteOnTermination, originalType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &original),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", volumeSize),
@@ -1716,7 +1716,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyType(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceRootBlockDevice(volumeSize, deleteOnTermination, updatedType),
+				Config: testAccInstanceRootBlockDevice(volumeSize, deleteOnTermination, updatedType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &updated),
 					testAccCheckInstanceNotRecreated(&original, &updated),
@@ -1748,7 +1748,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyIOPS_Io1(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceRootBlockDeviceWithIOPS(volumeSize, deleteOnTermination, volumeType, originalIOPS),
+				Config: testAccInstanceRootBlockDeviceWithIOPS(volumeSize, deleteOnTermination, volumeType, originalIOPS),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &original),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", volumeSize),
@@ -1758,7 +1758,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyIOPS_Io1(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceRootBlockDeviceWithIOPS(volumeSize, deleteOnTermination, volumeType, updatedIOPS),
+				Config: testAccInstanceRootBlockDeviceWithIOPS(volumeSize, deleteOnTermination, volumeType, updatedIOPS),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &updated),
 					testAccCheckInstanceNotRecreated(&original, &updated),
@@ -1791,7 +1791,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyIOPS_Io2(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceRootBlockDeviceWithIOPS(volumeSize, deleteOnTermination, volumeType, originalIOPS),
+				Config: testAccInstanceRootBlockDeviceWithIOPS(volumeSize, deleteOnTermination, volumeType, originalIOPS),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &original),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", volumeSize),
@@ -1801,7 +1801,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyIOPS_Io2(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceRootBlockDeviceWithIOPS(volumeSize, deleteOnTermination, volumeType, updatedIOPS),
+				Config: testAccInstanceRootBlockDeviceWithIOPS(volumeSize, deleteOnTermination, volumeType, updatedIOPS),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &updated),
 					testAccCheckInstanceNotRecreated(&original, &updated),
@@ -1834,7 +1834,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyThroughput_Gp3(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceRootBlockDeviceWithThroughput(volumeSize, deleteOnTermination, volumeType, originalThroughput),
+				Config: testAccInstanceRootBlockDeviceWithThroughput(volumeSize, deleteOnTermination, volumeType, originalThroughput),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &original),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", volumeSize),
@@ -1844,7 +1844,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyThroughput_Gp3(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceRootBlockDeviceWithThroughput(volumeSize, deleteOnTermination, volumeType, updatedThroughput),
+				Config: testAccInstanceRootBlockDeviceWithThroughput(volumeSize, deleteOnTermination, volumeType, updatedThroughput),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &updated),
 					testAccCheckInstanceNotRecreated(&original, &updated),
@@ -1876,7 +1876,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyDeleteOnTermination(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceRootBlockDevice(volumeSize, originalDeleteOnTermination, volumeType),
+				Config: testAccInstanceRootBlockDevice(volumeSize, originalDeleteOnTermination, volumeType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &original),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", volumeSize),
@@ -1885,7 +1885,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyDeleteOnTermination(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceRootBlockDevice(volumeSize, updatedDeleteOnTermination, volumeType),
+				Config: testAccInstanceRootBlockDevice(volumeSize, updatedDeleteOnTermination, volumeType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &updated),
 					testAccCheckInstanceNotRecreated(&original, &updated),
@@ -1921,7 +1921,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyAll(t *testing.T) {
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceRootBlockDevice(originalSize, originalDeleteOnTermination, originalType),
+				Config: testAccInstanceRootBlockDevice(originalSize, originalDeleteOnTermination, originalType),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &original),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", originalSize),
@@ -1930,7 +1930,7 @@ func TestAccAWSInstance_EbsRootDevice_ModifyAll(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceRootBlockDeviceWithIOPS(updatedSize, updatedDeleteOnTermination, updatedType, updatedIOPS),
+				Config: testAccInstanceRootBlockDeviceWithIOPS(updatedSize, updatedDeleteOnTermination, updatedType, updatedIOPS),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &updated),
 					testAccCheckInstanceNotRecreated(&original, &updated),
@@ -1961,7 +1961,7 @@ func TestAccAWSInstance_EbsRootDevice_MultipleBlockDevices_ModifySize(t *testing
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceConfigBlockDevicesWithDeleteOnTerminate(originalRootVolumeSize, deleteOnTermination),
+				Config: testAccInstanceBlockDevicesWithDeleteOnTerminateConfig(originalRootVolumeSize, deleteOnTermination),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &before),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", originalRootVolumeSize),
@@ -1977,7 +1977,7 @@ func TestAccAWSInstance_EbsRootDevice_MultipleBlockDevices_ModifySize(t *testing
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceConfigBlockDevicesWithDeleteOnTerminate(updatedRootVolumeSize, deleteOnTermination),
+				Config: testAccInstanceBlockDevicesWithDeleteOnTerminateConfig(updatedRootVolumeSize, deleteOnTermination),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &after),
 					testAccCheckInstanceNotRecreated(&before, &after),
@@ -2014,7 +2014,7 @@ func TestAccAWSInstance_EbsRootDevice_MultipleBlockDevices_ModifyDeleteOnTermina
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceConfigBlockDevicesWithDeleteOnTerminate(rootVolumeSize, originalDeleteOnTermination),
+				Config: testAccInstanceBlockDevicesWithDeleteOnTerminateConfig(rootVolumeSize, originalDeleteOnTermination),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &before),
 					resource.TestCheckResourceAttr(resourceName, "root_block_device.0.volume_size", rootVolumeSize),
@@ -2031,7 +2031,7 @@ func TestAccAWSInstance_EbsRootDevice_MultipleBlockDevices_ModifyDeleteOnTermina
 				),
 			},
 			{
-				Config: testAccAwsEc2InstanceConfigBlockDevicesWithDeleteOnTerminate(rootVolumeSize, updatedDeleteOnTermination),
+				Config: testAccInstanceBlockDevicesWithDeleteOnTerminateConfig(rootVolumeSize, updatedDeleteOnTermination),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &after),
 					testAccCheckInstanceNotRecreated(&before, &after),
@@ -2065,7 +2065,7 @@ func TestAccAWSInstance_EbsRootDevice_MultipleDynamicEBSBlockDevices(t *testing.
 		CheckDestroy: testAccCheckInstanceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAwsEc2InstanceConfigDynamicEBSBlockDevices(),
+				Config: testAccInstanceDynamicEBSBlockDevicesConfig(),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &instance),
 					resource.TestCheckResourceAttr(resourceName, "ebs_block_device.#", "3"),
@@ -2121,7 +2121,7 @@ func TestAccAWSInstance_primaryNetworkInterface(t *testing.T) {
 				Config: testAccInstanceConfigPrimaryNetworkInterface(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &instance),
-					testAccCheckAWSENIExists(eniResourceName, &eni),
+					testAccCheckENIExists(eniResourceName, &eni),
 					resource.TestCheckResourceAttr(resourceName, "network_interface.#", "1"),
 				),
 			},
@@ -2152,7 +2152,7 @@ func TestAccAWSInstance_primaryNetworkInterfaceSourceDestCheck(t *testing.T) {
 				Config: testAccInstanceConfigPrimaryNetworkInterfaceSourceDestCheck(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &instance),
-					testAccCheckAWSENIExists(eniResourceName, &eni),
+					testAccCheckENIExists(eniResourceName, &eni),
 					resource.TestCheckResourceAttr(resourceName, "source_dest_check", "false"),
 				),
 			},
@@ -2186,7 +2186,7 @@ func TestAccAWSInstance_addSecondaryInterface(t *testing.T) {
 				Config: testAccInstanceConfigAddSecondaryNetworkInterfaceBefore(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &before),
-					testAccCheckAWSENIExists(eniPrimaryResourceName, &eniPrimary),
+					testAccCheckENIExists(eniPrimaryResourceName, &eniPrimary),
 					resource.TestCheckResourceAttr(resourceName, "network_interface.#", "1"),
 				),
 			},
@@ -2200,7 +2200,7 @@ func TestAccAWSInstance_addSecondaryInterface(t *testing.T) {
 				Config: testAccInstanceConfigAddSecondaryNetworkInterfaceAfter(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckInstanceExists(resourceName, &after),
-					testAccCheckAWSENIExists(eniSecondaryResourceName, &eniSecondary),
+					testAccCheckENIExists(eniSecondaryResourceName, &eniSecondary),
 					resource.TestCheckResourceAttr(resourceName, "network_interface.#", "1"),
 				),
 			},
@@ -4056,7 +4056,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigAtLeastOneOtherEbsVolume(rName string) string {
 	return acctest.ConfigCompose(
 		testAccLatestAmazonLinuxHvmInstanceStoreAmiConfig(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 # Ensure that there is at least 1 EBS volume in the current region.
 # See https://github.com/hashicorp/terraform/issues/1249.
@@ -4089,7 +4089,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigWithUserDataBase64(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami       = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4104,7 +4104,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigWithSmallInstanceType(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami       = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4122,7 +4122,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigUpdateInstanceType(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami       = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4207,8 +4207,8 @@ resource "aws_instance" "test" {
 `)
 }
 
-func testAccAwsEc2InstanceEbsRootDeviceBasic() string {
-	return acctest.ConfigCompose(testAccAwsEc2InstanceAmiWithEbsRootVolume, `
+func testAccInstanceEBSRootDeviceBasic() string {
+	return acctest.ConfigCompose(testAccInstanceAMIWithEBSRootVolume, `
 resource "aws_instance" "test" {
   ami = data.aws_ami.ami.id
 
@@ -4217,15 +4217,15 @@ resource "aws_instance" "test" {
 `)
 }
 
-func testAccAwsEc2InstanceRootBlockDevice(size, delete, volumeType string) string {
-	return testAccAwsEc2InstanceRootBlockDeviceWithIOPS(size, delete, volumeType, "")
+func testAccInstanceRootBlockDevice(size, delete, volumeType string) string {
+	return testAccInstanceRootBlockDeviceWithIOPS(size, delete, volumeType, "")
 }
 
-func testAccAwsEc2InstanceRootBlockDeviceWithIOPS(size, delete, volumeType, iops string) string {
+func testAccInstanceRootBlockDeviceWithIOPS(size, delete, volumeType, iops string) string {
 	if iops == "" {
 		iops = "null"
 	}
-	return acctest.ConfigCompose(testAccAwsEc2InstanceAmiWithEbsRootVolume, fmt.Sprintf(`
+	return acctest.ConfigCompose(testAccInstanceAMIWithEBSRootVolume, fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami = data.aws_ami.ami.id
 
@@ -4241,11 +4241,11 @@ resource "aws_instance" "test" {
 `, size, delete, volumeType, iops))
 }
 
-func testAccAwsEc2InstanceRootBlockDeviceWithThroughput(size, delete, volumeType, throughput string) string {
+func testAccInstanceRootBlockDeviceWithThroughput(size, delete, volumeType, throughput string) string {
 	if throughput == "" {
 		throughput = "null"
 	}
-	return acctest.ConfigCompose(testAccAwsEc2InstanceAmiWithEbsRootVolume, fmt.Sprintf(`
+	return acctest.ConfigCompose(testAccInstanceAMIWithEBSRootVolume, fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami = data.aws_ami.ami.id
 
@@ -4325,7 +4325,7 @@ resource "aws_instance" "test" {
 `)
 }
 
-const testAccAwsEc2InstanceAmiWithEbsRootVolume = `
+const testAccInstanceAMIWithEBSRootVolume = `
 data "aws_ami" "ami" {
   owners      = ["amazon"]
   most_recent = true
@@ -4347,11 +4347,11 @@ data "aws_ami" "ami" {
 }
 `
 
-func testAccAwsEc2InstanceConfigBlockDevices(size string) string {
-	return testAccAwsEc2InstanceConfigBlockDevicesWithDeleteOnTerminate(size, "")
+func testAccInstanceBlockDevicesConfig(size string) string {
+	return testAccInstanceBlockDevicesWithDeleteOnTerminateConfig(size, "")
 }
 
-func testAccAwsEc2InstanceConfigBlockDevicesWithDeleteOnTerminate(size, delete string) string {
+func testAccInstanceBlockDevicesWithDeleteOnTerminateConfig(size, delete string) string {
 	if delete == "" {
 		delete = "null"
 	}
@@ -4414,7 +4414,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigSourceDestEnable(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4427,7 +4427,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigSourceDestDisable(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami               = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4441,7 +4441,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigDisableAPITermination(rName string, val bool) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                     = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4455,7 +4455,7 @@ resource "aws_instance" "test" {
 func testAccEc2InstanceConfigDedicatedInstance(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4510,7 +4510,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigPlacementGroup(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_placement_group" "test" {
   name     = %[1]q
@@ -4534,7 +4534,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigIpv6ErrorConfig(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcIpv6Config(rName),
+		testAccInstanceVPCIPv6Config(rName),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4553,7 +4553,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigIpv6Support(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcIpv6Config(rName),
+		testAccInstanceVPCIPv6Config(rName),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4571,7 +4571,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigIpv6SupportWithIpv4(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcIpv6Config(rName),
+		testAccInstanceVPCIPv6Config(rName),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -4631,7 +4631,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigRootBlockDeviceKmsKeyArn(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_kms_key" "test" {
   deletion_window_in_days = 7
@@ -4918,7 +4918,7 @@ resource "aws_instance" "test" {
 `, rName))
 }
 
-var testAccInstanceConfigEBSBlockDeviceInvalidIops = acctest.ConfigCompose(testAccAwsEc2InstanceAmiWithEbsRootVolume, `
+var testAccInstanceConfigEBSBlockDeviceInvalidIops = acctest.ConfigCompose(testAccInstanceAMIWithEBSRootVolume, `
 resource "aws_instance" "test" {
   ami = data.aws_ami.ami.id
 
@@ -4933,7 +4933,7 @@ resource "aws_instance" "test" {
 }
 `)
 
-var testAccInstanceConfigEBSBlockDeviceInvalidThroughput = acctest.ConfigCompose(testAccAwsEc2InstanceAmiWithEbsRootVolume, `
+var testAccInstanceConfigEBSBlockDeviceInvalidThroughput = acctest.ConfigCompose(testAccInstanceAMIWithEBSRootVolume, `
 resource "aws_instance" "test" {
   ami = data.aws_ami.ami.id
 
@@ -5172,7 +5172,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigPrivateIP(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5186,7 +5186,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigEmptyPrivateIP(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5200,7 +5200,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigAssociatePublicIPAndPrivateIP(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5215,8 +5215,8 @@ resource "aws_instance" "test" {
 func testAccInstanceNetworkInstanceSecurityGroups(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
-		testAccAwsInstanceVpcSecurityGroupConfig(rName),
+		testAccInstanceVPCConfig(rName, false),
+		testAccInstanceVPCSecurityGroupConfig(rName),
 		`
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5238,8 +5238,8 @@ resource "aws_eip" "test" {
 func testAccInstanceNetworkInstanceVPCSecurityGroupIDs(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
-		testAccAwsInstanceVpcSecurityGroupConfig(rName),
+		testAccInstanceVPCConfig(rName, false),
+		testAccInstanceVPCSecurityGroupConfig(rName),
 		`
 resource "aws_instance" "test" {
   ami                    = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5260,8 +5260,8 @@ resource "aws_eip" "test" {
 func testAccInstanceNetworkInstanceVPCRemoveSecurityGroupIDs(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
-		testAccAwsInstanceVpcSecurityGroupConfig(rName),
+		testAccInstanceVPCConfig(rName, false),
+		testAccInstanceVPCSecurityGroupConfig(rName),
 		`
 resource "aws_instance" "test" {
   ami                    = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5302,7 +5302,7 @@ resource "aws_instance" "test" {
 
 func testAccInstanceConfigRootBlockDeviceMismatch(rName string) string {
 	return acctest.ConfigCompose(
-		testAccAwsInstanceVpcConfig(rName, false), `
+		testAccInstanceVPCConfig(rName, false), `
 resource "aws_instance" "test" {
   # This is an AMI in UsWest2 with RootDeviceName: "/dev/sda1"; actual root: "/dev/sda"
   ami = "ami-ef5b69df"
@@ -5321,7 +5321,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigForceNewAndTagsDrift(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5334,7 +5334,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigForceNewAndTagsDrift_Update(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5347,7 +5347,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigPrimaryNetworkInterface(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id   = aws_subnet.test.id
@@ -5373,7 +5373,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigPrimaryNetworkInterfaceSourceDestCheck(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_network_interface" "test" {
   subnet_id         = aws_subnet.test.id
@@ -5400,7 +5400,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigAddSecondaryNetworkInterfaceBefore(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_network_interface" "primary" {
   subnet_id   = aws_subnet.test.id
@@ -5435,7 +5435,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigAddSecondaryNetworkInterfaceAfter(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_network_interface" "primary" {
   subnet_id   = aws_subnet.test.id
@@ -5476,7 +5476,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigAddSecurityGroupBefore(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_subnet" "test2" {
   cidr_block        = "10.1.2.0/24"
@@ -5536,7 +5536,7 @@ resource "aws_network_interface" "test" {
 func testAccInstanceConfigAddSecurityGroupAfter(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_subnet" "test2" {
   cidr_block        = "10.1.2.0/24"
@@ -5597,7 +5597,7 @@ resource "aws_network_interface" "test" {
 func testAccInstanceConfigPublicAndPrivateSecondaryIPs(rName string, isPublic bool) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_security_group" "test" {
   vpc_id      = aws_vpc.test.id
@@ -5628,7 +5628,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigPrivateIPAndSecondaryIPs(rName, privateIP, secondaryIPs string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_security_group" "test" {
   vpc_id      = aws_vpc.test.id
@@ -5658,7 +5658,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_associatePublic_defaultPrivate(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5675,7 +5675,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_associatePublic_defaultPublic(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, true),
+		testAccInstanceVPCConfig(rName, true),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5692,7 +5692,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_associatePublic_explicitPublic(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, true),
+		testAccInstanceVPCConfig(rName, true),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5710,7 +5710,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_associatePublic_explicitPrivate(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, true),
+		testAccInstanceVPCConfig(rName, true),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5728,7 +5728,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_associatePublic_overridePublic(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5746,7 +5746,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_associatePublic_overridePrivate(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, true),
+		testAccInstanceVPCConfig(rName, true),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5781,7 +5781,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_CreditSpecification_Empty_NonBurstable(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5796,7 +5796,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_CreditSpecification_Unspecified_NonBurstable(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5809,7 +5809,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_creditSpecification_unspecified(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5822,7 +5822,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_creditSpecification_unspecified_t3(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5835,7 +5835,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_creditSpecification_standardCpuCredits(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5852,7 +5852,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_creditSpecification_standardCpuCredits_t3(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5869,7 +5869,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_creditSpecification_unlimitedCpuCredits(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5886,7 +5886,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_creditSpecification_unlimitedCpuCredits_t3(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5903,7 +5903,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_creditSpecification_isNotAppliedToNonBurstable(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5920,7 +5920,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_creditSpecification_unknownCpuCredits(rName, instanceType string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5935,7 +5935,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_UserData_Unspecified(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -5948,7 +5948,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfig_UserData_EmptyString(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		`
 resource "aws_instance" "test" {
   ami           = data.aws_ami.amzn-ami-minimal-hvm-ebs.id
@@ -6042,11 +6042,11 @@ data "aws_ami" "win2016core-ami" {
 `
 }
 
-// testAccAwsInstanceVpcConfig returns the configuration for tests that create
+// testAccInstanceVPCConfig returns the configuration for tests that create
 //   1) a VPC without IPv6 support
 //   2) a subnet in the VPC that optionally assigns public IP addresses to ENIs
 // The resources are named 'test'.
-func testAccAwsInstanceVpcConfig(rName string, mapPublicIpOnLaunch bool) string {
+func testAccInstanceVPCConfig(rName string, mapPublicIpOnLaunch bool) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(), fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -6069,7 +6069,7 @@ resource "aws_subnet" "test" {
 `, rName, mapPublicIpOnLaunch))
 }
 
-func testAccAwsInstanceVpcConfigBasic(rName string) string {
+func testAccInstanceVPCBasicConfig(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptIn(), fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.0.0.0/16"
@@ -6091,11 +6091,11 @@ resource "aws_subnet" "test" {
 `, rName))
 }
 
-// testAccAwsInstanceVpcSecurityGroupConfig returns the configuration for tests that create
+// testAccInstanceVPCSecurityGroupConfig returns the configuration for tests that create
 //   1) a VPC security group
 //   2) an internet gateway in the VPC
 // The resources are named 'test'.
-func testAccAwsInstanceVpcSecurityGroupConfig(rName string) string {
+func testAccInstanceVPCSecurityGroupConfig(rName string) string {
 	return fmt.Sprintf(`
 resource "aws_internet_gateway" "test" {
   vpc_id = aws_vpc.test.id
@@ -6124,11 +6124,11 @@ resource "aws_security_group" "test" {
 `, rName)
 }
 
-// testAccAwsInstanceVpcIpv6Config returns the configuration for tests that create
+// testAccInstanceVPCIPv6Config returns the configuration for tests that create
 //   1) a VPC with IPv6 support
 //   2) a subnet in the VPC with an assigned IPv6 CIDR block
 // The resources are named 'test'.
-func testAccAwsInstanceVpcIpv6Config(rName string) string {
+func testAccInstanceVPCIPv6Config(rName string) string {
 	return acctest.ConfigCompose(acctest.ConfigAvailableAZsNoOptInDefaultExclude(), fmt.Sprintf(`
 resource "aws_vpc" "test" {
   cidr_block = "10.1.0.0/16"
@@ -6192,7 +6192,7 @@ resource "aws_instance" "test" {
 func testAccInstanceConfigMetadataOptions(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		acctest.AvailableEC2InstanceTypeForRegion("t3.micro", "t2.micro"),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
@@ -6218,7 +6218,7 @@ data "aws_instance" "test" {
 func testAccInstanceConfigMetadataOptionsUpdated(rName string) string {
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(rName, false),
+		testAccInstanceVPCConfig(rName, false),
 		acctest.AvailableEC2InstanceTypeForRegion("t3.micro", "t2.micro"),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
@@ -6243,7 +6243,7 @@ func testAccInstanceConfigEnclaveOptions(enabled bool) string {
 	name := "tf-acc-instance-enclaves"
 	return acctest.ConfigCompose(
 		acctest.ConfigLatestAmazonLinuxHVMEBSAMI(),
-		testAccAwsInstanceVpcConfig(name, false),
+		testAccInstanceVPCConfig(name, false),
 		acctest.AvailableEC2InstanceTypeForRegion("c5a.xlarge", "c5.xlarge"),
 		fmt.Sprintf(`
 resource "aws_instance" "test" {
@@ -6262,7 +6262,7 @@ resource "aws_instance" "test" {
 `, name, enabled))
 }
 
-func testAccAwsEc2InstanceConfigDynamicEBSBlockDevices() string {
+func testAccInstanceDynamicEBSBlockDevicesConfig() string {
 	return acctest.ConfigCompose(testAccLatestAmazonLinuxPvEbsAmiConfig(), `
 resource "aws_instance" "test" {
   ami = data.aws_ami.amzn-ami-minimal-pv-ebs.id
