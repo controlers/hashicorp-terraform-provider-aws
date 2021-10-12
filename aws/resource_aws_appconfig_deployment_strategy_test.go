@@ -88,7 +88,7 @@ func TestAccAWSAppConfigDeploymentStrategy_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigDeploymentStrategyDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -120,7 +120,7 @@ func TestAccAWSAppConfigDeploymentStrategy_updateDescription(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigDeploymentStrategyDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -153,7 +153,7 @@ func TestAccAWSAppConfigDeploymentStrategy_updateFinalBakeTime(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigDeploymentStrategyDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -198,14 +198,14 @@ func TestAccAWSAppConfigDeploymentStrategy_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigDeploymentStrategyDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSAppConfigDeploymentStrategyConfigName(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSAppConfigDeploymentStrategyExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsAppconfigDeploymentStrategy(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsAppconfigDeploymentStrategy(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -220,7 +220,7 @@ func TestAccAWSAppConfigDeploymentStrategy_Tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigDeploymentStrategyDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -258,7 +258,7 @@ func TestAccAWSAppConfigDeploymentStrategy_Tags(t *testing.T) {
 }
 
 func testAccCheckAppConfigDeploymentStrategyDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).appconfigconn
+	conn := acctest.Provider.Meta().(*AWSClient).appconfigconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_appconfig_deployment_strategy" {
@@ -298,7 +298,7 @@ func testAccCheckAWSAppConfigDeploymentStrategyExists(resourceName string) resou
 			return fmt.Errorf("Resource (%s) ID not set", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).appconfigconn
+		conn := acctest.Provider.Meta().(*AWSClient).appconfigconn
 
 		input := &appconfig.GetDeploymentStrategyInput{
 			DeploymentStrategyId: aws.String(rs.Primary.ID),

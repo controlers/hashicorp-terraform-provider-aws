@@ -86,7 +86,7 @@ func TestAccAWSAppConfigApplication_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigApplicationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -114,14 +114,14 @@ func TestAccAWSAppConfigApplication_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigApplicationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSAppConfigApplicationConfigName(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSAppConfigApplicationExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsAppconfigApplication(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsAppconfigApplication(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -137,7 +137,7 @@ func TestAccAWSAppConfigApplication_updateName(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigApplicationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -170,7 +170,7 @@ func TestAccAWSAppConfigApplication_updateDescription(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigApplicationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -215,7 +215,7 @@ func TestAccAWSAppConfigApplication_Tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appconfig.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppConfigApplicationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -253,7 +253,7 @@ func TestAccAWSAppConfigApplication_Tags(t *testing.T) {
 }
 
 func testAccCheckAppConfigApplicationDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).appconfigconn
+	conn := acctest.Provider.Meta().(*AWSClient).appconfigconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_appconfig_application" {
@@ -293,7 +293,7 @@ func testAccCheckAWSAppConfigApplicationExists(resourceName string) resource.Tes
 			return fmt.Errorf("Resource (%s) ID not set", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).appconfigconn
+		conn := acctest.Provider.Meta().(*AWSClient).appconfigconn
 
 		input := &appconfig.GetApplicationInput{
 			ApplicationId: aws.String(rs.Primary.ID),
