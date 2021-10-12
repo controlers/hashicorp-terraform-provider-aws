@@ -75,7 +75,7 @@ func testAccAwsAppmeshMesh_basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appmesh.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppmeshMeshDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -107,7 +107,7 @@ func testAccAwsAppmeshMesh_egressFilter(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appmesh.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppmeshMeshDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -147,7 +147,7 @@ func testAccAwsAppmeshMesh_tags(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); acctest.PreCheckPartitionHasService(appmesh.EndpointsID, t) },
 		ErrorCheck:   acctest.ErrorCheck(t, appmesh.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAppmeshMeshDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -185,7 +185,7 @@ func testAccAwsAppmeshMesh_tags(t *testing.T) {
 }
 
 func testAccCheckAppmeshMeshDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).appmeshconn
+	conn := acctest.Provider.Meta().(*AWSClient).appmeshconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_appmesh_mesh" {
@@ -209,7 +209,7 @@ func testAccCheckAppmeshMeshDestroy(s *terraform.State) error {
 
 func testAccCheckAppmeshMeshExists(name string, v *appmesh.MeshData) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).appmeshconn
+		conn := acctest.Provider.Meta().(*AWSClient).appmeshconn
 
 		rs, ok := s.RootModule().Resources[name]
 		if !ok {
