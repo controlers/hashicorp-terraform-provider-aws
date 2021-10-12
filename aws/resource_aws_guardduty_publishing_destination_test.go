@@ -89,7 +89,7 @@ func testAccAwsGuardDutyPublishingDestination_basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, guardduty.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsGuardDutyPublishingDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -117,14 +117,14 @@ func testAccAwsGuardDutyPublishingDestination_disappears(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, guardduty.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsGuardDutyPublishingDestinationDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAwsGuardDutyPublishingDestinationConfig_basic(bucketName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsGuardDutyPublishingDestinationExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsGuardDutyPublishingDestination(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsGuardDutyPublishingDestination(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -261,7 +261,7 @@ func testAccCheckAwsGuardDutyPublishingDestinationExists(name string) resource.T
 			DestinationId: aws.String(destination_id),
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).guarddutyconn
+		conn := acctest.Provider.Meta().(*AWSClient).guarddutyconn
 		_, err := conn.DescribePublishingDestination(input)
 		return err
 	}
@@ -269,7 +269,7 @@ func testAccCheckAwsGuardDutyPublishingDestinationExists(name string) resource.T
 
 func testAccCheckAwsGuardDutyPublishingDestinationDestroy(s *terraform.State) error {
 
-	conn := testAccProvider.Meta().(*AWSClient).guarddutyconn
+	conn := acctest.Provider.Meta().(*AWSClient).guarddutyconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_guardduty_publishing_destination" {
