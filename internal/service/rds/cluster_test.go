@@ -115,7 +115,7 @@ func sweepClusters(region string) error {
 	return nil
 }
 
-func TestAccAWSRDSCluster_basic(t *testing.T) {
+func TestAccRDSCluster_basic(t *testing.T) {
 	var dbCluster rds.DBCluster
 	clusterName := sdkacctest.RandomWithPrefix("tf-aurora-cluster")
 	resourceName := "aws_rds_cluster.test"
@@ -162,7 +162,7 @@ func TestAccAWSRDSCluster_basic(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_AllowMajorVersionUpgrade(t *testing.T) {
+func TestAccRDSCluster_allowMajorVersionUpgrade(t *testing.T) {
 	var dbCluster1, dbCluster2 rds.DBCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster.test"
@@ -213,7 +213,7 @@ func TestAccAWSRDSCluster_AllowMajorVersionUpgrade(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_OnlyMajorVersion(t *testing.T) {
+func TestAccRDSCluster_onlyMajorVersion(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster.test"
@@ -254,7 +254,7 @@ func TestAccAWSRDSCluster_OnlyMajorVersion(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_AvailabilityZones(t *testing.T) {
+func TestAccRDSCluster_availabilityZones(t *testing.T) {
 	var dbCluster rds.DBCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster.test"
@@ -286,7 +286,7 @@ func TestAccAWSRDSCluster_AvailabilityZones(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_BacktrackWindow(t *testing.T) {
+func TestAccRDSCluster_backtrackWindow(t *testing.T) {
 	var dbCluster rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
 
@@ -325,7 +325,7 @@ func TestAccAWSRDSCluster_BacktrackWindow(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_ClusterIdentifierPrefix(t *testing.T) {
+func TestAccRDSCluster_clusterIdentifierPrefix(t *testing.T) {
 	var v rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
 
@@ -359,7 +359,7 @@ func TestAccAWSRDSCluster_ClusterIdentifierPrefix(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_DbSubnetGroupName(t *testing.T) {
+func TestAccRDSCluster_dbSubnetGroupName(t *testing.T) {
 	var dbCluster rds.DBCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster.test"
@@ -391,7 +391,7 @@ func TestAccAWSRDSCluster_DbSubnetGroupName(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_s3Restore(t *testing.T) {
+func TestAccRDSCluster_s3Restore(t *testing.T) {
 	var v rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
 	bucket := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -427,7 +427,7 @@ func TestAccAWSRDSCluster_s3Restore(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_PointInTimeRestore(t *testing.T) {
+func TestAccRDSCluster_pointInTimeRestore(t *testing.T) {
 	var v rds.DBCluster
 	var c rds.DBCluster
 
@@ -453,7 +453,7 @@ func TestAccAWSRDSCluster_PointInTimeRestore(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_PointInTimeRestore_EnabledCloudwatchLogsExports(t *testing.T) {
+func TestAccRDSCluster_PointInTimeRestore_enabledCloudWatchLogsExports(t *testing.T) {
 	var v rds.DBCluster
 	var c rds.DBCluster
 
@@ -481,7 +481,7 @@ func TestAccAWSRDSCluster_PointInTimeRestore_EnabledCloudwatchLogsExports(t *tes
 	})
 }
 
-func TestAccAWSRDSCluster_generatedName(t *testing.T) {
+func TestAccRDSCluster_generatedName(t *testing.T) {
 	var v rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
 
@@ -515,7 +515,7 @@ func TestAccAWSRDSCluster_generatedName(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_takeFinalSnapshot(t *testing.T) {
+func TestAccRDSCluster_takeFinalSnapshot(t *testing.T) {
 	var v rds.DBCluster
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_rds_cluster.test"
@@ -552,7 +552,7 @@ func TestAccAWSRDSCluster_takeFinalSnapshot(t *testing.T) {
 // This is a regression test to make sure that we always cover the scenario as highlighted in
 // https://github.com/hashicorp/terraform/issues/11568
 // Expected error updated to match API response
-func TestAccAWSRDSCluster_missingUserNameCausesError(t *testing.T) {
+func TestAccRDSCluster_missingUserNameCausesError(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, rds.EndpointsID),
@@ -567,7 +567,7 @@ func TestAccAWSRDSCluster_missingUserNameCausesError(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_Tags(t *testing.T) {
+func TestAccRDSCluster_tags(t *testing.T) {
 	var dbCluster1, dbCluster2, dbCluster3 rds.DBCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster.test"
@@ -619,7 +619,7 @@ func TestAccAWSRDSCluster_Tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_EnabledCloudwatchLogsExports_MySQL(t *testing.T) {
+func TestAccRDSCluster_EnabledCloudWatchLogsExports_mySQL(t *testing.T) {
 	var dbCluster1, dbCluster2, dbCluster3 rds.DBCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster.test"
@@ -671,7 +671,7 @@ func TestAccAWSRDSCluster_EnabledCloudwatchLogsExports_MySQL(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_EnabledCloudwatchLogsExports_Postgresql(t *testing.T) {
+func TestAccRDSCluster_EnabledCloudWatchLogsExports_postgresql(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster.test"
@@ -706,7 +706,7 @@ func TestAccAWSRDSCluster_EnabledCloudwatchLogsExports_Postgresql(t *testing.T) 
 	})
 }
 
-func TestAccAWSRDSCluster_updateIamRoles(t *testing.T) {
+func TestAccRDSCluster_updateIAMRoles(t *testing.T) {
 	var v rds.DBCluster
 	ri := sdkacctest.RandInt()
 	resourceName := "aws_rds_cluster.test"
@@ -755,7 +755,7 @@ func TestAccAWSRDSCluster_updateIamRoles(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_kmsKey(t *testing.T) {
+func TestAccRDSCluster_kmsKey(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 	kmsKeyResourceName := "aws_kms_key.foo"
 	resourceName := "aws_rds_cluster.test"
@@ -789,7 +789,7 @@ func TestAccAWSRDSCluster_kmsKey(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_encrypted(t *testing.T) {
+func TestAccRDSCluster_encrypted(t *testing.T) {
 	var v rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
 
@@ -825,7 +825,7 @@ func TestAccAWSRDSCluster_encrypted(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_copyTagsToSnapshot(t *testing.T) {
+func TestAccRDSCluster_copyTagsToSnapshot(t *testing.T) {
 	var v rds.DBCluster
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_rds_cluster.test"
@@ -873,7 +873,7 @@ func TestAccAWSRDSCluster_copyTagsToSnapshot(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_ReplicationSourceIdentifier_KmsKeyId(t *testing.T) {
+func TestAccRDSCluster_ReplicationSourceIdentifier_kmsKeyID(t *testing.T) {
 	var primaryCluster rds.DBCluster
 	var replicaCluster rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
@@ -917,7 +917,7 @@ func TestAccAWSRDSCluster_ReplicationSourceIdentifier_KmsKeyId(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_backupsUpdate(t *testing.T) {
+func TestAccRDSCluster_backupsUpdate(t *testing.T) {
 	var v rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
 
@@ -968,7 +968,7 @@ func TestAccAWSRDSCluster_backupsUpdate(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_iamAuth(t *testing.T) {
+func TestAccRDSCluster_iamAuth(t *testing.T) {
 	var v rds.DBCluster
 	resourceName := "aws_rds_cluster.test"
 
@@ -1002,7 +1002,7 @@ func TestAccAWSRDSCluster_iamAuth(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_DeletionProtection(t *testing.T) {
+func TestAccRDSCluster_deletionProtection(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "aws_rds_cluster.test"
@@ -1043,7 +1043,7 @@ func TestAccAWSRDSCluster_DeletionProtection(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_EngineMode(t *testing.T) {
+func TestAccRDSCluster_engineMode(t *testing.T) {
 	var dbCluster1, dbCluster2 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1100,7 +1100,7 @@ func TestAccAWSRDSCluster_EngineMode(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_EngineMode_Global(t *testing.T) {
+func TestAccRDSCluster_EngineMode_global(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1135,7 +1135,7 @@ func TestAccAWSRDSCluster_EngineMode_Global(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_EngineMode_Multimaster(t *testing.T) {
+func TestAccRDSCluster_EngineMode_multiMaster(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1170,7 +1170,7 @@ func TestAccAWSRDSCluster_EngineMode_Multimaster(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_EngineMode_ParallelQuery(t *testing.T) {
+func TestAccRDSCluster_EngineMode_parallelQuery(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1205,7 +1205,7 @@ func TestAccAWSRDSCluster_EngineMode_ParallelQuery(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_EngineVersion(t *testing.T) {
+func TestAccRDSCluster_engineVersion(t *testing.T) {
 	var dbCluster rds.DBCluster
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_rds_cluster.test"
@@ -1245,7 +1245,7 @@ func TestAccAWSRDSCluster_EngineVersion(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_EngineVersionWithPrimaryInstance(t *testing.T) {
+func TestAccRDSCluster_engineVersionWithPrimaryInstance(t *testing.T) {
 	var dbCluster rds.DBCluster
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_rds_cluster.test"
@@ -1290,7 +1290,7 @@ func TestAccAWSRDSCluster_EngineVersionWithPrimaryInstance(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Global(t *testing.T) {
+func TestAccRDSCluster_GlobalClusterIdentifierEngineMode_global(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1326,7 +1326,7 @@ func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Global(t *testing.T
 	})
 }
 
-func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Global_Add(t *testing.T) {
+func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_add(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1365,7 +1365,7 @@ func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Global_Add(t *testi
 	})
 }
 
-func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Global_Remove(t *testing.T) {
+func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_remove(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1408,7 +1408,7 @@ func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Global_Remove(t *te
 	})
 }
 
-func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Global_Update(t *testing.T) {
+func TestAccRDSCluster_GlobalClusterIdentifierEngineModeGlobal_update(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1449,7 +1449,7 @@ func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Global_Update(t *te
 	})
 }
 
-func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Provisioned(t *testing.T) {
+func TestAccRDSCluster_GlobalClusterIdentifierEngineMode_provisioned(t *testing.T) {
 	var dbCluster1 rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1486,7 +1486,7 @@ func TestAccAWSRDSCluster_GlobalClusterIdentifier_EngineMode_Provisioned(t *test
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/13126
-func TestAccAWSRDSCluster_GlobalClusterIdentifier_PrimarySecondaryClusters(t *testing.T) {
+func TestAccRDSCluster_GlobalClusterIdentifier_primarySecondaryClusters(t *testing.T) {
 	var providers []*schema.Provider
 	var primaryDbCluster, secondaryDbCluster rds.DBCluster
 
@@ -1519,7 +1519,7 @@ func TestAccAWSRDSCluster_GlobalClusterIdentifier_PrimarySecondaryClusters(t *te
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/13715
-func TestAccAWSRDSCluster_GlobalClusterIdentifier_ReplicationSourceIdentifier(t *testing.T) {
+func TestAccRDSCluster_GlobalClusterIdentifier_replicationSourceIdentifier(t *testing.T) {
 	var providers []*schema.Provider
 	var primaryDbCluster, secondaryDbCluster rds.DBCluster
 
@@ -1548,7 +1548,7 @@ func TestAccAWSRDSCluster_GlobalClusterIdentifier_ReplicationSourceIdentifier(t 
 	})
 }
 
-func TestAccAWSRDSCluster_Port(t *testing.T) {
+func TestAccRDSCluster_port(t *testing.T) {
 	var dbCluster1, dbCluster2 rds.DBCluster
 	rInt := sdkacctest.RandInt()
 	resourceName := "aws_rds_cluster.test"
@@ -1589,7 +1589,7 @@ func TestAccAWSRDSCluster_Port(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_ScalingConfiguration(t *testing.T) {
+func TestAccRDSCluster_scaling(t *testing.T) {
 	var dbCluster rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1642,7 +1642,7 @@ func TestAccAWSRDSCluster_ScalingConfiguration(t *testing.T) {
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/11698
-func TestAccAWSRDSCluster_ScalingConfiguration_DefaultMinCapacity(t *testing.T) {
+func TestAccRDSCluster_Scaling_defaultMinCapacity(t *testing.T) {
 	var dbCluster rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -1682,7 +1682,7 @@ func TestAccAWSRDSCluster_ScalingConfiguration_DefaultMinCapacity(t *testing.T) 
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier(t *testing.T) {
+func TestAccRDSCluster_snapshotIdentifier(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -1721,7 +1721,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_DeletionProtection(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_deletionProtection(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -1771,7 +1771,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_DeletionProtection(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_EngineMode_ParallelQuery(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifierEngineMode_parallelQuery(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -1811,7 +1811,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_EngineMode_ParallelQuery(t *testing
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_EngineMode_Provisioned(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifierEngineMode_provisioned(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -1851,7 +1851,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_EngineMode_Provisioned(t *testing.T
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_EngineMode_Serverless(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifierEngineMode_serverless(t *testing.T) {
 	// The below is according to AWS Support. This test can be updated in the future
 	// to initialize some data.
 	t.Skip("serverless does not support snapshot restore on an empty volume")
@@ -1896,7 +1896,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_EngineMode_Serverless(t *testing.T)
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/6157
-func TestAccAWSRDSCluster_SnapshotIdentifier_EngineVersion_Different(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifierEngineVersion_different(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -1938,7 +1938,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_EngineVersion_Different(t *testing.
 }
 
 // Reference: https://github.com/hashicorp/terraform-provider-aws/issues/6157
-func TestAccAWSRDSCluster_SnapshotIdentifier_EngineVersion_Equal(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifierEngineVersion_equal(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -1979,7 +1979,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_EngineVersion_Equal(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_KmsKeyId(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_kmsKeyID(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2020,7 +2020,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_KmsKeyId(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_MasterPassword(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_masterPassword(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2060,7 +2060,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_MasterPassword(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_MasterUsername(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_masterUsername(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2102,7 +2102,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_MasterUsername(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_PreferredBackupWindow(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_preferredBackupWindow(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2142,7 +2142,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_PreferredBackupWindow(t *testing.T)
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_PreferredMaintenanceWindow(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_preferredMaintenanceWindow(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2182,7 +2182,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_PreferredMaintenanceWindow(t *testi
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_Tags(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_tags(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2223,7 +2223,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_Tags(t *testing.T) {
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_VpcSecurityGroupIds(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_vpcSecurityGroupIDs(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2266,7 +2266,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_VpcSecurityGroupIds(t *testing.T) {
 // This acceptance test explicitly tests when snapshot_identifier is set,
 // vpc_security_group_ids is set (which triggered the resource update function),
 // and tags is set which was missing its ARN used for tagging
-func TestAccAWSRDSCluster_SnapshotIdentifier_VpcSecurityGroupIds_Tags(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifierVPCSecurityGroupIDs_tags(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2307,7 +2307,7 @@ func TestAccAWSRDSCluster_SnapshotIdentifier_VpcSecurityGroupIds_Tags(t *testing
 	})
 }
 
-func TestAccAWSRDSCluster_SnapshotIdentifier_EncryptedRestore(t *testing.T) {
+func TestAccRDSCluster_SnapshotIdentifier_encryptedRestore(t *testing.T) {
 	var dbCluster, sourceDbCluster rds.DBCluster
 	var dbClusterSnapshot rds.DBClusterSnapshot
 
@@ -2484,7 +2484,7 @@ func testAccCheckClusterRecreated(i, j *rds.DBCluster) resource.TestCheckFunc {
 	}
 }
 
-func TestAccAWSRDSCluster_EnableHttpEndpoint(t *testing.T) {
+func TestAccRDSCluster_enableHTTPEndpoint(t *testing.T) {
 	var dbCluster rds.DBCluster
 
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
