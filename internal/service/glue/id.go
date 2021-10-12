@@ -19,10 +19,10 @@ func readPartitionID(id string) (catalogID string, dbName string, tableName stri
 }
 
 func createPartitionID(catalogID, dbName, tableName string, values []interface{}) string {
-	return fmt.Sprintf("%s:%s:%s:%s", catalogID, dbName, tableName, stringifyAwsGluePartition(values))
+	return fmt.Sprintf("%s:%s:%s:%s", catalogID, dbName, tableName, stringifyPartition(values))
 }
 
-func stringifyAwsGluePartition(partValues []interface{}) string {
+func stringifyPartition(partValues []interface{}) string {
 	var b bytes.Buffer
 	for _, val := range partValues {
 		b.WriteString(fmt.Sprintf("%s#", val.(string)))
