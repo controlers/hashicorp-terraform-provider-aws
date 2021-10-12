@@ -5,9 +5,9 @@ import "testing"
 func TestAccAWSGlue_serial(t *testing.T) {
 	testCases := map[string]map[string]func(t *testing.T){
 		"ResourcePolicy": {
-			"basic":      testAccAWSGlueResourcePolicy_basic,
-			"update":     testAccAWSGlueResourcePolicy_update,
-			"disappears": testAccAWSGlueResourcePolicy_disappears,
+			"basic":      testAccResourcePolicy_basic,
+			"update":     testAccResourcePolicy_update,
+			"disappears": testAccResourcePolicy_disappears,
 		},
 	}
 
