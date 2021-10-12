@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 )
 
-func TestAccAWSCloudwatchLogGroupsDataSource_basic(t *testing.T) {
+func TestAccCloudWatchLogsGroupsDataSource_basic(t *testing.T) {
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	resourceName := "data.aws_cloudwatch_log_groups.test"
 
