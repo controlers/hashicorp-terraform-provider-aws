@@ -20,10 +20,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-
-
-
-
 func TestAccNetworkFirewallLoggingConfiguration_CloudWatchLogDestination_logGroup(t *testing.T) {
 	logGroupName := sdkacctest.RandomWithPrefix("tf-acc-test")
 	updatedLogGroupName := fmt.Sprintf("%s-updated", logGroupName)

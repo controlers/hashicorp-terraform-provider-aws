@@ -23,10 +23,6 @@ const (
 	GlueDevEndpointResourcePrefix = "tf-acc-test"
 )
 
-
-
-
-
 func TestAccGlueDevEndpoint_basic(t *testing.T) {
 	var endpoint glue.DevEndpoint
 
