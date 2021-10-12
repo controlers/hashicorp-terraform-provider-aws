@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/hashicorp/terraform-provider-aws/internal/acctest"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
+	tfacm "github.com/hashicorp/terraform-provider-aws/internal/service/acm"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 )
 
@@ -164,9 +165,9 @@ func testAccCheckAPIMappingCreateCertificate(rName string, certificateArn *strin
 		output, err := conn.ImportCertificate(&acm.ImportCertificateInput{
 			Certificate: []byte(certificate),
 			PrivateKey:  []byte(privateKey),
-			Tags: tftags.New(map[string]interface{}{
+			Tags: tfacm.Tags(tftags.New(map[string]interface{}{
 				"Name": rName,
-			}).IgnoreAWS().AcmTags(),
+			}).IgnoreAWS()),
 		})
 		if err != nil {
 			return err
