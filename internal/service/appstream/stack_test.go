@@ -77,7 +77,7 @@ func sweepStack(region string) error {
 	return errs.ErrorOrNil()
 }
 
-func TestAccAwsAppStreamStack_basic(t *testing.T) {
+func TestAccAppStreamStack_basic(t *testing.T) {
 	var stackOutput appstream.Stack
 	resourceName := "aws_appstream_stack.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -105,7 +105,7 @@ func TestAccAwsAppStreamStack_basic(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppStreamStack_disappears(t *testing.T) {
+func TestAccAppStreamStack_disappears(t *testing.T) {
 	var stackOutput appstream.Stack
 	resourceName := "aws_appstream_stack.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -128,7 +128,7 @@ func TestAccAwsAppStreamStack_disappears(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppStreamStack_complete(t *testing.T) {
+func TestAccAppStreamStack_complete(t *testing.T) {
 	var stackOutput appstream.Stack
 	resourceName := "aws_appstream_stack.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
@@ -168,7 +168,7 @@ func TestAccAwsAppStreamStack_complete(t *testing.T) {
 	})
 }
 
-func TestAccAwsAppStreamStack_withTags(t *testing.T) {
+func TestAccAppStreamStack_withTags(t *testing.T) {
 	var stackOutput appstream.Stack
 	resourceName := "aws_appstream_stack.test"
 	rName := sdkacctest.RandomWithPrefix("tf-acc-test")
