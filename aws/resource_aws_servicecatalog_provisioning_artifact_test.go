@@ -115,7 +115,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogProvisioningArtifactDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -157,14 +157,14 @@ func TestAccAWSServiceCatalogProvisioningArtifact_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogProvisioningArtifactDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSServiceCatalogProvisioningArtifactConfig_basic(rName, domain),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsServiceCatalogProvisioningArtifactExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsServiceCatalogProvisioningArtifact(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsServiceCatalogProvisioningArtifact(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -181,7 +181,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_update(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogProvisioningArtifactDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -228,7 +228,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_physicalID(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, servicecatalog.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAwsServiceCatalogProvisioningArtifactDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -262,7 +262,7 @@ func TestAccAWSServiceCatalogProvisioningArtifact_physicalID(t *testing.T) {
 }
 
 func testAccCheckAwsServiceCatalogProvisioningArtifactDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).scconn
+	conn := acctest.Provider.Meta().(*AWSClient).scconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_servicecatalog_provisioning_artifact" {
@@ -306,7 +306,7 @@ func testAccCheckAwsServiceCatalogProvisioningArtifactExists(resourceName string
 			return fmt.Errorf("resource not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).scconn
+		conn := acctest.Provider.Meta().(*AWSClient).scconn
 
 		artifactID, productID, err := tfservicecatalog.ProvisioningArtifactParseID(rs.Primary.ID)
 
@@ -386,7 +386,7 @@ resource "aws_servicecatalog_product" "test" {
     Name = %[1]q
   }
 }
-`, rName, domain, testAccDefaultEmailAddress)
+`, rName, domain, acctest.DefaultEmailAddress)
 }
 
 func testAccAWSServiceCatalogProvisioningArtifactConfig_basic(rName, domain string) string {
@@ -466,7 +466,7 @@ resource "aws_servicecatalog_product" "test" {
     type                 = "CLOUD_FORMATION_TEMPLATE"
   }
 }
-`, rName, domain, testAccDefaultEmailAddress)
+`, rName, domain, acctest.DefaultEmailAddress)
 }
 
 func testAccAWSServiceCatalogProvisioningArtifactConfig_physicalID(rName, domain string) string {
