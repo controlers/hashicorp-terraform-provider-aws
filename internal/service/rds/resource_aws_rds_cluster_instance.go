@@ -19,6 +19,32 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/verify"
+	tfiam "github.com/hashicorp/terraform-provider-aws/internal/service/iam"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
+	tfrds "github.com/hashicorp/terraform-provider-aws/internal/service/rds"
 )
 
 func ResourceClusterInstance() *schema.Resource {
@@ -300,7 +326,7 @@ func resourceClusterInstanceCreate(d *schema.ResourceData, meta interface{}) err
 
 	log.Printf("[DEBUG] Creating RDS DB Instance opts: %s", createOpts)
 	var resp *rds.CreateDBInstanceOutput
-	err := resource.Retry(iamwaiter.PropagationTimeout, func() *resource.RetryError {
+	err := resource.Retry(tfiam.PropagationTimeout, func() *resource.RetryError {
 		var err error
 		resp, err = conn.CreateDBInstance(createOpts)
 		if err != nil {
@@ -405,7 +431,7 @@ func resourceClusterInstanceRead(d *schema.ResourceData, meta interface{}) error
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
 
-	db, err := finder.DBInstanceByID(conn, d.Id())
+	db, err := tfrds.FindDBInstanceByID(conn, d.Id())
 
 	if !d.IsNewResource() && tfresource.NotFound(err) {
 		log.Printf("[WARN] RDS Cluster Instance (%s) not found, removing from state", d.Id())
@@ -423,7 +449,7 @@ func resourceClusterInstanceRead(d *schema.ResourceData, meta interface{}) error
 		return fmt.Errorf("DBClusterIdentifier is missing from RDS Cluster Instance (%s). The aws_db_instance resource should be used for non-Aurora instances", d.Id())
 	}
 
-	dbc, err := finder.DBClusterByID(conn, dbClusterID)
+	dbc, err := tfrds.FindDBClusterByID(conn, dbClusterID)
 
 	if err != nil {
 		return fmt.Errorf("error reading RDS Cluster (%s): %w", dbClusterID, err)
@@ -570,7 +596,7 @@ func resourceClusterInstanceUpdate(d *schema.ResourceData, meta interface{}) err
 	log.Printf("[DEBUG] Send DB Instance Modification request: %#v", requestUpdate)
 	if requestUpdate {
 		log.Printf("[DEBUG] DB Instance Modification request: %#v", req)
-		err := resource.Retry(iamwaiter.PropagationTimeout, func() *resource.RetryError {
+		err := resource.Retry(tfiam.PropagationTimeout, func() *resource.RetryError {
 			_, err := conn.ModifyDBInstance(req)
 			if err != nil {
 				if tfawserr.ErrMessageContains(err, "InvalidParameterValue", "IAM role ARN value is invalid or does not include the required permissions") {
@@ -647,7 +673,7 @@ func resourceClusterInstanceDelete(d *schema.ResourceData, meta interface{}) err
 		return fmt.Errorf("error deleting RDS Cluster Instance (%s): %w", d.Id(), err)
 	}
 
-	if _, err := waiter.DBClusterInstanceDeleted(conn, d.Id(), d.Timeout(schema.TimeoutDelete)); err != nil {
+	if _, err := tfrds.waitDBClusterInstanceDeleted(conn, d.Id(), d.Timeout(schema.TimeoutDelete)); err != nil {
 		return fmt.Errorf("error waiting for RDS Cluster Instance (%s) delete: %w", d.Id(), err)
 	}
 
