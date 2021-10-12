@@ -106,7 +106,7 @@ func TestAccAWSEksAddon_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t); testAccPreCheckAWSEksAddon(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, eks.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSEksAddonDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -139,14 +139,14 @@ func TestAccAWSEksAddon_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t); testAccPreCheckAWSEksAddon(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, eks.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSEksAddonDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSEksAddon_Basic(rName, addonName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSEksAddonExists(ctx, resourceName, &addon),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsEksAddon(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsEksAddon(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -165,14 +165,14 @@ func TestAccAWSEksAddon_disappears_Cluster(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t); testAccPreCheckAWSEksAddon(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, eks.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSEksAddonDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAWSEksAddon_Basic(rName, addonName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAWSEksAddonExists(ctx, resourceName, &addon),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsEksCluster(), clusterResourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsEksCluster(), clusterResourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -192,7 +192,7 @@ func TestAccAWSEksAddon_AddonVersion(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t); testAccPreCheckAWSEksAddon(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, eks.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSEksAddonDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -229,7 +229,7 @@ func TestAccAWSEksAddon_ResolveConflicts(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t); testAccPreCheckAWSEksAddon(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, eks.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSEksAddonDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -267,7 +267,7 @@ func TestAccAWSEksAddon_ServiceAccountRoleArn(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t); testAccPreCheckAWSEksAddon(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, eks.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSEksAddonDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -296,7 +296,7 @@ func TestAccAWSEksAddon_Tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckAWSEks(t); testAccPreCheckAWSEksAddon(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, eks.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAWSEksAddonDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -741,7 +741,7 @@ func testAccCheckAWSEksAddonExists(ctx context.Context, resourceName string, add
 			return err
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).eksconn
+		conn := acctest.Provider.Meta().(*AWSClient).eksconn
 
 		output, err := finder.AddonByClusterNameAndAddonName(ctx, conn, clusterName, addonName)
 
@@ -757,7 +757,7 @@ func testAccCheckAWSEksAddonExists(ctx context.Context, resourceName string, add
 
 func testAccCheckAWSEksAddonDestroy(s *terraform.State) error {
 	ctx := context.TODO()
-	conn := testAccProvider.Meta().(*AWSClient).eksconn
+	conn := acctest.Provider.Meta().(*AWSClient).eksconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_eks_addon" {
@@ -787,7 +787,7 @@ func testAccCheckAWSEksAddonDestroy(s *terraform.State) error {
 }
 
 func testAccPreCheckAWSEksAddon(t *testing.T) {
-	conn := testAccProvider.Meta().(*AWSClient).eksconn
+	conn := acctest.Provider.Meta().(*AWSClient).eksconn
 
 	input := &eks.DescribeAddonVersionsInput{}
 
@@ -804,7 +804,7 @@ func testAccPreCheckAWSEksAddon(t *testing.T) {
 
 func testAccCheckEksAddonUpdateTags(addon *eks.Addon, oldTags, newTags map[string]string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).eksconn
+		conn := acctest.Provider.Meta().(*AWSClient).eksconn
 
 		return keyvaluetags.EksUpdateTags(conn, aws.StringValue(addon.AddonArn), oldTags, newTags)
 	}
