@@ -173,7 +173,7 @@ func TestAccAwsDxGatewayAssociationProposal_disappears(t *testing.T) {
 				Config: testAccDxGatewayAssociationProposalConfig_basicVpnGateway(rName, rBgpAsn),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsDxGatewayAssociationProposalExists(resourceName, &proposal),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsDxGatewayAssociationProposal(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsDxGatewayAssociationProposal(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -199,7 +199,7 @@ func TestAccAwsDxGatewayAssociationProposal_endOfLifeVpn(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsDxGatewayAssociationProposalExists(resourceName, &proposal),
 					testAccCheckAwsDxGatewayAssociationProposalAccepted(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsDxGatewayAssociationProposal(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsDxGatewayAssociationProposal(), resourceName),
 				),
 			},
 			{
@@ -236,7 +236,7 @@ func TestAccAwsDxGatewayAssociationProposal_endOfLifeTgw(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsDxGatewayAssociationProposalExists(resourceName, &proposal),
 					testAccCheckAwsDxGatewayAssociationProposalAccepted(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsDxGatewayAssociationProposal(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsDxGatewayAssociationProposal(), resourceName),
 				),
 			},
 			{
@@ -294,7 +294,7 @@ func TestAccAwsDxGatewayAssociationProposal_AllowedPrefixes(t *testing.T) {
 }
 
 func testAccCheckAwsDxGatewayAssociationProposalDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).dxconn
+	conn := acctest.Provider.Meta().(*AWSClient).dxconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_dx_gateway_association_proposal" {
@@ -328,7 +328,7 @@ func testAccCheckAwsDxGatewayAssociationProposalExists(resourceName string, gate
 			return fmt.Errorf("No ID is set")
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).dxconn
+		conn := acctest.Provider.Meta().(*AWSClient).dxconn
 
 		output, err := finder.GatewayAssociationProposalByID(conn, rs.Primary.ID)
 
@@ -359,7 +359,7 @@ func testAccCheckAwsDxGatewayAssociationProposalAccepted(resourceName string) re
 			return fmt.Errorf("Not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).dxconn
+		conn := acctest.Provider.Meta().(*AWSClient).dxconn
 
 		output, err := finder.GatewayAssociationProposalByID(conn, rs.Primary.ID)
 
