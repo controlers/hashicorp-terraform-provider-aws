@@ -141,7 +141,7 @@ func resourcePlacementGroupRead(d *schema.ResourceData, meta interface{}) error 
 	d.Set("name", pg.GroupName)
 	d.Set("strategy", pg.Strategy)
 	d.Set("placement_group_id", pg.GroupId)
-	tags := KeyValueTags(pg.Tags).IgnoreAws().IgnoreConfig(ignoreTagsConfig)
+	tags := KeyValueTags(pg.Tags).IgnoreAWS().IgnoreConfig(ignoreTagsConfig)
 
 	//lintignore:AWSR002
 	if err := d.Set("tags", tags.RemoveDefaultConfig(defaultTagsConfig).Map()); err != nil {

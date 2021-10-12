@@ -249,7 +249,7 @@ func resourceAwsLogFlowRead(d *schema.ResourceData, meta interface{}) error {
 		d.Set(resourceKey, fl.ResourceId)
 	}
 
-	tags := KeyValueTags(fl.Tags).IgnoreAws().IgnoreConfig(ignoreTagsConfig)
+	tags := KeyValueTags(fl.Tags).IgnoreAWS().IgnoreConfig(ignoreTagsConfig)
 
 	//lintignore:AWSR002
 	if err := d.Set("tags", tags.RemoveDefaultConfig(defaultTagsConfig).Map()); err != nil {

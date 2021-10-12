@@ -158,7 +158,7 @@ func CreateTags(conn {{ .ClientType }}, identifier string{{ if .TagResTypeElem }
 		{{- if .TagInCustomVal }}
 		{{ .TagInTagsElem }}:       {{ .TagInCustomVal }},
 		{{- else }}
-		{{ .TagInTagsElem }}:       Tags(tags.IgnoreAws()),
+		{{ .TagInTagsElem }}:       Tags(tags.IgnoreAWS()),
 		{{- end }}
 	}
 

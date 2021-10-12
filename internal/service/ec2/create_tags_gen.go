@@ -23,7 +23,7 @@ func CreateTags(conn *ec2.EC2, identifier string, tagsMap interface{}) error {
 	tags := tftags.New(tagsMap)
 	input := &ec2.CreateTagsInput{
 		Resources: aws.StringSlice([]string{identifier}),
-		Tags:      Tags(tags.IgnoreAws()),
+		Tags:      Tags(tags.IgnoreAWS()),
 	}
 
 	_, err := tfresource.RetryWhenNotFound(EventualConsistencyTimeout, func() (interface{}, error) {

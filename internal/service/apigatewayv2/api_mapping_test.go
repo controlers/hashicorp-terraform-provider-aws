@@ -167,7 +167,7 @@ func testAccCheckAWSAPIGatewayV2ApiMappingCreateCertificate(rName string, certif
 			PrivateKey:  []byte(privateKey),
 			Tags: tftags.New(map[string]interface{}{
 				"Name": rName,
-			}).IgnoreAws().AcmTags(),
+			}).IgnoreAWS().AcmTags(),
 		})
 		if err != nil {
 			return err
