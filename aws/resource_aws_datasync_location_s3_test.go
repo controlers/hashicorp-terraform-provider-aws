@@ -90,7 +90,7 @@ func TestAccAWSDataSyncLocationS3_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDataSyncLocationS3Destroy,
 		Steps: []resource.TestStep{
 			{
@@ -128,7 +128,7 @@ func TestAccAWSDataSyncLocationS3_storageclass(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDataSyncLocationS3Destroy,
 		Steps: []resource.TestStep{
 			{
@@ -162,7 +162,7 @@ func TestAccAWSDataSyncLocationS3_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDataSyncLocationS3Destroy,
 		Steps: []resource.TestStep{
 			{
@@ -185,7 +185,7 @@ func TestAccAWSDataSyncLocationS3_Tags(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acctest.PreCheck(t); testAccPreCheckAWSDataSync(t) },
 		ErrorCheck:   acctest.ErrorCheck(t, datasync.EndpointsID),
-		Providers:    testAccProviders,
+		Providers:    acctest.Providers,
 		CheckDestroy: testAccCheckAWSDataSyncLocationS3Destroy,
 		Steps: []resource.TestStep{
 			{
@@ -226,7 +226,7 @@ func TestAccAWSDataSyncLocationS3_Tags(t *testing.T) {
 }
 
 func testAccCheckAWSDataSyncLocationS3Destroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).datasyncconn
+	conn := acctest.Provider.Meta().(*AWSClient).datasyncconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_datasync_location_s3" {
@@ -258,7 +258,7 @@ func testAccCheckAWSDataSyncLocationS3Exists(resourceName string, locationS3 *da
 			return fmt.Errorf("Not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).datasyncconn
+		conn := acctest.Provider.Meta().(*AWSClient).datasyncconn
 		input := &datasync.DescribeLocationS3Input{
 			LocationArn: aws.String(rs.Primary.ID),
 		}
@@ -281,7 +281,7 @@ func testAccCheckAWSDataSyncLocationS3Exists(resourceName string, locationS3 *da
 
 func testAccCheckAWSDataSyncLocationS3Disappears(location *datasync.DescribeLocationS3Output) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		conn := testAccProvider.Meta().(*AWSClient).datasyncconn
+		conn := acctest.Provider.Meta().(*AWSClient).datasyncconn
 
 		input := &datasync.DeleteLocationInput{
 			LocationArn: location.LocationArn,
