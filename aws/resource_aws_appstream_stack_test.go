@@ -82,7 +82,7 @@ func TestAccAwsAppStreamStack_basic(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamStackDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -110,7 +110,7 @@ func TestAccAwsAppStreamStack_disappears(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamStackDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -118,7 +118,7 @@ func TestAccAwsAppStreamStack_disappears(t *testing.T) {
 				Config: testAccAwsAppStreamStackConfig(rName),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckAwsAppStreamStackExists(resourceName, &stackOutput),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsAppStreamStack(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsAppStreamStack(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -135,7 +135,7 @@ func TestAccAwsAppStreamStack_complete(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamStackDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -175,7 +175,7 @@ func TestAccAwsAppStreamStack_withTags(t *testing.T) {
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t) },
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsAppStreamStackDestroy,
 		ErrorCheck:        acctest.ErrorCheck(t, appstream.EndpointsID),
 		Steps: []resource.TestStep{
@@ -217,7 +217,7 @@ func testAccCheckAwsAppStreamStackExists(resourceName string, appStreamStack *ap
 			return fmt.Errorf("not found: %s", resourceName)
 		}
 
-		conn := testAccProvider.Meta().(*AWSClient).appstreamconn
+		conn := acctest.Provider.Meta().(*AWSClient).appstreamconn
 		resp, err := conn.DescribeStacks(&appstream.DescribeStacksInput{Names: []*string{aws.String(rs.Primary.ID)}})
 
 		if err != nil {
@@ -235,7 +235,7 @@ func testAccCheckAwsAppStreamStackExists(resourceName string, appStreamStack *ap
 }
 
 func testAccCheckAwsAppStreamStackDestroy(s *terraform.State) error {
-	conn := testAccProvider.Meta().(*AWSClient).appstreamconn
+	conn := acctest.Provider.Meta().(*AWSClient).appstreamconn
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "aws_appstream_stack" {
