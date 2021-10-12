@@ -19,12 +19,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 )
 
-func resourceAwsRDSClusterInstance() *schema.Resource {
+func ResourceClusterInstance() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceAwsRDSClusterInstanceCreate,
-		Read:   resourceAwsRDSClusterInstanceRead,
-		Update: resourceAwsRDSClusterInstanceUpdate,
-		Delete: resourceAwsRDSClusterInstanceDelete,
+		Create: resourceClusterInstanceCreate,
+		Read:   resourceClusterInstanceRead,
+		Update: resourceClusterInstanceUpdate,
+		Delete: resourceClusterInstanceDelete,
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
 		},
@@ -230,7 +230,7 @@ func resourceAwsRDSClusterInstance() *schema.Resource {
 	}
 }
 
-func resourceAwsRDSClusterInstanceCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceClusterInstanceCreate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).RDSConn
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	tags := defaultTagsConfig.MergeTags(keyvaluetags.New(d.Get("tags").(map[string]interface{})))
@@ -395,10 +395,10 @@ func resourceAwsRDSClusterInstanceCreate(d *schema.ResourceData, meta interface{
 		}
 	}
 
-	return resourceAwsRDSClusterInstanceRead(d, meta)
+	return resourceClusterInstanceRead(d, meta)
 }
 
-func resourceAwsRDSClusterInstanceRead(d *schema.ResourceData, meta interface{}) error {
+func resourceClusterInstanceRead(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).RDSConn
 	defaultTagsConfig := meta.(*conns.AWSClient).DefaultTagsConfig
 	ignoreTagsConfig := meta.(*conns.AWSClient).IgnoreTagsConfig
@@ -491,7 +491,7 @@ func resourceAwsRDSClusterInstanceRead(d *schema.ResourceData, meta interface{})
 	return nil
 }
 
-func resourceAwsRDSClusterInstanceUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceClusterInstanceUpdate(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).RDSConn
 	requestUpdate := false
 
@@ -612,10 +612,10 @@ func resourceAwsRDSClusterInstanceUpdate(d *schema.ResourceData, meta interface{
 		}
 	}
 
-	return resourceAwsRDSClusterInstanceRead(d, meta)
+	return resourceClusterInstanceRead(d, meta)
 }
 
-func resourceAwsRDSClusterInstanceDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceClusterInstanceDelete(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*conns.AWSClient).RDSConn
 
 	input := &rds.DeleteDBInstanceInput{
