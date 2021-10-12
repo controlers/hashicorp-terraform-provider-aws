@@ -119,7 +119,7 @@ func TestAccAwsRoute53KeySigningKey_basic(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckRoute53KeySigningKey(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, route53.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsRoute53KeySigningKeyDestroy,
 		Steps: []resource.TestStep{
 			{
@@ -160,14 +160,14 @@ func TestAccAwsRoute53KeySigningKey_disappears(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckRoute53KeySigningKey(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, route53.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsRoute53KeySigningKeyDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccAwsRoute53KeySigningKeyConfig_Name(rName, domainName),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					testAccAwsRoute53KeySigningKeyExists(resourceName),
-					acctest.CheckResourceDisappears(testAccProvider, resourceAwsRoute53KeySigningKey(), resourceName),
+					acctest.CheckResourceDisappears(acctest.Provider, resourceAwsRoute53KeySigningKey(), resourceName),
 				),
 				ExpectNonEmptyPlan: true,
 			},
@@ -184,7 +184,7 @@ func TestAccAwsRoute53KeySigningKey_Status(t *testing.T) {
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:          func() { acctest.PreCheck(t); testAccPreCheckRoute53KeySigningKey(t) },
 		ErrorCheck:        acctest.ErrorCheck(t, route53.EndpointsID),
-		ProviderFactories: testAccProviderFactories,
+		ProviderFactories: acctest.ProviderFactories,
 		CheckDestroy:      testAccCheckAwsRoute53KeySigningKeyDestroy,
 		Steps: []resource.TestStep{
 			{
